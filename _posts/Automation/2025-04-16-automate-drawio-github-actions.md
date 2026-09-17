@@ -2,7 +2,7 @@
 layout: post
 title: "Automate Draw.io Diagram Export with GitHub Actions"
 date: 2025-04-16
-categories: [DevOps, GitHub, CI/CD, Drawio]
+categories: [devops, github, CI/CD, Drawio]
 author: manishtiwari25
 tags: [github-actions, drawio, automation, diagrams, documentation]
 description: "Learn how to automate exporting Draw.io diagrams into PNG images using GitHub Actions. Keep your visual documentation always in sync with your code."

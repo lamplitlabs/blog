@@ -1,0 +1,4 @@
+{% comment %} Commons: CDN libraries every page loads (jQuery, Bootstrap, search). Appends to `urls`. {% endcomment %}
+{% assign urls = site.data.origin[type].jquery.js | append: ',' | append:
+site.data.origin[type].bootstrap.js | append: ',' | append:
+site.data.origin[type].search.js %}

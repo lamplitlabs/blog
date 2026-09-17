@@ -97,7 +97,7 @@ Now, let's walk through the steps to obtain your API access token specifically f
  
     If you want to invite specific people to test your app, you can add them as testers. However, this step is optional since OAuth will handle the authorization.
 
-    If you are generating token for [ferret](https://github.com/lamplitlabs/ferret), you have to add your thread account as tester.
+    If you are generating token for [ferret](https://github.com/bitesinbyte/ferret), you have to add your thread account as tester.
 
     To add test user, Expend App roles and click on Roles. Click on Add People and select Thread Tester. please note when you add a user as tester, it sends a invite, you have to accept that invite. 
 

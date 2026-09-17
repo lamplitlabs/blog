@@ -54,7 +54,7 @@ docs/images/deathstar-blueprint-page-1.png
 
 ## 🧾 The GitHub Actions Workflow
 
-More In depth [Here]({% post_url 2025-04-16-automate-drawio-azure-devops %})
+More In depth [Here]({% post_url Automation/2025-04-16-automate-drawio-azure-devops %})
 
 Create a workflow file at: `.github/workflows/drawio-export.yml`
 

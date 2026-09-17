@@ -1,0 +1,7 @@
+{% comment %} Optional page features: TOC and Mermaid CDN libraries. Appends to `urls`. {% endcomment %}
+{% if page.content contains '<h2' or page.content contains '<h3' and site.toc and page.toc %}
+{% assign urls = urls | append: ',' | append: site.data.origin[type].toc.js %}
+{% endif %}
+{% if page.mermaid %}
+{% assign urls = urls | append: ',' | append: site.data.origin[type].mermaid.js %}
+{% endif %}

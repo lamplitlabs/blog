@@ -27,6 +27,7 @@ yarn*
 !.git*
 !.editorconfig
 !.nojekyll
+!.ruby-version
 !.travis.yml
 !.markdownlint.yaml
 

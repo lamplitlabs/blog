@@ -3,7 +3,7 @@ layout: post
 title: "Azurite + GitHub Actions"
 date: 2022-07-19 09:00:00 -0500
 categories: github
-tags: Github-Actions Azurite Csharp Github
+tags: github-actions Azurite Csharp github
 author: manishtiwari25
 redirect_from:
   - /media/e52ece39cd93224dd7fc1d9efa62f08a

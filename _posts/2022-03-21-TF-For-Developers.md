@@ -5,6 +5,9 @@ date: 2022-03-21 09:00:00 -0500
 categories: terraform cloud
 author: manishtiwari25
 tags: terraform
+image:
+  path: /assets/img/headers/terraform/terraform-for-developers.webp
+  alt: Terminal screenshot of the four basic Terraform commands - init, plan, apply and import
 redirect_from:
   - /terraform-for-developers-150ecff176fd
   - /followers?source=user_profile-------------------------------------

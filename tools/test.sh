@@ -48,7 +48,23 @@ read_baseurl() {
   fi
 }
 
+preflight() {
+  if ! command -v bundle >/dev/null 2>&1; then
+    echo "error: 'bundle' not found on PATH." >&2
+    echo "       Activate the pinned toolchain (e.g. 'mise exec -- bash tools/test.sh') and try again." >&2
+    exit 1
+  fi
+
+  if ! bundle exec ruby -e 'exit 0' >/dev/null 2>&1; then
+    echo "error: required gems are not available for this Ruby/bundler." >&2
+    echo "       Run 'bundle install' (with the pinned Ruby active) and try again." >&2
+    exit 1
+  fi
+}
+
 main() {
+  preflight
+
   # clean up
   if [[ -d $SITE_DIR ]]; then
     rm -rf "$SITE_DIR"

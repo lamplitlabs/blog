@@ -5,6 +5,9 @@ date: 2022-07-19 09:00:00 -0500
 categories: github
 tags: github-actions Azurite Csharp github
 author: manishtiwari25
+image:
+  path: /assets/img/headers/azurite-github-actions.webp
+  alt: GitHub Actions workflow run of the Build And Test job with the Azurite step and integration tests passing
 redirect_from:
   - /media/e52ece39cd93224dd7fc1d9efa62f08a
   - /azurite-github-actions-2a29953af13f?source=author_recirc-----a9c256fee353----4----------------------------

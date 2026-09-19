@@ -56,8 +56,16 @@ preflight() {
   fi
 
   if ! bundle exec ruby -e 'exit 0' >/dev/null 2>&1; then
+    local found_ruby pinned_ruby
+    found_ruby="$(ruby -e 'print RUBY_VERSION' 2>/dev/null || echo 'none')"
+    pinned_ruby="$(tr -d '[:space:]' <.ruby-version 2>/dev/null || echo 'unknown')"
     echo "error: required gems are not available for this Ruby/bundler." >&2
-    echo "       Run 'bundle install' (with the pinned Ruby active) and try again." >&2
+    echo "       ruby on PATH: $found_ruby; pinned in .ruby-version: $pinned_ruby" >&2
+    if [[ $found_ruby != "$pinned_ruby" ]]; then
+      echo "       The Ruby versions differ: activate the pinned toolchain (e.g. 'mise exec -- bash tools/test.sh')." >&2
+    else
+      echo "       Run 'bundle install' (with the pinned Ruby active) and try again." >&2
+    fi
     exit 1
   fi
 }

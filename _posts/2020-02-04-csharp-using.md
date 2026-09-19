@@ -5,6 +5,9 @@ date: 2020-02-04 09:00:00 -0500
 categories: coding dotnet
 tags: c# dotnet
 author: manishtiwari25
+image:
+  path: /assets/img/headers/dotnet/csharp-using-declaration.webp
+  alt: Code screenshot comparing the classic C# using statement block with the C# 8 using declaration
 redirect_from:
   - /should-we-move-to-c-8-using-declaration-891e3866d81?source=post_internal_links---------0----------------------------
   - /should-we-move-to-c-8-using-declaration-891e3866d81?source=author_recirc-----a9c256fee353----4----------------------------

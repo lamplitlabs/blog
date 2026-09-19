@@ -97,9 +97,28 @@ check_tag_case_duplicates() {
   fi
 }
 
+# Report image coverage of _posts so image-coverage cards can cite one number
+# (same rule as `grep -L '^image:' _posts/*.md`) and list the posts still
+# lacking a header image so the next one to illustrate can be picked without
+# grepping. Informational only: never fails the build.
+report_image_coverage() {
+  local total without
+  total="$(ls _posts/*.md | wc -l | tr -d ' ')"
+  without="$(grep -L '^image:' _posts/*.md || true)"
+  local count=0
+  if [[ -n $without ]]; then
+    count="$(printf '%s\n' "$without" | wc -l | tr -d ' ')"
+  fi
+  echo "image-coverage: $count/$total posts without image"
+  if [[ -n $without ]]; then
+    printf '  %s\n' $without
+  fi
+}
+
 main() {
   preflight
   check_tag_case_duplicates
+  report_image_coverage
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

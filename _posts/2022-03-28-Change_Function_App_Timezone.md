@@ -5,6 +5,9 @@ date: 2022-03-28 09:00:00 -0500
 categories: cloud function azure
 tags: azure azurefunction
 author: manishtiwari25
+image:
+  path: /assets/img/headers/function-app-website-time-zone.webp
+  alt: Azure portal screenshot of a Function App Configuration blade with the WEBSITE_TIME_ZONE application setting highlighted
 redirect_from:
   - /how-to-change-azure-function-app-time-zone-a9c256fee353?source=user_profile---------3----------------------------
   - /how-to-change-azure-function-app-time-zone-a9c256fee353

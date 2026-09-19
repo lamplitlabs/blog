@@ -5,6 +5,9 @@ date: 2022-12-16 09:00:00 -0500
 categories: azure cloud
 tags: apim key-vault
 author: manishtiwari25
+image:
+  path: /assets/img/headers/apim-key-vault-named-value.webp
+  alt: Azure portal screenshot of adding an APIM named value of type Key vault pointing at a Key Vault secret
 redirect_from:
   - /securing-azure-apim-with-azure-key-vault-27bad7129e0d
   - /securing-azure-apim-with-azure-key-vault-27bad7129e0d?source=user_profile---------0----------------------------

@@ -5,6 +5,9 @@ date: 2022-03-21 09:00:00 -0500
 categories: coding grpc
 tags: grpc grpc-data-type
 author: manishtiwari25
+image:
+  path: /assets/img/headers/grpc-protobuf-data-types.webp
+  alt: Sample .proto file listing gRPC protobuf scalar and well-known data types
 redirect_from:
   - /grpc-protobuf-data-types-7148ce60b54b?source=user_profile---------7----------------------------
   - /grpc-protobuf-data-types-7148ce60b54b

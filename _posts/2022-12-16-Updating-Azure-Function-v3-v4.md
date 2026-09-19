@@ -5,6 +5,9 @@ date: 2022-12-16 09:00:00 -0500
 categories: cloud azure
 tags: azure azurefunction
 author: manishtiwari25
+image:
+  path: /assets/img/headers/updating-azure-function-v3-v4.webp
+  alt: Azure portal application settings showing FUNCTIONS_EXTENSION_VERSION changed from ~3 to ~4
 redirect_from:
   - /1
   - /-1

@@ -60,3 +60,4 @@ package-lock.json
 assets/js/dist
 
 !.devcontainer
+!.tool-versions

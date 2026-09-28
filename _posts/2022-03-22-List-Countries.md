@@ -5,6 +5,9 @@ date: 2022-03-22 09:00:00 -0500
 categories: cloud gist
 tags: Countries Geoname Gist
 author: manishtiwari25
+image:
+  path: /assets/img/headers/list-countries-states-gist.webp
+  alt: JSON snippet from the countries gist showing a country with its ISO code and nested list of states and provinces
 redirect_from:
   - /where-can-i-get-list-of-countries-and-there-state-provinces-f05ce8f50928
   - /where-can-i-get-list-of-countries-and-there-state-provinces-f05ce8f50928?source=user_profile---------4----------------------------

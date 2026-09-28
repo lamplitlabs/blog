@@ -62,7 +62,7 @@ preflight() {
     echo "error: required gems are not available for this Ruby/bundler." >&2
     echo "       ruby on PATH: $found_ruby; pinned in .ruby-version: $pinned_ruby" >&2
     if [[ $found_ruby != "$pinned_ruby" ]]; then
-      echo "       The Ruby versions differ: activate the pinned toolchain (e.g. 'mise exec -- bash tools/test.sh')." >&2
+      echo "       The Ruby versions differ: run 'mise exec ruby@$pinned_ruby -- bash tools/test.sh'." >&2
     else
       echo "       Run 'bundle install' (with the pinned Ruby active) and try again." >&2
     fi

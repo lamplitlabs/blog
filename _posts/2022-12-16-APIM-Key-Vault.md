@@ -53,3 +53,5 @@ To connect Azure API Gateway with Azure Key Vault, you will need to perform the 
 5. Test your API: Once you have configured your API Gateway to use Azure Key Vault, you can test your API to ensure that it is working correctly. To do this, send a request to your API and verify that you receive the expected response.
 
 By following these steps, you can securely connect Azure API Gateway with Azure Key Vault and store and manage your secrets in a centralized location. This can help you secure your APIs and protect sensitive information, such as API keys and secrets, from unauthorized access.
+
+*Header image: Azure portal "Add named value" form, from [Microsoft Learn – Use named values in Azure API Management policies](https://learn.microsoft.com/azure/api-management/api-management-howto-properties), © Microsoft, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*

@@ -5,6 +5,9 @@ date: 2022-03-22 09:00:00 -0500
 categories: non-coding
 tags: Backend Backend-Development Software-Engineering Engineer
 author: manishtiwari25
+image:
+  path: /assets/img/headers/coding-enough.webp
+  alt: Illustration contrasting a code snippet with the wider skills of a good backend engineer - system design, communication, testing and ownership
 redirect_from:
   - /does-coding-is-enough-to-become-a-good-backend-engineer-3dc7d2702380?source=user_profile---------5----------------------------
   - /does-coding-is-enough-to-become-a-good-backend-engineer-3dc7d2702380?source=author_recirc-----a9c256fee353----3----------------------------

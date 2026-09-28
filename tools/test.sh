@@ -119,7 +119,9 @@ report_image_coverage() {
   if [[ -n $without ]]; then
     count="$(printf '%s\n' "$without" | wc -l | tr -d ' ')"
   fi
-  echo "image-coverage: $count/$total posts without image (image: key, ![ or <img)"
+  # Print the exact rule so handoff cards copy this command, not a variant
+  # (an unanchored 'image:' would also match "*Header image: ...*" captions).
+  echo "image-coverage: $count/$total posts without image (rule: grep -L -E '^image:|!\\[|<img' _posts/*.md)"
   if [[ -n $without ]]; then
     printf '  %s\n' $without
   fi

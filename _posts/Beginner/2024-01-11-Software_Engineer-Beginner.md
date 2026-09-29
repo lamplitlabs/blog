@@ -5,6 +5,7 @@ date: 2024-01-11 06:38:00 00
 categories: software-engineering beginner
 tags: coding software-enginner scratch guid
 author: manishtiwari25
+description: "A no-shortcuts beginner guide to becoming a software engineer from scratch: foundations, languages, and how to build a solid start."
 image:
   path: /assets/img/headers/beginner/coding.webp
 ---

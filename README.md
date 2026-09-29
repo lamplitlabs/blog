@@ -20,3 +20,23 @@ bundle install
 ```bash
 bundle exec jekyll s
 ```
+
+## Local checks
+
+Run the same checks the build relies on before opening a pull request:
+
+```bash
+bash tools/test.sh
+```
+
+This builds the site into `_site`, runs `htmlproofer` against the generated
+HTML (broken links, images and HTML), and prints the `image-coverage` line
+listing which posts under `_posts/` still lack an image. Use
+`bash tools/test.sh --help` to see the config options.
+
+To run the site locally with live reload (optionally in production mode):
+
+```bash
+bash tools/run.sh            # dev server on 127.0.0.1
+bash tools/run.sh --production
+```

@@ -5,7 +5,7 @@ date: 2026-09-29 05:00:00 -0500
 categories: ai
 tags: ai azure openai dotnet csharp json-schema structured-outputs
 author: manishtiwari25
-description: "How to use Azure OpenAI structured outputs (JSON schema mode) from C# to get responses that always match a typed record, with pitfalls, schema rules and a working sample."
+description: "How to use Azure OpenAI structured outputs (JSON schema mode) from C# so responses always match a typed record, with schema rules, pitfalls and a sample."
 image:
   path: /assets/img/headers/ai/structured-outputs-azure-openai.webp
   alt: "Diagram of the structured outputs flow: prompt, JSON schema, model reply, C# record"

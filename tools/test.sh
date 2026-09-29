@@ -140,7 +140,24 @@ check_post_descriptions() {
     echo "       Add a one-sentence 'description:' so search snippets and the feed describe the post itself." >&2
     exit 1
   fi
-  echo "description-coverage: all $(ls _posts/*.md | wc -l | tr -d ' ') posts have a front-matter description (rule: grep -L '^description:' _posts/*.md)"
+
+  # Also fail when a description is shorter than 50 or longer than 160
+  # characters: search engines truncate snippets around 160 characters and
+  # very short ones say nothing about the post. Quotes around the value are
+  # stripped before counting; the first `description:` line of a post is used.
+  local bad
+  bad="$(for f in _posts/*.md; do
+    d="$(grep -m1 '^description:' "$f" | sed "s/^description:[[:space:]]*//;s/^[\"']//;s/[\"'][[:space:]]*\$//")"
+    n=${#d}
+    if ((n < 50 || n > 160)); then echo "$n chars: $f"; fi
+  done)"
+  if [[ -n $bad ]]; then
+    echo "error: posts whose front-matter 'description:' is outside 50-160 characters were found in _posts/:" >&2
+    printf '       %s\n' "$bad" >&2
+    echo "       Keep descriptions between 50 and 160 characters so search engines show them uncut." >&2
+    exit 1
+  fi
+  echo "description-coverage: all $(ls _posts/*.md | wc -l | tr -d ' ') posts have a front-matter description of 50-160 characters (rule: grep -L '^description:' _posts/*.md, plus length check)"
 }
 
 main() {

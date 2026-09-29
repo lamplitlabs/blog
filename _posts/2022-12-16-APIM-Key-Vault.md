@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Securing Azure APIM With Azure Key Vault"
+description: "Step-by-step guide to securing Azure API Management by storing secrets and API keys in Azure Key Vault and referencing them from APIM named values."
 date: 2022-12-16 09:00:00 -0500
 categories: azure cloud
 tags: apim key-vault

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Automatic Database Backup Of Golden Configuration Environment D365FO"
+description: "Automate database backups of a D365 Finance and Operations golden configuration or tier 1/2 cloud-hosted environment with Azure DevOps and Azure Storage."
 date: 2023-04-03 09:00:00 -0500
 categories: coding d365 cloud
 tags: d365fo powershell

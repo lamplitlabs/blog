@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Terraform for developers"
+description: "Terraform basics for backend developers: what it is, how providers, resources and state work, and the essential commands to manage cloud infrastructure as code."
 date: 2022-03-21 09:00:00 -0500
 categories: terraform cloud
 author: manishtiwari25

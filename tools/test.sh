@@ -127,9 +127,26 @@ report_image_coverage() {
   fi
 }
 
+# Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
+# Atom feed fall back to the generic site description otherwise, so every post
+# would show the same search snippet. Same rule as
+# `grep -L "^description:" _posts/*.md`.
+check_post_descriptions() {
+  local missing
+  missing="$(grep -L '^description:' _posts/*.md || true)"
+  if [[ -n $missing ]]; then
+    echo "error: posts without a front-matter 'description:' were found in _posts/:" >&2
+    printf '       %s\n' $missing >&2
+    echo "       Add a one-sentence 'description:' so search snippets and the feed describe the post itself." >&2
+    exit 1
+  fi
+  echo "description-coverage: all $(ls _posts/*.md | wc -l | tr -d ' ') posts have a front-matter description (rule: grep -L '^description:' _posts/*.md)"
+}
+
 main() {
   preflight
   check_tag_case_duplicates
+  check_post_descriptions
   report_image_coverage
 
   # clean up

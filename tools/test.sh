@@ -74,7 +74,8 @@ preflight() {
 # vs "azurite"): Jekyll would then emit a "Conflict:" line buried in the build
 # output and silently drop one tag page. Reads every front-matter style used in
 # _posts: space-separated (`tags: a b`), inline list (`tags: [a, b]`) and
-# multi-line YAML list (`tags:` followed by `  - a` lines).
+# multi-line YAML list (`tags:` followed by `  - a` lines). Scans every post
+# recursively (_posts/AI, _posts/Beginner, ... too), not just _posts/*.md.
 check_tag_case_duplicates() {
   local tags dupes
   tags="$(awk '
@@ -93,7 +94,7 @@ check_tag_case_duplicates() {
       gsub(/[][,"'"'"']/, " ")
       for (i = 1; i <= NF; i++) print $i
     }
-  ' _posts/*.md | sort -u)"
+  ' $(find _posts -name '*.md' | sort) | sort -u)"
 
   dupes="$(printf '%s\n' "$tags" | awk '{ k = tolower($0); if (k in seen) print seen[k] " / " $0; else seen[k] = $0 }')"
 

@@ -4,7 +4,7 @@ title: "Azurite + GitHub Actions"
 description: "Run Azurite, the Azure Storage emulator, inside GitHub Actions or any CI/CD pipeline to execute integration tests against local storage."
 date: 2022-07-19 09:00:00 -0500
 categories: github
-tags: github-actions Azurite Csharp github
+tags: github-actions Azurite csharp github
 author: manishtiwari25
 image:
   path: /assets/img/headers/azurite-github-actions.webp

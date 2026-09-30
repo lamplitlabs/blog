@@ -135,6 +135,40 @@ report_image_coverage() {
   fi
 }
 
+# Report alt-text coverage of post header images so alt-text cards can cite one
+# number. A post counts as covered when its front-matter `image:` block has a
+# nested `alt:` key (Chirpy renders it as the header <img alt>); screen readers
+# and image search otherwise get an empty alt. Denominator: posts with an
+# `image:` front-matter key (subfolders included). Lists the posts still lacking
+# alt text. Informational only: never fails the build.
+report_alt_coverage() {
+  local with_image without
+  with_image="$(grep -l '^image:' $_posts || true)"
+  local with_image_total=0
+  if [[ -n $with_image ]]; then
+    with_image_total="$(printf '%s\n' "$with_image" | wc -l | tr -d ' ')"
+  fi
+  without="$(for f in $with_image; do
+    awk '
+      FNR == 1 { fm = 0; in_image = 0; found = 0 }
+      /^---[[:space:]]*$/ { fm++; in_image = 0; next }
+      fm != 1 { next }
+      /^image:/ { in_image = 1; next }
+      /^[^[:space:]]/ { in_image = 0 }
+      in_image && /^[[:space:]]+alt:[[:space:]]*[^[:space:]]/ { found = 1 }
+      END { exit found ? 0 : 1 }
+    ' "$f" || echo "$f"
+  done)"
+  local count=0
+  if [[ -n $without ]]; then
+    count="$(printf '%s\n' "$without" | wc -l | tr -d ' ')"
+  fi
+  echo "alt-coverage: $count/$with_image_total posts with a front-matter image but no alt text (rule: 'image:' block without a nested 'alt:' key)"
+  if [[ -n $without ]]; then
+    printf '  %s\n' $without
+  fi
+}
+
 # Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
 # Atom feed fall back to the generic site description otherwise, so every post
 # would show the same search snippet. Same rule as
@@ -174,6 +208,7 @@ main() {
   check_tag_case_duplicates
   check_post_descriptions
   report_image_coverage
+  report_alt_coverage
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

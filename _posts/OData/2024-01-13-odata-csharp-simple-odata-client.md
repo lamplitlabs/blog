@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Simple OData Client - Dotnet 8 and C#"
+description: "An overview of Simple.OData.Client for C# and .NET: setup, querying OData services with a fluent API, and its advantages and disadvantages."
 date: 2024-01-13 04:40:00 -0100
 categories: coding odata dotnet d365
 tags: odata c# dotnet8 simple.odata.client httpclient d365

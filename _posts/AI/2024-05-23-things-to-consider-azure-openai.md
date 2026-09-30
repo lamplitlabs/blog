@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Things to Consider Before Using Azure OpenAI in Your Organization"
+description: "Key things to consider before adopting Azure OpenAI: models, regions, quotas, pricing, security, responsible AI and integration with your existing stack."
 date: 2024-05-22 09:00:00 -0500
 categories: ai
 tags: ai azure openai cost security compliance

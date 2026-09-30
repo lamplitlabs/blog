@@ -8,6 +8,7 @@ tags: c# dotnet cosmos_db azure system.txt.json
 author: manishtiwari25
 image:
   path: /assets/img/headers/cosmosdb.webp
+  alt: Azure Cosmos DB header image illustrating System.Text.Json serialization with the Cosmos DB .NET SDK v3 on .NET 8
 ---
 
 ### TL;DR

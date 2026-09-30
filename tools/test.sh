@@ -14,6 +14,13 @@ _config="_config.yml"
 
 _baseurl=""
 
+# Every post under _posts (subfolders included), sorted; computed once in main()
+# so all checks share one glob and one denominator.
+collect_posts() {
+  _posts="$(find _posts -name '*.md' | sort)"
+  _posts_total="$(printf '%s\n' "$_posts" | wc -l | tr -d ' ')"
+}
+
 help() {
   echo "Build and test the site content"
   echo
@@ -94,7 +101,7 @@ check_tag_case_duplicates() {
       gsub(/[][,"'"'"']/, " ")
       for (i = 1; i <= NF; i++) print $i
     }
-  ' $(find _posts -name '*.md' | sort) | sort -u)"
+  ' $_posts | sort -u)"
 
   dupes="$(printf '%s\n' "$tags" | awk '{ k = tolower($0); if (k in seen) print seen[k] " / " $0; else seen[k] = $0 }')"
 
@@ -114,16 +121,15 @@ check_tag_case_duplicates() {
 # still lacking any image so the next one to illustrate can be picked without
 # grepping. Informational only: never fails the build.
 report_image_coverage() {
-  local total without
-  total="$(find _posts -name '*.md' | wc -l | tr -d ' ')"
-  without="$(grep -L -E '^image:|!\[|<img' $(find _posts -name '*.md') || true)"
+  local without
+  without="$(grep -L -E '^image:|!\[|<img' $_posts || true)"
   local count=0
   if [[ -n $without ]]; then
     count="$(printf '%s\n' "$without" | wc -l | tr -d ' ')"
   fi
   # Print the exact rule so handoff cards copy this command, not a variant
   # (an unanchored 'image:' would also match "*Header image: ...*" captions).
-  echo "image-coverage: $count/$total posts without image (rule: grep -L -E '^image:|!\\[|<img' \$(find _posts -name '*.md'))"
+  echo "image-coverage: $count/$_posts_total posts without image (rule: grep -L -E '^image:|!\\[|<img' \$(find _posts -name '*.md'))"
   if [[ -n $without ]]; then
     printf '  %s\n' $without
   fi
@@ -135,7 +141,7 @@ report_image_coverage() {
 # `grep -L "^description:" $(find _posts -name '*.md')` (subfolders included).
 check_post_descriptions() {
   local missing
-  missing="$(grep -L '^description:' $(find _posts -name '*.md') || true)"
+  missing="$(grep -L '^description:' $_posts || true)"
   if [[ -n $missing ]]; then
     echo "error: posts without a front-matter 'description:' were found in _posts/:" >&2
     printf '       %s\n' $missing >&2
@@ -148,7 +154,7 @@ check_post_descriptions() {
   # very short ones say nothing about the post. Quotes around the value are
   # stripped before counting; the first `description:` line of a post is used.
   local bad
-  bad="$(for f in $(find _posts -name '*.md'); do
+  bad="$(for f in $_posts; do
     d="$(grep -m1 '^description:' "$f" | sed "s/^description:[[:space:]]*//;s/^[\"']//;s/[\"'][[:space:]]*\$//")"
     n=${#d}
     if ((n < 50 || n > 160)); then echo "$n chars: $f"; fi
@@ -159,11 +165,12 @@ check_post_descriptions() {
     echo "       Keep descriptions between 50 and 160 characters so search engines show them uncut." >&2
     exit 1
   fi
-  echo "description-coverage: all $(find _posts -name '*.md' | wc -l | tr -d ' ') posts have a front-matter description of 50-160 characters (rule: grep -L '^description:' \$(find _posts -name '*.md'), plus length check)"
+  echo "description-coverage: all $_posts_total posts have a front-matter description of 50-160 characters (rule: grep -L '^description:' \$(find _posts -name '*.md'), plus length check)"
 }
 
 main() {
   preflight
+  collect_posts
   check_tag_case_duplicates
   check_post_descriptions
   report_image_coverage

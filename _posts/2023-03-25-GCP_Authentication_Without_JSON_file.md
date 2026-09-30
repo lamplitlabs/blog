@@ -11,6 +11,7 @@ redirect_from:
   - /blogPost/cb792a32-945b-4f21-b57d-81ab5fffeeda
 image:
   path: /assets/img/headers/gcp.webp
+  alt: Google Cloud Platform header image illustrating GCP and Firebase authentication from .NET without a service account JSON file
 ---
 
 In this blog post, I will explain how we can authenticate GCP or Firebase without storing JSON in your repository.<br>

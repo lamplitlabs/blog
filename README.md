@@ -30,9 +30,10 @@ bash tools/test.sh
 ```
 
 This builds the site into `_site`, runs `htmlproofer` against the generated
-HTML (broken links, images and HTML), and prints the `image-coverage` line
-listing which posts under `_posts/` still lack an image. Use
-`bash tools/test.sh --help` to see the config options.
+HTML (broken links, images and HTML), and prints `description-coverage`,
+`image-coverage`, and `alt-coverage` lines listing which posts under
+`_posts/` are missing a front-matter description, an image, or image alt
+text. Use `bash tools/test.sh --help` to see the config options.
 
 To run the site locally with live reload (optionally in production mode):
 

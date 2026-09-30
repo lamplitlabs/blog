@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Automating RSS Feed Posts to Twitter(X) and Mastodon Using Logic Apps"
+description: "Automatically post new RSS feed items to Twitter and Mastodon with an Azure Logic App, using the RSS trigger and social media connectors."
 date: 2024-02-09 05:38:00 00
 categories: ferret
 tags: logicapps azure rss mastodon twitter x

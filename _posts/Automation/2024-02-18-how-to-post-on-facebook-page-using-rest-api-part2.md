@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Maximizing Your Facebook Page: Part 2 - Creating Post using REST Apis"
+description: "Part 2 of posting to a Facebook Page with the Graph REST API: exchanging tokens for a long-lived page token and publishing text, links and photos."
 date: 2024-02-18 05:38:00 00
 categories: ferret
 tags: facebook rest post api

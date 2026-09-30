@@ -8,6 +8,7 @@ tags: ai azure openai security
 author: manishtiwari25
 image:
   path: /assets/img/headers/ai/azure-openai.webp
+  alt: "Screenshot of the Azure OpenAI error message: call to get Azure Search index failed, server responded with status 403"
 ---
 
 ## Why?

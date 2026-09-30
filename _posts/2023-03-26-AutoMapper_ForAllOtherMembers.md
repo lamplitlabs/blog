@@ -12,6 +12,7 @@ redirect_from:
   - /share?text=AutoMapper ForAllOtherMembers - Lamplit Labs https://blogs.lamplitlabs.com/posts/AutoMapper_ForAllOtherMembers/
 image:
   path: /assets/img/headers/automapper.webp
+  alt: "AutoMapper header image for the ForAllOtherMembers removal and migration post"
 ---
 
 `ForAllOtherMembers` was removed <br>

@@ -8,6 +8,7 @@ tags: odata c# dotnet8 simple.odata.client httpclient d365
 author: manishtiwari25
 image:
   path: /assets/img/headers/odata-benchmark.webp
+  alt: Bar chart comparing latency of OData Client, Simple.OData.Client and a custom HttpClient across three benchmark scenarios
 ---
 
 To objectively compare the performance of these OData client libraries, we conducted a benchmarking exercise involving three scenarios:

@@ -6,7 +6,6 @@ date: 2024-01-12 06:38:00 00
 categories: software-engineering beginner
 tags: coding software-enginner scratch guid binary ascii unicode
 author: manishtiwari25
-description: How computers use binary, ASCII, and Unicode to encode and understand the digital information we send them.
 image:
   path: /assets/img/headers/beginner/language_of_computers.webp
   alt: Beginner header image illustrating how computers understand instructions through binary, ASCII and Unicode encoding

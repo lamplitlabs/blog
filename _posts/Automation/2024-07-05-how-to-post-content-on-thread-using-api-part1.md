@@ -8,6 +8,7 @@ tags: thread instagram rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/thread-api-part1.webp
+  alt: "Header image for Instagram Threads API Part 1: obtaining a Meta app access token"
 ---
 
 In today's digital era, leveraging the power of social media is essential for businesses and individuals alike. Among the myriad of platforms available, Instagram Threads stands out for connecting with your audience, amplifying your brand's message, and fostering engagement. But did you know that you can take your Instagram Threads experience to greater heights by tapping into its API (Application Programming Interface)?

@@ -8,6 +8,7 @@ tags: [github-actions, drawio, automation, diagrams, documentation]
 description: "Learn how to automate exporting Draw.io diagrams into PNG images using GitHub Actions. Keep your visual documentation always in sync with your code."
 image: 
   path: /assets/img/headers/automation/automate-drawio-github-actions.webp
+  alt: "Header image for automating Draw.io diagram export to PNG with GitHub Actions"
 ---
 
 > _“Every great architecture deserves versioned blueprints.”_

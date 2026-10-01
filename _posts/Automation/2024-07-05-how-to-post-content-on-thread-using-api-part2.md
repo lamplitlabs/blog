@@ -8,6 +8,7 @@ tags: thread instagram rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/thread-api-part2.webp
+  alt: "Header image for Instagram Threads API Part 2: creating posts with the Threads REST API"
 ---
 
 Hey there, welcome back to our journey in supercharging your Thread Account! In our [last chat](/posts/how-to-post-content-on-thread-using-api-part1), we talked about getting your hands on that special API access token tailor-made for creating posts on your Threads account. Now, armed with that token, let's dive into the fun part – crafting and scheduling posts using REST APIs.

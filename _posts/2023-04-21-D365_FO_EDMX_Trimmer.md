@@ -12,6 +12,7 @@ redirect_from:
   - /share?text=D365 FO EDMX / OData trimmer online– Make your metadata smaller online - Lamplit Labs https://blogs.lamplitlabs.com/posts/D365_FO_EDMX_Trimmer
 image:
   path: /assets/img/headers/d365fo.webp
+  alt: "Dynamics 365 Finance and Operations header image for the online EDMX / OData metadata trimmer tool"
 ---
 
 You are aware of how challenging it may be to work with large files if you are developing a.NET application and using D365 Finance and operation EDMX or Metadata files to produce your classes. The size of some EDMX files, which can reach 20MB, can significantly slow down your program and make it difficult to handle.

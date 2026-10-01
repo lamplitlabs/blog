@@ -8,6 +8,7 @@ author: manishtiwari25
 description: "Learn how to automate exporting Draw.io diagrams into PNG images using Azure DevOps pipelines. A complete step-by-step guide using deathstar-blueprint.drawio."
 image:
   path: /assets/img/headers/automation/automate-drawio-azure-devops.webp
+  alt: "Header image for automating Draw.io diagram export to PNG with Azure DevOps pipelines"
 
 ---
 

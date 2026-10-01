@@ -12,6 +12,7 @@ redirect_from:
   - /share?text=Automatic Database Backup Of Golden Configuration Environment D365FO - Lamplit Labs https://blogs.lamplitlabs.com/posts/Automatic_Database_Backup_Of_Golden_Configuration_Environment_D365_FO/
 image:
   path: /assets/img/headers/d365fo.webp
+  alt: Dynamics 365 Finance and Operations header image illustrating automated database backups of a golden configuration environment with Azure DevOps
 ---
 
 In this article, I will talk about automated database backup of Golden Configuration Environment or any tier 1 or 2 cloud-hosted environments. <br>

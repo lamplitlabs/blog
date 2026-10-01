@@ -8,6 +8,7 @@ tags: linkedin rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/unlock-your-linkedin-posting-potential-2.webp
+  alt: LinkedIn automation header image illustrating creating posts programmatically with the LinkedIn REST Posts API in part 2 of the series
 ---
 
 ## Introduction

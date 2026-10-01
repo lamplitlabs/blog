@@ -8,6 +8,7 @@ author: manishtiwari25
 description: "A no-shortcuts beginner guide to becoming a software engineer from scratch: foundations, languages, and how to build a solid start."
 image:
   path: /assets/img/headers/beginner/coding.webp
+  alt: "Header image of a person coding at a laptop, illustrating the beginner software engineering guide"
 ---
 
 #### TL;DR

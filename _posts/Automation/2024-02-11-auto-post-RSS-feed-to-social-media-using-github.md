@@ -8,6 +8,7 @@ tags: github azure rss mastodon twitter x social linkedin
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/hello-ferret.webp
+  alt: Ferret logo, a round white emblem on a dark blue background with the Ferret name beneath it
 ---
 
 ## Introduction

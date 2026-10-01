@@ -8,6 +8,7 @@ tags: logicapps azure rss mastodon twitter x
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/automate-rss-feed-x-and-mastodon.webp
+  alt: Dark illustrated header art with blue and green shapes for automating RSS feed posts to X (Twitter) and Mastodon with Azure Logic Apps
 ---
 
 ## Introduction

@@ -8,6 +8,7 @@ tags: linkedin rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/unlock-your-linkedin-posting-potential-1.webp
+  alt: Illustrated header with a white card on a blue and orange background for part 1 of posting to LinkedIn with the REST API
 ---
 
 ## Introduction

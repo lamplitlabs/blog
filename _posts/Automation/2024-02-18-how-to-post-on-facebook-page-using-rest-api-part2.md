@@ -8,6 +8,7 @@ tags: facebook rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/unlock-your-facebook-posting-potential-2.webp
+  alt: "Header graphic for part 2 of unlocking your Facebook posting potential, illustrating publishing posts to a Facebook Page with the Graph REST API."
 ---
 
 Hey there, welcome back to our journey in supercharging your Facebook Page! In our [last chat](/posts/how-to-post-on-facebook-page-using-rest-api-part1), we talked about getting your hands on that special API access token tailor-made for creating posts on your Page. Now, armed with that token, let's dive into the fun part – crafting and scheduling posts using REST APIs.

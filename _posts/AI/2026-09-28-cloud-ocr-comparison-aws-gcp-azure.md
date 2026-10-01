@@ -8,6 +8,7 @@ author: manishtiwari25
 description: "Amazon Textract vs Google Cloud Vision vs Azure AI Document Intelligence: accuracy, layout extraction, prebuilt models and pricing compared for production OCR."
 image:
   path: /assets/img/headers/ai/ocr-compare.webp
+  alt: "Side-by-side comparison graphic for Amazon Textract, Google Cloud Vision and Azure AI Document Intelligence OCR services"
 ---
 
 Invoices, receipts, scanned contracts and forms still arrive as images or PDFs. Before any AI model can summarize, classify or extract fields from them, you need Optical Character Recognition (OCR) to turn pixels into text. All three major clouds offer a managed OCR service, and the differences matter when you pick one for production.

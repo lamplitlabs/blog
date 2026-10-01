@@ -8,6 +8,7 @@ tags: ai azure openai cost security compliance
 author: manishtiwari25
 image:
   path: /assets/img/headers/ai/things-to-consider-azure-openai.webp
+  alt: Checklist graphic covering compliance, security, and cost considerations before adopting Azure OpenAI
 ---
 
 AI is revolutionizing how businesses operate, offering new levels of efficiency, automation, and innovation. Among the leading AI solutions, Azure OpenAI stands out for its advanced capabilities and seamless integration with other Microsoft services. However, before you incorporate Azure OpenAI into your organization, it's crucial to consider several key factors to ensure a successful and secure implementation.

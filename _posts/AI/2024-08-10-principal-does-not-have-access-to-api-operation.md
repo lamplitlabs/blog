@@ -8,6 +8,7 @@ tags: ai azure openai security
 author: manishtiwari25
 image:
   path: /assets/img/headers/ai/azure-openai.webp
+  alt: Azure OpenAI header image
 ---
 
 ## Why?

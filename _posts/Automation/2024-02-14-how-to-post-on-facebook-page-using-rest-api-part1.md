@@ -8,6 +8,7 @@ tags: facebook rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/unlock-your-facebook-posting-potential-1.webp
+  alt: "Header graphic for part 1 of unlocking your Facebook posting potential, showing the Facebook logo alongside the Meta Graph API access token setup."
 ---
 
 In today's digital era, harnessing the power of social media is essential for businesses and individuals alike. Among the myriad of platforms available, Facebook remains a titan for connecting with your audience, amplifying your brand's message, and fostering engagement. But did you know that you can take your Facebook Page to greater heights by tapping into its API (Application Programming Interface)?

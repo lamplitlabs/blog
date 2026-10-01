@@ -8,6 +8,7 @@ tags: thread instagram rest post api
 author: manishtiwari25
 image:
   path: /assets/img/headers/automation/thread-api-coming-soon.webp
+  alt: "Header graphic announcing that the Instagram Threads API is coming soon, with the Threads logo on a dark background."
 ---
 
 Hold onto your hats, developers! A recent announcement by a Threads engineer sent a wave of excitement through the community – the Threads API is arriving by the end of June! This isn't just good news for building cool tools, it might be a turning point in the Instagram vs. Twitter battle.

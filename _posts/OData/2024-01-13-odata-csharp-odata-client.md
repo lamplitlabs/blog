@@ -8,6 +8,7 @@ tags: odata c# dotnet8 simple.odata.client httpclient d365
 author: manishtiwari25
 image:
   path: /assets/img/headers/odata-client.webp
+  alt: "OData logo glowing on a dark background with code and data symbols around it, header for the OData Connected Service client post"
 ---
 
 OData Client, a library provided by Microsoft for accessing OData services, offers several advantages and disadvantages compared to other methods of connecting to OData APIs. Here's a comprehensive overview:

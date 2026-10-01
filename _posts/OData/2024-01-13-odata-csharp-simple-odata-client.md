@@ -8,6 +8,7 @@ tags: odata c# dotnet8 simple.odata.client httpclient d365
 author: manishtiwari25
 image:
   path: /assets/img/headers/simple-odata.webp
+  alt: "OData logo on a light grey, angular geometric background, header for the Simple.OData.Client in .NET 8 post"
 ---
 
 Simple.OData.Client is a multi-platform OData client library supporting .NET 4.x, netstandard 2.0, Android, and iOS. The adapter provides a great alternative to the WCF Data Services client. It does not require the generation of context or entity classes and fits the RESTful nature of OData services.

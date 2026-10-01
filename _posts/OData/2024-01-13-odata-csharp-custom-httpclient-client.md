@@ -8,6 +8,7 @@ tags: odata c# dotnet8 simple.odata.client httpclient d365
 author: manishtiwari25
 image:
   path: /assets/img/headers/custom-http-odata.webp
+  alt: "Dark illustration of the OData logo surrounded by network nodes and connecting lines, for the custom HttpClient approach to calling OData APIs from .NET 8"
 ---
 
 A custom HTTP client is a generic HTTP client implementation that is created and configured specifically for a particular application or use case. It provides more control over the low-level details of HTTP requests and responses, allowing developers to tailor the client to their specific needs.

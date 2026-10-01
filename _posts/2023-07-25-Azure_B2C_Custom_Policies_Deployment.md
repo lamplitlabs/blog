@@ -15,6 +15,7 @@ redirect_from:
   - /automate-azure-b2c-custom-policies-deployment-c6421f1baeb3?source=author_recirc-----7148ce60b54b----2----------------------------
 image:
   path: /assets/img/headers/azure-b2c-azure-devops.webp
+  alt: "Diagram of Azure AD B2C custom policy deployment pipeline in Azure DevOps"
 ---
 
 #### Update 08.08.2023

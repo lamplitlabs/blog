@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Instagram Threads API Coming Soon: A Big Step Towards Taking on Twitter?"
-description: "What the announced Instagram Threads API means for developers, what it will let you automate and how to prepare before it arrives in June 2024."
+title: "Instagram Threads API: A Big Step Towards Taking on Twitter?"
+description: "What the Instagram Threads API (announced April 2024, released June 2024) means for developers and what it lets you automate."
 date: 2024-04-11 05:38:00 00
 categories: automation
 tags: thread instagram rest post api
@@ -10,6 +10,8 @@ image:
   path: /assets/img/headers/automation/thread-api-coming-soon.webp
   alt: "Header graphic announcing that the Instagram Threads API is coming soon, with the Threads logo on a dark background."
 ---
+
+> **Editor's note (October 2026):** This post was written in April 2024, when the Threads API had only been announced. Meta released the Threads API publicly in June 2024, so it is available today - see the [official documentation](https://developers.facebook.com/docs/threads). The original text below is kept as written.
 
 Hold onto your hats, developers! A recent announcement by a Threads engineer sent a wave of excitement through the community – the Threads API is arriving by the end of June! This isn't just good news for building cool tools, it might be a turning point in the Instagram vs. Twitter battle.
 

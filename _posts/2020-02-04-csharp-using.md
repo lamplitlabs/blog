@@ -17,7 +17,7 @@ redirect_from:
 
 C# 8 officially got released on 23rd Sep 2019 and It has several new features.
 
-![Stock photo of a developer workspace with a laptop keyboard on a desk, used as the article illustration](https://miro.medium.com/v2/resize:fit:860/format:webp/0*ldwMi3Y4Kh5h_WcM.jpg)
+![Stock photo of a developer workspace with a laptop keyboard on a desk, used as the article illustration](/assets/img/posts/csharp-using-developer-workspace.webp)
 
 Today we will talk about one of the new feature using-declaration.
 

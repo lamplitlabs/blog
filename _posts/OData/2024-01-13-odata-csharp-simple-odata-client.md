@@ -80,6 +80,8 @@ public class Main
 
 ```
 
+![OData query request to the People entity set and the JSON response with @odata.context and the value array returned by FindEntriesAsync](/assets/img/posts/odata/odata-query-request-and-response.webp)
+
 - In case of Simple.OData.Client, the initial load time can be more, the library tries to fetch the metadata and use it for the validation later.
 
 Official [GitHub Repo](https://github.com/simple-odata-client/Simple.OData.Client).

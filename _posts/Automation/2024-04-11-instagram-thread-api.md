@@ -15,7 +15,7 @@ Hold onto your hats, developers! A recent announcement by a Threads engineer sen
 
 Thread API documentation is publicly available [here](https://developers.facebook.com/docs/threads).
 
-![ferret](/assets/img/posts/automation/thread-api-coming-soon.webp)
+![Header graphic announcing that the Instagram Threads API is coming soon, with the Threads logo on a dark background.](/assets/img/posts/automation/thread-api-coming-soon.webp)
 
 {% include article-ads.html %}
 

@@ -4,6 +4,9 @@ title: "Some Title"
 date: 2021-01-01 09:00:00 -0500
 categories: homelab
 tags: homelab rancher kubernetes
+# Fill in a one-sentence description of 50-160 characters: tools/test.sh fails
+# when it is missing or outside that range (search snippets and the feed use it).
+description: ""
 ---
 
 [![Some Title](https://img.youtube.com/vi/BBBBBBBBBBBB/0.jpg)](https://www.youtube.com/watch?v=BBBBBBBBBBBB "Some Title")

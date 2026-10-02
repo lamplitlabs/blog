@@ -7,6 +7,12 @@ tags: homelab rancher kubernetes
 # Fill in a one-sentence description of 50-160 characters: tools/test.sh fails
 # when it is missing or outside that range (search snippets and the feed use it).
 description: ""
+# Header image: set path to the file under /assets/img/headers/ and fill in alt
+# with what the image shows; tools/test.sh alt-coverage lists posts whose image
+# block has no nested alt (screen readers and image search get an empty alt).
+image:
+  path: /assets/img/headers/some-title.webp
+  alt: ""
 ---
 
 [![Some Title](https://img.youtube.com/vi/BBBBBBBBBBBB/0.jpg)](https://www.youtube.com/watch?v=BBBBBBBBBBBB "Some Title")

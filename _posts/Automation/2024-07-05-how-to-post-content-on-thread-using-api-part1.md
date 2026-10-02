@@ -3,7 +3,7 @@ layout: post
 title: "Instagram Threads API - Part 1 - Obtaining Your API Access Token"
 description: "Part 1 of posting to Instagram Threads with the API: creating a Meta app, configuring permissions and obtaining an access token for your account."
 date: 2024-07-05 05:38:00 00
-categories: ferret
+categories: automation
 tags: thread instagram rest post api
 author: manishtiwari25
 image:

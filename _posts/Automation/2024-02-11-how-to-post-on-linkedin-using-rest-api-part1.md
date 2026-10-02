@@ -3,7 +3,7 @@ layout: post
 title: "Unlocking LinkedIn's Posting Potential: Part 1 - Obtaining Your API Access Token"
 description: "Part 1 of automating LinkedIn posts with the REST API: creating a LinkedIn app, requesting the right scopes and completing the OAuth 2.0 flow for a token."
 date: 2024-02-11 05:38:00 00
-categories: ferret
+categories: automation
 tags: linkedin rest post api
 author: manishtiwari25
 image:

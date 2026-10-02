@@ -7,8 +7,8 @@ categories: automation
 tags: thread instagram rest post api
 author: manishtiwari25
 image:
-  path: /assets/img/headers/automation/thread-api-coming-soon.webp
-  alt: "Header graphic announcing that the Instagram Threads API is coming soon, with the Threads logo on a dark background."
+  path: /assets/img/headers/automation/thread-api.webp
+  alt: "Header graphic for the Instagram Threads API post: two linked rings beside the title on a dark blue background."
 ---
 
 > **Editor's note (October 2026):** This post was written in April 2024, when the Threads API had only been announced. Meta released the Threads API publicly in June 2024, so it is available today - see the [official documentation](https://developers.facebook.com/docs/threads). The original text below is kept as written.

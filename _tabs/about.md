@@ -14,4 +14,4 @@ Browse [All Posts](/all-posts/), the [Archives](/archives/), or jump straight to
 
 Found a bug in a post's code sample, or have a topic you'd like covered? Reach out at
 [hello@lamplitlabs.com](mailto:hello@lamplitlabs.com) or open an issue on
-[GitHub](https://github.com/lamplitlabs).
+[GitHub](https://github.com/lamplitlabs/blog/issues).

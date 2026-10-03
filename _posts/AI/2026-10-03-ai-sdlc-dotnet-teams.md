@@ -49,7 +49,7 @@ A cheap, high-value habit is to make the AI explain the diff it produced in the 
 
 ## 4. Test
 
-**Delegate:** generating xUnit cases for a pure function, proposing edge cases you did not list (empty collections, time zones, Unicode), and writing the regression suite for your own prompts, as covered in [Testing LLM Prompts in .NET]({% post_url 2026-10-02-testing-llm-prompts-dotnet %}).
+**Delegate:** generating xUnit cases for a pure function, proposing edge cases you did not list (empty collections, time zones, Unicode), and writing the regression suite for your own prompts, as covered in [Testing LLM Prompts in .NET]({% post_url AI/2026-10-02-testing-llm-prompts-dotnet %}).
 
 **What burned us:** tests that assert what the code currently does rather than what it should do. Generated tests cement bugs if nobody reads the expected values. Treat generated tests as a draft that needs the same review as production code.
 

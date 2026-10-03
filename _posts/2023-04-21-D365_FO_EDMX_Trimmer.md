@@ -25,6 +25,9 @@ Fortunately, a new online tool is available that can be useful. You may trim you
 
 The tool's ease of use is its best feature. You can easily build a condensed version of the EDMX file by selecting the entities you require. This file will only contain the entities you choose, making it far smaller and simpler.
 
+![EDMX trimmer walkthrough: a 19.8 MB D365 F&O metadata file is uploaded, five customer and sales-order entities are ticked in the entity list, and the trimmed EDMX output on the right shrinks to 142 KB with only the selected EntityType elements kept](/assets/img/posts/d365/edmx-trimmer-select-entities-output.webp)
+_Illustration of the expected flow: upload the full metadata, tick only the entities you need, then download the much smaller trimmed EDMX._
+
 {% include article-ads.html %}
 
 Hope this will help. <br/>

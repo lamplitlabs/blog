@@ -180,3 +180,5 @@ Three observations:
 5. Re-run the benchmark after each change. Several of these "obvious" wins are environment-dependent, and the table above is the only reason I trust the ordering.
 
 The full benchmark project is about 150 lines; the structure above is enough to reproduce it against your own schema.
+
+Related reading: if the `Allocated` column is still high after the queries are fixed, the remaining garbage is usually in your own parsing and formatting code; [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) walks through that with the same before/after tables.

@@ -30,7 +30,7 @@ Everything below is for that shape of problem. A customer-facing chatbot or a co
 
 ## What each approach actually does
 
-**RAG (retrieval-augmented generation)** keeps the model frozen. At query time you embed the question, pull the top-k chunks from a search index (Azure AI Search, PostgreSQL + pgvector, etc.), and paste them into the prompt. The model's job is to read and summarise, not to remember. I covered the embedding pipeline in [Azure OpenAI embeddings and semantic search in .NET]({% post_url 2026-10-01-azure-openai-embeddings-semantic-search-dotnet %}).
+**RAG (retrieval-augmented generation)** keeps the model frozen. At query time you embed the question, pull the top-k chunks from a search index (Azure AI Search, PostgreSQL + pgvector, etc.), and paste them into the prompt. The model's job is to read and summarise, not to remember. I covered the embedding pipeline in [Azure OpenAI embeddings and semantic search in .NET]({% post_url AI/2026-10-01-azure-openai-embeddings-semantic-search-dotnet %}).
 
 **Fine-tuning** changes the weights. You prepare a JSONL file of prompt/completion pairs, run a supervised fine-tuning job (hours), and deploy the resulting model to its own hosted endpoint. The knowledge is now *inside* the model; prompts can be shorter, and the model picks up tone, format and domain vocabulary.
 
@@ -51,7 +51,7 @@ The surprise for most teams is the **hosting line**. A fine-tuned deployment is 
 
 ## Latency
 
-Measured on a `gpt-4o-mini` deployment in Sweden Central, p50/p95 over a working day, using the streaming approach from [streaming Azure OpenAI responses in .NET]({% post_url 2026-09-30-streaming-azure-openai-responses-dotnet %}) so the user sees first tokens quickly:
+Measured on a `gpt-4o-mini` deployment in Sweden Central, p50/p95 over a working day, using the streaming approach from [streaming Azure OpenAI responses in .NET]({% post_url AI/2026-09-30-streaming-azure-openai-responses-dotnet %}) so the user sees first tokens quickly:
 
 | Stage | RAG | Fine-tuned |
 |---|---|---|
@@ -87,7 +87,7 @@ This is where the two approaches differ in *kind*, not degree.
 | Data residency | Index and model both stay in your chosen region | Training data and the resulting model are tied to the fine-tuning region; check it matches your classification |
 | Review effort | Standard: it is a search index plus an API | Higher: a new model artefact that security and legal want to assess as its own asset |
 
-For a copilot that spans HR, finance and engineering content, the permissions row alone rules out fine-tuning *on the documents*. The governance checklist in [Enterprise AI governance for Azure OpenAI]({% post_url 2026-10-03-enterprise-ai-governance-azure-openai %}) applies to both, but RAG lets you reuse the access-control model you already have.
+For a copilot that spans HR, finance and engineering content, the permissions row alone rules out fine-tuning *on the documents*. The governance checklist in [Enterprise AI governance for Azure OpenAI]({% post_url AI/2026-10-03-enterprise-ai-governance-azure-openai %}) applies to both, but RAG lets you reuse the access-control model you already have.
 
 ## The decision table
 

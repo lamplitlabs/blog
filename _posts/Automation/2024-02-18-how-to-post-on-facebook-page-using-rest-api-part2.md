@@ -68,6 +68,12 @@ Now, before we jump into the action, let's chat about the Facebook Graph API. Th
       ```
     - For more options please have a look at meta´s [documentation](https://developers.facebook.com/docs/graph-api/reference/v19.0/page/feed)
 
+    - **Result on the Page**
+
+      Once `scheduled_publish_time` passes (or immediately when `published` is `true`), the post appears on the Page timeline with the `message` as its text and the `link` rendered as a preview card. The `id` from the response is the Page post ID you can use to read, edit or delete it later.
+
+      ![Published Facebook Page post created with the Graph API: the Page avatar and name at the top, the message text "Text" below it, a link preview card for blogs.lamplitlabs.com/posts/odata/, the Like, Comment and Share actions, and the Page post ID returned by POST /{page-id}/feed](/assets/img/posts/automation/facebook-automation/facebook-page-post-published.webp)
+
 {% include article-ads.html %}
 
 ## Audience targeting

@@ -111,6 +111,7 @@ check_tag_case_duplicates() {
     echo "       Use one spelling per tag so Jekyll does not drop a tag page with a 'Conflict:' warning." >&2
     exit 1
   fi
+  echo "tag-case-duplicates: 0 case-variant tag collisions across $(printf '%s\n' "$tags" | grep -c .) distinct tags in $_posts_total posts (rule: tags equal under tolower() but spelled differently)"
 }
 
 # Report image coverage of _posts so image-coverage cards can cite one number.

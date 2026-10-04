@@ -180,3 +180,10 @@ Three observations:
 5. Re-run the benchmark after each change. Several of these "obvious" wins are environment-dependent, and the table above is the only reason I trust the ordering.
 
 The full benchmark project is about 150 lines; the structure above is enough to reproduce it against your own schema.
+
+## Related Performance posts
+
+Once the query shape is fixed, the remaining time on a read endpoint is usually spent allocating in hot loops or serializing the response. Both posts below apply the same BenchmarkDotNet workflow:
+
+- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
+- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.

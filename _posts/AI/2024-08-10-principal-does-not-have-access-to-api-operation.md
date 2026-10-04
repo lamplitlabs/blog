@@ -2,7 +2,7 @@
 layout: post
 title: "Principal does not have access to API/Operation"
 description: "Resolve the Azure OpenAI 'principal does not have access to API' error by assigning the correct RBAC role to your user or application identity."
-date: 2024-08-10 06:00:00 0500
+date: 2024-08-10 06:00:00 -0500
 categories: ai
 tags: ai azure openai security
 author: manishtiwari25

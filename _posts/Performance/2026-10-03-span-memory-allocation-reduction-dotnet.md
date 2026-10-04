@@ -216,4 +216,9 @@ Two things stand out. First, the time savings (2.3x to 3.8x) are nice but second
 - Keep `stackalloc` small and constant-sized; rent from `ArrayPool<T>` for anything variable.
 - Always measure with `[MemoryDiagnoser]` and read the `Allocated` column before and after. The before/after table is also the artefact that convinces a reviewer the change was worth the extra lines.
 
-Related reading: once the allocations in your hot loop are under control, the next place the `Allocated` column usually points is the data layer; [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) applies the same BenchmarkDotNet workflow to the database side.
+## Related Performance posts
+
+Once the allocations in your hot loop are under control, the `Allocated` column usually points at the data layer or the serializer next. Both posts below apply the same BenchmarkDotNet workflow:
+
+- [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the database side.
+- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.

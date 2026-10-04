@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 icon: fas fa-info-circle
-order: 4
+order: 5
 ---
 
 Lamplit Labs is a blog about building real software with .NET, C#, Azure, DevOps and AI.

@@ -17,6 +17,11 @@ In April 2024 a Threads engineer announced that the Threads API would arrive by 
 
 Thread API documentation is publicly available [here](https://developers.facebook.com/docs/threads).
 
+Publishing with the API is a two-step flow: create a media container, then publish it. Here is what that looks like with `curl`:
+
+![Terminal showing the Threads API publish flow with curl: a POST to graph.threads.net/v1.0/{threads-user-id}/threads with media_type=TEXT returns a container id, a POST to /threads_publish with that creation_id returns the post id, and a GET on the post id returns its text and permalink](/assets/img/posts/automation/thread-automation/threads-api-create-publish-curl.webp)
+_Create a container, publish it, then read the post back - the three calls behind every Threads automation._
+
 {% include article-ads.html %}
 
 ## Why This Threads API is a Big Deal

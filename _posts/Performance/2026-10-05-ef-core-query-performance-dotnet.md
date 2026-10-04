@@ -11,7 +11,7 @@ image:
   alt: "Bar chart of mean EF Core query time per request: tracking with Include at 42.3 ms, AsNoTracking at 29.1 ms, AsNoTracking with AsSplitQuery at 17.6 ms, compiled query with projection at 6.8 ms"
 ---
 
-After allocations in hot loops (see [the Span<T> post]({% post_url 2026-10-03-span-memory-allocation-reduction-dotnet %})), the second most common .NET performance problem I meet in enterprise code is an Entity Framework Core query that looks innocent and costs 40 ms per request. Nobody wrote slow SQL. EF Core did, because of defaults that are safe for correctness but expensive for read-heavy endpoints.
+After allocations in hot loops (see [the Span<T> post]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %})), the second most common .NET performance problem I meet in enterprise code is an Entity Framework Core query that looks innocent and costs 40 ms per request. Nobody wrote slow SQL. EF Core did, because of defaults that are safe for correctness but expensive for read-heavy endpoints.
 
 This post takes one realistic query, an order list page with its lines and customer, and applies four changes one at a time: `AsNoTracking()`, `AsSplitQuery()`, a projection to a DTO, and a compiled query. Every step is measured with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) against a local SQL Server 2022 container on .NET 8 and EF Core 8. Absolute numbers depend on your hardware and data; the *ratios* are what travel.
 

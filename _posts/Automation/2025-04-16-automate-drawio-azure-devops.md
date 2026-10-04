@@ -160,6 +160,11 @@ Parses XML to count `<diagram>` nodes (pages).
 
 Exports each page from the `.drawio` file as PNG images into `docs/images/`.
 
+When the pipeline runs, the **Export Draw.io Pages to PNG** step logs the page count and one `Exporting page N...` line per diagram page, and the **Cleanup and Push Changes** step shows the commit with a `create mode` line for each new PNG - that is your confirmation the export worked.
+
+![Azure DevOps pipeline run of the Export Draw.io Diagrams pipeline with the Export Draw.io Pages to PNG step expanded, showing Total pages to export: 3, deathstar-blueprint.drawio exported to page-0, page-1 and page-2 PNGs, followed by the Cleanup and Push Changes step committing the three files under docs/images with skip ci](/assets/img/posts/azure-devops/drawio-azure-devops-export-pipeline-log.webp)
+*The expanded export and push steps in the Azure DevOps job log. One PNG per diagram page lands under `docs/images/` and is pushed back to the source branch with `[skip ci]` so the pipeline does not retrigger itself.*
+
 {% include article-ads.html %}
 
 ---

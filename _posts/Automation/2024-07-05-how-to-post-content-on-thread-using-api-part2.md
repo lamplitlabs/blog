@@ -160,6 +160,9 @@ Use this before publishing media posts, or when a publish call fails.
 
   The post appears on your Threads profile immediately: the `text` as the body, the image or video (if any) below it, and the `link_attachment` rendered as a preview card. You can read it back with `GET /{THREADS_MEDIA_ID}?fields=id,text,media_type,permalink,timestamp`, and the `permalink` field gives you the public URL to share.
 
+  ![Terminal showing the three Threads API calls in order: a GET on the container id returns status FINISHED, a POST to threads_publish with that creation_id returns the published post id 17920251442154329, and a GET on the post id with fields id,text,media_type,permalink,timestamp returns the post text, media_type TEXT_POST and its public threads.net permalink](/assets/img/posts/automation/thread-automation/threads-api-status-publish-readback.webp)
+  _Verify your result: the container status, the publish response and the read-back of the published post. Open the `permalink` in a browser to see the post on your profile._
+
 {% include article-ads.html %}
 
 ## Bonus: Carousel Posts

@@ -2,7 +2,7 @@
 layout: post
 title: "Key based authentication is disabled for this resource"
 description: "What the 'key based authentication is disabled for this resource' error means in Azure AI Services and how to switch to Entra ID authentication."
-date: 2024-08-10 06:00:00 0500
+date: 2024-08-10 06:00:00 -0500
 categories: ai
 tags: ai azure openai security
 author: manishtiwari25

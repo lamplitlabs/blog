@@ -39,6 +39,8 @@ message Something {
 }
 ```
 
+![Table mapping proto3 scalar types (double, int32, string, bytes), well-known types (StringValue, Timestamp, Duration) and the google.type.Money common type to their C# and .NET equivalents](/assets/img/posts/grpc-protobuf-csharp-type-mapping.webp)
+
 <h4>Well known types</h4>
 there are more advance types provided by google. these supports null values.
 you can find complete list [here](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf)

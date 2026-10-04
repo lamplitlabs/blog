@@ -45,6 +45,17 @@ included) and prints one summary line per check:
   `alt-coverage: <count>/<with-image> posts with a front-matter image but no
   alt text (...)` followed by the offending post paths, where `<with-image>`
   is the number of posts that have a front-matter `image:` key.
+- `body-image-coverage`: informational only, never fails the build. Prints
+  `body-image-coverage: <count>/<total> posts without an inline ![...] image in
+  the body (...)` followed by the offending post paths; a front-matter `image:`
+  alone does not count, only a Markdown image after the closing `---`.
+- `folder-categories`: the build **fails** if a post under `_posts/<Folder>/`
+  does not list the lowercased folder name (e.g. `performance` for
+  `_posts/Performance/`) in its front-matter `categories`, since the post would
+  be missing from the category page its folder promises. Posts directly under
+  `_posts/` are not checked. When all posts pass it prints `folder-categories:
+  every post under _posts/<Folder>/ lists its lowercased folder name in
+  'categories'`.
 
 It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`

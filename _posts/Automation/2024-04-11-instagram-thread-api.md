@@ -2,7 +2,7 @@
 layout: post
 title: "Instagram Threads API: A Big Step Towards Taking on Twitter?"
 description: "What the Instagram Threads API (announced April 2024, released June 2024) means for developers and what it lets you automate."
-date: 2024-04-11 05:38:00 00
+date: 2024-04-11 05:38:00 +0000
 categories: automation
 tags: thread instagram rest post api
 author: manishtiwari25

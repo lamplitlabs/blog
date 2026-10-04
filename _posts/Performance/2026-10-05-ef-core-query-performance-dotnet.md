@@ -183,7 +183,8 @@ The full benchmark project is about 150 lines; the structure above is enough to 
 
 ## Related Performance posts
 
-Once the query shape is fixed, the remaining time on a read endpoint is usually spent allocating in hot loops or serializing the response. Both posts below apply the same BenchmarkDotNet workflow:
+Once the query shape is fixed, the remaining time on a read endpoint is usually spent allocating in hot loops or serializing the response. The first two posts below apply the same BenchmarkDotNet workflow; the third steps outside .NET:
 
 - [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.
+- [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.

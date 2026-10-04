@@ -172,7 +172,8 @@ Three observations:
 
 ## Related Performance posts
 
-The serializer is usually the last of three stops on the same `[MemoryDiagnoser]` tour. The two posts below use the same BenchmarkDotNet workflow on the layers that feed it:
+The serializer is usually the last of three stops on the same `[MemoryDiagnoser]` tour. The first two posts below use the same BenchmarkDotNet workflow on the layers that feed it; the third steps outside .NET:
 
 - [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the database side.
+- [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.

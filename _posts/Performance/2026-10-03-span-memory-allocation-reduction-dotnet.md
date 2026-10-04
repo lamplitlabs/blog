@@ -218,7 +218,8 @@ Two things stand out. First, the time savings (2.3x to 3.8x) are nice but second
 
 ## Related Performance posts
 
-Once the allocations in your hot loop are under control, the `Allocated` column usually points at the data layer or the serializer next. Both posts below apply the same BenchmarkDotNet workflow:
+Once the allocations in your hot loop are under control, the `Allocated` column usually points at the data layer or the serializer next. The first two posts below apply the same BenchmarkDotNet workflow; the third steps outside .NET:
 
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the database side.
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.
+- [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.

@@ -202,11 +202,54 @@ check_post_descriptions() {
   echo "description-coverage: all $_posts_total posts have a front-matter description of 50-160 characters (rule: grep -L '^description:' \$(find _posts -name '*.md'), plus length check)"
 }
 
+# Fail when a post under _posts/<Folder>/ has no front-matter `categories` value
+# containing the lowercased folder name (e.g. _posts/Automation/x.md must list
+# `automation`). The categories/ pages are keyed on these values, so a post whose
+# categories are unrelated to its folder drifts off the category page its folder
+# promises; this was previously silent. Reads the three styles used in _posts:
+# space-separated (`categories: a b`), inline list (`categories: [a, b]`) and
+# multi-line YAML list. Posts directly under _posts/ are not checked.
+check_folder_categories() {
+  local bad
+  bad="$(for f in $_posts; do
+    folder="${f#_posts/}"
+    [[ $folder == */* ]] || continue
+    folder="${folder%%/*}"
+    want="$(printf '%s' "$folder" | tr '[:upper:]' '[:lower:]')"
+    awk -v want="$want" '
+      FNR == 1 { fm = 0; in_cat = 0; found = 0 }
+      /^---[[:space:]]*$/ { fm++; in_cat = 0; next }
+      fm != 1 { next }
+      in_cat && /^[[:space:]]*-[[:space:]]+/ {
+        sub(/^[[:space:]]*-[[:space:]]+/, ""); gsub(/["'"'"']/, ""); sub(/[[:space:]]+$/, "")
+        if (tolower($0) == want) found = 1
+        next
+      }
+      { in_cat = 0 }
+      /^categories:/ {
+        sub(/^categories:[[:space:]]*/, "")
+        if ($0 == "") { in_cat = 1; next }
+        gsub(/[][,"'"'"']/, " ")
+        for (i = 1; i <= NF; i++) if (tolower($i) == want) found = 1
+      }
+      END { exit found ? 0 : 1 }
+    ' "$f" || echo "$f (expected category: $want)"
+  done)"
+  if [[ -n $bad ]]; then
+    echo "error: posts whose front-matter 'categories' does not contain their _posts/ folder name were found:" >&2
+    printf '       %s\n' "$bad" >&2
+    echo "       Add the lowercased folder name to 'categories' so the post appears on the category page its folder promises." >&2
+    exit 1
+  fi
+  echo "folder-categories: every post under _posts/<Folder>/ lists its lowercased folder name in 'categories'"
+}
+
 main() {
   preflight
   collect_posts
   check_tag_case_duplicates
   check_post_descriptions
+  check_folder_categories
   report_image_coverage
   report_alt_coverage
 

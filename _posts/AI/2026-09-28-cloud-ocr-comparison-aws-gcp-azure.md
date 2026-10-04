@@ -75,6 +75,10 @@ Related reading on the Azure side: [Things to consider before using Azure OpenAI
 - **Google** gives you a single Vision call for quick OCR and a separate Document AI product for structured extraction; two products means two sets of quotas and pricing pages.
 - **Azure** exposes everything through one REST API and SDK (`azure-ai-formrecognizer` / `azure-ai-documentintelligence`) and has Document Intelligence Studio, a browser tool for testing and labeling that saves a lot of time when building custom models.
 
+![Azure AI Document Intelligence Studio analyzing a one-page invoice with the prebuilt-layout model: the document preview outlines a 5-row by 4-column line-item table in blue and three key-value pairs (invoice number, date, due date) in orange, while the Result panel lists the table cells, key-value pairs with confidences of 0.96 to 0.99, 19 lines, 71 words and a detected handwritten signature region](/assets/img/posts/ai/cloud-ocr-azure-document-intelligence-studio-layout.webp)
+
+This is the kind of output you get before writing any code: Document Intelligence Studio runs `prebuilt-layout` on an uploaded invoice and shows the table, key-value pairs and per-field confidence next to the page. Textract has a similar console demo and Google has the Document AI processor test page, but the Azure tool is the only one that also lets you label documents for a custom model from the same screen.
+
 ## Which one should you choose?
 
 - Already on AWS with S3-based ingestion and mostly English documents: **Textract**.

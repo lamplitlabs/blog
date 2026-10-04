@@ -42,6 +42,8 @@ as a developer you should only worry about 4 commands
    Show changes required by the current configuration, this is the most crucial step, the output of this step will give you all the things terraform will do, so before applying just make sure you are not
    destroying anything.
 
+   ![PowerShell console running the Terraform workflow: terraform init installs the azurerm provider, terraform plan lists an Azure resource group and storage account to be created with the summary "Plan: 2 to add, 0 to change, 0 to destroy", and terraform apply finishes with "Apply complete! Resources: 2 added, 0 changed, 0 destroyed"](/assets/img/posts/terraform/terraform-init-plan-apply-console.webp)
+
 3. <h6>terraform apply</h6>
    Create or update infrastructure, this will trigger the cloud resources and create all the infra for you.
 

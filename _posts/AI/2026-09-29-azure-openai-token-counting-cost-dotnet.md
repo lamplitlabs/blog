@@ -61,6 +61,11 @@ static int EstimateChatTokens(Tokenizer tokenizer, IEnumerable<(string Role, str
 
 Compare the estimate against `usage.PromptTokens` in the response the first few times; if it drifts, adjust the constants for the model you use.
 
+Put the estimate next to the price list and the cost of untrimmed history becomes concrete. The table below is the output of a small console app that runs `EstimateChatTokens` for a 420-token system prompt with a growing number of 90-token turns, priced at the `gpt-4o-mini` rate:
+
+![Terminal output listing turns, input tokens, output cap, estimated cost per request and cost per 10k requests for 1 to 40 turns; 40 untrimmed turns cost $7.84 per 10k requests, while the same conversation trimmed to a 2,000-token input budget costs $4.73](/assets/img/posts/ai/azure-openai-token-count-vs-cost-table.webp)
+_Forty untrimmed turns cost three times as much per request as one turn; trimming to a 2,000-token input budget claws most of that back._
+
 {% include feed-ads.html %}
 
 ## Habit 1: trim history before it grows

@@ -169,6 +169,31 @@ report_alt_coverage() {
   fi
 }
 
+# Report inline-image coverage of post bodies so "publish more posts with
+# screenshots" has a numerator/denominator. A post counts as covered when its
+# body (after the closing front-matter '---') contains at least one Markdown
+# image `![...](...)`; a header `image:` alone does not count. Lists the posts
+# with no inline image. Informational only: never fails the build.
+report_body_image_coverage() {
+  local without
+  without="$(for f in $_posts; do
+    awk '
+      FNR == 1 { fm = 0; found = 0 }
+      /^---[[:space:]]*$/ && fm < 2 { fm++; next }
+      fm == 2 && /!\[[^]]*\]\(/ { found = 1 }
+      END { exit found ? 0 : 1 }
+    ' "$f" || echo "$f"
+  done)"
+  local count=0
+  if [[ -n $without ]]; then
+    count="$(printf '%s\n' "$without" | wc -l | tr -d ' ')"
+  fi
+  echo "body-image-coverage: $count/$_posts_total posts without an inline ![...] image in the body (rule: no Markdown image after the front matter)"
+  if [[ -n $without ]]; then
+    printf '  %s\n' $without
+  fi
+}
+
 # Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
 # Atom feed fall back to the generic site description otherwise, so every post
 # would show the same search snippet. Same rule as
@@ -209,6 +234,7 @@ main() {
   check_post_descriptions
   report_image_coverage
   report_alt_coverage
+  report_body_image_coverage
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

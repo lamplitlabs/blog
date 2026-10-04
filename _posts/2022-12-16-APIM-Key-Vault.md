@@ -29,6 +29,9 @@ To connect Azure API Gateway with Azure Key Vault, you will need to perform the 
 
 3. Grant access to Azure API Gateway: In order for Azure API Gateway to access your secrets in Azure Key Vault, you will need to grant it access. To do this, click on the Key Vault and then select “Access policies” from the menu. Click on the “Add Access Policy” button and then select “API Management” from the list of services. Follow the prompts to grant Azure API Gateway access to your Key Vault.
 
+![Azure portal "Add named value" pane in API Management: Name set to ContosoHeader, Display name ContosoHeader, Type set to Key vault, a Key Vault secret selected via the Select button, and a managed identity chosen under Client identity before saving](/assets/img/posts/azure/apim-add-named-value-key-vault.webp)
+*In the APIM "Named values" blade, pick type **Key vault** and select the secret you stored in step 2; APIM reads it with the managed identity you granted access in step 3.*
+
 4. Configure Azure API Gateway to use Azure Key Vault: Once you have granted Azure API Gateway access to your Azure Key Vault, you can configure your API Gateway to use it. To do this, sign in to the Azure portal and navigate to your API Gateway. Select the API you want to secure and then click on “Policies” in the menu. Add the following policy to your API:
 
 ```xml
@@ -55,4 +58,4 @@ To connect Azure API Gateway with Azure Key Vault, you will need to perform the 
 
 By following these steps, you can securely connect Azure API Gateway with Azure Key Vault and store and manage your secrets in a centralized location. This can help you secure your APIs and protect sensitive information, such as API keys and secrets, from unauthorized access.
 
-*Header image: Azure portal "Add named value" form, from [Microsoft Learn – Use named values in Azure API Management policies](https://learn.microsoft.com/azure/api-management/api-management-howto-properties), © Microsoft, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+*Header and inline screenshots: Azure portal "Add named value" form, from [Microsoft Learn – Use named values in Azure API Management policies](https://learn.microsoft.com/azure/api-management/api-management-howto-properties), © Microsoft, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*

@@ -2,7 +2,7 @@
 layout: post
 title: "Unlocking LinkedIn's Posting Potential: Part 2 - Creating Post using REST Apis"
 description: "Part 2 of automating LinkedIn posts with the REST API: finding your author URN and publishing text, article links and images with the Posts endpoint."
-date: 2024-02-11 05:38:00 00
+date: 2024-02-11 05:38:00 +0000
 categories: automation
 tags: linkedin rest post api
 author: manishtiwari25

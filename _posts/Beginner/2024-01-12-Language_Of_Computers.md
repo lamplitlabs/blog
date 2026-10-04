@@ -2,7 +2,7 @@
 layout: post
 title: "The Language Of Computers"
 description: "A beginner-friendly look at how computers understand instructions, from binary and machine code up to the high-level languages programmers write."
-date: 2024-01-12 06:38:00 00
+date: 2024-01-12 06:38:00 +0000
 categories: software-engineering beginner
 tags: coding software-enginner scratch guid binary ascii unicode
 author: manishtiwari25

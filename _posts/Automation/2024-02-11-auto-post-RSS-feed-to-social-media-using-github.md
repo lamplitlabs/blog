@@ -2,7 +2,7 @@
 layout: post
 title: "Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret"
 description: "Automatically share new RSS feed items to Twitter, Mastodon and other social media using a scheduled GitHub Actions workflow instead of Logic Apps."
-date: 2024-02-11 11:38:00 00
+date: 2024-02-11 11:38:00 +0000
 categories: automation
 tags: github azure rss mastodon twitter x social linkedin
 author: manishtiwari25

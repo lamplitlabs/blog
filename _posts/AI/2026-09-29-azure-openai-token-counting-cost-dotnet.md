@@ -66,6 +66,45 @@ Put the estimate next to the price list and the cost of untrimmed history become
 ![Terminal output listing turns, input tokens, output cap, estimated cost per request and cost per 10k requests for 1 to 40 turns; 40 untrimmed turns cost $7.84 per 10k requests, while the same conversation trimmed to a 2,000-token input budget costs $4.73](/assets/img/posts/ai/azure-openai-token-count-vs-cost-table.webp)
 _Forty untrimmed turns cost three times as much per request as one turn; trimming to a 2,000-token input budget claws most of that back._
 
+You can reproduce the table with a console app - `dotnet new console`, `dotnet add package Microsoft.ML.Tokenizers`, then replace `Program.cs` with the following (it reuses `EstimateChatTokens` and the `FitToBudget` helper from the next section):
+
+```csharp
+using Microsoft.ML.Tokenizers;
+
+// gpt-4o-mini list price per 1M tokens at the time of writing; check your region's price sheet
+const decimal InputPricePerToken  = 0.15m  / 1_000_000m;
+const decimal OutputPricePerToken = 0.60m  / 1_000_000m;
+const int     OutputCap           = 300;    // the MaxOutputTokenCount we send
+const int     InputBudget         = 2_000;  // the trimmed scenario
+
+Tokenizer tokenizer = TiktokenTokenizer.CreateForModel("gpt-4o-mini");
+
+// Synthetic messages padded to a known token count. Swap in your own system prompt
+// and a real transcript to see what your feature costs.
+string Pad(int tokens) => string.Join(' ', Enumerable.Repeat("lorem", tokens));
+var system = ("system", Pad(420));
+
+Console.WriteLine($"{"Turns",5} {"Input",8} {"Output",6} {"$/request",12} {"$/10k",8}   {"Trimmed $/10k",13}");
+foreach (int turns in new[] { 1, 5, 10, 20, 30, 40 })
+{
+    var messages = new List<(string Role, string Content)> { system };
+    for (int i = 0; i < turns; i++)
+    {
+        messages.Add((i % 2 == 0 ? "user" : "assistant", Pad(86))); // 86 + role + framing ≈ 90 tokens
+    }
+
+    int input = EstimateChatTokens(tokenizer, messages);
+    decimal perRequest = input * InputPricePerToken + OutputCap * OutputPricePerToken;
+
+    int trimmedInput = EstimateChatTokens(tokenizer, FitToBudget(tokenizer, messages, InputBudget));
+    decimal trimmedPerRequest = trimmedInput * InputPricePerToken + OutputCap * OutputPricePerToken;
+
+    Console.WriteLine($"{turns,5} {input,8} {OutputCap,6} {perRequest,12:F6} {perRequest * 10_000,8:F2}   {trimmedPerRequest * 10_000,13:F2}");
+}
+```
+
+Replace `Pad(...)` with your own system prompt and a real transcript and the table shows what *your* feature costs per 10k requests. The counts may differ from the screenshot by a token or two per message depending on the tokenizer version; the cost per 10k requests should match within a cent.
+
 {% include feed-ads.html %}
 
 ## Habit 1: trim history before it grows

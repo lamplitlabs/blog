@@ -23,6 +23,11 @@ this contains all the countries and there states and this list will update autom
 
 I am using geonames dumps to create this gist so if you find any incorrect data you can update at geonames side and it will reflect in next release.
 
+Here is the JSON shape each country entry follows in the gist, with its ISO codes and nested list of states/provinces:
+
+![Example JSON entry for Canada showing name, iso2, iso3 fields and a nested states array with Ontario and Quebec entries, each carrying a name and state_code](/assets/img/posts/gist/countries-states-json-shape.webp)
+*Each country object carries `name`, `iso2`, `iso3`, and a `states` array - use `state_code` to match a province/state back to its parent country.*
+
 {% include feed-ads.html %}
 
 [Here](https://gist.github.com/manishtiwari25/0fa055ee14f29ee6a7654d50af20f095) you can find the gist.

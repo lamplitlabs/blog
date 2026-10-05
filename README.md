@@ -62,7 +62,9 @@ included) and prints one summary line per check:
   disagreeing on the publish day. When all posts pass it prints
   `date-match-coverage: 0 mismatches between filename date and front-matter
   'date:' across <total> posts (...)`.
-  Worked example of a post that trips it:
+  A post that passes: `_posts/2024-01-05-example.md` with front matter
+  `date: 2024-01-05 10:00:00 +0000` (first ten characters of both are
+  `2024-01-05`). Worked example of a post that trips it:
 
   ```text
   _posts/AI/2024-05-23-azure-openai-prompt-caching.md

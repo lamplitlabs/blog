@@ -124,3 +124,11 @@ autocannon -c 256 -d 30 http://127.0.0.1:3000/users/42
 ```
 
 Run each three times and keep the median. Absolute numbers depend on the machine and on whether PostgreSQL is local or across a network hop; on a remote database the fixed network latency narrows the ratios but the ordering, and the pool-size lesson, stayed the same on every setup I tried.
+
+## Related Performance posts
+
+The database driver is one layer in the request path; these posts measure the others with the same discipline:
+
+- [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the same "pool and query shape beat runtime choice" lesson, measured on .NET against the same kind of database round trip.
+- [Node vs Deno vs Bun: HTTP Server Performance Under Load]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - the HTTP layer this driver benchmark sits behind, measured with the same autocannon workflow.
+- [Go vs .NET: Goroutines vs Tasks Concurrency Throughput]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - what the same kind of pooled-connection concurrency question looks like outside Node.js.

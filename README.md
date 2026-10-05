@@ -56,6 +56,17 @@ included) and prints one summary line per check:
   `_posts/` are not checked. When all posts pass it prints `folder-categories:
   every post under _posts/<Folder>/ lists its lowercased folder name in
   'categories'`.
+- `date-match-coverage`: the build **fails** if a post's filename date (the
+  first 10 characters, `YYYY-MM-DD`) differs from its front-matter `date:`,
+  since that mismatch leaves the permalink, feed order and file listing
+  disagreeing on the publish day. When all posts pass it prints
+  `date-match-coverage: 0 mismatches between filename date and front-matter
+  'date:' across <total> posts (...)`.
+- `tab-order-coverage`: the build **fails** if two `_tabs/*.md` files share the
+  same front-matter `order:`, since Chirpy would silently reorder the sidebar
+  nav by file name instead of the intended position. Tabs without an `order:`
+  key are not checked. When all tabs pass it prints `tab-order-coverage: all
+  _tabs/*.md 'order:' values are unique (...)`.
 
 It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`

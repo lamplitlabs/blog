@@ -3,7 +3,7 @@ layout: post
 title: "How to Become a Software Engineer (From Scratch)"
 date: 2024-01-11 06:38:00 +0000
 categories: software-engineering beginner
-tags: coding software-enginner scratch guid
+tags: coding software-engineer scratch guid
 author: manishtiwari25
 description: "A no-shortcuts beginner guide to becoming a software engineer from scratch: foundations, languages, and how to build a solid start."
 image:

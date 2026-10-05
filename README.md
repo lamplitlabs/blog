@@ -62,6 +62,24 @@ included) and prints one summary line per check:
   disagreeing on the publish day. When all posts pass it prints
   `date-match-coverage: 0 mismatches between filename date and front-matter
   'date:' across <total> posts (...)`.
+  Worked example of a post that trips it:
+
+  ```text
+  _posts/AI/2024-05-23-azure-openai-prompt-caching.md
+  ---
+  title: "Prompt caching with Azure OpenAI"
+  date: 2024-05-22 10:00:00 +0000      # <-- 2024-05-22 != filename's 2024-05-23
+  ---
+  ```
+
+  Fix it by renaming the file or changing `date:` so the first ten characters
+  agree. To self-check a single post before running the full script:
+
+  ```bash
+  f=_posts/AI/2024-05-23-azure-openai-prompt-caching.md
+  echo "filename: $(basename "$f" | cut -c1-10)"
+  echo "date:     $(grep -m1 '^date:' "$f" | sed 's/^date:[[:space:]]*//; s/["'"'"']//g' | cut -c1-10)"
+  ```
 - `tab-order-coverage`: the build **fails** if two `_tabs/*.md` files share the
   same front-matter `order:`, since Chirpy would silently reorder the sidebar
   nav by file name instead of the intended position. Tabs without an `order:`

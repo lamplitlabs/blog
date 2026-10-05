@@ -134,3 +134,9 @@ The .NET side of the same question, measured with BenchmarkDotNet:
 - [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side in C#.
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the database side.
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.
+
+Outside .NET, the same interpreter-vs-compiled trade-off measured at the HTTP and database layers:
+
+- [Node vs Deno vs Bun: HTTP Server Performance Under Load]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - what JIT-compiled JavaScript runtimes cost once a network is in the way.
+- [Go vs .NET: Goroutines vs Tasks Concurrency Throughput]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - two compiled runtimes under the same wrk load.
+- [pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22]({% post_url Performance/2026-10-08-postgres-driver-latency-pg-vs-prisma-vs-drizzle %}) - where the time goes when the hot loop is a database round trip.

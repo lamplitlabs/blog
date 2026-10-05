@@ -181,7 +181,7 @@ report_body_image_coverage() {
     awk '
       FNR == 1 { fm = 0; found = 0 }
       /^---[[:space:]]*$/ && fm < 2 { fm++; next }
-      fm == 2 && /!\[[^]]*\]\(/ { found = 1 }
+      fm == 2 && /!\[.*\]\(/ { found = 1 }
       END { exit found ? 0 : 1 }
     ' "$f" || echo "$f"
   done)"

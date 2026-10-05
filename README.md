@@ -78,7 +78,7 @@ included) and prints one summary line per check:
   agree. To self-check a single post before running the full script:
 
   ```bash
-  f=_posts/AI/2024-05-23-azure-openai-prompt-caching.md
+  f=_posts/AI/2024-05-23-things-to-consider-azure-openai.md  # real example post; illustrates a passing check
   echo "filename: $(basename "$f" | cut -c1-10)"
   echo "date:     $(grep -m1 '^date:' "$f" | sed 's/^date:[[:space:]]*//; s/["'"'"']//g' | cut -c1-10)"
   ```

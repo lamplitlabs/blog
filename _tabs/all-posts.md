@@ -1,7 +1,7 @@
 ---
 title: All Posts
 icon: fas fa-list
-order: 5
+order: 1
 ---
 
 Every post on the blog in one flat list, newest first, with its categories so you

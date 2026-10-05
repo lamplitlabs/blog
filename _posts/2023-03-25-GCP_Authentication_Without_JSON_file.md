@@ -30,6 +30,10 @@ after digging throw the docs and reading over the internet, I was able to use IC
 
 In the example, I am using Firestore, but I think it should work with all other services. <br>
 
+Here is the whole flow we are going to build, from configuration to a working `FirestoreDb`:
+
+![Diagram of the credential flow: Azure Key Vault or appsettings.json GCP section is bound through IConfiguration into a GCPCredentials class, serialized to JSON, passed to GoogleCredential.FromJson, and finally used as ChannelCredentials for FirestoreDb, with no credentials.json file on disk or in git](/assets/img/posts/gcp/gcp-auth-without-json-flow.webp)
+
 First thing first, we need to add some NuGets
 
 {% include article-ads.html %}

@@ -49,6 +49,8 @@ print(other)   # [1, 2, 3, 4]
 
 Why did `scores` change when we only touched `other`? Because the box labelled `scores` does not hold the list. It holds the **address** of the list, which lives somewhere else in memory. `other = scores` copied the address, not the list. Both labels now point at one list, so changing it through either name changes "both".
 
+![Memory diagram contrasting values and references: on the left, boxes a and b each hold their own copy of the number 42, so changing a leaves b untouched; on the right, boxes scores and other both hold the same address, with arrows pointing at a single list [1, 2, 3, 4], so other.append(4) is visible through scores too](/assets/img/posts/beginner/variables-values-references-memory-diagram.webp)
+
 That address-in-a-box is a **reference** (some languages say *pointer*). Lists, dictionaries, objects, arrays, strings in many languages - anything that can be large or grow - is usually handled by reference. Copying a small address is cheap; copying a million-element list every time you pass it to a function would be ruinously slow.
 
 ## The same idea in four languages

@@ -300,6 +300,33 @@ check_date_match() {
   echo "date-match-coverage: 0 mismatches between filename date and front-matter 'date:' across $_posts_total posts (rule: first 10 chars of basename equal YYYY-MM-DD of 'date:')"
 }
 
+# Fail when two sidebar tabs (_tabs/*.md) share the same front-matter `order:`.
+# Chirpy sorts the sidebar nav by `order`, so a collision (e.g. All Posts and
+# About both at order: 5) silently reorders the nav by file name instead of the
+# intended position. Tabs without an `order:` key are not checked.
+check_tab_order_unique() {
+  local bad
+  bad="$(for f in _tabs/*.md; do
+    [[ -f $f ]] || continue
+    awk -v f="$f" '
+      FNR == 1 { fm = 0 }
+      /^---[[:space:]]*$/ { fm++; next }
+      fm != 1 { next }
+      /^order:/ { sub(/^order:[[:space:]]*/, ""); gsub(/["'"'"'[:space:]]/, ""); if ($0 != "") print $0 "\t" f; exit }
+    ' "$f"
+  done | sort -t "$(printf '\t')" -k1,1n -k2,2 | awk -F "\t" '
+    $1 == prev { print "order: " $1 " shared by " prevf " and " $2 }
+    { prev = $1; prevf = $2 }
+  ')"
+  if [[ -n $bad ]]; then
+    echo "error: _tabs/*.md files with a duplicate front-matter 'order:' value were found:" >&2
+    printf '       %s\n' "$bad" >&2
+    echo "       Give each tab a distinct 'order:' so the sidebar nav keeps its intended position." >&2
+    exit 1
+  fi
+  echo "tab-order-coverage: all _tabs/*.md 'order:' values are unique (rule: no two tabs share the same front-matter 'order:')"
+}
+
 main() {
   preflight
   collect_posts
@@ -307,6 +334,7 @@ main() {
   check_post_descriptions
   check_folder_categories
   check_date_match
+  check_tab_order_unique
   report_image_coverage
   report_alt_coverage
   report_body_image_coverage

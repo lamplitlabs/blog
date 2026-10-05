@@ -270,12 +270,43 @@ check_folder_categories() {
   echo "folder-categories: every post under _posts/<Folder>/ lists its lowercased folder name in 'categories'"
 }
 
+# Fail when a post's filename date (_posts/**/YYYY-MM-DD-*.md) differs from its
+# front-matter `date:` day. Jekyll takes the front-matter date for the permalink
+# and for feed/home ordering, so a drifted filename makes the file list, the
+# URL and the feed disagree about when a post was published (e.g. a 2024-05-23
+# filename published under /posts/2024-05-22/...). Compares the first ten
+# characters (YYYY-MM-DD) of both; posts without a `date:` key fall back to the
+# filename in Jekyll and are not checked.
+check_date_match() {
+  local bad
+  bad="$(for f in $_posts; do
+    name="$(basename "$f")"
+    file_date="${name:0:10}"
+    fm_date="$(awk '
+      FNR == 1 { fm = 0 }
+      /^---[[:space:]]*$/ { fm++; next }
+      fm != 1 { next }
+      /^date:/ { sub(/^date:[[:space:]]*/, ""); gsub(/["'"'"']/, ""); print substr($0, 1, 10); exit }
+    ' "$f")"
+    [[ -n $fm_date ]] || continue
+    if [[ $file_date != "$fm_date" ]]; then echo "$f (filename $file_date, front matter $fm_date)"; fi
+  done)"
+  if [[ -n $bad ]]; then
+    echo "error: posts whose filename date differs from their front-matter 'date:' were found in _posts/:" >&2
+    printf '       %s\n' "$bad" >&2
+    echo "       Rename the file or fix 'date:' so the permalink, feed order and file list agree on the publish day." >&2
+    exit 1
+  fi
+  echo "date-match-coverage: 0 mismatches between filename date and front-matter 'date:' across $_posts_total posts (rule: first 10 chars of basename equal YYYY-MM-DD of 'date:')"
+}
+
 main() {
   preflight
   collect_posts
   check_tag_case_duplicates
   check_post_descriptions
   check_folder_categories
+  check_date_match
   report_image_coverage
   report_alt_coverage
   report_body_image_coverage

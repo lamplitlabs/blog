@@ -134,3 +134,12 @@ The OData grammar lets you write anything; the database only rewards the sargabl
 ## Measuring it
 
 Do not guess. Wrap the call in a `Stopwatch` and log `response.Content.Headers.ContentLength` next to the query string. Two numbers - milliseconds and bytes - sorted descending across a day of traffic will point you at the three or four queries worth fixing. In every OData integration I have profiled, those few queries accounted for most of the latency users complained about, and none of them were fixed by switching client library.
+
+## Related Performance posts
+
+Once the OData query shape is fixed, the remaining time on a read path is usually spent in the database layer, the serializer or the in-memory hot loop. These posts measure each of those with BenchmarkDotNet; the last steps outside .NET:
+
+- [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the same `$select`/`$expand` over-fetching lesson on the server side of an ASP.NET Core OData API.
+- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - what deserializing a multi-MB OData payload actually costs, and how to shrink it.
+- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
+- [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.

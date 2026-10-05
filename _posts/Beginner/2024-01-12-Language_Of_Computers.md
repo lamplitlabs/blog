@@ -23,6 +23,8 @@ At the heart of this system lies binary, a language composed of only two digits:
 
 Binary code is represented by sequences of 0s and 1s, each representing a specific electrical state. These sequences are called bits, and they are the fundamental building blocks of digital information.
 
+![Diagram showing how the letter A travels through a computer in three layers: binary bits 01000001, the ASCII code 65 that maps to A, and Unicode code points such as U+0041 that extend the same idea to every language and emoji](/assets/img/posts/beginner/language-of-computers-binary-ascii-unicode.webp)
+
 For more information, You can watch the video from CS50 and also try [this](https://cdn.cs50.net/2016/x/psets/0/pset0/bulbs.html)
 
 <iframe width="560" height="315" src="/assets/videos/binary.mp4" title="CS50 - Lecture 0 - Binary" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>

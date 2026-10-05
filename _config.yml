@@ -16,7 +16,7 @@ timezone: Europe/Berlin
 
 title: Lamplit Labs # the main title
 
-tagline: A space for my stories about dotnet, c#, azure, devops and more # it will display as the sub-title
+tagline: A space for my stories about AI, dotnet, c#, azure, devops and more # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Lamplit Labs Blog - Documentation and More.

@@ -146,3 +146,9 @@ wrk -t8 -c256 -d30s --latency http://127.0.0.1:3000/users/42
 ```
 
 Run each three times and keep the median; the first run on every runtime is 5-10% slower while the JIT warms up. Your absolute numbers will differ with the machine, but on every box I tried the ordering and the rough ratios held.
+
+## Related Performance posts
+
+- [Go Goroutines vs .NET Tasks: HTTP Concurrency Throughput]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - the same wrk setup pointed at two compiled runtimes, for comparison with the JavaScript numbers here.
+- [Python vs Rust in a Hot Loop]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - what interpreter overhead costs when there is no network in the way.
+- [pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22]({% post_url Performance/2026-10-08-postgres-driver-latency-pg-vs-prisma-vs-drizzle %}) - the next bottleneck once your Node HTTP layer is fast.

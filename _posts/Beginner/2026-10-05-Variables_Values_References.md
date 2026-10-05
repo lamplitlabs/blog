@@ -15,6 +15,8 @@ image:
 
 A variable is a **name** for a place that holds data. Some variables hold the data itself (a *value*); others hold the *address* where the data lives (a *reference*). Copying a value duplicates the data. Copying a reference duplicates only the address, so two names end up looking at the same thing. Almost every "why did my other variable change?!" bug in a beginner's first year comes from this single idea.
 
+![Diagram comparing value copies, where two variables each hold the number 42, with reference copies, where two variables hold the same address pointing at one list in memory](/assets/img/headers/beginner/variables_values_references.webp)
+
 This is the third article in the beginner series. If you missed the earlier ones, start with [How to Become a Software Engineer](/posts/Software_Engineer-Beginner/) and [The Language of Computers](/posts/Language_Of_Computers/).
 
 ## A variable is a label on a box

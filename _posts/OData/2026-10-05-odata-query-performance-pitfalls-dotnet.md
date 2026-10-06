@@ -4,7 +4,7 @@ title: "OData Query Performance Pitfalls in .NET - $expand, Paging and Payload S
 description: "Five OData query mistakes that slow down .NET clients talking to D365 or ASP.NET Core OData APIs, with before/after queries and a request-flow diagram."
 date: 2026-10-05 09:00:00 -0500
 categories: coding odata dotnet d365
-tags: odata csharp dotnet8 d365 performance httpclient
+tags: odata csharp dotnet d365 performance httpclient
 author: manishtiwari25
 image:
   path: /assets/img/headers/odata.webp

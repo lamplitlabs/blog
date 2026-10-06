@@ -158,7 +158,7 @@ check_category_case_duplicates() {
 # TAG_SYNONYM_ALLOWED (the count at the time the check was added), so new posts must use
 # the canonical tag while old posts can be migrated one at a time by lowering the cap.
 TAG_SYNONYM_GROUPS='dotnet .NET .NET7 .NET8 dotnet8 net net8;csharp c# C# CSharp;azure-devops AzureDevOps azuredevops;software-engineering software-engineer'
-TAG_SYNONYM_ALLOWED=22
+TAG_SYNONYM_ALLOWED=16
 check_tag_synonym_groups() {
   local hits count
   hits="$(awk -v groups="$TAG_SYNONYM_GROUPS" '

@@ -4,7 +4,7 @@ title: "How a Language Model Answers You: Tokens, Prediction and Repetition"
 description: "A beginner-friendly explanation of what happens between typing a prompt and getting an AI answer: tokens, next-token prediction and why models make things up."
 date: 2026-10-06 06:00:00 +0000
 categories: software-engineering beginner
-tags: coding software-engineer ai llm tokens prompt-engineering beginner-ai
+tags: coding software-engineering ai llm tokens prompt-engineering beginner-ai
 author: manishtiwari25
 image:
   path: /assets/img/headers/beginner/how_llms_work.webp

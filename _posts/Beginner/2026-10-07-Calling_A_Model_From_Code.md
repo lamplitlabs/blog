@@ -4,7 +4,7 @@ title: "Calling a Language Model from Code: Your Prompt Is Just an API Request"
 description: "A beginner walkthrough of calling a language model from a program: the HTTP request, system and user roles, max tokens, temperature and reading the reply."
 date: 2026-10-07 06:00:00 +0000
 categories: software-engineering beginner
-tags: coding software-engineer ai llm api prompt-engineering beginner-ai
+tags: coding software-engineering ai llm api prompt-engineering beginner-ai
 author: manishtiwari25
 image:
   path: /assets/img/headers/beginner/calling_a_model_from_code.webp

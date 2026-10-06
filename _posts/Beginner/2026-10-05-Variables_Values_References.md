@@ -4,7 +4,7 @@ title: "Variables, Values and References: How a Name Finds Its Data"
 description: "A beginner-friendly explanation of variables, values and references, and why copying a list behaves differently from copying a number across languages."
 date: 2026-10-05 06:00:00 +0000
 categories: software-engineering beginner
-tags: coding software-engineer scratch memory python javascript csharp rust
+tags: coding software-engineering scratch memory python javascript csharp rust
 author: manishtiwari25
 image:
   path: /assets/img/headers/beginner/variables_values_references.webp

@@ -34,6 +34,19 @@ included) and prints one summary line per check:
 
 - Tag case: the build **fails** if two posts spell the same tag with different
   letter case (e.g. `Azurite` vs `azurite`), since Jekyll would drop one tag page.
+- `category-case-duplicates`: the build **fails** if two posts use the same
+  category with different letter case (e.g. `Drawio` vs `drawio`), since Jekyll
+  would drop one category page the same way a tag-case collision drops a tag
+  page.
+- `tag-synonym-groups`: the build **fails** if more than `TAG_SYNONYM_ALLOWED`
+  post tags use a known synonym of a canonical tag (e.g. `.NET`/`net8` instead
+  of `dotnet`, or `C#` instead of `csharp`), since a synonym splits a topic
+  across two tag pages instead of one. See `TAG_SYNONYM_GROUPS` in
+  `tools/test.sh` for the canonical groups.
+- `ai-related-coverage`: informational only, never fails the build. Prints
+  `ai-related-coverage: <count>/<total> _posts posts without a '## Related'
+  heading (...)`, counting any post under `_posts/` missing a `## Related`
+  footer linking to other posts.
 - `description-coverage`: the build **fails** if any post lacks a front-matter
   `description:` or its description is outside 50-160 characters. When all posts
   pass it prints `description-coverage: all <total> posts have a front-matter

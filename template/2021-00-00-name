@@ -26,3 +26,11 @@ image:
 SOME DESCRIPTION
 
 [Watch Video](https://www.youtube.com/watch?v=BBBBBBBBBBBB)
+
+## Related posts
+
+<!-- Link 2-3 published posts on the same topic so readers have a next step;
+     tools/test.sh ai-related-coverage counts posts without a '## Related' heading. -->
+- [Related post title](/path/)
+- [Related post title](/path/)
+- [Related post title](/path/)

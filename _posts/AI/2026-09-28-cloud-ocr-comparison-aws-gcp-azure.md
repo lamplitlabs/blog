@@ -92,3 +92,9 @@ Whatever you pick, wrap it behind your own small interface. OCR is a commodity t
 - [Amazon Textract documentation](https://docs.aws.amazon.com/textract/latest/dg/what-is.html)
 - [Google Cloud Vision OCR](https://cloud.google.com/vision/docs/ocr)
 - [Azure AI Document Intelligence overview](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview)
+
+## Related posts
+
+- [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
+- [Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)
+- [Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text](/posts/structured-outputs-azure-openai-dotnet/)

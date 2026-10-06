@@ -159,3 +159,9 @@ while (true) {
 - Keep the non-streaming path for background jobs: streaming only helps when a human is watching.
 
 Streaming is a small amount of code for a large improvement in how responsive an AI feature feels. Pair it with the retry strategy from the [429 rate-limit post](/posts/azure-openai-429-rate-limit-retry-dotnet/) and you have the two pieces every production chat endpoint needs.
+
+## Related posts
+
+- [Azure OpenAI Function Calling in .NET: Let the Model Call Your C# Methods Safely](/posts/azure-openai-function-calling-dotnet/)
+- [Handling 429 Rate Limits from Azure OpenAI in .NET: Backoff That Actually Works](/posts/azure-openai-429-rate-limit-retry-dotnet/)
+- [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right](/posts/azure-openai-prompt-caching-dotnet/)

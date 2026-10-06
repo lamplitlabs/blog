@@ -138,3 +138,9 @@ The worst outcome is the silent one: an empty bubble, or a reply that ends mid-w
 ## Summary
 
 Content filter hits are not errors, they are results. Check `FinishReason` on every completion, catch the 400 with `error.code == "content_filter"` separately from other bad requests, and give the user a message that says which of the two happened. Ten lines of code, and a whole class of "the bot just stopped" tickets disappears.
+
+## Related posts
+
+- [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)
+- [Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text](/posts/structured-outputs-azure-openai-dotnet/)
+- [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)

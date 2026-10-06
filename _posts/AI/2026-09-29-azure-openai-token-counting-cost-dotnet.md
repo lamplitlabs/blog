@@ -194,3 +194,9 @@ Whatever else you do, log `Usage.InputTokenCount` and `Usage.OutputTokenCount` w
 None of these need a new service or a bigger quota. They are a few lines of C# each, and together they make the Azure OpenAI line on the invoice something you can forecast instead of dread.
 
 If you are new to Azure OpenAI, read [Things to Consider Before Using Azure OpenAI in Your Organization]({% post_url AI/2024-05-23-things-to-consider-azure-openai %}) first for the security and compliance side of the same decision.
+
+## Related posts
+
+- [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right](/posts/azure-openai-prompt-caching-dotnet/)
+- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
+- [Azure OpenAI Batch API in .NET: Process Thousands of Prompts at Half the Price](/posts/azure-openai-batch-api-dotnet/)

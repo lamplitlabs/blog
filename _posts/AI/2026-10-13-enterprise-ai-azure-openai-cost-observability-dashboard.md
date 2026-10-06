@@ -138,3 +138,9 @@ Evaluate it every 15 minutes, fire when the result has at least one row, and rou
 - **The platform team** stops discovering runaway jobs on the invoice.
 
 Once the `unattributed` row is near zero, the next step is to [move the quota enforcement into APIM](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/) so the alert becomes a 429 instead of a chat message. The dashboard stays: the gateway tells you who was throttled, the dashboard tells you what everything cost.
+
+## Related posts
+
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
+- [Enterprise AI: LLM Observability with OpenTelemetry in .NET - Tracing Tokens, Cost and Quality per Request](/posts/enterprise-llm-observability-opentelemetry-dotnet/)
+- [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)

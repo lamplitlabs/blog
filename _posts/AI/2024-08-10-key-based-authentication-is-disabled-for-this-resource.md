@@ -34,3 +34,9 @@ Once the identity is enabled, the fix on your screen looks like this: the **Syst
 
 {% include feed-ads.html %}
 {% include feed-ads.html %}
+
+## Related posts
+
+- [Principal does not have access to API/Operation](/posts/principal-does-not-have-access-to-api-operation/)
+- [Call to get Azure Search index failed - Server responded with status 403](/posts/call-to-get-azure-search-index-failed-server-responded-with-status-403/)
+- [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)

@@ -144,3 +144,9 @@ The same principle extends to LLM-generated tests for prompts themselves, covere
 - Feed the survived-mutants list back into the prompt; it is the best test-generation prompt you will ever write because it names exactly what is missing.
 - Review the expected-value comments, not the assertions. A wrong comment is cheap to spot; a wrong magic number is not.
 - Gate pull requests on Stryker's `break` threshold with `since` enabled, and run the full mutation set nightly.
+
+## Related posts
+
+- [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It](/posts/ai-sdlc-code-review-agent-metrics/)
+- [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)
+- [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase](/posts/ai-sdlc-dotnet-teams/)

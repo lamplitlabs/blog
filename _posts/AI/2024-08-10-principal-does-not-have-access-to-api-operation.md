@@ -30,3 +30,9 @@ In the Azure portal the fix looks like this: open the Azure OpenAI resource, go 
 
 {% include feed-ads.html %}
 {% include feed-ads.html %}
+
+## Related posts
+
+- [Key based authentication is disabled for this resource](/posts/key-based-authentication-is-disabled-for-this-resource/)
+- [Call to get Azure Search index failed - Server responded with status 403](/posts/call-to-get-azure-search-index-failed-server-responded-with-status-403/)
+- [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)

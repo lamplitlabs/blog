@@ -113,3 +113,9 @@ If your prompt is under about 1 500 tokens, or traffic is a few requests per hou
 2. Make tool-schema serialisation deterministic and register tools once.
 3. Log `CachedTokenCount` and watch the hit ratio; a drop to zero means someone broke the prefix.
 4. Expect roughly half the input cost and a large time-to-first-token reduction on warm traffic.
+
+## Related posts
+
+- [Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-semantic-caching-azure-openai/)
+- [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)
+- [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)

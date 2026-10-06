@@ -124,3 +124,9 @@ If you are already doing both and still see sustained 429s, the deployment is un
 | Sustained 429 after all of the above | More TPM or a second deployment |
 
 A 429 from Azure OpenAI is not an error in your code. It is the service telling you how fast it can go. Treat the `Retry-After` header as the source of truth, add jitter, cap the attempts, and the red banner in the demo becomes a two-second pause nobody notices.
+
+## Related posts
+
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
+- [Azure OpenAI Batch API in .NET: Process Thousands of Prompts at Half the Price](/posts/azure-openai-batch-api-dotnet/)
+- [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)

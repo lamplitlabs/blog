@@ -48,3 +48,9 @@ For more information, please visit [Using your data with Azure OpenAI securely](
 
 {% include feed-ads.html %}
 {% include feed-ads.html %}
+
+## Related posts
+
+- [Principal does not have access to API/Operation](/posts/principal-does-not-have-access-to-api-operation/)
+- [Key based authentication is disabled for this resource](/posts/key-based-authentication-is-disabled-for-this-resource/)
+- [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)

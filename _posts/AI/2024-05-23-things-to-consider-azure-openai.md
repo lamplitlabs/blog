@@ -97,3 +97,9 @@ Integrating Azure OpenAI into your organization can unlock significant potential
 For more detailed information on Azure OpenAI, visit [Microsoft's official documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/).
 
 {% include feed-ads.html %}
+
+## Related posts
+
+- [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)
+- [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)
+- [Azure OpenAI Content Filters in .NET: Handling finish_reason content_filter Without Breaking Your App](/posts/azure-openai-content-filter-dotnet/)

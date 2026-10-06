@@ -155,3 +155,9 @@ The payoff is a class of bugs that simply disappears. In our invoice pipeline, m
 - [Azure OpenAI structured outputs](https://learn.microsoft.com/azure/ai-services/openai/how-to/structured-outputs)
 - [Azure.AI.OpenAI NuGet package](https://www.nuget.org/packages/Azure.AI.OpenAI)
 - [JSON Schema specification](https://json-schema.org/)
+
+## Related posts
+
+- [Azure OpenAI Function Calling in .NET: Let the Model Call Your C# Methods Safely](/posts/azure-openai-function-calling-dotnet/)
+- [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)
+- [Azure OpenAI Content Filters in .NET: Handling finish_reason content_filter Without Breaking Your App](/posts/azure-openai-content-filter-dotnet/)

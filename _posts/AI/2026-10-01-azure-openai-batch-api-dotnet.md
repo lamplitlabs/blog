@@ -187,3 +187,9 @@ Each output line carries the full chat completions response under `response.body
 ## Wrapping up
 
 The Batch API turns a rate-limit fight into a file upload: write JSONL with a `custom_id` per request, upload it, create the batch against a Global-Batch deployment, poll, and join the output back by `custom_id`. For offline work it halves the cost and removes retry logic entirely. For anything interactive, stay with the normal endpoint and the retry pattern from my earlier [429 rate-limit post](/posts/azure-openai-429-rate-limit-retry-dotnet/).
+
+## Related posts
+
+- [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)
+- [Handling 429 Rate Limits from Azure OpenAI in .NET: Backoff That Actually Works](/posts/azure-openai-429-rate-limit-retry-dotnet/)
+- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)

@@ -153,3 +153,9 @@ Returning errors as JSON to the model (rather than crashing the request) gives n
 ## Summary
 
 Function calling is a protocol, not magic: the model emits a request, you execute it, you return the result, and the model continues. Keep the dispatcher on an explicit allow-list, validate arguments like any other external input, cap the loop, and require human confirmation for anything that changes state. With those guardrails, letting the model call into your .NET code is safe, and it is where most of the practical value of Azure OpenAI lives.
+
+## Related posts
+
+- [Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text](/posts/structured-outputs-azure-openai-dotnet/)
+- [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)
+- [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)

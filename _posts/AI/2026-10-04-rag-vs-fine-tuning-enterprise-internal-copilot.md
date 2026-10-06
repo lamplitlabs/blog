@@ -111,3 +111,9 @@ For a copilot that spans HR, finance and engineering content, the permissions ro
 4. Revisit the cost table when monthly volume crosses ~250k queries; that is roughly where the fixed hosting fee of a fine-tuned deployment stops being the dominant line.
 
 The argument "RAG vs fine-tuning" is mostly a false choice for internal copilots. Retrieval owns the facts; fine-tuning, if you do it at all, owns the voice.
+
+## Related posts
+
+- [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
+- [Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI](/posts/evaluating-rag-retriever-golden-set-dotnet/)
+- [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)

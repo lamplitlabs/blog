@@ -140,3 +140,9 @@ dependencies
 - Quality scored on a sample and joined by `operation_Id`.
 
 With this in place, "why did AI spend double?" becomes a 30-second query, and "the copilot is slow" becomes a span waterfall instead of a guess. See the companion posts on [handling 429s](/posts/azure-openai-429-rate-limit-retry-dotnet/) and [token counting and cost](/posts/azure-openai-token-counting-cost-dotnet/) for the pieces this builds on.
+
+## Related posts
+
+- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
+- [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)

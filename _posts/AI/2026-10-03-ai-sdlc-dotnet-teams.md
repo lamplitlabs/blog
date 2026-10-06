@@ -88,3 +88,9 @@ Start with code and test, where the deterministic checks already exist, and exte
 - Pair every AI step with a compiler, test or policy check; keep review heavier where no such check exists.
 - Keep deploy approval and customer-data handling human and documented.
 - Write the agreement down so "we use AI" means the same thing to everyone on the team.
+
+## Related posts
+
+- [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It](/posts/ai-sdlc-code-review-agent-metrics/)
+- [AI SDLC in Practice: Letting a Coding Agent Triage and Fix a GitHub Issue End-to-End](/posts/ai-coding-agent-fix-github-issue-end-to-end/)
+- [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest](/posts/llm-test-generation-mutation-testing-dotnet/)

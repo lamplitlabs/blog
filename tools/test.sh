@@ -327,6 +327,20 @@ check_tab_order_unique() {
   echo "tab-order-coverage: all _tabs/*.md 'order:' values are unique (rule: no two tabs share the same front-matter 'order:')"
 }
 
+# Report how many AI-category posts lack a "## Related" footer linking to
+# same-category posts, so readers finishing one AI/Enterprise-AI post are
+# offered the next one. Reports a count rather than failing so the number can
+# drop toward 0 while new posts land.
+report_ai_related_coverage() {
+  local ai_posts ai_total missing count
+  ai_posts="$(find _posts/AI -name '*.md' | sort)"
+  ai_total="$(printf '%s\n' "$ai_posts" | grep -c .)"
+  missing="$(grep -L -E '^## Related' $ai_posts || true)"
+  count="$(printf '%s\n' "$missing" | grep -c . || true)"
+  if [[ -n $missing ]]; then printf '       %s\n' $missing; fi
+  echo "ai-related-coverage: $count/$ai_total _posts/AI posts without a '## Related' heading (rule: grep -L -E '^## Related' \$(find _posts/AI -name '*.md'))"
+}
+
 main() {
   preflight
   collect_posts
@@ -338,6 +352,7 @@ main() {
   report_image_coverage
   report_alt_coverage
   report_body_image_coverage
+  report_ai_related_coverage
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

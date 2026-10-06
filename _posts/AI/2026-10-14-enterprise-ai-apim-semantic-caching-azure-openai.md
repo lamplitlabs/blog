@@ -104,3 +104,9 @@ A cache hit costs one embedding call and a Redis lookup, about 40 ms of the 210 
 ## Where this fits
 
 Semantic caching is the third layer in the gateway story: quotas keep one team from starving the others, the dashboard shows who spent what, and the cache makes the repetitive 60% of traffic nearly free and five times faster. For calls that do reach the model, [prompt caching](/posts/azure-openai-prompt-caching-dotnet/) trims the long static prefix. Together they turned a $118-a-day bot into a $49-a-day bot that answers faster, with no change to the application code.
+
+## Related posts
+
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
+- [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right](/posts/azure-openai-prompt-caching-dotnet/)
+- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)

@@ -253,3 +253,9 @@ Two more lessons:
 Treat the golden set like a test suite: it lives in the repository, it grows with every production incident ("add the query that failed"), and it runs on every change to chunking, embedding deployment, index schema or search options. The LLM-as-judge evaluation still runs nightly, but it no longer has to explain retrieval failures, because those never reach it.
 
 If you are starting today: write 50 queries from real tickets this week, compute Precision@5 and MRR with the thirty lines above, commit the baseline, and make the test red when it drops by three points. Everything after that is tuning with a number attached.
+
+## Related posts
+
+- [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
+- [Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)
+- [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)

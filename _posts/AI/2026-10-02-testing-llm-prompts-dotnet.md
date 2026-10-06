@@ -195,3 +195,9 @@ Filter it out of the normal build with `dotnet test --filter "Category!=Live"` a
 Treat prompts like code: isolate them behind a class, pin them to golden cases stored as data, assert structure on every build with recorded responses, and let a nightly live run with a pass-rate threshold tell you when the real model drifts. The fixture diff in each pull request makes prompt changes reviewable, which is the part teams miss most.
 
 If you are building on Azure OpenAI from .NET, the earlier posts on [structured outputs](/posts/structured-outputs-azure-openai-dotnet/) and [handling 429 rate limits](/posts/azure-openai-429-rate-limit-retry-dotnet/) pair well with this one.
+
+## Related posts
+
+- [Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI](/posts/evaluating-rag-retriever-golden-set-dotnet/)
+- [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest](/posts/llm-test-generation-mutation-testing-dotnet/)
+- [Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text](/posts/structured-outputs-azure-openai-dotnet/)

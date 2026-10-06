@@ -77,3 +77,9 @@ When the explanation and the code disagree, the code is usually wrong, so this p
 - An AI coding agent triaged a real CSV bug, proposed a plan, wrote an RFC 4180 fix and a regression test, ran the suite red-then-green and opened a PR.
 - Human gates were plan approval, diff review and merge; the deterministic checks were the compiler, the new failing test and the full suite in CI.
 - The agent saved the mechanical minutes; the review discipline stayed exactly the same as for a human PR.
+
+## Related posts
+
+- [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase](/posts/ai-sdlc-dotnet-teams/)
+- [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It](/posts/ai-sdlc-code-review-agent-metrics/)
+- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/)

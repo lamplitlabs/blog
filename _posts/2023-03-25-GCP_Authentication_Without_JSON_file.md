@@ -4,7 +4,7 @@ title: "GCP Authentication Without JSON file"
 description: "Authenticate to Google Cloud or Firebase from .NET without committing the service account JSON file to your repository, using environment variables."
 date: 2023-03-25 09:00:00 -0500
 categories: coding cloud dotnet
-tags: .NET7 .NET8 c# Firebase GCP
+tags: dotnet csharp Firebase GCP
 author: manishtiwari25
 redirect_from:
   - /blogPost/cb792a32-945b-4f21-b57d-81ab5fffeeda/gcp-authentication-without-json-file

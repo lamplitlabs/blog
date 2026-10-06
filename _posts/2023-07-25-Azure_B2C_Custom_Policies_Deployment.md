@@ -4,7 +4,7 @@ title: "Azure B2C Custom Policies Deployment - Azure DevOps"
 description: "Deploy Azure AD B2C custom policies from Azure DevOps pipelines with token replacement, including fixes for validation issues."
 date: 2023-07-25 09:00:00 -0500
 categories: azure devops cloud
-tags: AzureAD AzureADB2C AzureEntra AzureDevOps
+tags: AzureAD AzureADB2C AzureEntra azure-devops
 author: manishtiwari25
 redirect_from:
   - /blogPost/a474c427-52d8-4f7d-9f65-02822fced323/azure-b2c-custom-policies-deployment-azure-devops

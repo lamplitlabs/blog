@@ -4,7 +4,7 @@ title: "Should we move to c# 8 using-declaration?"
 description: "What C# 8 using declarations change compared to classic using blocks, when the object gets disposed, and whether moving your code to them is worth it."
 date: 2020-02-04 09:00:00 -0500
 categories: coding dotnet
-tags: c# dotnet
+tags: csharp dotnet
 author: manishtiwari25
 image:
   path: /assets/img/headers/dotnet/csharp-using-declaration.webp

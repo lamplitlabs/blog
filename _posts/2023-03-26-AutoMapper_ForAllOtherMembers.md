@@ -4,7 +4,7 @@ title: "AutoMapper ForAllOtherMembers"
 description: "ForAllOtherMembers was removed from AutoMapper; here is why, and how to migrate mappings that relied on it."
 date: 2023-03-26 09:00:00 -0500
 categories: coding dotnet
-tags: .NET7 .NET8 c# AutoMapper
+tags: dotnet csharp AutoMapper
 author: manishtiwari25
 redirect_from:
   - /blogPost/9a27ad88-0d31-4618-b2d1-9555edbbaa80/automapper-forallothermembers

@@ -4,7 +4,7 @@ title: "System.Text.Json Serialization Issue With Azure Cosmos DB SDK V3 For dot
 description: "Fix System.Text.Json serialization issues with the Azure Cosmos DB .NET SDK v3 on .NET 8 by plugging in a custom serializer; copy-paste code included."
 date: 2024-01-10 07:40:00 -0100
 categories: coding dotnet azure
-tags: c# dotnet cosmos_db azure system.txt.json
+tags: csharp dotnet cosmos_db azure system.txt.json
 author: manishtiwari25
 image:
   path: /assets/img/headers/cosmosdb.webp

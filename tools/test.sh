@@ -454,8 +454,27 @@ main() {
   read_baseurl
 
   # build
+  # Capture the build log: Jekyll prints "Liquid Warning: Liquid syntax error ..."
+  # for an unescaped `{{ ... }}` / `{% ... %}` in a post body, exits 0, and
+  # silently drops that text from the rendered page, so readers see a sentence
+  # with a hole in it. Fail the check so the author fixes it before merge.
+  local _build_log
+  _build_log=$(mktemp)
+  local _build_rc=0
   JEKYLL_ENV=production bundle exec jekyll b \
-    -d "$SITE_DIR$_baseurl" -c "$_config"
+    -d "$SITE_DIR$_baseurl" -c "$_config" 2>&1 | tee "$_build_log" || _build_rc=${PIPESTATUS[0]}
+  if ((_build_rc != 0)); then
+    rm -f "$_build_log"
+    exit "$_build_rc"
+  fi
+  if grep -q 'Liquid Warning' "$_build_log"; then
+    echo "ERROR: jekyll build emitted Liquid Warning lines; the affected text is dropped from the rendered page:" >&2
+    grep 'Liquid Warning' "$_build_log" | sed 's/\x1b\[[0-9;]*m//g' >&2
+    echo "       Wrap literal {{ ... }} or {% ... %} in {% raw %}...{% endraw %} in the post source." >&2
+    rm -f "$_build_log"
+    exit 1
+  fi
+  rm -f "$_build_log"
 
   # test
   bundle exec htmlproofer "$SITE_DIR" \

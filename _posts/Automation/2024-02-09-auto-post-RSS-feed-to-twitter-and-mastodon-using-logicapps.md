@@ -145,3 +145,9 @@ Automating the posting of RSS feed updates to Twitter and Mastodon using Logic A
 ## Conclusion:
 
 Automating the posting of RSS feed updates to Twitter and Mastodon using Logic Apps is a powerful way to streamline your social media workflow. By automating repetitive tasks, you can save time, maintain consistency, and reach a wider audience with your content. With the step-by-step guide provided in this blog post, you can easily set up this automation and start reaping the benefits today.
+
+## Related posts
+
+- [Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret](/posts/auto-post-RSS-feed-to-social-media-using-github/)
+- [Unlocking LinkedIn's Posting Potential: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-linkedin-using-rest-api-part1/)
+- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/)

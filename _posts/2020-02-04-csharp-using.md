@@ -123,3 +123,9 @@ it looks a small feature, but this can make code cleaner and less buggy.
 if the method is small, then we should definitely use simplified using and it also helps the compiler, now compiler doest have to keep track of all the scopes.
 
 I think I’ll switch to the new using-declaration with all my code and hope you will do the same.
+
+## Related posts
+
+- [AutoMapper ForAllOtherMembers](/posts/AutoMapper_ForAllOtherMembers/)
+- [The Stirring Debate Surrounding Moq's Latest Version: Unveiling Privacy Concerns and Trust Dilemmas](/posts/Moq_Issue/)
+- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers](/posts/span-memory-allocation-reduction-dotnet/)

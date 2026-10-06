@@ -50,3 +50,9 @@ Getting started with Ferret is a breeze. Simply [fork the Ferret repository](htt
 ## Conclusion
 
 With Ferret, automating the dissemination of content from RSS feeds to social media platforms has never been easier. By harnessing the power of GitHub Actions, Ferret empowers users to streamline their content-sharing workflows while reaching a wider audience. Say goodbye to manual content posting and embrace the efficiency of Ferret today!
+
+## Related posts
+
+- [Automating RSS Feed Posts to Twitter(X) and Mastodon Using Logic Apps](/posts/auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps/)
+- [Automate Draw.io Diagram Export with GitHub Actions](/posts/automate-drawio-github-actions/)
+- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/)

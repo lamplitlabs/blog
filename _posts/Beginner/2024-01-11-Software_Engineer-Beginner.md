@@ -61,3 +61,9 @@ So, Let's wrap up this post here, I hope it helped you a bit.
 #### References
 
 1. https://www.youtube.com/watch?v=3LPJfIKxwWc <= I will strongly recommend watching this video.
+
+## Related posts
+
+- [The Language Of Computers](/posts/Language_Of_Computers/)
+- [Variables, Values and References: How a Name Finds Its Data](/posts/Variables_Values_References/)
+- [Does coding is enough to become a good backend engineer?](/posts/Coding-Enough/)

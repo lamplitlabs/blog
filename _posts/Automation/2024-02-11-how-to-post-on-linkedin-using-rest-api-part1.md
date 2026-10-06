@@ -147,3 +147,9 @@ Now that we've successfully obtained the access token, the hard part is behind u
 - [https://learning.postman.com/docs/sending-requests/authorization/oauth-20/](https://learning.postman.com/docs/sending-requests/authorization/oauth-20/)
 - [https://medium.com/tech-takeaways/how-to-perform-oauth-2-0-authorization-with-postman-2bfbde062959](https://learning.postman.com/docs/sending-requests/authorization/oauth-20/)
 - [https://www.azaytek.com/part-1-how-to-get-linkedin-api-access-token/](https://www.azaytek.com/part-1-how-to-get-linkedin-api-access-token/)
+
+## Related posts
+
+- [Unlocking LinkedIn's Posting Potential: Part 2 - Creating Post using REST Apis](/posts/how-to-post-on-linkedin-using-rest-api-part2/)
+- [Maximizing Your Facebook Page: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-facebook-page-using-rest-api-part1/)
+- [Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret](/posts/auto-post-RSS-feed-to-social-media-using-github/)

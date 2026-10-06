@@ -93,3 +93,9 @@ var client = new CosmosClient(endpoint, authKey, cosmosClientOptions);
 
 I hope this article will help you.
 cheers :)
+
+## Related posts
+
+- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/)
+- [AutoMapper ForAllOtherMembers](/posts/AutoMapper_ForAllOtherMembers/)
+- [Updating Azure Function App From V3 to V4](/posts/Updating-Azure-Function-v3-v4/)

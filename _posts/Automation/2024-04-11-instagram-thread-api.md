@@ -51,3 +51,9 @@ The Threads API marks a significant step for Instagram. It's a clear message: th
 The potential for automation and integrations is massive. If Instagram keeps building on the API to create a developer haven, it could become incredibly attractive to power users and businesses alike.
 
 {% include article-ads.html %}
+
+## Related posts
+
+- [Instagram Threads API - Part 1 - Obtaining Your API Access Token](/posts/how-to-post-content-on-thread-using-api-part1/)
+- [Instagram Threads API - Part 2 - Creating Post using REST Apis](/posts/how-to-post-content-on-thread-using-api-part2/)
+- [Maximizing Your Facebook Page: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-facebook-page-using-rest-api-part1/)

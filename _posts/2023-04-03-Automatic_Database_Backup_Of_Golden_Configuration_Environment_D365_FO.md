@@ -69,3 +69,9 @@ If you are interested in terraforming, DevOps, Cloud (Azure, GCP, or AWS), or .N
  <br/>
 Happy Coding, <br/>
 Cheers ? _Bis Bald_
+
+## Related posts
+
+- [D365 FO EDMX / OData trimmer online– Make your metadata smaller online](/posts/D365_FO_EDMX_Trimmer/)
+- [Navigating OData APIs with Dotnet 8 and C#: Exploring Options and Drawbacks](/posts/odata/)
+- [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained](/posts/odata-query-performance-pitfalls-dotnet/)

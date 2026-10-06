@@ -79,3 +79,9 @@ you can just refer to one of the google common type.
 - https://docs.microsoft.com/en-us/dotnet/architecture/grpc-for-wcf-developers/protobuf-data-types
 - https://developers.google.com/protocol-buffers/docs/proto3?source=post_page-----7148ce60b54b--------------------------------
 - https://developers.google.com/protocol-buffers/docs/reference/google.protobuf?source=post_page-----7148ce60b54b--------------------------------
+
+## Related posts
+
+- [Navigating OData APIs with Dotnet 8 and C#: Exploring Options and Drawbacks](/posts/odata/)
+- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/)
+- [Should we move to c# 8 using-declaration?](/posts/csharp-using/)

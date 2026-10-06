@@ -59,3 +59,9 @@ Coding is only 30% of total backend engineering. if you have an degree of CSE th
 becoming a developer is easy but becoming an engineer takes sweat, tears and a lot of hard work. DS and Algorithm is important but they are not that much important, whenever I design a system I never thought of graph, or SDFS or something, you can become an good engineer just start leaning.
 
 Cheers
+
+## Related posts
+
+- [How to Become a Software Engineer (From Scratch)](/posts/Software_Engineer-Beginner/)
+- [The Language Of Computers](/posts/Language_Of_Computers/)
+- [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase](/posts/ai-sdlc-dotnet-teams/)

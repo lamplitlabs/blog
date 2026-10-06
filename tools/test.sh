@@ -327,18 +327,25 @@ check_tab_order_unique() {
   echo "tab-order-coverage: all _tabs/*.md 'order:' values are unique (rule: no two tabs share the same front-matter 'order:')"
 }
 
-# Report how many AI-category posts lack a "## Related" footer linking to
-# same-category posts, so readers finishing one AI/Enterprise-AI post are
-# offered the next one. Reports a count rather than failing so the number can
-# drop toward 0 while new posts land.
+# Report how many posts (all categories) lack a "## Related" footer linking to
+# related posts, so readers finishing any post are offered the next one.
+# Reports a count rather than failing so the number can drop toward 0 while
+# new posts land. Also reports the per-folder breakdown so a regression in one
+# category stands out.
 report_ai_related_coverage() {
-  local ai_posts ai_total missing count
-  ai_posts="$(find _posts/AI -name '*.md' | sort)"
-  ai_total="$(printf '%s\n' "$ai_posts" | grep -c .)"
-  missing="$(grep -L -E '^## Related' $ai_posts || true)"
+  local all_posts total missing count dir dtotal dmissing
+  all_posts="$(find _posts -name '*.md' | sort)"
+  total="$(printf '%s\n' "$all_posts" | grep -c .)"
+  missing="$(grep -L -E '^## Related' $all_posts || true)"
   count="$(printf '%s\n' "$missing" | grep -c . || true)"
   if [[ -n $missing ]]; then printf '       %s\n' $missing; fi
-  echo "ai-related-coverage: $count/$ai_total _posts/AI posts without a '## Related' heading (rule: grep -L -E '^## Related' \$(find _posts/AI -name '*.md'))"
+  for dir in _posts $(find _posts -mindepth 1 -type d | sort); do
+    dtotal="$(find "$dir" -maxdepth 1 -name '*.md' | grep -c . || true)"
+    [[ $dtotal -eq 0 ]] && continue
+    dmissing="$(find "$dir" -maxdepth 1 -name '*.md' -print0 | xargs -0 grep -L -E '^## Related' | grep -c . || true)"
+    echo "       $dir: $dmissing/$dtotal without '## Related'"
+  done
+  echo "ai-related-coverage: $count/$total _posts posts without a '## Related' heading (rule: grep -L -E '^## Related' \$(find _posts -name '*.md'))"
 }
 
 main() {

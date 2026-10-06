@@ -59,3 +59,9 @@ To connect Azure API Gateway with Azure Key Vault, you will need to perform the 
 By following these steps, you can securely connect Azure API Gateway with Azure Key Vault and store and manage your secrets in a centralized location. This can help you secure your APIs and protect sensitive information, such as API keys and secrets, from unauthorized access.
 
 *Header and inline screenshots: Azure portal "Add named value" form, from [Microsoft Learn – Use named values in Azure API Management policies](https://learn.microsoft.com/azure/api-management/api-management-howto-properties), © Microsoft, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+## Related posts
+
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
+- [Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-semantic-caching-azure-openai/)
+- [Azure B2C Custom Policies Deployment - Azure DevOps](/posts/Azure_B2C_Custom_Policies_Deployment/)

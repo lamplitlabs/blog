@@ -155,3 +155,9 @@ Every field maps one-to-one onto the `curl` version. In C# with Azure OpenAI the
 4. Build a two-turn conversation by hand: copy the assistant's answer into a new request as an `assistant` message and ask a follow-up question.
 
 Next in the series we will take this call and make it useful: giving the model your own documents to answer from, and asking it to reply in a shape your code can check.
+
+## Related posts
+
+- [How a Language Model Answers You: Tokens, Prediction and Repetition](/posts/How_Language_Models_Work/)
+- [Grounding a Model with Your Own Documents and Getting a Reply Your Code Can Check](/posts/Grounding_A_Model_With_Your_Documents/)
+- [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)

@@ -67,3 +67,9 @@ The codes and encodings discussed in this blog post form the backbone of our dig
 
 1. https://www.youtube.com/watch?v=3LPJfIKxwWc
 2. https://pll.harvard.edu/course/cs50-introduction-computer-science
+
+## Related posts
+
+- [Variables, Values and References: How a Name Finds Its Data](/posts/Variables_Values_References/)
+- [How to Become a Software Engineer (From Scratch)](/posts/Software_Engineer-Beginner/)
+- [How a Language Model Answers You: Tokens, Prediction and Repetition](/posts/How_Language_Models_Work/)

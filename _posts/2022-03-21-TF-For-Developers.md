@@ -53,3 +53,9 @@ as a developer you should only worry about 4 commands
    Associate existing infrastructure with a Terraform resource, that means if you have existing resource in cloud it will just import there configuration in you local state.
 
 I hope this article helps you understand something, if you have any question or you wants more stuff please add comments, I will try to add them.
+
+## Related posts
+
+- [Azure B2C Custom Policies Deployment - Azure DevOps](/posts/Azure_B2C_Custom_Policies_Deployment/)
+- [Securing Azure APIM With Azure Key Vault](/posts/APIM-Key-Vault/)
+- [Azurite + GitHub Actions](/posts/Azurite-GitHubAction/)

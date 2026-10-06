@@ -152,3 +152,9 @@ Reassigning the parameter (`items = []`) inside the function only relabels the l
 3. Make a real copy and confirm the two names are now independent.
 
 Ten minutes with this exercise will save you hours of debugging later.
+
+## Related posts
+
+- [The Language Of Computers](/posts/Language_Of_Computers/)
+- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers](/posts/span-memory-allocation-reduction-dotnet/)
+- [How a Language Model Answers You: Tokens, Prediction and Repetition](/posts/How_Language_Models_Work/)

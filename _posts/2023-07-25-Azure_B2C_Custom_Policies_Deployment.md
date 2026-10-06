@@ -400,3 +400,9 @@ stages:
 
 Hope this blog post will help you automate the custom policies, if you face any issues please leave a comment here.
 cheers.
+
+## Related posts
+
+- [Automate Draw.io Diagram Export with Azure DevOps](/posts/automate-drawio-azure-devops/)
+- [Securing Azure APIM With Azure Key Vault](/posts/APIM-Key-Vault/)
+- [Terraform for developers](/posts/TF-For-Developers/)

@@ -54,3 +54,9 @@ If you face any issues or if you have any question please add a comment, and ple
 cheers🍻
 
 *Inline screenshot: Function App app settings blade, from [Microsoft Learn – Manage your function app](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings), © Microsoft, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+## Related posts
+
+- [Updating Azure Function App From V3 to V4](/posts/Updating-Azure-Function-v3-v4/)
+- [Azurite + GitHub Actions](/posts/Azurite-GitHubAction/)
+- [Securing Azure APIM With Azure Key Vault](/posts/APIM-Key-Vault/)

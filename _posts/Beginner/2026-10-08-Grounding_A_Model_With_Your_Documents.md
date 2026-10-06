@@ -141,3 +141,9 @@ Every production "chat with your documents" feature is this loop with better ret
 ## Where to go next
 
 You now have the complete beginner arc: what a program is, how a model predicts text, how to call it, how to ground it in your data, and how to make its answer checkable. The .NET series on this blog picks up each piece at production depth: [Structured Outputs with Azure OpenAI in .NET](/posts/structured-outputs-azure-openai-dotnet/) enforces the JSON *schema*, not just JSON syntax; [Testing LLM Prompts in .NET](/posts/testing-llm-prompts-dotnet/) shows how to write tests so a prompt change cannot quietly break the checks above; and [Azure OpenAI Embeddings and Semantic Search](/posts/azure-openai-embeddings-semantic-search-dotnet/) replaces keyword retrieval with embeddings.
+
+## Related posts
+
+- [Calling a Language Model from Code: Your Prompt Is Just an API Request](/posts/Calling_A_Model_From_Code/)
+- [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
+- [Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)

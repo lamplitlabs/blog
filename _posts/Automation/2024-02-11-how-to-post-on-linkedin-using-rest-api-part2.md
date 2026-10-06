@@ -187,3 +187,9 @@ Let's keep moving forward together!
 ## Other
 
 - Go Code is available [here](https://github.com/lamplitlabs/ferret/blob/main/pkg/external/linkedin.go)
+
+## Related posts
+
+- [Unlocking LinkedIn's Posting Potential: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-linkedin-using-rest-api-part1/)
+- [Maximizing Your Facebook Page: Part 2 - Creating Post using REST Apis](/posts/how-to-post-on-facebook-page-using-rest-api-part2/)
+- [Automating RSS Feed Posts to Twitter(X) and Mastodon Using Logic Apps](/posts/auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps/)

@@ -154,3 +154,9 @@ Need help extending this workflow? Feel free to fork, adapt, or drop a question!
 
 {% include article-ads.html %}
 {% include article-ads.html %}
+
+## Related posts
+
+- [Automate Draw.io Diagram Export with Azure DevOps](/posts/automate-drawio-azure-devops/)
+- [Azurite + GitHub Actions](/posts/Azurite-GitHubAction/)
+- [Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret](/posts/auto-post-RSS-feed-to-social-media-using-github/)

@@ -67,3 +67,9 @@ As mentioned in the [GitHub discussion](https://github.com/AutoMapper/AutoMapper
 <br>
 Cheers <br>
 Happy coding :)
+
+## Related posts
+
+- [The Stirring Debate Surrounding Moq's Latest Version: Unveiling Privacy Concerns and Trust Dilemmas](/posts/Moq_Issue/)
+- [Should we move to c# 8 using-declaration?](/posts/csharp-using/)
+- [System.Text.Json Serialization Issue With Azure Cosmos DB SDK V3 For dotnet8](/posts/Cosmos_DB_Sdk_System_Text_Json_Issue/)

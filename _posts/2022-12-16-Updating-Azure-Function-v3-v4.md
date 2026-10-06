@@ -43,3 +43,9 @@ After you save, the Application settings table should show `FUNCTIONS_EXTENSION_
 {% include article-ads.html %}
 
 Updating an Azure Functions app from version 3 to version 4 can be a complex process, and it is important to carefully follow the steps outlined above to ensure a smooth transition. If you encounter any issues during the update process, you may want to consult the Azure Functions documentation or seek help from Microsoft support.
+
+## Related posts
+
+- [How To Change Azure Function App Time zone](/posts/Change_Function_App_Timezone/)
+- [Azurite + GitHub Actions](/posts/Azurite-GitHubAction/)
+- [System.Text.Json Serialization Issue With Azure Cosmos DB SDK V3 For dotnet8](/posts/Cosmos_DB_Sdk_System_Text_Json_Issue/)

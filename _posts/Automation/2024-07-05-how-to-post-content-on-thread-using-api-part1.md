@@ -187,3 +187,9 @@ Obtaining your API access token for post creation marks the initial step towards
 [Part 2](/posts/how-to-post-content-on-thread-using-api-part2) is out now.
 
 {% include article-ads.html %}
+
+## Related posts
+
+- [Instagram Threads API - Part 2 - Creating Post using REST Apis](/posts/how-to-post-content-on-thread-using-api-part2/)
+- [Instagram Threads API: A Big Step Towards Taking on Twitter?](/posts/instagram-thread-api/)
+- [Maximizing Your Facebook Page: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-facebook-page-using-rest-api-part1/)

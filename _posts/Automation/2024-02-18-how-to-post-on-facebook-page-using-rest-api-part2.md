@@ -126,3 +126,9 @@ And there you have it – a crash course in creating Facebook posts like a pro u
 ## Other
 
 - [https://developers.facebook.com/docs/pages-api/posts/](https://developers.facebook.com/docs/pages-api/posts/)
+
+## Related posts
+
+- [Maximizing Your Facebook Page: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-facebook-page-using-rest-api-part1/)
+- [Instagram Threads API - Part 2 - Creating Post using REST Apis](/posts/how-to-post-content-on-thread-using-api-part2/)
+- [Unlocking LinkedIn's Posting Potential: Part 2 - Creating Post using REST Apis](/posts/how-to-post-on-linkedin-using-rest-api-part2/)

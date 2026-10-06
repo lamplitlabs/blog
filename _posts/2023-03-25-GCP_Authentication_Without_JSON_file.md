@@ -144,3 +144,9 @@ await firestoreDb.Collection("blogs").AddAsync(new { Hello = "Hello World!!!" })
 
 That's It!!! I hope it helps. <br>
 Happy Coding :)
+
+## Related posts
+
+- [Cloud OCR Compared: Amazon Textract vs Google Cloud Vision vs Azure AI Document Intelligence](/posts/cloud-ocr-comparison-aws-gcp-azure/)
+- [Securing Azure APIM With Azure Key Vault](/posts/APIM-Key-Vault/)
+- [Where can I get list of countries and there state provinces?](/posts/List-Countries/)

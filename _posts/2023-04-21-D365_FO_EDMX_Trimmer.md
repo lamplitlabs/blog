@@ -32,3 +32,9 @@ _Illustration of the expected flow: upload the full metadata, tick only the enti
 
 Hope this will help. <br/>
 Happy coding
+
+## Related posts
+
+- [Navigating OData APIs with Dotnet 8 and C#: Exploring Options and Drawbacks](/posts/odata/)
+- [OData Client- Dotnet 8 and C#](/posts/odata-csharp-odata-client/)
+- [Automatic Database Backup Of Golden Configuration Environment D365FO](/posts/Automatic_Database_Backup_Of_Golden_Configuration_Environment_D365_FO/)

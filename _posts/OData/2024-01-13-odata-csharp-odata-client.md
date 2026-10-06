@@ -105,3 +105,9 @@ In summary, OData Client is a valuable tool for developers who want to simplify 
 ## Other
 
 If you want to explore your OData metadata, you can visit an [open-source](https://edmx.lamplitlabs.com/explore) project created by me. By using this tool you can get the data types, enum values, and other useful information.
+
+## Related posts
+
+- [Navigating OData APIs with Dotnet 8 and C#: Exploring Options and Drawbacks](/posts/odata/)
+- [Simple OData Client - Dotnet 8 and C#](/posts/odata-csharp-simple-odata-client/)
+- [Benchmarking OData Clients in Dotnet 8](/posts/odata-csharp-benchmark/)

@@ -217,3 +217,9 @@ And there you have it – a crash course in creating Threads posts like a pro us
 - I am not considering all the use cases here but you can visit [https://developers.facebook.com/docs/threads](https://developers.facebook.com/docs/threads/) for more use cases, including replies, insights and deleting posts.
 
 {% include article-ads.html %}
+
+## Related posts
+
+- [Instagram Threads API - Part 1 - Obtaining Your API Access Token](/posts/how-to-post-content-on-thread-using-api-part1/)
+- [Instagram Threads API: A Big Step Towards Taking on Twitter?](/posts/instagram-thread-api/)
+- [Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret](/posts/auto-post-RSS-feed-to-social-media-using-github/)

@@ -151,3 +151,9 @@ Obtaining your API access token for post creation marks the initial step towards
 Stay tuned for more insights on maximizing your Facebook Page's impact through API integration!
 
 [Part 2](/posts/how-to-post-on-facebook-page-using-rest-api-part2) is out now.
+
+## Related posts
+
+- [Maximizing Your Facebook Page: Part 2 - Creating Post using REST Apis](/posts/how-to-post-on-facebook-page-using-rest-api-part2/)
+- [Instagram Threads API - Part 1 - Obtaining Your API Access Token](/posts/how-to-post-content-on-thread-using-api-part1/)
+- [Unlocking LinkedIn's Posting Potential: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-linkedin-using-rest-api-part1/)

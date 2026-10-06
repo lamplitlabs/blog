@@ -31,3 +31,8 @@ Here is the JSON shape each country entry follows in the gist, with its ISO code
 {% include feed-ads.html %}
 
 [Here](https://gist.github.com/manishtiwari25/0fa055ee14f29ee6a7654d50af20f095) you can find the gist.
+
+## Related posts
+
+- [GCP Authentication Without JSON file](/posts/GCP_Authentication_Without_JSON_file/)
+- [How To Change Azure Function App Time zone](/posts/Change_Function_App_Timezone/)

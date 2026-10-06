@@ -75,3 +75,9 @@ The choice between ODataClient, custom HttpClient, and Simple OData Client hinge
 - The benchmarking code is available on [GitHub](https://github.com/lamplitlabs/bites-in-byte-blog/tree/main/src/ODataBenchmark)
 - Tools related to OData EDMX or Metadata are available [here](https://edmx.lamplitlabs.com/)
 - Other Related [blogs](/categories/odata/)
+
+## Related posts
+
+- [Navigating OData APIs with Dotnet 8 and C#: Exploring Options and Drawbacks](/posts/odata/)
+- [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained](/posts/odata-query-performance-pitfalls-dotnet/)
+- [Custom HTTP Client - Dotnet 8 and C#](/posts/odata-csharp-custom-httpclient-client/)

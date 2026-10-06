@@ -68,3 +68,9 @@ Change the azurite version according to your need.
 
 Hope it help you,
 Cheers 🍻
+
+## Related posts
+
+- [Automate Draw.io Diagram Export with GitHub Actions](/posts/automate-drawio-github-actions/)
+- [Updating Azure Function App From V3 to V4](/posts/Updating-Azure-Function-v3-v4/)
+- [Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret](/posts/auto-post-RSS-feed-to-social-media-using-github/)

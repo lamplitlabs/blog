@@ -148,8 +148,6 @@ Now, let's walk through the steps to obtain your API access token specifically f
 
 Obtaining your API access token for post creation marks the initial step towards optimizing your Facebook Page's performance through automation. In [Part 2](/posts/how-to-post-on-facebook-page-using-rest-api-part2)of this series, we'll delve into leveraging your access token to programmatically create and schedule posts, empowering you to elevate your social media strategy.
 
-Stay tuned for more insights on maximizing your Facebook Page's impact through API integration!
-
 [Part 2](/posts/how-to-post-on-facebook-page-using-rest-api-part2) is out now.
 
 ## Related posts

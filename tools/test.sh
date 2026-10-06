@@ -114,6 +114,89 @@ check_tag_case_duplicates() {
   echo "tag-case-duplicates: 0 case-variant tag collisions across $(printf '%s\n' "$tags" | grep -c .) distinct tags in $_posts_total posts (rule: tags equal under tolower() but spelled differently)"
 }
 
+# Fail when two posts use the same category with different letter case (e.g. "Drawio"
+# vs "drawio", fixed in a97a525): Jekyll would then emit a "Conflict:" line buried in the build
+# output and silently drop one category page. Reads every front-matter style used in
+# _posts: space-separated (`categories: a b`), inline list (`categories: [a, b]`) and
+# multi-line YAML list (`categories:` followed by `  - a` lines). Scans every post
+# recursively (_posts/AI, _posts/Beginner, ... too), not just _posts/*.md.
+check_category_case_duplicates() {
+  local categories dupes
+  categories="$(awk '
+    FNR == 1 { fm = 0; in_categories = 0 }
+    /^---[[:space:]]*$/ { fm++; in_categories = 0; next }
+    fm != 1 { next }
+    in_categories && /^[[:space:]]*-[[:space:]]+/ {
+      sub(/^[[:space:]]*-[[:space:]]+/, ""); gsub(/["'"'"']/, ""); sub(/[[:space:]]+$/, "")
+      if ($0 != "") print $0
+      next
+    }
+    { in_categories = 0 }
+    /^categories:/ {
+      sub(/^categories:[[:space:]]*/, "")
+      if ($0 == "") { in_categories = 1; next }
+      gsub(/[][,"'"'"']/, " ")
+      for (i = 1; i <= NF; i++) print $i
+    }
+  ' $_posts | sort -u)"
+
+  dupes="$(printf '%s\n' "$categories" | awk '{ k = tolower($0); if (k in seen) print seen[k] " / " $0; else seen[k] = $0 }')"
+
+  if [[ -n $dupes ]]; then
+    echo "error: categories that differ only by letter case were found in _posts/:" >&2
+    printf '       %s\n' "$dupes" >&2
+    echo "       Use one spelling per category so Jekyll does not drop a category page with a 'Conflict:' warning." >&2
+    exit 1
+  fi
+  echo "category-case-duplicates: 0 case-variant category collisions across $(printf '%s\n' "$categories" | grep -c .) distinct categories in $_posts_total posts (rule: categories equal under tolower() but spelled differently)"
+}
+
+# Report (and ratchet) tag synonym clusters: posts tagged ".NET", ".NET7", ".NET8" or
+# "dotnet8" never show up on the "dotnet" tag page, so readers browsing one tag miss the
+# others. Each line in TAG_SYNONYM_GROUPS is "canonical variant variant ..."; the check
+# counts posts that use a non-canonical variant and fails when that number grows past
+# TAG_SYNONYM_ALLOWED (the count at the time the check was added), so new posts must use
+# the canonical tag while old posts can be migrated one at a time by lowering the cap.
+TAG_SYNONYM_GROUPS='dotnet .NET .NET7 .NET8 dotnet8 net net8;csharp c# C# CSharp;azure-devops AzureDevOps azuredevops;software-engineering software-engineer'
+TAG_SYNONYM_ALLOWED=22
+check_tag_synonym_groups() {
+  local hits count
+  hits="$(awk -v groups="$TAG_SYNONYM_GROUPS" '
+    BEGIN {
+      n = split(groups, lines, ";")
+      for (l = 1; l <= n; l++) {
+        m = split(lines[l], w, " ")
+        for (i = 2; i <= m; i++) canon[w[i]] = w[1]
+      }
+    }
+    FNR == 1 { fm = 0; in_tags = 0 }
+    /^---[[:space:]]*$/ { fm++; in_tags = 0; next }
+    fm != 1 { next }
+    in_tags && /^[[:space:]]*-[[:space:]]+/ {
+      sub(/^[[:space:]]*-[[:space:]]+/, ""); gsub(/["'"'"']/, ""); sub(/[[:space:]]+$/, "")
+      if ($0 in canon) print FILENAME ": " $0 " -> " canon[$0]
+      next
+    }
+    { in_tags = 0 }
+    /^tags:/ {
+      sub(/^tags:[[:space:]]*/, "")
+      if ($0 == "") { in_tags = 1; next }
+      gsub(/[][,"'"'"']/, " ")
+      for (i = 1; i <= NF; i++) if ($i in canon) print FILENAME ": " $i " -> " canon[$i]
+    }
+  ' $_posts | sort)"
+  count="$(printf '%s\n' "$hits" | grep -c . || true)"
+
+  if ((count > TAG_SYNONYM_ALLOWED)); then
+    echo "error: $count post tags use a synonym of a canonical tag (allowed: $TAG_SYNONYM_ALLOWED):" >&2
+    printf '       %s\n' "$hits" >&2
+    echo "       Use the canonical tag (left of the arrow) so the post lands on the same tag page as its siblings." >&2
+    exit 1
+  fi
+  echo "tag-synonym-groups: $count/$TAG_SYNONYM_ALLOWED post tags still use a non-canonical synonym across $(printf '%s' "$TAG_SYNONYM_GROUPS" | tr ';' '\n' | grep -c .) groups in $_posts_total posts (lower TAG_SYNONYM_ALLOWED after migrating a post)"
+  if [[ -n $hits ]]; then printf '  %s\n' "$hits"; fi
+}
+
 # Report image coverage of _posts so image-coverage cards can cite one number.
 # A post counts as having an image when it has a front-matter `image:` key, a
 # markdown `![` image or an `<img` tag; the denominator is every `*.md` under
@@ -352,6 +435,8 @@ main() {
   preflight
   collect_posts
   check_tag_case_duplicates
+  check_category_case_duplicates
+  check_tag_synonym_groups
   check_post_descriptions
   check_folder_categories
   check_date_match

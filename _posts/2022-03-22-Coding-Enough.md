@@ -4,7 +4,7 @@ title: "Does coding is enough to become a good backend engineer?"
 description: "Is coding, data structures and algorithms enough to become a good backend engineer? Thoughts on the other skills that matter in real projects."
 date: 2022-03-22 09:00:00 -0500
 categories: non-coding
-tags: Backend Backend-Development Software-Engineering Engineer
+tags: backend backend-development software-engineering engineer
 author: manishtiwari25
 image:
   path: /assets/img/headers/coding-enough.webp

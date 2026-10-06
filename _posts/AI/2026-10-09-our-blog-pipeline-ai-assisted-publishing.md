@@ -24,13 +24,13 @@ The site is a plain [Jekyll](https://jekyllrb.com/) project using the Chirpy the
 ```yaml
 ---
 layout: post
-title: "..."
+title: "How This Blog Is Built and Checked"
 date: 2026-10-09 09:00:00 -0500
 categories: ai
 tags: ai sdlc jekyll
 description: "One sentence, 50-160 characters, used for search snippets and the feed."
 image:
-  path: /assets/img/headers/ai/....webp
+  path: /assets/img/headers/ai/our-blog-pipeline-ai-assisted-publishing.webp
   alt: "What the header image shows"
 ---
 ```

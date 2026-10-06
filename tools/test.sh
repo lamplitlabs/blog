@@ -431,6 +431,44 @@ report_ai_related_coverage() {
   echo "ai-related-coverage: $count/$total _posts posts without a '## Related' heading (rule: grep -L -E '^## Related' \$(find _posts -name '*.md'))"
 }
 
+# Fail when a `(/posts/<slug>/)` link under a post's "## Related" heading points
+# at a slug no file in _posts produces. Posts are published at /posts/:title/
+# (_config.yml), where :title is the filename with its YYYY-MM-DD- prefix and
+# .md suffix stripped, so a typo or a renamed post leaves readers on a 404 that
+# htmlproofer cannot see (it only checks links on pages that were built). Scans
+# every line from "## Related" to the next "## " heading or end of file.
+check_related_link_resolution() {
+  local slugfile links bad count
+  slugfile="$(mktemp)"
+  for f in $_posts; do n="$(basename "$f" .md)"; echo "${n:11}"; done | sort -u > "$slugfile"
+  # "<file>\t<slug>" for every Related link, then keep the ones not in slugfile.
+  links="$(for f in $_posts; do
+    awk -v file="$f" '
+      /^## Related/ { in_rel = 1; next }
+      /^## / { in_rel = 0 }
+      in_rel {
+        s = $0
+        while (match(s, /\(\/posts\/[^)#?]+/)) {
+          link = substr(s, RSTART + 8, RLENGTH - 8)
+          sub(/\/$/, "", link)
+          print file "\t" link
+          s = substr(s, RSTART + RLENGTH)
+        }
+      }
+    ' "$f"
+  done | awk -F '\t' 'NR == FNR { ok[$0] = 1; next } !($2 in ok)' "$slugfile" -)"
+  rm -f "$slugfile"
+  bad="$(printf '%s\n' "$links" | cut -f1 | grep -c . || true)"
+  count="$(printf '%s\n' "$links" | cut -f1 | sort -u | grep -c . || true)"
+  if ((count > 0)); then
+    echo "error: $count posts have $bad '## Related' links to /posts/<slug>/ that no file in _posts produces:" >&2
+    printf '%s\n' "$links" | awk -F '\t' '{ print "       " $1 ": /posts/" $2 "/" }' >&2
+    echo "       Point each link at an existing post slug (filename without its date prefix and .md) so readers do not land on a 404." >&2
+    exit 1
+  fi
+  echo "related-link-resolution: $count/$_posts_total posts with unresolved Related links (rule: every (/posts/<slug>/) under '## Related' matches a _posts/**/YYYY-MM-DD-<slug>.md)"
+}
+
 main() {
   preflight
   collect_posts
@@ -445,6 +483,7 @@ main() {
   report_alt_coverage
   report_body_image_coverage
   report_ai_related_coverage
+  check_related_link_resolution
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

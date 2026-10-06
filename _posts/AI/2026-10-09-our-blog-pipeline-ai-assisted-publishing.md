@@ -98,6 +98,12 @@ What has *not* changed is the editorial bar: a post that passes every check can 
 
 If you run a Jekyll blog, the cheapest wins are the two anchored `grep -L` checks above wrapped in a script that `set -eu` fails on. Add html-proofer after that. Only once the deterministic checks exist does it make sense to let an AI agent draft posts, because then "did the agent break the site?" is a question a script answers in ten seconds, and the human review can spend its time on whether the post is worth reading.
 
+## Our Products
+
+The same "AI drafts, checks gate, humans merge" habit shapes the tooling we ship at Lamplit Labs. Our flagship is the [EDMX Trimmer and OData metadata explorer](https://edmx.lamplitlabs.com/explore), which turns a multi-megabyte D365 or OData `$metadata` file into just the entities, enums and types your client actually needs. Our platform also includes the [cron expression tester](https://tools.lamplitlabs.com/cron) for Azure Functions timer triggers and [Ferret](https://github.com/lamplitlabs/ferret), our open-source Go toolkit for posting to social APIs such as Threads and LinkedIn. All of them are built and checked with the same kind of deterministic gates described above.
+
+![Side-by-side flow showing an AI coding agent's plan for a GitHub issue, used as the drafting step that precedes the deterministic checks in our tooling pipeline](/assets/img/posts/ai/ai-agent-issue-plan.webp)
+
 ## Related posts
 
 - [AI SDLC for .NET Teams: a phase-by-phase guide]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})

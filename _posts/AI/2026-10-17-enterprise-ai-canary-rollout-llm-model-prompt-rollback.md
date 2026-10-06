@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise AI: Canary Deploys and Automatic Rollback for LLM Model Versions and Prompt Changes"
 date: 2026-10-17 09:00:00 -0500
 categories: ai
-tags: ai azure openai enterprise apim canary rollback deployment observability dotnet
+tags: ai azure openai enterprise apim canary rollback deployment observability dotnet enterprise-ai
 author: manishtiwari25
 description: "Ship a new Azure OpenAI model version or prompt safely: shadow traffic, weighted canary in APIM, golden-set quality scoring, automatic rollback on regression."
 image:

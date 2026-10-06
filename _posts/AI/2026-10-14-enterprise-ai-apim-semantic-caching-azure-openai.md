@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management"
 date: 2026-10-14 09:00:00 -0500
 categories: ai
-tags: ai azure openai enterprise apim caching performance finops governance
+tags: ai azure openai enterprise apim caching performance finops governance enterprise-ai
 author: manishtiwari25
 description: "Cut Azure OpenAI latency and token spend with APIM semantic cache policies: setup, threshold tuning on real traffic, and the gotchas."
 image:

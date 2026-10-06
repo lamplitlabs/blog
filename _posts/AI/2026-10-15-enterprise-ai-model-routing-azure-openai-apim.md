@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise AI: Model Routing for Azure OpenAI - Cheap Model First, Escalate Only When Needed"
 date: 2026-10-15 09:00:00 -0500
 categories: ai
-tags: ai azure openai enterprise apim routing finops performance governance
+tags: ai azure openai enterprise apim routing finops performance governance enterprise-ai
 author: manishtiwari25
 description: "Route Azure OpenAI traffic to gpt-4o-mini by default and escalate to gpt-4o or o1 only when quality checks fail: APIM policy, classifier, results."
 image:

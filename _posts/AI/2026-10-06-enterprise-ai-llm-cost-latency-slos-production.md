@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise AI: Cost and Latency SLOs for LLM Workloads - Burn-Rate Alerts for Azure OpenAI in Production"
 date: 2026-10-06 09:00:00 -0500
 categories: ai
-tags: ai azure openai enterprise observability sre finops performance
+tags: ai azure openai enterprise observability sre finops performance enterprise-ai
 author: manishtiwari25
 description: "Define cost and p95 latency SLOs per team and model for Azure OpenAI, compute burn rates in KQL, and page only when both windows are on fire."
 image:

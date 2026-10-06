@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management"
 date: 2026-10-05 09:00:00 -0500
 categories: ai
-tags: ai azure openai enterprise apim governance dotnet performance
+tags: ai azure openai enterprise apim governance dotnet performance enterprise-ai
 author: manishtiwari25
 description: "Put Azure API Management in front of Azure OpenAI to give every team its own token quota, a 429 instead of a starved deployment, and a chargeback report."
 image:

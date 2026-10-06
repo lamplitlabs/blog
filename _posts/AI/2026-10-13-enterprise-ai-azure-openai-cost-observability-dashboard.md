@@ -3,7 +3,7 @@ layout: post
 title: "Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks"
 date: 2026-10-13 09:00:00 -0500
 categories: ai
-tags: ai azure openai enterprise observability kql finops governance
+tags: ai azure openai enterprise observability kql finops governance enterprise-ai
 author: manishtiwari25
 description: "Turn Azure OpenAI diagnostic logs into a per-team, per-model daily cost dashboard with KQL and an Azure Monitor Workbook, plus a budget alert."
 image:

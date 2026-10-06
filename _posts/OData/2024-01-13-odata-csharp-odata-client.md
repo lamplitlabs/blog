@@ -13,7 +13,8 @@ image:
 
 OData Client, a library provided by Microsoft for accessing OData services, offers several advantages and disadvantages compared to other methods of connecting to OData APIs. Here's a comprehensive overview:
 
-Comparison with other techniques is available [here](/posts/odata-csharp-benchmark)
+> **Which OData client library is this?** This post covers Microsoft's **OData Connected Service / `Microsoft.OData.Client`**, which generates a typed `DefaultContainer` from the service `$metadata`. If you want a lightweight, metadata-free fluent API instead, read the sibling post on [Simple.OData.Client](/posts/odata-csharp-simple-odata-client/) - it uses the same TripPin sample service, so the two walkthroughs are directly comparable. Latency numbers for both (plus raw `HttpClient`) are in the [OData client benchmark](/posts/odata-csharp-benchmark/).
+{: .prompt-info }
 
 {% include article-ads.html %}
 
@@ -48,7 +49,7 @@ public static void Main(string[] s)
 
 ```
 
-you can get the code [here](https://github.com/lamplitlabs/bites-in-byte-blog/blob/main/src/ODataBenchmark/BenchmarkODataClient.cs)
+you can get the code [here](https://github.com/lamplitlabs/bites-in-byte-blog/blob/main/src/ODataBenchmark/BenchmarkODataClient.cs). The same `People` query written against Simple.OData.Client (no generated `Reference.cs`, hand-written `People` model instead) is in the [Simple OData Client post](/posts/odata-csharp-simple-odata-client/#how-to-integrate-in-c).
 
 ## Advantages of OData Client
 

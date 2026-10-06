@@ -13,7 +13,8 @@ image:
 
 Simple.OData.Client is a multi-platform OData client library supporting .NET 4.x, netstandard 2.0, Android, and iOS. The adapter provides a great alternative to the WCF Data Services client. It does not require the generation of context or entity classes and fits the RESTful nature of OData services.
 
-Comparison with other techniques is available [here](/posts/odata-csharp-benchmark)
+> **Which OData client library is this?** This post covers the community **Simple.OData.Client** NuGet package, which needs no code generation. If you prefer Microsoft's typed, metadata-generated client, read the sibling post on [OData Connected Service / OData Client](/posts/odata-csharp-odata-client/) - it uses the same TripPin sample service, so the two walkthroughs are directly comparable. Latency numbers for both (plus raw `HttpClient`) are in the [OData client benchmark](/posts/odata-csharp-benchmark/).
+{: .prompt-info }
 
 {% include article-ads.html %}
 

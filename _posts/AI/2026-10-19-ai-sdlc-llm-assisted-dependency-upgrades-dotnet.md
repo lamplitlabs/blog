@@ -74,7 +74,7 @@ Nineteen of forty-seven patches were rejected by this gate in the quarter. Most 
 
 ## What the reviewer sees
 
-A PR comment with the summary, the list of edits with their release-note citation, the unresolved errors if any, and the pipeline result. A typical one for the `Polly` 7 to 8 bump reads:
+A PR comment with the summary, the list of edits with their release-note citation, the unresolved errors if any, and the pipeline result. A typical one for the `Polly` 7 to 8 bump (the same resilience library we lean on in the [Azure OpenAI 429 retry post]({% post_url AI/2026-09-29-azure-openai-429-rate-limit-retry-dotnet %})) reads:
 
 > Migrated 14 `Policy.Handle<T>().WaitAndRetryAsync(...)` call sites to `ResiliencePipelineBuilder` with `AddRetry`, per Polly 8 release notes "Policy classes are deprecated". Replaced `Context` dictionary usage in `OrderService.RetryHandler` with `ResilienceContext` properties. Unresolved: `PaymentClient.cs:88` uses a custom `IAsyncPolicy` wrapper with no documented equivalent.
 
@@ -104,3 +104,4 @@ Start with the gate, not the agent. If your pipeline does not already run `-warn
 - [AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines]({% post_url AI/2026-10-16-ai-sdlc-flaky-test-triage %})
 - [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest]({% post_url AI/2026-10-12-llm-test-generation-mutation-testing-dotnet %})
 - [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
+- [Handling 429 Rate Limits from Azure OpenAI in .NET: Backoff That Actually Works]({% post_url AI/2026-09-29-azure-openai-429-rate-limit-retry-dotnet %})

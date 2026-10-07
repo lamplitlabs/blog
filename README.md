@@ -62,6 +62,11 @@ included) and prints one summary line per check:
   `body-image-coverage: <count>/<total> posts without an inline ![...] image in
   the body (...)` followed by the offending post paths; a front-matter `image:`
   alone does not count, only a Markdown image after the closing `---`.
+- `alt-duplicate-coverage`: informational only, never fails the build. Prints
+  `alt-duplicate-coverage: <count> alt text values repeated verbatim across
+  more than one post (...)` followed by each repeated (trimmed, case-folded)
+  alt text value and the posts that share it, since identical alt text on
+  different images loses its accessibility value for screen reader users.
 - `folder-categories`: the build **fails** if a post under `_posts/<Folder>/`
   does not list the lowercased folder name (e.g. `performance` for
   `_posts/Performance/`) in its front-matter `categories`, since the post would

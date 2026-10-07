@@ -469,6 +469,50 @@ check_related_link_resolution() {
   echo "related-link-resolution: $count/$_posts_total posts with unresolved Related links (rule: every (/posts/<slug>/) under '## Related' matches a _posts/**/YYYY-MM-DD-<slug>.md)"
 }
 
+# Fail when a post links to /posts/<slug>/ whose source post is dated after the
+# referencing post (a forward "next in series" link). With future:false the
+# target is not built until its publish day, so on every build before that day
+# the earlier post ships a 404 and htmlproofer fails the whole build. Compares
+# the YYYY-MM-DD filename prefixes of both posts; links to same-day or earlier
+# posts are fine, and so are links to later posts that are already published
+# (target date <= today): those were retro-fitted and both pages exist on every
+# build. Scans every (/posts/<slug>/) link in the post body.
+check_forward_links() {
+  local datefile links bad count today
+  today="$(date +%Y-%m-%d)"
+  datefile="$(mktemp)"
+  for f in $_posts; do n="$(basename "$f" .md)"; printf '%s\t%s\n' "${n:11}" "${n:0:10}"; done | sort -u > "$datefile"
+  # "<file>\t<file-date>\t<slug>" for every /posts/ link, then keep those whose target is dated later.
+  links="$(for f in $_posts; do
+    n="$(basename "$f" .md)"
+    awk -v file="$f" -v fdate="${n:0:10}" '
+      FNR == 1 { fm = 0 }
+      /^---[[:space:]]*$/ && fm < 2 { fm++; next }
+      fm != 2 { next }
+      {
+        s = $0
+        while (match(s, /\(\/posts\/[^)#?]+/)) {
+          link = substr(s, RSTART + 8, RLENGTH - 8)
+          sub(/\/$/, "", link)
+          print file "\t" fdate "\t" link
+          s = substr(s, RSTART + RLENGTH)
+        }
+      }
+    ' "$f"
+  done | awk -F '\t' -v today="$today" 'NR == FNR { d[$1] = $2; next } ($3 in d) && d[$3] > $2 && d[$3] > today { print $1 "\t" $3 "\t" d[$3] "\t" $2 }' "$datefile" -)"
+  rm -f "$datefile"
+  bad="$(printf '%s\n' "$links" | cut -f1 | grep -c . || true)"
+  count="$(printf '%s\n' "$links" | cut -f1 | sort -u | grep -c . || true)"
+  if ((count > 0)); then
+    echo "error: $count posts have $bad links to /posts/<slug>/ whose target post is dated later than the referencing post:" >&2
+    printf '%s\n' "$links" | awk -F '\t' '{ print "       " $1 " (" $4 "): /posts/" $2 "/ (" $3 ")" }' >&2
+    echo "       With future:false the target is not built until its date, so the link is a 404 that fails htmlproofer." >&2
+    echo "       Drop the link (plain text) until the target is published, or link from the later post back to the earlier one." >&2
+    exit 1
+  fi
+  echo "forward-link-coverage: $count/$_posts_total posts linking to a not-yet-published later-dated /posts/<slug>/ (rule: no link whose target filename date is after both the referencing post and today $today)"
+}
+
 main() {
   preflight
   collect_posts
@@ -484,6 +528,7 @@ main() {
   report_body_image_coverage
   report_ai_related_coverage
   check_related_link_resolution
+  check_forward_links
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

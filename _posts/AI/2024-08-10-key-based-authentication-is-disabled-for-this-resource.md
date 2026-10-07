@@ -8,7 +8,7 @@ tags: ai azure openai security
 author: manishtiwari25
 image:
   path: /assets/img/headers/ai/azure-openai.webp
-  alt: Azure OpenAI header image
+  alt: Azure OpenAI header image illustrating the key-based authentication disabled error and switching to Entra ID
 ---
 
 ## Why?

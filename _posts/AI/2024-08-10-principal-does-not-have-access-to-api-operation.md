@@ -8,7 +8,7 @@ tags: ai azure openai security
 author: manishtiwari25
 image:
   path: /assets/img/headers/ai/azure-openai.webp
-  alt: Azure OpenAI header image
+  alt: Azure OpenAI header image illustrating the principal does not have access to API operation RBAC error
 ---
 
 ## Why?

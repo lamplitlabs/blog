@@ -101,6 +101,12 @@ included) and prints one summary line per check:
   key are not checked. When all tabs pass it prints `tab-order-coverage: all
   _tabs/*.md 'order:' values are unique (...)`.
 
+- `related-link-resolution`: the build **fails** if a post's `## Related`
+  section links to `/posts/<slug>/` for a slug that no file in `_posts`
+  produces (readers would hit a 404). When all links resolve it prints
+  `related-link-resolution: 0/<total> posts with unresolved Related links
+  (...)`.
+
 It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`
 to see the config options.

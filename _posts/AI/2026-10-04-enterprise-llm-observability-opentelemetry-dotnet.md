@@ -94,7 +94,7 @@ public sealed class TracedChatClient(ChatClient inner, IPricing pricing)
 Two decisions worth calling out:
 
 - **Cost is computed in code, not derived later.** Pricing changes per model and region; a small `IPricing` table in config that you update when Microsoft changes prices is far simpler than reverse-engineering the bill.
-- **Count cached input tokens separately.** `Usage.InputTokenDetails.CachedTokenCount` tells you how many prompt tokens hit Azure OpenAI's prefix cache and were billed at a discount. Emitting it as its own `direction` lets a `cached_input / input` ratio chart show whether a prompt reorder actually paid off; a drop to zero after a deploy means someone put a timestamp or a user id at the top of the system prompt. See [Azure OpenAI Prompt Caching in .NET]({% post_url AI/2026-10-10-azure-openai-prompt-caching-dotnet %}) for what the cache keys on and the measured latency and cost win.
+- **Count cached input tokens separately.** `Usage.InputTokenDetails.CachedTokenCount` tells you how many prompt tokens hit Azure OpenAI's prefix cache and were billed at a discount. Emitting it as its own `direction` lets a `cached_input / input` ratio chart show whether a prompt reorder actually paid off; a drop to zero after a deploy means someone put a timestamp or a user id at the top of the system prompt. See Azure OpenAI Prompt Caching in .NET for what the cache keys on and the measured latency and cost win.
 - **Never put the prompt or completion text in a span attribute by default.** They contain customer data and blow past Application Insights' 8 KB attribute limit. Store a content hash and a sampled copy in a locked-down store if you need replay.
 
 ## Step 3: Retrieval and guardrails get their own spans
@@ -143,6 +143,6 @@ With this in place, "why did AI spend double?" becomes a 30-second query, and "t
 
 ## Related posts
 
-- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
+- Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
 - [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)

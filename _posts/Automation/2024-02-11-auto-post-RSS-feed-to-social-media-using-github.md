@@ -55,4 +55,4 @@ With Ferret, automating the dissemination of content from RSS feeds to social me
 
 - [Automating RSS Feed Posts to Twitter(X) and Mastodon Using Logic Apps](/posts/auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps/)
 - [Automate Draw.io Diagram Export with GitHub Actions](/posts/automate-drawio-github-actions/)
-- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/)
+- How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge

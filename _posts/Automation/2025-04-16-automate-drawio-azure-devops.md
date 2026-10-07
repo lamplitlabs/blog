@@ -229,4 +229,4 @@ And just like that—your `deathstar-blueprint.drawio` evolves into a living art
 
 - [Automate Draw.io Diagram Export with GitHub Actions](/posts/automate-drawio-github-actions/)
 - [Azure B2C Custom Policies Deployment - Azure DevOps](/posts/Azure_B2C_Custom_Policies_Deployment/)
-- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/)
+- How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge

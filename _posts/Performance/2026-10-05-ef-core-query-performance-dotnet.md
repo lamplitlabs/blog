@@ -186,6 +186,6 @@ The full benchmark project is about 150 lines; the structure above is enough to 
 Once the query shape is fixed, the remaining time on a read endpoint is usually spent allocating in hot loops or serializing the response. The first two posts below apply the same BenchmarkDotNet workflow; the third steps outside .NET:
 
 - [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
-- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.
-- [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.
+- [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/) - the serialization side.
+- [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine](/posts/python-vs-rust-hot-loop-performance/) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.
 - [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained]({% post_url OData/2026-10-05-odata-query-performance-pitfalls-dotnet %}) - the client side of the same over-fetching problem when the query arrives as `$select`/`$expand` over HTTP.

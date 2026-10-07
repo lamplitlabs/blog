@@ -159,5 +159,5 @@ Next in the series we will take this call and make it useful: giving the model y
 ## Related posts
 
 - [How a Language Model Answers You: Tokens, Prediction and Repetition](/posts/How_Language_Models_Work/)
-- [Grounding a Model with Your Own Documents and Getting a Reply Your Code Can Check](/posts/Grounding_A_Model_With_Your_Documents/)
+- Grounding a Model with Your Own Documents and Getting a Reply Your Code Can Check
 - [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)

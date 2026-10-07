@@ -115,5 +115,5 @@ The argument "RAG vs fine-tuning" is mostly a false choice for internal copilots
 ## Related posts
 
 - [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
-- [Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI](/posts/evaluating-rag-retriever-golden-set-dotnet/)
+- Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI
 - [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)

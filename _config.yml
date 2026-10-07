@@ -112,11 +112,7 @@ pwa:
 
 paginate: 10
 
-# Render posts whose date is later than the build clock. Posts here are dated
-# the day they are written (often with a timezone offset), so without this the
-# production build silently reports "Skipping: ... has a future date" and the
-# newest same-day posts never appear on the site.
-future: true
+future: false
 
 # The base URL of your site
 baseurl: ""

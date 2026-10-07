@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine"
-date: 2026-10-07 09:00:00 -0500
+date: 2026-10-07 06:00:00 +0000
 categories: performance rust
 tags: rust python performance benchmark hyperfine numpy
 author: manishtiwari25
@@ -138,5 +138,5 @@ The .NET side of the same question, measured with BenchmarkDotNet:
 Outside .NET, the same interpreter-vs-compiled trade-off measured at the HTTP and database layers:
 
 - [Node vs Deno vs Bun: HTTP Server Performance Under Load]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - what JIT-compiled JavaScript runtimes cost once a network is in the way.
-- [Go vs .NET: Goroutines vs Tasks Concurrency Throughput]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - two compiled runtimes under the same wrk load.
-- [pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22]({% post_url Performance/2026-10-08-postgres-driver-latency-pg-vs-prisma-vs-drizzle %}) - where the time goes when the hot loop is a database round trip.
+- Go vs .NET: Goroutines vs Tasks Concurrency Throughput - two compiled runtimes under the same wrk load.
+- pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22 - where the time goes when the hot loop is a database round trip.

@@ -150,4 +150,4 @@ Automating the posting of RSS feed updates to Twitter and Mastodon using Logic A
 
 - [Automating RSS Feed Posts to Social Media Using GitHub: Say Hello To Ferret](/posts/auto-post-RSS-feed-to-social-media-using-github/)
 - [Unlocking LinkedIn's Posting Potential: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-linkedin-using-rest-api-part1/)
-- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/)
+- How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge

@@ -114,7 +114,7 @@ Pin this to a workbook, export it monthly, and the "one line item" ticket is clo
 
 Once every call passes through APIM the following are each a single policy, not eleven client changes:
 
-- **Semantic caching** (`azure-openai-semantic-cache-lookup`) so repeated questions never reach the model; pairs well with [prompt caching](/posts/azure-openai-prompt-caching-dotnet/) for the ones that do.
+- **Semantic caching** (`azure-openai-semantic-cache-lookup`) so repeated questions never reach the model; pairs well with prompt caching for the ones that do.
 - **Load balancing and failover** across deployments in two regions with a weighted backend pool and circuit breaker, so a regional `429` storm degrades to higher latency instead of errors.
 - **Prompt and response logging** to your own store with your redaction rule, satisfying the governance "logging you own" item without touching application code.
 - **Content safety** via `llm-content-safety`, applied uniformly even to the team that forgot.

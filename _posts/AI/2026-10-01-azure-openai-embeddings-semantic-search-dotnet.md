@@ -121,6 +121,6 @@ Embeddings turn "does the document contain these words" into "does the document 
 
 ## Related posts
 
-- [Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI](/posts/evaluating-rag-retriever-golden-set-dotnet/)
+- Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI
 - [Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)
-- [Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-semantic-caching-azure-openai/)
+- Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management

@@ -91,6 +91,6 @@ Start with code and test, where the deterministic checks already exist, and exte
 
 ## Related posts
 
-- [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It](/posts/ai-sdlc-code-review-agent-metrics/)
+- AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It
 - [AI SDLC in Practice: Letting a Coding Agent Triage and Fix a GitHub Issue End-to-End](/posts/ai-coding-agent-fix-github-issue-end-to-end/)
-- [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest](/posts/llm-test-generation-mutation-testing-dotnet/)
+- LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest

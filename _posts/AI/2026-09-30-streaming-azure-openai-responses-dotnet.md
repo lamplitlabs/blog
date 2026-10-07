@@ -164,4 +164,4 @@ Streaming is a small amount of code for a large improvement in how responsive an
 
 - [Azure OpenAI Function Calling in .NET: Let the Model Call Your C# Methods Safely](/posts/azure-openai-function-calling-dotnet/)
 - [Handling 429 Rate Limits from Azure OpenAI in .NET: Backoff That Actually Works](/posts/azure-openai-429-rate-limit-retry-dotnet/)
-- [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right](/posts/azure-openai-prompt-caching-dotnet/)
+- Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right

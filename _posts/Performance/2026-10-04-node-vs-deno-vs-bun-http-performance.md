@@ -11,7 +11,7 @@ image:
   alt: "Bar chart of requests per second for a 1.2 KB JSON GET endpoint: Node.js 22 http 54,800, Node.js 22 with Fastify 71,200, Deno 2 98,600, Bun 1.1 162,300"
 ---
 
-So far this folder has covered [Span<T> allocations]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}), [EF Core queries]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}), [JSON serialization in .NET]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) and a [Python vs Rust hot loop]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}). This one looks at the JavaScript side of our stack. Most of our internal dashboards and a couple of AI tool backends are small HTTP services written in TypeScript, and "should we move this to Bun?" has become the new "should we move this to Rust?". Instead of debating benchmarks published by the runtime vendors themselves, I ran the same endpoint on all three runtimes on the same machine.
+So far this folder has covered [Span<T> allocations]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}), [EF Core queries](/posts/ef-core-query-performance-dotnet/), [JSON serialization in .NET](/posts/dotnet-json-serialization-performance/) and a [Python vs Rust hot loop](/posts/python-vs-rust-hot-loop-performance/). This one looks at the JavaScript side of our stack. Most of our internal dashboards and a couple of AI tool backends are small HTTP services written in TypeScript, and "should we move this to Bun?" has become the new "should we move this to Rust?". Instead of debating benchmarks published by the runtime vendors themselves, I ran the same endpoint on all three runtimes on the same machine.
 
 The workload is the most common shape of service we write: a `GET /users/:id` that looks up an in-memory record and returns a 1.2 KB JSON body. No database, no TLS, no middleware beyond routing. That isolates the runtime's HTTP server, its JSON encoder and its event loop, which is exactly what you pay for when you switch runtimes.
 
@@ -107,7 +107,7 @@ Here is the raw `wrk` output for the three native servers:
 
 Three things in that table are worth pausing on.
 
-**Fastify beats raw `http` on the same runtime by 30%.** That is not framework magic; it is `fast-json-stringify` compiling a serializer from the response schema instead of calling the generic `JSON.stringify`. The same lesson as the [System.Text.Json source generators post]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}): a serializer that knows the shape ahead of time wins. If you cannot change runtimes, this is the cheapest 30% you will find.
+**Fastify beats raw `http` on the same runtime by 30%.** That is not framework magic; it is `fast-json-stringify` compiling a serializer from the response schema instead of calling the generic `JSON.stringify`. The same lesson as the [System.Text.Json source generators post](/posts/dotnet-json-serialization-performance/): a serializer that knows the shape ahead of time wins. If you cannot change runtimes, this is the cheapest 30% you will find.
 
 **Deno is 1.8x Node and Bun is 3x Node.** Both ship an HTTP server written in a systems language (Rust via hyper for Deno, Zig with a custom parser for Bun) and avoid going through a JavaScript `http` layer for header parsing. Bun additionally uses JavaScriptCore, whose `JSON.stringify` is faster than V8's for small objects, and its `Response.json` path skips a copy. The gap between Deno and Bun is mostly those two things.
 
@@ -149,6 +149,6 @@ Run each three times and keep the median; the first run on every runtime is 5-10
 
 ## Related Performance posts
 
-- [Go Goroutines vs .NET Tasks: HTTP Concurrency Throughput]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - the same wrk setup pointed at two compiled runtimes, for comparison with the JavaScript numbers here.
-- [Python vs Rust in a Hot Loop]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - what interpreter overhead costs when there is no network in the way.
-- [pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22]({% post_url Performance/2026-10-08-postgres-driver-latency-pg-vs-prisma-vs-drizzle %}) - the next bottleneck once your Node HTTP layer is fast.
+- Go Goroutines vs .NET Tasks: HTTP Concurrency Throughput - the same wrk setup pointed at two compiled runtimes, for comparison with the JavaScript numbers here.
+- [Python vs Rust in a Hot Loop](/posts/python-vs-rust-hot-loop-performance/) - what interpreter overhead costs when there is no network in the way.
+- pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22 - the next bottleneck once your Node HTTP layer is fast.

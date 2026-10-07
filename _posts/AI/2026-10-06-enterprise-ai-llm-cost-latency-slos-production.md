@@ -11,7 +11,7 @@ image:
   alt: "Two charts, LLM cost per hour and p95 latency, each with a red SLO line that the cost series crosses near the end"
 ---
 
-A cost dashboard tells you what happened. An SLO tells you when to act. Once a few teams share an Azure OpenAI platform, the questions change from "how much did we spend" to "is the payments bot about to blow its daily budget *right now*, and is the 2.8 second p95 a model problem or a retrieval problem?". This post defines **cost and latency SLOs per team and deployment**, computes **burn rates** in KQL over two windows, and wires alerts that page on real incidents and open a ticket for slow drift. It builds on the [cost dashboard](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/) and the [OpenTelemetry tracing](/posts/enterprise-llm-observability-opentelemetry-dotnet/) from earlier posts; if you have those, this is a day of work.
+A cost dashboard tells you what happened. An SLO tells you when to act. Once a few teams share an Azure OpenAI platform, the questions change from "how much did we spend" to "is the payments bot about to blow its daily budget *right now*, and is the 2.8 second p95 a model problem or a retrieval problem?". This post defines **cost and latency SLOs per team and deployment**, computes **burn rates** in KQL over two windows, and wires alerts that page on real incidents and open a ticket for slow drift. It builds on the cost dashboard and the [OpenTelemetry tracing](/posts/enterprise-llm-observability-opentelemetry-dotnet/) from earlier posts; if you have those, this is a day of work.
 
 {% include feed-ads.html %}
 
@@ -158,7 +158,7 @@ The data was already there in the logs. Turning it into an SLO with a burn rate 
 
 ## Related
 
-- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
+- Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks
 - [Enterprise AI: LLM Observability with OpenTelemetry in .NET - Tracing Tokens, Cost and Quality per Request](/posts/enterprise-llm-observability-opentelemetry-dotnet/)
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
 - [Azure OpenAI Batch API in .NET](/posts/azure-openai-batch-api-dotnet/)

@@ -107,6 +107,13 @@ included) and prints one summary line per check:
   `related-link-resolution: 0/<total> posts with unresolved Related links
   (...)`.
 
+- `forward-link-coverage`: the build **fails** if a post links to
+  `/posts/<slug>/` for a post dated after both the referencing post and
+  today, since `future: false` means Jekyll has not built that page yet and
+  the link would 404 in `htmlproofer`. When no such links exist it prints
+  `forward-link-coverage: 0/<total> posts linking to a not-yet-published
+  later-dated /posts/<slug>/ (...)`.
+
 It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`
 to see the config options.

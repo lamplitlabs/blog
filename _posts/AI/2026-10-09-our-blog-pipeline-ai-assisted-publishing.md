@@ -2,7 +2,7 @@
 layout: post
 title: "How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge"
 date: 2026-10-09 00:00:00 +0200
-categories: ai
+categories: ai lamplit-tools
 tags: ai sdlc jekyll github-pages automation agents devops testing
 author: manishtiwari25
 description: "Behind the scenes of this blog: the Jekyll setup, the six content checks in tools/test.sh, and the AI agent workflow where agents draft and humans merge."

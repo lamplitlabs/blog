@@ -3,7 +3,7 @@ layout: post
 title: "How To Change Azure Function App Time zone"
 description: "How to change the time zone used by Azure Function App timer triggers with the WEBSITE_TIME_ZONE setting so CRON expressions run in local time."
 date: 2022-03-28 00:00:00 +0200
-categories: cloud function azure
+categories: cloud function azure lamplit-tools
 tags: azure azurefunction
 author: manishtiwari25
 image:

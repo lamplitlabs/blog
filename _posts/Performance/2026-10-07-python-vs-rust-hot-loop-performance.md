@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine"
-date: 2026-10-07 06:00:00 +0000
+date: 2026-10-07 00:00:00 +0200
 categories: performance rust
 tags: rust python performance benchmark hyperfine numpy
 author: manishtiwari25

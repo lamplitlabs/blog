@@ -224,7 +224,6 @@ And just like that—your `deathstar-blueprint.drawio` evolves into a living art
 **Need help extending this setup?** Reach out, comment, or fork this into your own DevOps Death Star ✨
 
 {% include article-ads.html %}
-{% include article-ads.html %}
 
 ## Related posts
 

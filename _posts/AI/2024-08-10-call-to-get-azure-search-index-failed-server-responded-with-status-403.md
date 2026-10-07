@@ -16,7 +16,6 @@ image:
 Azure Open AI Service does not have access to Azure Search service.
 
 {% include feed-ads.html %}
-{% include feed-ads.html %}
 
 ## How to fix?
 
@@ -35,7 +34,6 @@ For more information, please visit [Using your data with Azure OpenAI securely](
 - Assign the role to open ai service, Follow this to know more about role assignment please go through [MS Docs](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
 
 {% include feed-ads.html %}
-{% include feed-ads.html %}
 
 ### Enable RBAC
 
@@ -46,7 +44,6 @@ For more information, please visit [Using your data with Azure OpenAI securely](
   ![Compliance](/assets/img/posts/ai/call-to-get-azure-search-index-failed-server-responded-with-status-403.webp){: height="300px" }
 - Press **Yes** when it asks for confirmation
 
-{% include feed-ads.html %}
 {% include feed-ads.html %}
 
 ## Related posts

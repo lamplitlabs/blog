@@ -126,7 +126,6 @@ Once the workflow runs, the **Export PNG Images from Draw.io** step prints one l
 ✅ Git-tracks your documentation like your code
 
 {% include article-ads.html %}
-{% include article-ads.html %}
 
 ---
 
@@ -152,7 +151,6 @@ Turn your `deathstar-blueprint.drawio` into a blueprint the rebellion would envy
 
 Need help extending this workflow? Feel free to fork, adapt, or drop a question!
 
-{% include article-ads.html %}
 {% include article-ads.html %}
 
 ## Related posts

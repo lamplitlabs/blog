@@ -16,7 +16,6 @@ image:
 If you have disabled local auth([Disable local authentication in Azure AI Services](https://learn.microsoft.com/en-us/azure/ai-services/disable-local-auth)), that means you can not use keys for AI service authentication.
 
 {% include feed-ads.html %}
-{% include feed-ads.html %}
 
 ## How to fix?
 
@@ -32,7 +31,6 @@ Once the identity is enabled, the fix on your screen looks like this: the **Syst
 
 ![Azure portal: Azure OpenAI resource Identity blade with System assigned status On and the Object (principal) ID shown, the fix for 'Key based authentication is disabled for this resource'](/assets/img/posts/ai/key-based-authentication-is-disabled-for-this-resource-fix.webp){: width="700px" }
 
-{% include feed-ads.html %}
 {% include feed-ads.html %}
 
 ## Related posts

@@ -16,7 +16,6 @@ image:
 This issue can occur when you or application does not have correct permissions to use the AI resource.
 
 {% include feed-ads.html %}
-{% include feed-ads.html %}
 
 ## How to fix?
 
@@ -28,7 +27,6 @@ In the Azure portal the fix looks like this: open the Azure OpenAI resource, go 
 
 ![Azure portal: Add role assignment on the Azure OpenAI resource with the Cognitive Services OpenAI User role, resolving the 'Principal does not have access to API/Operation' error](/assets/img/posts/ai/principal-does-not-have-access-to-api-operation.webp){: width="700px" }
 
-{% include feed-ads.html %}
 {% include feed-ads.html %}
 
 ## Related posts

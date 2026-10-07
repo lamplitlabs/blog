@@ -94,5 +94,5 @@ Next in the series we will look at how programs talk to these models through an 
 ## Related posts
 
 - [Calling a Language Model from Code: Your Prompt Is Just an API Request](/posts/Calling_A_Model_From_Code/)
-- Grounding a Model with Your Own Documents and Getting a Reply Your Code Can Check
+- [Grounding a Model with Your Own Documents and Getting a Reply Your Code Can Check](/posts/Grounding_A_Model_With_Your_Documents/)
 - [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22, Measured with autocannon"
-date: 2026-10-08 09:00:00 -0500
+date: 2026-10-08 00:00:00 +0200
 categories: performance javascript
 tags: nodejs postgresql prisma drizzle pg typescript performance benchmark autocannon
 author: manishtiwari25

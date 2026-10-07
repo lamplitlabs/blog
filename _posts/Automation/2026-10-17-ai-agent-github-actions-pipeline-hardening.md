@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC for Automation: Letting a Coding Agent Harden GitHub Actions Workflows, One PR at a Time"
-date: 2026-10-17 09:00:00 -0500
+date: 2026-10-17 00:00:00 +0200
 categories: [automation, ai, devops, github]
 tags: [github-actions, ai, sdlc, automation, ci, devops, security, enterprise]
 author: manishtiwari25

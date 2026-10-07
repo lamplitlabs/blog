@@ -2,7 +2,7 @@
 layout: post
 title: "Grounding a Model with Your Own Documents and Getting a Reply Your Code Can Check"
 description: "Beginner guide to grounding a language model in your own documents (simple RAG) and asking for a JSON reply your code can validate."
-date: 2026-10-08 06:00:00 +0000
+date: 2026-10-08 00:00:00 +0200
 categories: software-engineering beginner
 tags: coding software-engineering ai llm api rag json prompt-engineering beginner-ai
 author: manishtiwari25

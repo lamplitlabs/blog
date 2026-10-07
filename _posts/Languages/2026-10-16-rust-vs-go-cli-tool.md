@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rust vs Go for a CLI Tool: Startup, Binary Size, Build Time and the Day-Two Costs"
-date: 2026-10-16 09:00:00 -0500
+date: 2026-10-16 00:00:00 +0200
 categories: languages rust go
 tags: rust go cli performance benchmark hyperfine tooling
 author: manishtiwari25

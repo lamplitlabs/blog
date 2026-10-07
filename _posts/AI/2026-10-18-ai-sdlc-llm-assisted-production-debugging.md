@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC: LLM-Assisted Production Debugging for .NET Services, With Guardrails"
-date: 2026-10-18 09:00:00 -0500
+date: 2026-10-18 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp devops observability azure enterprise
 author: manishtiwari25

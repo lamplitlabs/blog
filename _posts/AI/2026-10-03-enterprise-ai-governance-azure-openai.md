@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org"
-date: 2026-10-03 14:00:00 -0500
+date: 2026-10-03 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise governance security compliance dotnet enterprise-ai
 author: manishtiwari25

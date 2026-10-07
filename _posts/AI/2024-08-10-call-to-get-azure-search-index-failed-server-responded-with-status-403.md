@@ -2,7 +2,7 @@
 layout: post
 title: "Call to get Azure Search index failed - Server responded with status 403"
 description: "Fix the Azure OpenAI 'call to get Azure Search index failed' 403 error by granting the service the right role on your Azure AI Search resource."
-date: 2024-08-10 06:00:00 -0500
+date: 2024-08-10 00:00:00 +0200
 categories: ai
 tags: ai azure openai security
 author: manishtiwari25

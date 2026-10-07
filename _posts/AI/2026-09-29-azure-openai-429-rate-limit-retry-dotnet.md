@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Handling 429 Rate Limits from Azure OpenAI in .NET: Backoff That Actually Works"
-date: 2026-09-29 20:00:00 -0500
+date: 2026-09-29 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp resilience polly rate-limiting
 author: manishtiwari25

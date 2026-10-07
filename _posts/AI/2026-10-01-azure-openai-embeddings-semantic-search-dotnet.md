@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database"
-date: 2026-10-01 05:00:00 -0500
+date: 2026-10-01 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp embeddings semantic-search vectors
 author: manishtiwari25

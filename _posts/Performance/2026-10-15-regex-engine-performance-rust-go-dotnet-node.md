@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Regex Engine Performance: Rust regex vs Go regexp vs .NET 8 Regex vs Node 22, Measured with hyperfine"
-date: 2026-10-15 09:00:00 -0500
+date: 2026-10-15 00:00:00 +0200
 categories: performance rust
 tags: rust go dotnet nodejs regex performance benchmark hyperfine
 author: manishtiwari25

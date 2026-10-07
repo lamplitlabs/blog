@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC: LLM-Assisted Dependency Upgrades for .NET - Major Version Bumps Without Losing the Weekend"
-date: 2026-10-19 09:00:00 -0500
+date: 2026-10-19 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp devops nuget azure enterprise
 author: manishtiwari25

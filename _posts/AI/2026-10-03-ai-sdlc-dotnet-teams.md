@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase"
-date: 2026-10-03 09:00:00 -0500
+date: 2026-10-03 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp copilot devops testing enterprise
 author: manishtiwari25

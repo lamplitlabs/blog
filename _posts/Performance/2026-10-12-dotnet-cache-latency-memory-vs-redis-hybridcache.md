@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "In-Process Cache vs Redis in .NET 8: Where the Microseconds Go, Measured with BenchmarkDotNet"
-date: 2026-10-12 09:00:00 -0500
+date: 2026-10-12 00:00:00 +0200
 categories: performance dotnet
 tags: dotnet performance benchmark benchmarkdotnet redis caching hybridcache
 author: manishtiwari25

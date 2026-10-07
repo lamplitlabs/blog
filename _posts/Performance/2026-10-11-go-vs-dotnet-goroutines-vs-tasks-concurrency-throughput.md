@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Go Goroutines vs .NET Tasks: HTTP Concurrency Throughput, Measured with wrk"
-date: 2026-10-11 09:00:00 -0500
+date: 2026-10-11 00:00:00 +0200
 categories: performance dotnet
 tags: go dotnet performance benchmark wrk concurrency goroutines async
 author: manishtiwari25

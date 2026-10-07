@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "TypeScript vs Kotlin for Backend Services: Type Safety, Tooling, Performance and Team Velocity"
-date: 2026-10-14 09:00:00 -0500
+date: 2026-10-14 00:00:00 +0200
 categories: languages kotlin typescript
 tags: typescript kotlin nodejs jvm api performance benchmark wrk
 author: manishtiwari25

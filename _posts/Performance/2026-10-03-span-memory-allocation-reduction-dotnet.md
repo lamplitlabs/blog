@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers"
-date: 2026-10-03 16:00:00 -0500
+date: 2026-10-03 00:00:00 +0200
 categories: performance dotnet
 tags: dotnet csharp performance benchmarkdotnet span memory gc
 author: manishtiwari25

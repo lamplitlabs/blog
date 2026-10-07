@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8"
-date: 2026-10-06 09:00:00 -0500
+date: 2026-10-06 00:00:00 +0200
 categories: performance dotnet
 tags: dotnet csharp performance benchmarkdotnet json serialization
 author: manishtiwari25

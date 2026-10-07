@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Node.js 22 vs Deno 2 vs Bun 1.1: HTTP JSON API Throughput, Measured with wrk"
-date: 2026-10-04 09:00:00 -0500
+date: 2026-10-04 00:00:00 +0200
 categories: performance javascript
 tags: nodejs deno bun javascript typescript performance benchmark wrk
 author: manishtiwari25

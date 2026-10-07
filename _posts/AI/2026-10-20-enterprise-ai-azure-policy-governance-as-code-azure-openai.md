@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Governance as Code for Azure OpenAI - Azure Policy Guardrails and Budget Alerts Before the First Deployment Exists"
-date: 2026-10-20 09:00:00 -0500
+date: 2026-10-20 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise enterprise-ai governance finops cost security compliance bicep
 author: manishtiwari25

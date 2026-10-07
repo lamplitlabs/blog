@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines"
-date: 2026-10-16 09:00:00 -0500
+date: 2026-10-16 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp testing xunit devops enterprise ci
 author: manishtiwari25

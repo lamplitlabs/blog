@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It"
-date: 2026-10-08 09:00:00 -0500
+date: 2026-10-08 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp code-review copilot devops enterprise metrics
 author: manishtiwari25

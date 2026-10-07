@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet"
-date: 2026-10-05 09:00:00 -0500
+date: 2026-10-05 00:00:00 +0200
 categories: performance dotnet
 tags: dotnet csharp performance benchmarkdotnet efcore sql
 author: manishtiwari25

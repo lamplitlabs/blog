@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cloud OCR Compared: Amazon Textract vs Google Cloud Vision vs Azure AI Document Intelligence"
-date: 2026-09-28 09:00:00 -0500
+date: 2026-09-28 00:00:00 +0200
 categories: ai
 tags: ai ocr azure aws GCP textract vision document-intelligence
 author: manishtiwari25

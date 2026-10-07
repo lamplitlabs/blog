@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right"
-date: 2026-10-10 09:00:00 -0500
+date: 2026-10-10 00:00:00 +0200
 categories: ai
 tags: ai azure-openai dotnet csharp performance cost gpt-4o prompt-caching
 author: manishtiwari25

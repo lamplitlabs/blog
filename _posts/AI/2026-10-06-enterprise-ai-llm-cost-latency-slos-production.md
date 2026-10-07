@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Cost and Latency SLOs for LLM Workloads - Burn-Rate Alerts for Azure OpenAI in Production"
-date: 2026-10-06 09:00:00 -0500
+date: 2026-10-06 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise observability sre finops performance enterprise-ai
 author: manishtiwari25

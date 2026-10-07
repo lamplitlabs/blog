@@ -2,7 +2,7 @@
 layout: post
 title: "Where can I get list of countries and there state provinces?"
 description: "A free, automatically updated list of all countries with their states and provinces, ready to use in your project as JSON."
-date: 2022-03-22 09:00:00 -0500
+date: 2022-03-22 00:00:00 +0100
 categories: cloud gist
 tags: Countries Geoname Gist
 author: manishtiwari25

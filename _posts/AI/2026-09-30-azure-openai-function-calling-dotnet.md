@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Azure OpenAI Function Calling in .NET: Let the Model Call Your C# Methods Safely"
-date: 2026-09-30 09:00:00 -0500
+date: 2026-09-30 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp function-calling tools
 author: manishtiwari25

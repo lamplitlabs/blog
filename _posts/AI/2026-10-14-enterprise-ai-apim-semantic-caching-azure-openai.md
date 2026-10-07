@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management"
-date: 2026-10-14 09:00:00 -0500
+date: 2026-10-14 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise apim caching performance finops governance enterprise-ai
 author: manishtiwari25

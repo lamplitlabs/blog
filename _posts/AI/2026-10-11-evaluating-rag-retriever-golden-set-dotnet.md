@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI"
-date: 2026-10-11 09:00:00 -0500
+date: 2026-10-11 00:00:00 +0200
 categories: ai
 tags: ai azure openai rag evaluation dotnet testing ai-sdlc enterprise
 author: manishtiwari25

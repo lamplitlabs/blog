@@ -2,7 +2,7 @@
 layout: post
 title: "Updating Azure Function App From V3 to V4"
 description: "Outline of the steps to upgrade an Azure Functions app from runtime version 3 to version 4, including backups, project changes and testing."
-date: 2022-12-16 09:00:00 -0500
+date: 2022-12-16 00:00:00 +0100
 categories: cloud azure
 tags: azure azurefunction
 author: manishtiwari25

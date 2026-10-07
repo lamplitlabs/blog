@@ -2,7 +2,7 @@
 layout: post
 title: "OData Client- Dotnet 8 and C#"
 description: "An overview of Microsoft's OData Client library for C#: generating a typed client, querying services, and its pros and cons compared to other approaches."
-date: 2024-01-13 04:40:00 -0100
+date: 2024-01-13 00:00:00 +0100
 categories: coding odata dotnet d365
 tags: odata csharp dotnet simple.odata.client httpclient d365
 author: manishtiwari25

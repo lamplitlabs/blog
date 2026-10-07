@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest"
-date: 2026-10-12 09:00:00 -0500
+date: 2026-10-12 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp testing xunit copilot mutation-testing enterprise
 author: manishtiwari25

@@ -2,7 +2,7 @@
 layout: post
 title: "D365 FO EDMX / OData trimmer online– Make your metadata smaller online"
 description: "Trim large D365 Finance and Operations EDMX / OData metadata files online to speed up .NET class generation and make your application lighter."
-date: 2023-04-21 09:00:00 -0500
+date: 2023-04-21 00:00:00 +0200
 categories: d365 tools
 tags: Metadata_Trimmer EDMX_trimmer d365fo
 author: manishtiwari25

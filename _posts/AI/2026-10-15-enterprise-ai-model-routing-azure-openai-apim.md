@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Model Routing for Azure OpenAI - Cheap Model First, Escalate Only When Needed"
-date: 2026-10-15 09:00:00 -0500
+date: 2026-10-15 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise apim routing finops performance governance enterprise-ai
 author: manishtiwari25

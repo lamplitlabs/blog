@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Azure OpenAI Content Filters in .NET: Handling finish_reason content_filter Without Breaking Your App"
-date: 2026-10-02 09:00:00 -0500
+date: 2026-10-02 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp content-filter safety
 author: manishtiwari25

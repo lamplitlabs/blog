@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Automate Draw.io Diagram Export with GitHub Actions"
-date: 2025-04-16
+date: 2025-04-16 00:00:00 +0200
 categories: automation devops github
 author: manishtiwari25
 tags: [github-actions, drawio, automation, diagrams, documentation]

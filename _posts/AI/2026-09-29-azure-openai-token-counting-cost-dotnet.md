@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Counting Tokens and Controlling Azure OpenAI Cost in .NET"
-date: 2026-09-29 10:00:00 +0200
+date: 2026-09-29 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet cost tokens
 author: manishtiwari25

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text"
-date: 2026-09-29 05:00:00 -0500
+date: 2026-09-29 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp json-schema structured-outputs
 author: manishtiwari25

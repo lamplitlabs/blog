@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Zig vs C for a Systems Tool: Throughput, Binary Size, Cross-Compiling and Where the Bugs Hide"
-date: 2026-10-18 09:00:00 -0500
+date: 2026-10-18 00:00:00 +0200
 categories: languages zig c
 tags: zig c systems-programming performance benchmark hyperfine cross-compilation
 author: manishtiwari25

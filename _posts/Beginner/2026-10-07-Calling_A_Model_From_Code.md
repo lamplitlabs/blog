@@ -2,7 +2,7 @@
 layout: post
 title: "Calling a Language Model from Code: Your Prompt Is Just an API Request"
 description: "A beginner walkthrough of calling a language model from a program: the HTTP request, system and user roles, max tokens, temperature and reading the reply."
-date: 2026-10-07 06:00:00 +0000
+date: 2026-10-07 00:00:00 +0200
 categories: software-engineering beginner
 tags: coding software-engineering ai llm api prompt-engineering beginner-ai
 author: manishtiwari25

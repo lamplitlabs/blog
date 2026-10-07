@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance"
-date: 2026-10-04 09:00:00 -0500
+date: 2026-10-04 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise rag fine-tuning architecture dotnet enterprise-ai
 author: manishtiwari25

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Azure OpenAI Batch API in .NET: Process Thousands of Prompts at Half the Price"
-date: 2026-10-01 09:00:00 -0500
+date: 2026-10-01 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp batch jsonl cost
 author: manishtiwari25

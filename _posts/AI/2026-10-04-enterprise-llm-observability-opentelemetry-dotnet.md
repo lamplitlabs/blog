@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: LLM Observability with OpenTelemetry in .NET - Tracing Tokens, Cost and Quality per Request"
-date: 2026-10-04 11:00:00 -0500
+date: 2026-10-04 00:00:00 +0200
 categories: ai
 tags: ai azure openai enterprise observability opentelemetry dotnet performance enterprise-ai
 author: manishtiwari25

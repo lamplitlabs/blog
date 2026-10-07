@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs"
-date: 2026-10-02 09:00:00 -0500
+date: 2026-10-02 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp testing xunit prompts
 author: manishtiwari25

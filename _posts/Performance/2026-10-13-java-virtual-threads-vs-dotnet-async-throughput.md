@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Java 21 Virtual Threads vs .NET 8 async/await: Blocking I/O Throughput, Measured with wrk"
-date: 2026-10-13 09:00:00 -0500
+date: 2026-10-13 00:00:00 +0200
 categories: performance java
 tags: java dotnet go performance benchmark wrk virtual-threads async-await concurrency
 author: manishtiwari25

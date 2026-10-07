@@ -2,7 +2,7 @@
 layout: post
 title: "Maximizing Your Facebook Page: Part 1 - Obtaining Your API Access Token"
 description: "Part 1 of posting to a Facebook Page with the Graph REST API: creating a Meta developer app, adding permissions and generating a user access token."
-date: 2024-02-14 05:38:00 +0000
+date: 2024-02-14 00:00:00 +0100
 categories: automation
 tags: facebook rest post api
 author: manishtiwari25

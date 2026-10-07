@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Streaming Azure OpenAI Responses in .NET: First Token in Under a Second"
-date: 2026-09-30 05:00:00 -0500
+date: 2026-09-30 00:00:00 +0200
 categories: ai
 tags: ai azure openai dotnet csharp streaming sse aspnetcore
 author: manishtiwari25

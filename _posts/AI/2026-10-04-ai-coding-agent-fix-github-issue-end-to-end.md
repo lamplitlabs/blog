@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC in Practice: Letting a Coding Agent Triage and Fix a GitHub Issue End-to-End"
-date: 2026-10-04 09:00:00 -0500
+date: 2026-10-04 00:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp copilot github testing enterprise
 author: manishtiwari25

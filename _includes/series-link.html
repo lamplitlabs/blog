@@ -1,0 +1,14 @@
+{%- comment -%}
+Series navigation link that only becomes a link once the target post is built.
+With `future: false`, a post dated after the build day is not in site.posts, so a
+hard link to it would be a 404 until publish day. Render the title as plain text
+with "(coming soon)" until then and as a link afterwards - no manual edit needed.
+Usage: {% include series-link.html post="Performance/2026-10-11-slug" title="..." note=" - why it is related." %}
+{%- endcomment -%}
+{%- assign _sl_path = "_posts/" | append: include.post | append: ".md" -%}
+{%- assign _sl_target = site.posts | where: "path", _sl_path | first -%}
+{%- if _sl_target -%}
+[{{ include.title }}]({{ _sl_target.url | relative_url }}){{ include.note }}
+{%- else -%}
+{{ include.title }} (coming soon){{ include.note }}
+{%- endif -%}

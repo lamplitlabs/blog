@@ -116,6 +116,6 @@ If your prompt is under about 1 500 tokens, or traffic is a few requests per hou
 
 ## Related posts
 
-- Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management (coming soon)
+- {% include series-link.html post="AI/2026-10-14-enterprise-ai-apim-semantic-caching-azure-openai" title="Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management" %}
 - [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)
 - [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)

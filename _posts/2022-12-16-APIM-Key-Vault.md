@@ -63,5 +63,5 @@ By following these steps, you can securely connect Azure API Gateway with Azure 
 ## Related posts
 
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
-- Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management
+- {% include series-link.html post="AI/2026-10-14-enterprise-ai-apim-semantic-caching-azure-openai" title="Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management" %}
 - [Azure B2C Custom Policies Deployment - Azure DevOps](/posts/Azure_B2C_Custom_Policies_Deployment/)

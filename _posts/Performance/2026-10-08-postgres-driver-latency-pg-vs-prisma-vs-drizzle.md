@@ -131,4 +131,4 @@ The database driver is one layer in the request path; these posts measure the ot
 
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the same "pool and query shape beat runtime choice" lesson, measured on .NET against the same kind of database round trip.
 - [Node vs Deno vs Bun: HTTP Server Performance Under Load]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - the HTTP layer this driver benchmark sits behind, measured with the same autocannon workflow.
-- [Go vs .NET: Goroutines vs Tasks Concurrency Throughput](/posts/go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput/) - what the same kind of pooled-connection concurrency question looks like outside Node.js.
+- Go vs .NET: Goroutines vs Tasks Concurrency Throughput (coming soon) - what the same kind of pooled-connection concurrency question looks like outside Node.js.

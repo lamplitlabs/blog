@@ -110,5 +110,5 @@ Neither choice is wrong. The costly mistake is picking one and then skipping the
 - [pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22, Measured with autocannon]({% post_url Performance/2026-10-08-postgres-driver-latency-pg-vs-prisma-vs-drizzle %}) - why the NestJS version lost ground in the ORM.
 - [Go Goroutines vs .NET Tasks: HTTP Concurrency Throughput, Measured with wrk]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - the process-vs-thread trade-off behind Node cluster mode.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - another language comparison in this series.
-- [Rust vs Go for a CLI Tool: Startup, Binary Size, Build Time and the Day-Two Costs](/posts/rust-vs-go-cli-tool/) - the next language comparison in this category, for short-lived processes instead of servers.
-- [Zig vs C for a Systems Tool: Throughput, Binary Size, Cross-Compiling and Where the Bugs Hide](/posts/zig-vs-c-systems-tool/) - the newest comparison in this category, at the systems end of the spectrum.
+- Rust vs Go for a CLI Tool: Startup, Binary Size, Build Time and the Day-Two Costs (coming soon) - the next language comparison in this category, for short-lived processes instead of servers.
+- Zig vs C for a Systems Tool: Throughput, Binary Size, Cross-Compiling and Where the Bugs Hide (coming soon) - the newest comparison in this category, at the systems end of the spectrum.

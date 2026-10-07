@@ -251,6 +251,38 @@ report_alt_coverage() {
   if [[ -n $without ]]; then
     printf '  %s\n' $without
   fi
+
+  # Duplicate coverage: the same alt text repeated verbatim across more than one
+  # post is generic/copy-pasted and tells screen readers and image search nothing
+  # about this post (regression fixed in 3853af3). Compares the trimmed value of
+  # the nested `alt:` key, case-insensitively, and lists each repeated value with
+  # the posts that share it.
+  local dupes
+  dupes="$(for f in $with_image; do
+    awk -v file="$f" '
+      FNR == 1 { fm = 0; in_image = 0 }
+      /^---[[:space:]]*$/ { fm++; in_image = 0; next }
+      fm != 1 { next }
+      /^image:/ { in_image = 1; next }
+      /^[^[:space:]]/ { in_image = 0 }
+      in_image && /^[[:space:]]+alt:[[:space:]]*[^[:space:]]/ {
+        v = $0; sub(/^[[:space:]]+alt:[[:space:]]*/, "", v)
+        sub(/[[:space:]]+$/, "", v); gsub(/^["'"'"']|["'"'"']$/, "", v)
+        print tolower(v) "\t" file
+      }
+    ' "$f"
+  done | sort | awk -F'\t' '
+    { n[$1]++; files[$1] = files[$1] "\n    " $2 }
+    END { for (k in n) if (n[k] > 1) print "  \"" k "\" (" n[k] " posts)" files[k] }
+  ')"
+  local dupe_count=0
+  if [[ -n $dupes ]]; then
+    dupe_count="$(printf '%s\n' "$dupes" | grep -c '^  "' || true)"
+  fi
+  echo "alt-duplicate-coverage: $dupe_count alt text values repeated verbatim across more than one post (rule: identical trimmed, case-folded nested 'alt:' value in >1 post)"
+  if [[ -n $dupes ]]; then
+    printf '%s\n' "$dupes"
+  fi
 }
 
 # Report inline-image coverage of post bodies so "publish more posts with

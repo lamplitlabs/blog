@@ -100,7 +100,7 @@ If you run a Jekyll blog, the cheapest wins are the two anchored `grep -L` check
 
 ## Our Products
 
-The same "AI drafts, checks gate, humans merge" habit shapes the tooling we ship at Lamplit Labs. Our flagship is the [EDMX Trimmer and OData metadata explorer](https://edmx.lamplitlabs.com/explore), which turns a multi-megabyte D365 or OData `$metadata` file into just the entities, enums and types your client actually needs. Our platform also includes the [cron expression tester](https://tools.lamplitlabs.com/cron) for Azure Functions timer triggers and [Ferret](https://github.com/lamplitlabs/ferret), our open-source Go toolkit for posting to social APIs such as Threads and LinkedIn. All of them are built and checked with the same kind of deterministic gates described above.
+The same "AI drafts, checks gate, humans merge" habit shapes the tooling we ship at Lamplit Labs. Our flagship is the [EDMX Trimmer and OData metadata explorer](https://edmx.lamplitlabs.com/#/explore), which turns a multi-megabyte D365 or OData `$metadata` file into just the entities, enums and types your client actually needs. Our platform also includes the [cron expression tester](https://tools.lamplitlabs.com/#/cron) for Azure Functions timer triggers and [Ferret](https://github.com/lamplitlabs/ferret), our open-source Go toolkit for posting to social APIs such as Threads and LinkedIn. All of them are built and checked with the same kind of deterministic gates described above.
 
 ![Side-by-side flow showing an AI coding agent's plan for a GitHub issue, used as the drafting step that precedes the deterministic checks in our tooling pipeline](/assets/img/posts/ai/ai-agent-issue-plan.webp)
 

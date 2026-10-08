@@ -123,9 +123,13 @@ It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`
 to see the config options.
 
-To run the site locally with live reload (optionally in production mode):
+To run the site locally with live reload (optionally in production mode or
+bound to a non-default host, e.g. to reach the dev server from another device
+or a container):
 
 ```bash
-bash tools/run.sh            # dev server on 127.0.0.1
-bash tools/run.sh --production
+bash tools/run.sh                    # dev server on 127.0.0.1
+bash tools/run.sh --production       # JEKYLL_ENV=production
+bash tools/run.sh -H 0.0.0.0         # bind to all interfaces (also --host <host>)
+bash tools/run.sh --help             # list all options
 ```

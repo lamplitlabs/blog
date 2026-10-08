@@ -5,10 +5,10 @@ date: 2026-10-09 00:00:00 +0200
 categories: ai lamplit-tools
 tags: ai sdlc jekyll github-pages automation agents devops testing
 author: manishtiwari25
-description: "Behind the scenes of this blog: the Jekyll setup, the six content checks in tools/test.sh, and the AI agent workflow where agents draft and humans merge."
+description: "Behind the scenes of this blog: the Jekyll setup, the deterministic checks in tools/test.sh, and the AI agent workflow where agents draft and humans merge."
 image:
   path: /assets/img/headers/ai/our-blog-pipeline-ai-assisted-publishing.webp
-  alt: "Header card showing the blog pipeline: a Markdown post flows into tools/test.sh with six checks plus html-proofer, then into the GitHub Pages Jekyll build"
+  alt: "Header card showing the blog pipeline: a Markdown post flows into tools/test.sh with its deterministic checks plus html-proofer, then into the GitHub Pages Jekyll build"
 ---
 
 Most of the posts here are about building things with .NET, Azure OpenAI and AI agents. This one is about the thing you are reading. The blog is itself a small product with users, defects and a test suite, and over the last year it has turned into a working example of the [AI SDLC loop]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %}) I keep recommending: AI drafts, humans decide, and something deterministic checks. Here is how the pieces fit.
@@ -45,7 +45,7 @@ mise exec -- bash tools/test.sh
 
 ## The checks: what tools/test.sh refuses to ship
 
-`tools/test.sh` started as the stock Chirpy script that builds the site and runs [html-proofer](https://github.com/gjtorikian/html-proofer) over `_site` to catch broken links and images. Each time a real reader-facing defect slipped through, we added one deterministic check for it. Today the script prints one line per check so an agent or a human can cite a single number instead of re-deriving it:
+`tools/test.sh` started as the stock Chirpy script that builds the site and runs [html-proofer](https://github.com/gjtorikian/html-proofer) over `_site` to catch broken links and images. Each time a real reader-facing defect slipped through, we added one deterministic check for it. Today the script runs 13 deterministic checks and prints one line per check so an agent or a human can cite a single number instead of re-deriving it. Here are six of them:
 
 | Check | What it enforces | Why a reader cares |
 |---|---|---|

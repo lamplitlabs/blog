@@ -78,7 +78,7 @@ avatar: /assets/img/favicons/android-chrome-512x512.png
 
 # Fallback social preview image (og:image / twitter:image) for pages without a
 # per-post image, e.g. the homepage and category pages, so link shares get a thumbnail.
-social_preview_image: /assets/img/favicons/android-chrome-512x512.png
+social_preview_image: /assets/img/og-default.webp
 
 # boolean type, the global switch for TOC in posts.
 toc: true

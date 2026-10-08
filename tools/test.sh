@@ -633,7 +633,10 @@ main() {
   local _build_log
   _build_log=$(mktemp)
   local _build_rc=0
-  JEKYLL_ENV=production bundle exec jekyll b \
+  # Build with --future so scheduled posts (dated after today, skipped by
+  # future:false in production) are rendered too and htmlproofer checks their
+  # links and images now, in CI, instead of on publish day.
+  JEKYLL_ENV=production bundle exec jekyll b --future \
     -d "$SITE_DIR$_baseurl" -c "$_config" 2>&1 | tee "$_build_log" || _build_rc=${PIPESTATUS[0]}
   if ((_build_rc != 0)); then
     rm -f "$_build_log"

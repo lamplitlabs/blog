@@ -32,8 +32,9 @@ bash tools/test.sh
 Before building, the script checks every post under `_posts/` (subfolders
 included) and prints one summary line per check:
 
-- Tag case: the build **fails** if two posts spell the same tag with different
-  letter case (e.g. `Azurite` vs `azurite`), since Jekyll would drop one tag page.
+- `tag-case-duplicates`: the build **fails** if two posts spell the same tag
+  with different letter case (e.g. `Azurite` vs `azurite`), since Jekyll would
+  drop one tag page.
 - `category-case-duplicates`: the build **fails** if two posts use the same
   category with different letter case (e.g. `Drawio` vs `drawio`), since Jekyll
   would drop one category page the same way a tag-case collision drops a tag
@@ -62,6 +63,12 @@ included) and prints one summary line per check:
   `body-image-coverage: <count>/<total> posts without an inline ![...] image in
   the body (...)` followed by the offending post paths; a front-matter `image:`
   alone does not count, only a Markdown image after the closing `---`.
+- `image-link-coverage`: the build **fails** if any post's Markdown image
+  (`![...](path)`) or front-matter `image:`/`path:` value that starts with
+  `/` or `assets/` points at a file that does not exist under the repo root,
+  since the image would render broken for readers. Prints
+  `image-link-coverage: <count>/<total> broken (...)` and, on failure, the
+  offending post and path.
 - `alt-duplicate-coverage`: informational only, never fails the build. Prints
   `alt-duplicate-coverage: <count> alt text values repeated verbatim across
   more than one post (...)` followed by each repeated (trimmed, case-folded)

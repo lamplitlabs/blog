@@ -310,6 +310,61 @@ report_body_image_coverage() {
   fi
 }
 
+# Fail when a post references an image that does not exist in the repo. Covers
+# every Markdown image `![...](path)` in the body and every front-matter `image:`
+# path (inline `image: /x.webp` or a nested `path:` key under `image:`). Paths
+# starting with `/` or `assets/` are resolved against the repo root; other paths
+# (external URLs, relative) are skipped. A broken path renders as a missing
+# header or an empty box with alt text, so readers lose the screenshot the post
+# was written around. Hard fail: exits non-zero listing post -> missing path.
+report_image_link_coverage() {
+  local broken
+  broken="$(for f in $_posts; do
+    awk -v file="$f" '
+      FNR == 1 { fm = 0; in_image = 0 }
+      /^---[[:space:]]*$/ && fm < 2 { fm++; in_image = 0; next }
+      fm == 1 && /^image:[[:space:]]*[^[:space:]]/ {
+        v = $0; sub(/^image:[[:space:]]*/, "", v); emit(v); next
+      }
+      fm == 1 && /^image:[[:space:]]*$/ { in_image = 1; next }
+      fm == 1 && /^[^[:space:]]/ { in_image = 0 }
+      fm == 1 && in_image && /^[[:space:]]+path:[[:space:]]*[^[:space:]]/ {
+        v = $0; sub(/^[[:space:]]+path:[[:space:]]*/, "", v); emit(v)
+      }
+      fm == 2 {
+        line = $0
+        while (match(line, /!\[[^]]*\]\([^)]*\)/)) {
+          img = substr(line, RSTART, RLENGTH)
+          line = substr(line, RSTART + RLENGTH)
+          sub(/^!\[[^]]*\]\(/, "", img); sub(/\)$/, "", img)
+          sub(/[[:space:]].*$/, "", img)
+          emit(img)
+        }
+      }
+      function emit(v) {
+        sub(/[[:space:]]+$/, "", v); gsub(/^["\x27]|["\x27]$/, "", v)
+        if (v ~ /^\// || v ~ /^assets\//) print file "\t" v
+      }
+    ' "$f"
+  done | while IFS="$(printf '\t')" read -r post path; do
+    rel="${path#/}"
+    if [[ ! -f "./$rel" ]]; then
+      echo "$post -> $path"
+    fi
+  done)"
+  local count=0
+  if [[ -n $broken ]]; then
+    count="$(printf '%s\n' "$broken" | wc -l | tr -d ' ')"
+  fi
+  echo "image-link-coverage: $count/$_posts_total broken (rule: every '![...](path)' and front-matter 'image:'/'path:' value starting with / or assets/ must exist as a file under the repo root)"
+  if [[ -n $broken ]]; then
+    echo "error: $count post image path(s) point at files that do not exist:" >&2
+    printf '       %s\n' "$broken" >&2
+    echo "       Fix the path or add the image under assets/ so the post renders its screenshot." >&2
+    exit 1
+  fi
+}
+
 # Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
 # Atom feed fall back to the generic site description otherwise, so every post
 # would show the same search snippet. Same rule as
@@ -556,6 +611,7 @@ main() {
   check_date_match
   check_tab_order_unique
   report_image_coverage
+  report_image_link_coverage
   report_alt_coverage
   report_body_image_coverage
   report_ai_related_coverage

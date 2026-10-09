@@ -33,7 +33,7 @@ Startup cost is real operational time and belongs in the table:
 
 ## The headline: 128 concurrent chat users
 
-![Terminal output of benchmark_serving.py for the three servers on one H100: vLLM 15.53 req/s, 2,910 output tok/s, TTFT p99 412 ms, TPOT p99 58.3 ms; TGI 12.49 req/s, 2,340 tok/s, TTFT p99 538 ms, TPOT p99 71.2 ms; TensorRT-LLM 20.66 req/s, 3,870 tok/s, TTFT p99 286 ms, TPOT p99 41.9 ms](/assets/img/posts/performance/vllm-tgi-trtllm-benchmark-serving-output.webp)
+![Terminal output of benchmark_serving.py for the three servers on one H100: vLLM 15.53 req/s, 2,910 output tok/s, TTFT p99 412 ms, TPOT p99 58.3 ms; TGI 12.49 req/s, 2,340 tok/s, TTFT p99 538 ms, TPOT p99 71.2 ms; TensorRT-LLM 20.66 req/s, 3,870 tok/s, TTFT p99 286 ms, TPOT p99 41.9 ms](/assets/img/posts/performance/vllm-tgi-trtllm-benchmark-serving-output.webp){: width="1200" height="766" }
 
 | Server | Req/s | Output tok/s | TTFT p50 | TTFT p99 | TPOT p50 | TPOT p99 | ITL p99 |
 |---|---|---|---|---|---|---|---|

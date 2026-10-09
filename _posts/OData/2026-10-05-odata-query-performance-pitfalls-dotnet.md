@@ -15,7 +15,7 @@ In the [OData client benchmark](/posts/odata-csharp-benchmark/) the three client
 
 This post walks through the five pitfalls I see most often in production code talking to Dynamics 365 and ASP.NET Core OData services, each with a before/after query.
 
-![Bar chart from the OData client benchmark showing OData Client, Simple.OData.Client and a custom HttpClient within a few milliseconds of each other on add, delete and get operations](/assets/img/headers/odata-benchmark.webp)
+![Bar chart from the OData client benchmark showing OData Client, Simple.OData.Client and a custom HttpClient within a few milliseconds of each other on add, delete and get operations](/assets/img/headers/odata-benchmark.webp){: width="608" height="1080" }
 _The benchmark that started this: three clients, nearly identical numbers. The query, not the library, is what you need to tune._
 
 {% include article-ads.html %}

@@ -13,7 +13,7 @@ image:
 
 Most enterprise LLM features ship with exactly one metric: the Azure bill at the end of the month. When finance asks "why did AI spend double in September?" or a user says "the copilot got slower this week", nobody can answer because the only trace is an HTTP 200 from `/ask`. This post shows how to make every LLM request **observable like any other dependency**: one OpenTelemetry trace per user request, with spans for retrieval, the model call and guardrails, carrying token counts, cost and tenant as attributes, exported to Azure Monitor.
 
-![LLM observability pipeline: one trace per user request with retrieval, Azure OpenAI and guardrail spans, span attributes for tokens and cost, and dashboards for latency, cost per tenant and quality](/assets/img/posts/ai/enterprise-llm-observability-trace-pipeline.webp)
+![LLM observability pipeline: one trace per user request with retrieval, Azure OpenAI and guardrail spans, span attributes for tokens and cost, and dashboards for latency, cost per tenant and quality](/assets/img/posts/ai/enterprise-llm-observability-trace-pipeline.webp){: width="1200" height="640" }
 
 {% include feed-ads.html %}
 
@@ -101,7 +101,7 @@ Two decisions worth calling out:
 
 If you use RAG (see the [RAG vs fine-tuning post](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)), wrap the search call in a `search.query` span with `search.top_k`, `search.hits` and `search.filter` (the permission filter). Wrap content safety or policy checks in `policy.check` with `policy.verdict`. Now a slow request decomposes immediately: in the pipeline above, a 6.8 s p95 turned out to be 4.9 s in retrieval because the index had no permission filter pushed down, not the model at all.
 
-![Application Insights end-to-end transaction details for POST /ask (6.82 s): waterfall with search.query taking 4.91 s, policy.check 180 ms, gen_ai.chat 1.42 s, and the gen_ai.chat dependency panel showing gpt-4o, 3 412 input tokens, 287 output tokens, finish reason Stop, tenant contoso-eu and cost 0.01141 USD](/assets/img/posts/ai/enterprise-llm-observability-appinsights-waterfall.webp)
+![Application Insights end-to-end transaction details for POST /ask (6.82 s): waterfall with search.query taking 4.91 s, policy.check 180 ms, gen_ai.chat 1.42 s, and the gen_ai.chat dependency panel showing gpt-4o, 3 412 input tokens, 287 output tokens, finish reason Stop, tenant contoso-eu and cost 0.01141 USD](/assets/img/posts/ai/enterprise-llm-observability-appinsights-waterfall.webp){: width="1200" height="640" }
 
 This is what that request looks like in the Application Insights **End-to-end transaction details** blade: the orange `search.query` span dominates the waterfall, and clicking `gen_ai.chat` shows the `gen_ai.*` and `enterprise.*` attributes from Step 2 as custom properties, so cost and tenant are visible on the same screen as latency.
 

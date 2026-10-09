@@ -107,7 +107,7 @@ Three things worth noticing:
 
 Create an **Azure Monitor Workbook**, add a query step with the KQL above and render it as a stacked bar chart by `Team` over `Day`. Add a second step that drops the `Team` grouping and renders a grid by `Model`. Pin a text step at the top with the month-to-date total against the budget so the first thing anyone sees is the number Finance asked for.
 
-![Azure Monitor workbook with a stacked bar chart of daily Azure OpenAI cost per team showing a Thursday spike from the eng-runbooks team, a table of cost by model, and a fired budget alert](/assets/img/posts/ai/enterprise-ai-azure-openai-cost-workbook.webp)
+![Azure Monitor workbook with a stacked bar chart of daily Azure OpenAI cost per team showing a Thursday spike from the eng-runbooks team, a table of cost by model, and a fired budget alert](/assets/img/posts/ai/enterprise-ai-azure-openai-cost-workbook.webp){: width="1100" height="560" }
 
 The spike on Thursday is the whole reason to build this. In the invoice it would have been $600 smeared across a month. Here it is a bar, labelled with the team, visible the same day, and traceable (through `clientRequestId`) to the one job that caused it.
 

@@ -112,7 +112,7 @@ LlmSlo5m()
 
 A single workbook grid joining the 1h and 6h burn, the current p95 and the error rate is what on-call actually looks at. The **State** column is a KQL `case()` over the same thresholds the alerts use, so the board and the pager never disagree.
 
-![SLO board with one row per team and deployment showing hourly cost, budget, 1h and 6h burn rate, p95 latency, error rate and a PAGE/TICKET/OK state](/assets/img/posts/ai/enterprise-ai-llm-slo-burn-rate-board.webp)
+![SLO board with one row per team and deployment showing hourly cost, budget, 1h and 6h burn rate, p95 latency, error rate and a PAGE/TICKET/OK state](/assets/img/posts/ai/enterprise-ai-llm-slo-burn-rate-board.webp){: width="1000" height="560" }
 _The board after a week in production: payments is paging on cost (3.4x over one hour, 1.9x over six), etl-summaries is paging on latency and 429s, docs-bot has a ticket for slow drift._
 
 The two PAGE rows above tell different stories, and that is the point of putting cost and latency side by side. **payments** is expensive but fast: a new prompt doubled the output tokens, and the fix is a prompt change. **etl-summaries** is expensive *and* slow *and* throwing 429s: it is hitting the deployment's TPM limit and retrying, so every retry is paid for twice. The fix there is the [Batch API](/posts/azure-openai-batch-api-dotnet/) or a quota bump, not a prompt edit.

@@ -41,7 +41,7 @@ For more information, please visit [Using your data with Azure OpenAI securely](
 - Under **Settings** section, click on **Keys**
 - Under **API Access control** either select **Both** or **Role-based access control**, I would recommend using RBAC(Role-based access control)
 
-  ![Compliance](/assets/img/posts/ai/call-to-get-azure-search-index-failed-server-responded-with-status-403.webp){: height="300px" }
+  ![Compliance](/assets/img/posts/ai/call-to-get-azure-search-index-failed-server-responded-with-status-403.webp){: width="406" height="300" }
 - Press **Yes** when it asks for confirmation
 
 {% include feed-ads.html %}

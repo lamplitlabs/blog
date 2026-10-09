@@ -15,7 +15,7 @@ If you are classifying 50,000 support tickets, summarising a backlog of document
 
 This post shows the whole loop from .NET: building the JSONL input, uploading it, creating the batch, polling, and reading the results back. It also covers the parts that surprise people the first time: the deployment type, the `custom_id` field, and what a partially failed batch looks like.
 
-![Azure OpenAI Batch API flow: JSONL, upload, create batch, poll, download results](/assets/img/headers/ai/azure-openai-batch-api-dotnet.webp)
+![Azure OpenAI Batch API flow: JSONL, upload, create batch, poll, download results](/assets/img/headers/ai/azure-openai-batch-api-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

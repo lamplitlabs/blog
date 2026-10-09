@@ -112,7 +112,7 @@ Even though it was a fun project, it is very hard to maintain it, so I decided t
 - Please follow [steps from Microsoft](https://learn.microsoft.com/en-us/azure/active-directory-b2c/microsoft-graph-get-started?tabs=app-reg-ga) and note down applicationId, clientSecret and tenantId.
 - Create the following folder structure
 
-  ![Folder Structure](/assets/img/posts/folder-structure.png)
+  width=
 
 {% include article-ads.html %}
 

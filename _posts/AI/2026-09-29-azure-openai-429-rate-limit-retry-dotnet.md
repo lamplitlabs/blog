@@ -15,7 +15,7 @@ The first time an Azure OpenAI integration goes to production, somebody demos it
 
 This post explains what the 429 really means, how to retry it properly from .NET, and where the boundary sits between what the SDK does for you and what you still have to build.
 
-![Timeline of four Azure OpenAI calls: three 429 responses with growing waits, then a 200 success](/assets/img/headers/ai/azure-openai-429-retry-dotnet.webp)
+![Timeline of four Azure OpenAI calls: three 429 responses with growing waits, then a 200 success](/assets/img/headers/ai/azure-openai-429-retry-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

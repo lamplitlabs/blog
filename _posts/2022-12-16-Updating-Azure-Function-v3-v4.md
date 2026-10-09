@@ -27,7 +27,7 @@ Updating an Azure Functions app from version 3 to version 4 involves a few steps
 
 After you save, the Application settings table should show `FUNCTIONS_EXTENSION_VERSION` with the value `~4` - that is your confirmation the runtime switch was recorded before you move on to the hosting plan.
 
-![Azure portal Function App Configuration blade, Application settings tab, with the FUNCTIONS_EXTENSION_VERSION row highlighted showing the value ~4 and a green banner saying the settings were updated and the app needs a restart](/assets/img/posts/azure/function-app-functions-extension-version-v4.webp)
+width=
 *The Configuration blade after saving: `FUNCTIONS_EXTENSION_VERSION` reads `~4`. If it still shows `~3`, the save did not go through - repeat step 2 before changing the plan.*
 
 {% include article-ads.html %}

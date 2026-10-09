@@ -13,7 +13,7 @@ image:
 
 Every internal-copilot pitch I have reviewed this year ends in the same argument: "we should fine-tune a model on our documents" versus "we should just put a vector index in front of GPT-4o". Both camps are usually arguing about the wrong axis. For an *internal* copilot (HR policy, engineering runbooks, sales playbooks, support macros) the decision is rarely about answer quality. It is about four operational properties: **what it costs per month, how long the user waits, how stale the answers are allowed to be, and who is allowed to see what**. This post puts numbers and a decision table on each.
 
-![RAG vs fine-tuning side-by-side for an internal copilot](/assets/img/headers/ai/rag-vs-fine-tuning-internal-copilot.webp)
+![RAG vs fine-tuning side-by-side for an internal copilot](/assets/img/headers/ai/rag-vs-fine-tuning-internal-copilot.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -101,7 +101,7 @@ For a copilot that spans HR, finance and engineering content, the permissions ro
 | p95 time-to-first-token must be under ~700 ms | Fine-tune, or RAG with aggressive caching and small *k* | Retrieval hop costs 100-350 ms |
 | Both facts change and style matters | RAG for facts + fine-tuned small model for style | The common production shape |
 
-![Decision flow for choosing between RAG, fine-tuning and prompt engineering for an internal copilot](/assets/img/posts/ai/rag-vs-fine-tuning-decision-flow.webp)
+![Decision flow for choosing between RAG, fine-tuning and prompt engineering for an internal copilot](/assets/img/posts/ai/rag-vs-fine-tuning-decision-flow.webp){: width="1200" height="700" }
 
 ## What I would ship for this scenario
 

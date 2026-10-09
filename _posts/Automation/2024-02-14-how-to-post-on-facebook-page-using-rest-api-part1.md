@@ -59,21 +59,21 @@ Now, let's walk through the steps to obtain your API access token specifically f
 2.  ##### **Set Up a New App**
 
     - Navigate to the "My Apps" dashboard within your developer account.
-      ![Figure 1](/assets/img/posts/automation/facebook-automation/facebook-1.webp)
+      ![Figure 1](/assets/img/posts/automation/facebook-automation/facebook-1.webp){: width="1410" height="784" }
     - Click "Create App"
-      ![Figure 2](/assets/img/posts/automation/facebook-automation/facebook-2.webp)
+      ![Figure 2](/assets/img/posts/automation/facebook-automation/facebook-2.webp){: width="1394" height="784" }
     - Click on Other radio button.
-      ![Figure 3](/assets/img/posts/automation/facebook-automation/facebook-3.webp)
+      ![Figure 3](/assets/img/posts/automation/facebook-automation/facebook-3.webp){: width="1394" height="754" }
     - Click Next
-      ![Figure 4](/assets/img/posts/automation/facebook-automation/facebook-4.webp)
+      ![Figure 4](/assets/img/posts/automation/facebook-automation/facebook-4.webp){: width="1394" height="754" }
     - Select Business app type
-      ![Figure 5](/assets/img/posts/automation/facebook-automation/facebook-5.webp)
+      ![Figure 5](/assets/img/posts/automation/facebook-automation/facebook-5.webp){: width="1410" height="804" }
     - Click "Next"
-      ![Figure 6](/assets/img/posts/automation/facebook-automation/facebook-6.webp)
+      ![Figure 6](/assets/img/posts/automation/facebook-automation/facebook-6.webp){: width="1410" height="804" }
     - Fill The form
-      ![Figure 7](/assets/img/posts/automation/facebook-automation/facebook-7.webp)
+      ![Figure 7](/assets/img/posts/automation/facebook-automation/facebook-7.webp){: width="1410" height="804" }
     - Click on "Create app"
-      ![Figure 8](/assets/img/posts/automation/facebook-automation/facebook-8.webp)
+      ![Figure 8](/assets/img/posts/automation/facebook-automation/facebook-8.webp){: width="1394" height="772" }
     - You may ask to Login Again
 
 {% include article-ads.html %}
@@ -81,17 +81,17 @@ Now, let's walk through the steps to obtain your API access token specifically f
 3.  ##### **Generate an API Access Token**
 
     - Go to "App Settings"
-      ![Figure 9](/assets/img/posts/automation/facebook-automation/facebook-9.webp)
+      ![Figure 9](/assets/img/posts/automation/facebook-automation/facebook-9.webp){: width="1394" height="772" }
     - Select "Basic"
-      ![Figure 10](/assets/img/posts/automation/facebook-automation/facebook-10.webp)
+      ![Figure 10](/assets/img/posts/automation/facebook-automation/facebook-10.webp){: width="1394" height="790" }
     - Copy "App Id" and "App Secret"
     - Go to ["Meta Graph Explorer"](https://developers.facebook.com/tools/explorer)
-      ![Figure 12](/assets/img/posts/automation/facebook-automation/facebook-12.webp)
+      ![Figure 12](/assets/img/posts/automation/facebook-automation/facebook-12.webp){: width="1394" height="836" }
     - Change "User or Page" to "Get Page Access Token", this will ask you to select the page.
-      ![Figure 13](/assets/img/posts/automation/facebook-automation/facebook-13.webp)
-      ![Figure 14](/assets/img/posts/automation/facebook-automation/facebook-14.webp)
+      ![Figure 13](/assets/img/posts/automation/facebook-automation/facebook-13.webp){: width="1394" height="836" }
+      ![Figure 14](/assets/img/posts/automation/facebook-automation/facebook-14.webp){: width="1394" height="806" }
     - Go to "Permissions" and "Add a Permission", For automation we need **pages_manage_posts** permission
-      ![Figure 15](/assets/img/posts/automation/facebook-automation/facebook-15.webp)
+      ![Figure 15](/assets/img/posts/automation/facebook-automation/facebook-15.webp){: width="1394" height="806" }
     - Click on "Generate Access Token" and copy, this token is short lived so we need to generate a long living token
     - Get Long Lived Token
 
@@ -116,7 +116,7 @@ Now, let's walk through the steps to obtain your API access token specifically f
       - Get "Page Id" from Facebook
       - Open Page on Facebook
       - Click on "About" tab and select "Page transparency"
-        ![Figure 16](/assets/img/posts/automation/facebook-automation/facebook-16.webp)
+        ![Figure 16](/assets/img/posts/automation/facebook-automation/facebook-16.webp){: width="2372" height="834" }
       - Copy the "PAGE ID"
 
       - Generate Token

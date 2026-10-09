@@ -25,7 +25,7 @@ Nowadays everyone wants to use System.Text.Json as the Default Serializer for th
 Recently while working on a project I was using Azure Cosmos Db with dotnet 8 and I decided to use Cosmos DB SDK v3, I managed to create the code and when I started debugging
 I faced an issue, the error was <strong>required field id is missing</strong>, but in my model class I had an Id property and I added the attribute JsonPropertyName from System.Text.Json
 
-![Visual Studio exception dialog showing Microsoft.Azure.Cosmos.CosmosException BadRequest (400): the input content is invalid because the required properties 'id' are missing, even though the model has an Id property annotated with System.Text.Json's JsonPropertyName("id")](/assets/img/posts/azure/cosmosdb-sdk-required-property-id-missing.webp)
+width=
 
 When I checked the dependency of the Azure Cosmos Db SDK v3, I found that it is using NewtonSoft.Json, So when internally it was calling cosmos db it was unable to parse the ID.
 

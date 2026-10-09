@@ -15,7 +15,7 @@ After allocations in hot loops (see [the Span<T> post]({% post_url Performance/2
 
 This post takes one realistic query, an order list page with its lines and customer, and applies four changes one at a time: `AsNoTracking()`, `AsSplitQuery()`, a projection to a DTO, and a compiled query. Every step is measured with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) against a local SQL Server 2022 container on .NET 8 and EF Core 8. Absolute numbers depend on your hardware and data; the *ratios* are what travel.
 
-![Bar chart of mean EF Core query time per request across four tuning steps](/assets/img/headers/performance/ef-core-query-performance.webp)
+![Bar chart of mean EF Core query time per request across four tuning steps](/assets/img/headers/performance/ef-core-query-performance.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

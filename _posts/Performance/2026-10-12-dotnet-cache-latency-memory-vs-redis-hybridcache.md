@@ -16,7 +16,7 @@ The [EF Core query post]({% post_url Performance/2026-10-05-ef-core-query-perfor
 
 The working set is 10,000 small records (an `int` id, two strings, a `decimal`), serialized with `System.Text.Json` where serialization is required. Every benchmark reads a random existing key. Redis 7.2 runs on the same machine over a Unix socket, which is the *best* case for Redis; add a network hop and the Redis rows below get slower, the in-process rows do not.
 
-![Bar chart of p50 Get latency for ConcurrentDictionary, IMemoryCache, HybridCache and StackExchange.Redis against a 10k-item working set](/assets/img/headers/performance/dotnet-cache-latency-memory-vs-redis.webp)
+![Bar chart of p50 Get latency for ConcurrentDictionary, IMemoryCache, HybridCache and StackExchange.Redis against a 10k-item working set](/assets/img/headers/performance/dotnet-cache-latency-memory-vs-redis.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -91,7 +91,7 @@ sealed class RedisStore(IConnectionMultiplexer mux) : IProductCache
 | `StackExchange.Redis` GET (raw bytes) | 168 us | 968 B |
 | `StackExchange.Redis` GET + deserialize | 241 us | 2,104 B |
 
-![BenchmarkDotNet summary table for the six cache variants and redis-benchmark output at pipeline depth 1 and 16](/assets/img/posts/performance/dotnet-cache-benchmarkdotnet-output.webp)
+![BenchmarkDotNet summary table for the six cache variants and redis-benchmark output at pipeline depth 1 and 16](/assets/img/posts/performance/dotnet-cache-benchmarkdotnet-output.webp){: width="1200" height="460" }
 
 Three things stand out.
 

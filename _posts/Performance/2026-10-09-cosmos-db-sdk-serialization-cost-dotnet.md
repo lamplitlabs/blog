@@ -82,7 +82,7 @@ This skips the SDK's `ItemResponse<T>` wrapper and its copy of the headers/diagn
 
 Here is the BenchmarkDotNet output:
 
-![BenchmarkDotNet terminal table for five Cosmos DB read strategies: Newtonsoft default 1.381 ms and 41.21 KB allocated, System.Text.Json 1.192 ms and 18.63 KB, source-generated 1.118 ms and 14.88 KB, stream with System.Text.Json 1.043 ms and 9.07 KB, body discarded 0.968 ms and 4.31 KB](/assets/img/posts/performance/cosmos-db-sdk-benchmarkdotnet-output.webp)
+![BenchmarkDotNet terminal table for five Cosmos DB read strategies: Newtonsoft default 1.381 ms and 41.21 KB allocated, System.Text.Json 1.192 ms and 18.63 KB, source-generated 1.118 ms and 14.88 KB, stream with System.Text.Json 1.043 ms and 9.07 KB, body discarded 0.968 ms and 4.31 KB](/assets/img/posts/performance/cosmos-db-sdk-benchmarkdotnet-output.webp){: width="1200" height="520" }
 
 ## Results
 

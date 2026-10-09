@@ -11,7 +11,7 @@ image:
   alt: "Pipeline diagram: D365FO pending vendor invoice over OData, Azure Function builds prompt and history lookup, Azure OpenAI gpt-4o-mini returns structured output, draft line coding with confidence written back to D365FO, AP clerk approves or corrects; measured 86 percent accepted unchanged, 41 to 9 seconds per line, 0.0021 dollars per line, 3.4 second p95"
 ---
 
-![Pipeline: D365FO invoice via OData, Azure Function, Azure OpenAI structured output, draft coding back to D365FO, clerk approval; 86 % accepted unchanged, 41 s to 9 s per line, $0.0021 per line, 3.4 s p95](/assets/img/posts/enterprise-ai-azure-openai-d365fo-vendor-invoice-coding/d365fo-azure-openai-invoice-coding-pipeline.webp)
+![Pipeline: D365FO invoice via OData, Azure Function, Azure OpenAI structured output, draft coding back to D365FO, clerk approval; 86 % accepted unchanged, 41 s to 9 s per line, $0.0021 per line, 3.4 s p95](/assets/img/posts/enterprise-ai-azure-openai-d365fo-vendor-invoice-coding/d365fo-azure-openai-invoice-coding-pipeline.webp){: width="1200" height="630" }
 
 Most "AI in the ERP" demos stop at a chat box next to the form. The work that actually consumes an accounts payable team's day is smaller and duller: every vendor invoice line needs a main account, a cost centre, a department and sometimes a project, and the clerk picks them by remembering what was done last time for this vendor and this description. That is a lookup-plus-pattern-matching job, which is exactly what a language model with the right context does well, and exactly the kind of job where you do **not** want the model to post anything on its own.
 
@@ -116,7 +116,7 @@ res.EnsureSuccessStatusCode();
 
 Four weeks, one legal entity, 3,120 invoices, 18,400 lines. Acceptance was measured by comparing the suggestion written to the custom fields with the dimensions actually posted.
 
-![Table: acceptance rate by confidence band - 0.90 to 1.00: 11,210 lines, 96.1 % accepted unchanged; 0.70 to 0.89: 4,930 lines, 81.4 %; 0.50 to 0.69: 1,640 lines, 52.0 %; below 0.50: 620 lines, no suggestion; all: 86.0 % accepted, 12.5 % corrected, 1.5 % rejected](/assets/img/posts/enterprise-ai-azure-openai-d365fo-vendor-invoice-coding/d365fo-invoice-coding-acceptance-by-confidence.webp)
+![Table: acceptance rate by confidence band - 0.90 to 1.00: 11,210 lines, 96.1 % accepted unchanged; 0.70 to 0.89: 4,930 lines, 81.4 %; 0.50 to 0.69: 1,640 lines, 52.0 %; below 0.50: 620 lines, no suggestion; all: 86.0 % accepted, 12.5 % corrected, 1.5 % rejected](/assets/img/posts/enterprise-ai-azure-openai-d365fo-vendor-invoice-coding/d365fo-invoice-coding-acceptance-by-confidence.webp){: width="1100" height="520" }
 
 | Metric | Before | After |
 |---|---|---|

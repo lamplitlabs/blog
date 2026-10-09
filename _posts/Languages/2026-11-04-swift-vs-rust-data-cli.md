@@ -31,7 +31,7 @@ Toolchain: Swift 6.1 (`swiftc -O`) and Rust 1.90 (`cargo build --release`, thin 
 
 ## The numbers
 
-![Table comparing Swift idiomatic, Swift byte-level and Rust for aggregating a 5,000,000-row CSV: wall time 8.40 s vs 2.47 s vs 1.57 s, min/max 7.93-8.55 vs 2.35-3.73 vs 1.35-1.64 s, peak RSS 355 vs 309 vs 290 MB, clean build 1.6 vs 1.6 vs 3.0 s, stripped binary 80 vs 78 vs 487 KB, 40 vs 55 vs 42 lines of code, identical output](/assets/img/posts/languages/swift-vs-rust-csv-aggregation-table.webp)
+![Table comparing Swift idiomatic, Swift byte-level and Rust for aggregating a 5,000,000-row CSV: wall time 8.40 s vs 2.47 s vs 1.57 s, min/max 7.93-8.55 vs 2.35-3.73 vs 1.35-1.64 s, peak RSS 355 vs 309 vs 290 MB, clean build 1.6 vs 1.6 vs 3.0 s, stripped binary 80 vs 78 vs 487 KB, 40 vs 55 vs 42 lines of code, identical output](/assets/img/posts/languages/swift-vs-rust-csv-aggregation-table.webp){: width="1200" height="520" }
 _Rust's first draft is 5.3x faster than Swift's first draft. Swift gets within 1.6x once you stop allocating a String per line - at the cost of code nobody enjoys reading._
 
 Three things stand out.

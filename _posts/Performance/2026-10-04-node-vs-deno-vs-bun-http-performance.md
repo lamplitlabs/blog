@@ -15,7 +15,7 @@ So far this folder has covered [Span<T> allocations]({% post_url Performance/202
 
 The workload is the most common shape of service we write: a `GET /users/:id` that looks up an in-memory record and returns a 1.2 KB JSON body. No database, no TLS, no middleware beyond routing. That isolates the runtime's HTTP server, its JSON encoder and its event loop, which is exactly what you pay for when you switch runtimes.
 
-![Bar chart of requests per second for a 1.2 KB JSON endpoint across Node.js 22, Fastify, Deno 2 and Bun 1.1](/assets/img/headers/performance/node-vs-deno-vs-bun-http.webp)
+![Bar chart of requests per second for a 1.2 KB JSON endpoint across Node.js 22, Fastify, Deno 2 and Bun 1.1](/assets/img/headers/performance/node-vs-deno-vs-bun-http.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -94,7 +94,7 @@ Bun.serve({
 
 Here is the raw `wrk` output for the three native servers:
 
-![Terminal screenshot of wrk output for the Node.js http, Deno.serve and Bun.serve servers showing 54,812, 98,603 and 162,307 requests per second with p99 latency of 9.81 ms, 5.42 ms and 3.21 ms](/assets/img/posts/performance/node-deno-bun-wrk-output.webp)
+![Terminal screenshot of wrk output for the Node.js http, Deno.serve and Bun.serve servers showing 54,812, 98,603 and 162,307 requests per second with p99 latency of 9.81 ms, 5.42 ms and 3.21 ms](/assets/img/posts/performance/node-deno-bun-wrk-output.webp){: width="1100" height="760" }
 
 ## Results
 

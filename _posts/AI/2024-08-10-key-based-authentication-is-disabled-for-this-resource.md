@@ -23,13 +23,13 @@ Make sure when accessing the AI service API do not use api keys instead try to u
 
 - Go to Azure AI service (In this case, I am using Azure Open AI Service), and go to Resource Management and select Identity
 
-  ![Compliance](/assets/img/posts/ai/key-based-authentication-is-disabled-for-this-resource.webp){: height="300px" }
+  ![Compliance](/assets/img/posts/ai/key-based-authentication-is-disabled-for-this-resource.webp){: width="121" height="300" }
 - Make sure you are in **System Assigned** Tab
 - If the status is **Off**, please change it to **On** and save the generated ID for future use.
 
 Once the identity is enabled, the fix on your screen looks like this: the **System assigned** status is **On** and an Object (principal) ID is shown. Keys stay disabled (`disableLocalAuth: true`), so your application must now call the API with an Entra ID token (for example `DefaultAzureCredential` in the Azure SDK) instead of the `api-key` header:
 
-![Azure portal: Azure OpenAI resource Identity blade with System assigned status On and the Object (principal) ID shown, the fix for 'Key based authentication is disabled for this resource'](/assets/img/posts/ai/key-based-authentication-is-disabled-for-this-resource-fix.webp){: width="700px" }
+width=
 
 {% include feed-ads.html %}
 

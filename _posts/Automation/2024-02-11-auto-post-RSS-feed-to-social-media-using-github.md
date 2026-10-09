@@ -15,7 +15,7 @@ image:
 
 In my last post about [automation using Logic App](/posts/auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps/), I discussed the usage of the X (Twitter) connector. However, I encountered some limitations with this approach. Determined to find a more flexible solution, I delved deeper into the realm of automation and crafted an open-source automation tool hosted on GitHub Actions. Join me in welcoming [Ferret](https://github.com/lamplitlabs/ferret).
 
-![ferret](/assets/img/posts/automation/ferret.webp)
+![ferret](/assets/img/posts/automation/ferret.webp){: width="1776" height="896" }
 
 {% include article-ads.html %}
 
@@ -37,7 +37,7 @@ Additionally, if you've arrived at this blog post from social media, it's worth 
 
 Ferret operates on a simple yet efficient workflow. Upon detecting new content in the specified RSS feeds, Ferret triggers a series of predefined actions using GitHub Actions. These actions include fetching the content, formatting it according to user-defined preferences, and posting it across the designated social media platforms.
 
-![ferret-work](/assets/img/posts/automation/ferret-worl.webp)
+![ferret-work](/assets/img/posts/automation/ferret-worl.webp){: width="1678" height="896" }
 
 {% include article-ads.html %}
 

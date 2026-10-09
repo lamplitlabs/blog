@@ -16,7 +16,7 @@ The [Go vs .NET concurrency post]({% post_url Performance/2026-10-11-go-vs-dotne
 
 The workload is deliberately boring: an HTTP endpoint that waits 20 ms on a downstream call (a stub service on localhost that sleeps 20 ms before answering) and returns 140 bytes of JSON. Nothing is CPU-bound, so the only thing being measured is how each runtime handles 1,000 connections that are each blocked most of the time. With 1,000 connections and a 20 ms wait the theoretical ceiling is 1,000 / 0.020 s = **50,000 req/s**; a runtime that gets close is not wasting threads.
 
-![Bar chart of requests per second for Java platform threads, Java virtual threads, .NET sync-over-async, .NET async/await and Go goroutines at 1,000 connections](/assets/img/headers/performance/java-virtual-threads-vs-dotnet-async.webp)
+![Bar chart of requests per second for Java platform threads, Java virtual threads, .NET sync-over-async, .NET async/await and Go goroutines at 1,000 connections](/assets/img/headers/performance/java-virtual-threads-vs-dotnet-async.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -59,7 +59,7 @@ app.MapGet("/wait", async (HttpClient client) => await client.GetStringAsync(Dow
 | .NET 8 async/await, Kestrel | 48,600 | 20.6 ms | 27.4 ms | 19 | 118 MB |
 | Go 1.23 goroutines, net/http | 49,400 | 20.3 ms | 23.6 ms | 12 | 41 MB |
 
-![wrk output for the Java platform-thread, Java virtual-thread and .NET async/await servers showing 9,850, 47,303 and 48,604 requests per second](/assets/img/posts/performance/java-virtual-threads-wrk-output.webp)
+![wrk output for the Java platform-thread, Java virtual-thread and .NET async/await servers showing 9,850, 47,303 and 48,604 requests per second](/assets/img/posts/performance/java-virtual-threads-wrk-output.webp){: width="1200" height="460" }
 
 ### What the rows mean
 

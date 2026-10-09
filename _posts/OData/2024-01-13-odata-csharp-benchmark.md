@@ -48,19 +48,19 @@ The results indicated that ODataClient exhibited a slight performance advantage 
 
 ## Simple OData Client Benchmark
 
-![simple-odata-benchmark](/assets/img/posts/simpleodataclient.webp "Simple.OData.Client Benchmark")
+![simple-odata-benchmark](/assets/img/posts/simpleodataclient.webp "Simple.OData.Client Benchmark"){: width="756" height="381" }
 
 {% include article-ads.html %}
 
 ## OData Client Benchmark
 
-![odata-client-benchmark](/assets/img/posts/odataclient.webp "OData Client Benchmark")
+![odata-client-benchmark](/assets/img/posts/odataclient.webp "OData Client Benchmark"){: width="777" height="410" }
 
 {% include article-ads.html %}
 
 ## Http Client Benchmark
 
-![httpclient-benchmark](/assets/img/posts/httpclient.webp "Custom Http Client Benchmark")
+![httpclient-benchmark](/assets/img/posts/httpclient.webp "Custom Http Client Benchmark"){: width="750" height="339" }
 
 {% include article-ads.html %}
 

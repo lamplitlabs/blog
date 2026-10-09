@@ -15,7 +15,7 @@ A chat model on its own can only talk. Function calling (Azure OpenAI calls them
 
 This post walks through the full loop in .NET with the `Azure.AI.OpenAI` SDK, plus the parts that bite in production: argument validation, tool loops that never terminate, and deciding which methods the model is allowed to touch at all.
 
-![Function-calling loop: prompt, tool call, C# execution, final answer](/assets/img/headers/ai/azure-openai-function-calling-dotnet.webp)
+![Function-calling loop: prompt, tool call, C# execution, final answer](/assets/img/headers/ai/azure-openai-function-calling-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

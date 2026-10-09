@@ -28,7 +28,7 @@ I think it pretty much explains it, but in simpler terms, you are reading this o
 
 Okay, So How to get started?
 
-![Roadmap diagram of this beginner guide: 1. What is software engineering, 2. Think like a computer (computational thinking), 3. Think like a detective, 4. Keep going with the series; below it the five detective habits: break down the problem, find patterns, simplify, step-by-step plans, logical reasoning](/assets/img/posts/beginner/software-engineer-beginner-roadmap.webp)
+![Roadmap diagram of this beginner guide: 1. What is software engineering, 2. Think like a computer (computational thinking), 3. Think like a detective, 4. Keep going with the series; below it the five detective habits: break down the problem, find patterns, simplify, step-by-step plans, logical reasoning](/assets/img/posts/beginner/software-engineer-beginner-roadmap.webp){: width="1200" height="420" }
 
 Let´s train your brain to think like a computer, a fancy word for this is <strong>Computational thinking </strong>
 

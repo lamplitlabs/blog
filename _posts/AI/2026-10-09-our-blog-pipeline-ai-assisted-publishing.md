@@ -13,7 +13,7 @@ image:
 
 Most of the posts here are about building things with .NET, Azure OpenAI and AI agents. This one is about the thing you are reading. The blog is itself a small product with users, defects and a test suite, and over the last year it has turned into a working example of the [AI SDLC loop]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %}) I keep recommending: AI drafts, humans decide, and something deterministic checks. Here is how the pieces fit.
 
-![Terminal output of tools/test.sh: Jekyll build done, then tag-case-duplicates, image-coverage 0/58, alt-coverage 0/58, body-image-coverage 18/58, description-coverage all 58 posts, folder-categories, and HTML-Proofer finished successfully](/assets/img/posts/ai/our-blog-pipeline-test-sh-output.webp)
+![Terminal output of tools/test.sh: Jekyll build done, then tag-case-duplicates, image-coverage 0/58, alt-coverage 0/58, body-image-coverage 18/58, description-coverage all 58 posts, folder-categories, and HTML-Proofer finished successfully](/assets/img/posts/ai/our-blog-pipeline-test-sh-output.webp){: width="1200" height="620" }
 
 {% include feed-ads.html %}
 
@@ -102,7 +102,7 @@ If you run a Jekyll blog, the cheapest wins are the two anchored `grep -L` check
 
 The same "AI drafts, checks gate, humans merge" habit shapes the tooling we ship at Lamplit Labs. Our flagship is the [EDMX Trimmer and OData metadata explorer](https://edmx.lamplitlabs.com/#/explore), which turns a multi-megabyte D365 or OData `$metadata` file into just the entities, enums and types your client actually needs. Our platform also includes the [cron expression tester](https://tools.lamplitlabs.com/#/cron) for Azure Functions timer triggers and [Ferret](https://github.com/lamplitlabs/ferret), our open-source Go toolkit for posting to social APIs such as Threads and LinkedIn. All of them are built and checked with the same kind of deterministic gates described above.
 
-![Side-by-side flow showing an AI coding agent's plan for a GitHub issue, used as the drafting step that precedes the deterministic checks in our tooling pipeline](/assets/img/posts/ai/ai-agent-issue-plan.webp)
+![Side-by-side flow showing an AI coding agent's plan for a GitHub issue, used as the drafting step that precedes the deterministic checks in our tooling pipeline](/assets/img/posts/ai/ai-agent-issue-plan.webp){: width="1200" height="428" }
 
 ## Related posts
 

@@ -25,7 +25,7 @@ Idiomatic stacks only: Rust with `clap`, `regex`, `memchr` and `anyhow`; Go with
 
 ## Runtime: both are fast, Rust is faster
 
-![Terminal screenshot of hyperfine comparing loggrep-rs at 184.3 ms mean against loggrep-go at 246.9 ms mean, 1.34 times faster, followed by ls -lh showing 3.2M and 8.9M binaries and clean build times of 41.02 s for cargo and 2.8 s for go build](/assets/img/headers/languages/rust-vs-go-cli-hyperfine-terminal.webp)
+![Terminal screenshot of hyperfine comparing loggrep-rs at 184.3 ms mean against loggrep-go at 246.9 ms mean, 1.34 times faster, followed by ls -lh showing 3.2M and 8.9M binaries and clean build times of 41.02 s for cargo and 2.8 s for go build](/assets/img/headers/languages/rust-vs-go-cli-hyperfine-terminal.webp){: width="1200" height="700" }
 
 | | Rust 1.81 | Go 1.23 |
 |---|---|---|

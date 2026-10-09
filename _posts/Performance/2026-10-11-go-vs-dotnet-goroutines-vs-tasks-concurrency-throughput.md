@@ -16,7 +16,7 @@ The [Python vs Rust post]({% post_url Performance/2026-10-07-python-vs-rust-hot-
 
 The workload is an HTTP JSON echo endpoint, the shape of nearly every internal service we run: parse a small request body, do a little work, serialize a response. Two servers, same payload, same machine, same load generator: [wrk](https://github.com/wg/wrk) at 8 threads and 256 keep-alive connections for 30 seconds. Then a second variant of each server that waits 1 ms per request to stand in for a database call, because that is where the two concurrency models actually differ.
 
-![Bar chart of wrk requests per second for Go net/http and .NET 8 Minimal API, with and without a 1 ms per-request wait](/assets/img/headers/performance/go-vs-dotnet-concurrency-throughput.webp)
+![Bar chart of wrk requests per second for Go net/http and .NET 8 Minimal API, with and without a 1 ms per-request wait](/assets/img/headers/performance/go-vs-dotnet-concurrency-throughput.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -88,7 +88,7 @@ Both built in release mode: `go build` and `dotnet publish -c Release`. For .NET
 
 ## Results
 
-![wrk console output for the Go and .NET 8 echo endpoints and the .NET Thread.Sleep variant, showing latency distributions and Requests/sec lines](/assets/img/posts/performance/go-vs-dotnet-wrk-output.webp)
+![wrk console output for the Go and .NET 8 echo endpoints and the .NET Thread.Sleep variant, showing latency distributions and Requests/sec lines](/assets/img/posts/performance/go-vs-dotnet-wrk-output.webp){: width="1100" height="823" }
 
 | Server                               |  Requests/sec | p50 latency | p99 latency |
 | ------------------------------------ | ------------: | ----------: | ----------: |

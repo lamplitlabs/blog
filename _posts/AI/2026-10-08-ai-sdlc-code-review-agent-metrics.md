@@ -13,7 +13,7 @@ image:
 
 In the [phase-by-phase AI SDLC post]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %}) I argued that AI drafts, humans decide, and something deterministic checks. The code-review phase is where that rule gets tested first, because an AI reviewer that posts twenty comments per pull request and is right about six of them trains your team to ignore all twenty. This post is about the measurement loop we put around an LLM review bot on a .NET API repo, the five numbers we track, and the dashboard that decides each sprint whether the bot stays on.
 
-![Code-review agent dashboard for one sprint: precision 71%, 4.2 comments per PR, 22% ignored-comment rate, 2 escaped defects, a precision trend line crossing the 60% target, accepted vs ignored comments per category, and a turnaround and cost table](/assets/img/posts/ai/ai-code-review-agent-metrics-dashboard.webp)
+![Code-review agent dashboard for one sprint: precision 71%, 4.2 comments per PR, 22% ignored-comment rate, 2 escaped defects, a precision trend line crossing the 60% target, accepted vs ignored comments per category, and a turnaround and cost table](/assets/img/posts/ai/ai-code-review-agent-metrics-dashboard.webp){: width="1400" height="820" }
 
 {% include feed-ads.html %}
 

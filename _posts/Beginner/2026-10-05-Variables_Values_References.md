@@ -15,7 +15,7 @@ image:
 
 A variable is a **name** for a place that holds data. Some variables hold the data itself (a *value*); others hold the *address* where the data lives (a *reference*). Copying a value duplicates the data. Copying a reference duplicates only the address, so two names end up looking at the same thing. Almost every "why did my other variable change?!" bug in a beginner's first year comes from this single idea.
 
-![Diagram comparing value copies, where two variables each hold the number 42, with reference copies, where two variables hold the same address pointing at one list in memory](/assets/img/headers/beginner/variables_values_references.webp)
+![Diagram comparing value copies, where two variables each hold the number 42, with reference copies, where two variables hold the same address pointing at one list in memory](/assets/img/headers/beginner/variables_values_references.webp){: width="1200" height="800" }
 
 This is the third article in the beginner series. If you missed the earlier ones, start with [How to Become a Software Engineer](/posts/Software_Engineer-Beginner/) and [The Language of Computers](/posts/Language_Of_Computers/).
 
@@ -51,7 +51,7 @@ print(other)   # [1, 2, 3, 4]
 
 Why did `scores` change when we only touched `other`? Because the box labelled `scores` does not hold the list. It holds the **address** of the list, which lives somewhere else in memory. `other = scores` copied the address, not the list. Both labels now point at one list, so changing it through either name changes "both".
 
-![Memory diagram contrasting values and references: on the left, boxes a and b each hold their own copy of the number 42, so changing a leaves b untouched; on the right, boxes scores and other both hold the same address, with arrows pointing at a single list 1, 2, 3, 4, so other.append(4) is visible through scores too](/assets/img/posts/beginner/variables-values-references-memory-diagram.webp)
+![Memory diagram contrasting values and references: on the left, boxes a and b each hold their own copy of the number 42, so changing a leaves b untouched; on the right, boxes scores and other both hold the same address, with arrows pointing at a single list 1, 2, 3, 4, so other.append(4) is visible through scores too](/assets/img/posts/beginner/variables-values-references-memory-diagram.webp){: width="1200" height="560" }
 
 That address-in-a-box is a **reference** (some languages say *pointer*). Lists, dictionaries, objects, arrays, strings in many languages - anything that can be large or grow - is usually handled by reference. Copying a small address is cheap; copying a million-element list every time you pass it to a function would be ruinously slow.
 

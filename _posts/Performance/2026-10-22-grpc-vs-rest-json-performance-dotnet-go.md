@@ -9,7 +9,7 @@ image:
   alt: "Bar chart of requests per second at 64 connections with a 2 KB payload: Go gRPC 118,400, .NET 8 gRPC 112,900, Go REST 96,200, .NET 8 Minimal API 91,700, .NET 8 Controllers 78,300"
 ---
 
-![Bar chart of requests per second at 64 connections with a 2 KB payload: Go gRPC 118,400, .NET 8 gRPC 112,900, Go REST 96,200, .NET 8 Minimal API 91,700, .NET 8 Controllers 78,300](/assets/img/headers/performance/grpc-vs-rest-dotnet-go.webp)
+![Bar chart of requests per second at 64 connections with a 2 KB payload: Go gRPC 118,400, .NET 8 gRPC 112,900, Go REST 96,200, .NET 8 Minimal API 91,700, .NET 8 Controllers 78,300](/assets/img/headers/performance/grpc-vs-rest-dotnet-go.webp){: width="1200" height="630" }
 
 "Should we move this service to gRPC?" comes up in almost every architecture review I sit in, and the answer is usually given from memory rather than from a measurement. So I built the same small service twice in two languages and measured it, the same way the earlier posts in this category measured a [Python vs Rust hot loop]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) and [HTTP runtimes]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}).
 
@@ -28,7 +28,7 @@ Load came from a second VM in the same subnet: `wrk 2.1` for REST, `ghz 0.120` f
 
 ## Throughput and latency
 
-![Table of p50 and p99 latency, wire bytes per request and CPU percent: Go gRPC 0.49 ms p50, 2.1 ms p99, 1,210 bytes, 71% CPU; .NET 8 gRPC 0.52, 2.4, 1,210, 74%; Go REST 0.61, 3.9, 2,870, 83%; .NET 8 Minimal API 0.64, 4.3, 2,870, 85%; .NET 8 Controllers 0.77, 5.8, 2,870, 91%](/assets/img/posts/performance/grpc-vs-rest-latency-table.webp)
+![Table of p50 and p99 latency, wire bytes per request and CPU percent: Go gRPC 0.49 ms p50, 2.1 ms p99, 1,210 bytes, 71% CPU; .NET 8 gRPC 0.52, 2.4, 1,210, 74%; Go REST 0.61, 3.9, 2,870, 83%; .NET 8 Minimal API 0.64, 4.3, 2,870, 85%; .NET 8 Controllers 0.77, 5.8, 2,870, 91%](/assets/img/posts/performance/grpc-vs-rest-latency-table.webp){: width="1200" height="760" }
 
 Three things in that table matter more than the headline number:
 

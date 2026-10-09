@@ -15,7 +15,7 @@ image:
 
 A large language model (LLM) does not look anything up and does not "know" facts the way a database does. It turns your text into small pieces called **tokens**, predicts the single most likely next token, appends it, and repeats until it predicts a "stop". Everything you see from ChatGPT, Copilot or Azure OpenAI is that one loop, run very fast. Once you understand the loop, the model's strengths *and* its odd mistakes stop being mysterious.
 
-![Diagram showing the four steps a language model takes to answer a prompt: the prompt, splitting it into tokens, predicting the next token with probabilities, and repeating until done](/assets/img/headers/beginner/how_llms_work.webp)
+![Diagram showing the four steps a language model takes to answer a prompt: the prompt, splitting it into tokens, predicting the next token with probabilities, and repeating until done](/assets/img/headers/beginner/how_llms_work.webp){: width="1200" height="800" }
 
 This is the fourth article in the beginner series. The earlier ones are [How to Become a Software Engineer](/posts/Software_Engineer-Beginner/), [The Language of Computers](/posts/Language_Of_Computers/) and [Variables, Values and References](/posts/Variables_Values_References/).
 

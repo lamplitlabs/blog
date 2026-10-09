@@ -9,7 +9,7 @@ image:
   alt: "Bar chart of p99 event latency at 5,000 concurrent clients: gRPC server-streaming 14 ms, REST long-poll over HTTP/2 61 ms, REST long-poll over HTTP/1.1 148 ms, REST short-poll every 250 ms 412 ms"
 ---
 
-![Bar chart of p99 event latency at 5,000 concurrent clients: gRPC server-streaming 14 ms, REST long-poll over HTTP/2 61 ms, REST long-poll over HTTP/1.1 148 ms, REST short-poll every 250 ms 412 ms](/assets/img/headers/performance/grpc-streaming-vs-rest-polling-dotnet.webp)
+![Bar chart of p99 event latency at 5,000 concurrent clients: gRPC server-streaming 14 ms, REST long-poll over HTTP/2 61 ms, REST long-poll over HTTP/1.1 148 ms, REST short-poll every 250 ms 412 ms](/assets/img/headers/performance/grpc-streaming-vs-rest-polling-dotnet.webp){: width="1200" height="630" }
 
 The [gRPC vs REST JSON post]({% post_url Performance/2026-10-22-grpc-vs-rest-json-performance-dotnet-go %}) measured a request/response call. The question that followed in the comments and in two architecture reviews since was different: "we push order status updates to thousands of clients - does gRPC streaming actually beat the long-polling endpoint we already have?" That is a server-push problem, not a request problem, and the numbers are not the same. So I measured it.
 
@@ -28,7 +28,7 @@ The load generator ran on a second VM in the same subnet: a .NET console app ope
 
 ## Latency, throughput, CPU
 
-![Table of p50 and p99 latency, events per second, connections, server CPU and bytes per event: gRPC server-streaming 3 ms p50, 14 ms p99, 49,900 events/s, 5,000 connections, 38% CPU, 71 bytes; REST long-poll HTTP/2 9 ms, 61 ms, 49,600, 5,000 multiplexed, 57%, 412 bytes; REST long-poll HTTP/1.1 21 ms, 148 ms, 48,100, 5,000, 71%, 438 bytes; REST short-poll 250 ms 131 ms, 412 ms, 47,200, 5,000, 96%, 1,960 bytes](/assets/img/posts/performance/grpc-streaming-vs-rest-polling-table.webp)
+![Table of p50 and p99 latency, events per second, connections, server CPU and bytes per event: gRPC server-streaming 3 ms p50, 14 ms p99, 49,900 events/s, 5,000 connections, 38% CPU, 71 bytes; REST long-poll HTTP/2 9 ms, 61 ms, 49,600, 5,000 multiplexed, 57%, 412 bytes; REST long-poll HTTP/1.1 21 ms, 148 ms, 48,100, 5,000, 71%, 438 bytes; REST short-poll 250 ms 131 ms, 412 ms, 47,200, 5,000, 96%, 1,960 bytes](/assets/img/posts/performance/grpc-streaming-vs-rest-polling-table.webp){: width="1200" height="560" }
 
 Four things in that table are worth more than the headline:
 

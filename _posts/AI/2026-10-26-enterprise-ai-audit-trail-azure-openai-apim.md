@@ -9,7 +9,7 @@ image:
   alt: "Bar chart of Azure OpenAI audit coverage: traceable calls 31 percent before and 99.6 percent after, calls with content retained 0 before and 64 percent after under policy scope, audit requests answered within one day 100 percent"
 ---
 
-![Bar chart: traceable LLM calls 31% before and 99.6% after, calls with content retained 0% before and 64% after under policy scope, audit requests answered within one day 100%](/assets/img/headers/ai/enterprise-ai-audit-trail-azure-openai-apim.webp)
+![Bar chart: traceable LLM calls 31% before and 99.6% after, calls with content retained 0% before and 64% after under policy scope, audit requests answered within one day 100%](/assets/img/headers/ai/enterprise-ai-audit-trail-azure-openai-apim.webp){: width="1200" height="630" }
 
 The [governance controls post]({% post_url AI/2026-10-03-enterprise-ai-governance-azure-openai %}) listed "an audit trail per call" as control number four and spent two paragraphs on it. This is the long version: what we log, where it goes, who can read it, and the numbers after one quarter across 8 applications, 38 teams and 2.4 million calls.
 
@@ -23,7 +23,7 @@ Before this work we could answer that for 31% of calls - the ones from the two a
 
 Every Azure OpenAI call already went through Azure API Management because of the [token quota and chargeback]({% post_url AI/2026-10-05-enterprise-ai-apim-token-quotas-chargeback-azure-openai %}) work. That made the gateway the one place where a policy could capture a complete record without asking 38 teams to change code.
 
-![Table of audit record fields with source, store and retention: correlation id and timestamp from the APIM policy; caller app and Entra user oid from JWT claims; deployment, model and api-version from the request URL and response header; token counts from the response usage; prompt-version id from an x-prompt-version header; content filter result from the response body; all in Log Analytics for 2 years; prompt and completion text in immutable Storage with customer-managed keys for 90 days or per-app policy; SHA-256 content hash in Log Analytics](/assets/img/posts/ai/enterprise-ai-audit-log-record-fields.webp)
+![Table of audit record fields with source, store and retention: correlation id and timestamp from the APIM policy; caller app and Entra user oid from JWT claims; deployment, model and api-version from the request URL and response header; token counts from the response usage; prompt-version id from an x-prompt-version header; content filter result from the response body; all in Log Analytics for 2 years; prompt and completion text in immutable Storage with customer-managed keys for 90 days or per-app policy; SHA-256 content hash in Log Analytics](/assets/img/posts/ai/enterprise-ai-audit-log-record-fields.webp){: width="1200" height="760" }
 
 The APIM policy does three things on every request:
 

@@ -21,7 +21,7 @@ Reading is forgiving. Writing is where the service-protection limits in D365 Fin
 
 Same sandbox tenant as the paging post, same .NET 8 console client over a 12 ms RTT link, same 250,000 rows. Each row needs one `PATCH` that updates two columns (`LineDiscountPercentage`, `LineDiscountAmount`). Numbers are the median of 5 runs.
 
-![Table comparing four write strategies for 250,000 rows: one PATCH per row sends 250,000 requests in 2,110 s with 0 throttles at 118 rows per second and 188 MB; 8 parallel PATCH workers take 612 s with 37 throttles at 408 rows per second; $batch with 100 operations per changeset sends 2,500 requests in 238 s with 4 throttles at 1,050 rows per second and 172 MB; $batch with return=minimal takes 151 s with 2 throttles at 1,655 rows per second and 96 MB](/assets/img/posts/odata/odata-bulk-writes-results-table.webp)
+![Table comparing four write strategies for 250,000 rows: one PATCH per row sends 250,000 requests in 2,110 s with 0 throttles at 118 rows per second and 188 MB; 8 parallel PATCH workers take 612 s with 37 throttles at 408 rows per second; $batch with 100 operations per changeset sends 2,500 requests in 238 s with 4 throttles at 1,050 rows per second and 172 MB; $batch with return=minimal takes 151 s with 2 throttles at 1,655 rows per second and 96 MB](/assets/img/posts/odata/odata-bulk-writes-results-table.webp){: width="1400" height="560" }
 _The per-row version never gets throttled - it is simply too slow to trigger the limit. Everything faster than it has to deal with 429s._
 
 Three things stand out:

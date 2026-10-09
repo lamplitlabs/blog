@@ -41,7 +41,7 @@ The IVFFlat build is fast because it is k-means plus a bucket assignment. HNSW o
 | pgvector HNSW | `ef_search = 100` | 0.978 | 4,365 | 11.6 ms | 15.8 ms | 18.4 ms |
 | Qdrant HNSW | `ef = 100` | 0.981 | 8,608 | 5.9 ms | 8.3 ms | 9.7 ms |
 
-![Terminal output of vecbench showing the five runs: pgvector IVFFlat 902 QPS p99 61.0 ms, pgvector HNSW 4,365 QPS p99 18.4 ms, Qdrant 8,608 QPS p99 9.7 ms, then the tenant-filtered runs with pgvector HNSW at p99 47.3 ms and Qdrant at p99 10.4 ms](/assets/img/posts/performance/pgvector-qdrant-vecbench-output.webp)
+![Terminal output of vecbench showing the five runs: pgvector IVFFlat 902 QPS p99 61.0 ms, pgvector HNSW 4,365 QPS p99 18.4 ms, Qdrant 8,608 QPS p99 9.7 ms, then the tenant-filtered runs with pgvector HNSW at p99 47.3 ms and Qdrant at p99 10.4 ms](/assets/img/posts/performance/pgvector-qdrant-vecbench-output.webp){: width="1200" height="620" }
 
 Three things in that table:
 

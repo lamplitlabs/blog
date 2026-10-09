@@ -13,7 +13,7 @@ image:
 
 The [six governance controls post]({% post_url AI/2026-10-03-enterprise-ai-governance-azure-openai %}) was a checklist for the review meeting. It worked, right up until the eleventh team created an Azure OpenAI account on a Friday afternoon with public network access on, an API key in a pipeline variable and a model nobody had approved. Nothing in the checklist stopped them, because a checklist is read by people and resources are created by scripts. This post is the next step: the same controls expressed as Azure Policy assignments and budget alerts in Bicep, so the platform denies the wrong configuration at creation time and the finance team hears about spend drift before the invoice. It is governance as code, and it is the part of Enterprise AI that is mostly plumbing and mostly worth it.
 
-![Table of Azure Policy assignments for the Azure OpenAI landing zone: deny public network access, deny local auth, deny disallowed regions and models, deploy diagnostic settings if missing, deny missing cost-center tags, and budget alerts at 80 and 100 percent; compliance went from 11 non-compliant accounts to 0 in six weeks](/assets/img/posts/ai/enterprise-ai-azure-policy-controls-table.webp)
+![Table of Azure Policy assignments for the Azure OpenAI landing zone: deny public network access, deny local auth, deny disallowed regions and models, deploy diagnostic settings if missing, deny missing cost-center tags, and budget alerts at 80 and 100 percent; compliance went from 11 non-compliant accounts to 0 in six weeks](/assets/img/posts/ai/enterprise-ai-azure-policy-controls-table.webp){: width="1200" height="700" }
 
 {% include feed-ads.html %}
 

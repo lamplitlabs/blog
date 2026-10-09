@@ -24,7 +24,7 @@ Four engines, one workload. A 1 GB nginx access log (4.9 million lines), five pa
 5. [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}  # email address in query string
 ```
 
-![Bar chart of regex scan throughput in MB/s for Rust, .NET 8, Node 22 and Go](/assets/img/headers/performance/regex-engines-rust-go-dotnet-node.webp)
+![Bar chart of regex scan throughput in MB/s for Rust, .NET 8, Node 22 and Go](/assets/img/headers/performance/regex-engines-rust-go-dotnet-node.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -60,7 +60,7 @@ for line in reader.lines() {
 | Node 22 Irregexp | 2.45 s | 438 | 3.38x slower |
 | Go 1.23 `regexp` | 11.18 s | 96 | 15.4x slower |
 
-![hyperfine output for the Rust, .NET 8, Node 22 and Go regex scanners showing 725 ms, 1.754 s, 2.451 s and 11.183 s mean wall time](/assets/img/posts/performance/regex-engines-hyperfine-output.webp)
+![hyperfine output for the Rust, .NET 8, Node 22 and Go regex scanners showing 725 ms, 1.754 s, 2.451 s and 11.183 s mean wall time](/assets/img/posts/performance/regex-engines-hyperfine-output.webp){: width="1000" height="560" }
 
 ## Why the spread is 15x
 

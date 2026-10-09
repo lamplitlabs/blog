@@ -15,7 +15,7 @@ image:
 
 A chat window is only one way to talk to a language model. Underneath, every app (ChatGPT, Copilot, your company's internal assistant) sends an ordinary **HTTP request** containing a list of **messages**, and gets back a JSON reply containing the model's answer. Once you can send that request yourself, you can build anything on top of a model. This post shows the request, explains the three fields beginners trip over (roles, `max_tokens`, `temperature`), and reads the response.
 
-![Diagram showing a chat completions HTTP request with system and user messages on the left and the JSON response with the assistant message on the right](/assets/img/headers/beginner/calling_a_model_from_code.webp)
+![Diagram showing a chat completions HTTP request with system and user messages on the left and the JSON response with the assistant message on the right](/assets/img/headers/beginner/calling_a_model_from_code.webp){: width="1200" height="630" }
 
 This is the fifth article in the beginner series. The earlier ones are [How to Become a Software Engineer](/posts/Software_Engineer-Beginner/), [The Language of Computers](/posts/Language_Of_Computers/), [Variables, Values and References](/posts/Variables_Values_References/) and [How a Language Model Answers You](/posts/How_Language_Models_Work/). You do not need to have read them, but the last one explains the *tokens* we count below.
 

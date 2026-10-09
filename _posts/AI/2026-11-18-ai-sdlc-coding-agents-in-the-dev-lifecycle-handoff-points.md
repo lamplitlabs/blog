@@ -15,7 +15,7 @@ Copilot-style autocomplete sits inside the editor and never leaves it. A *coding
 
 This post describes the four hand-off points I use to place an agent in a .NET team's SDLC. It builds on the phase-by-phase overview in the earlier AI SDLC post and on the end-to-end GitHub issue walkthrough; here the focus is the *boundaries* between the agent and everything else.
 
-![Coding agents in the SDLC: task contract, sandboxed run, deterministic gates, human review](/assets/img/headers/ai/ai-sdlc-coding-agent-handoff-points.webp)
+![Coding agents in the SDLC: task contract, sandboxed run, deterministic gates, human review](/assets/img/headers/ai/ai-sdlc-coding-agent-handoff-points.webp){: width="1600" height="900" }
 
 {% include feed-ads.html %}
 

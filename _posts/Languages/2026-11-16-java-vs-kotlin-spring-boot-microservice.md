@@ -82,7 +82,7 @@ The load generator shares the CPU with the server, so absolute throughput is cap
 
 ## Results
 
-![Table comparing Java 21 and Kotlin 2.1 on the same Spring Boot 3.5.6 microservice: startup median 1.62 vs 1.71 seconds and best of five 1.55 vs 1.63 seconds, resident memory 214 vs 226 MB, heap after GC 38 vs 41 MB, throughput 24,300 vs 24,100 requests per second, p99 latency 4.1 vs 4.2 ms, lines of code 187 vs 112, clean build 14.8 vs 31.2 seconds, incremental build 3.9 vs 7.4 seconds, fat jar 24.6 vs 26.4 MB](/assets/img/posts/languages/java-vs-kotlin-spring-boot-results-table.webp)
+![Table comparing Java 21 and Kotlin 2.1 on the same Spring Boot 3.5.6 microservice: startup median 1.62 vs 1.71 seconds and best of five 1.55 vs 1.63 seconds, resident memory 214 vs 226 MB, heap after GC 38 vs 41 MB, throughput 24,300 vs 24,100 requests per second, p99 latency 4.1 vs 4.2 ms, lines of code 187 vs 112, clean build 14.8 vs 31.2 seconds, incremental build 3.9 vs 7.4 seconds, fat jar 24.6 vs 26.4 MB](/assets/img/posts/languages/java-vs-kotlin-spring-boot-results-table.webp){: width="1200" height="560" }
 
 | Metric | Java 21 | Kotlin 2.1 | Delta |
 |---|---|---|---|

@@ -15,7 +15,7 @@ Most .NET performance work I do in enterprise codebases is not about clever algo
 
 This post walks through three patterns I see constantly (parsing a delimited line, building a cache key, and copying chunks out of a buffer), shows the allocating version and the span version side by side, and measures both with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet). All numbers are from .NET 8 on an Apple M2; your absolute times will differ, but the *allocation* columns are what matter and those are deterministic.
 
-![Bar chart comparing allocated bytes per call for string.Split with Substring versus Span<char> parsing](/assets/img/headers/performance/span-memory-allocation-reduction.webp)
+![Bar chart comparing allocated bytes per call for string.Split with Substring versus Span<char> parsing](/assets/img/headers/performance/span-memory-allocation-reduction.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -189,7 +189,7 @@ private static int Process(ReadOnlyMemory<byte> chunk)
 
 ## The results
 
-![BenchmarkDotNet console output showing three baseline methods allocating 2728, 336 and 16440 bytes versus the Span and Memory versions allocating 0, 88 and 0 bytes](/assets/img/posts/performance/span-memory-benchmarkdotnet-output.webp)
+![BenchmarkDotNet console output showing three baseline methods allocating 2728, 336 and 16440 bytes versus the Span and Memory versions allocating 0, 88 and 0 bytes](/assets/img/posts/performance/span-memory-benchmarkdotnet-output.webp){: width="1400" height="660" }
 _BenchmarkDotNet output for the six methods above on .NET 8. The `Allocated` and `Alloc Ratio` columns are the ones to watch._
 
 | Method                      |       Mean | Ratio |   Gen0 | Allocated | Alloc Ratio |

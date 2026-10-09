@@ -61,7 +61,7 @@ A single laptop is not a production fleet, and the load generator shares the CPU
 
 ## Results
 
-![Table comparing Go 1.27 and Node.js 24 serving the same 50-item JSON endpoint with 64 keep-alive connections: throughput 9,678 vs 1,591 req/s in run 1 and 9,081 vs 2,371 req/s in run 2, p50 latency 2.3-2.6 vs 8.4-15.9 ms, p99 latency 72-98 vs 172-221 ms, p99.9 latency 165-177 vs 267-302 ms, resident memory 9.7 vs 61 MB, Go build 0.29 s producing a 6.2 MB static binary versus no build step for Node, 24 vs 9 lines of code](/assets/img/posts/languages/go-vs-node-json-api-results-table.webp)
+![Table comparing Go 1.27 and Node.js 24 serving the same 50-item JSON endpoint with 64 keep-alive connections: throughput 9,678 vs 1,591 req/s in run 1 and 9,081 vs 2,371 req/s in run 2, p50 latency 2.3-2.6 vs 8.4-15.9 ms, p99 latency 72-98 vs 172-221 ms, p99.9 latency 165-177 vs 267-302 ms, resident memory 9.7 vs 61 MB, Go build 0.29 s producing a 6.2 MB static binary versus no build step for Node, 24 vs 9 lines of code](/assets/img/posts/languages/go-vs-node-json-api-results-table.webp){: width="1200" height="560" }
 
 | Metric | Go 1.27 | Node.js 24 | Ratio |
 |---|---|---|---|

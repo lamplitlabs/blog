@@ -13,7 +13,7 @@ image:
 
 Most Azure OpenAI pilots in banks, insurers and healthcare organisations do not fail on model quality. They fail in the review meeting where security, legal and the data-protection officer ask questions the team has not prepared for. This post is the checklist I now bring to that meeting. Each control maps to a concrete Azure setting or a small piece of .NET code, so "we have governance" means something you can show, not a slide.
 
-![Six governance controls for Azure OpenAI in a regulated enterprise](/assets/img/headers/ai/enterprise-ai-governance-azure-openai.webp)
+![Six governance controls for Azure OpenAI in a regulated enterprise](/assets/img/headers/ai/enterprise-ai-governance-azure-openai.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

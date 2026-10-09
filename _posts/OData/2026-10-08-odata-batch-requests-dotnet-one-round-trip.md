@@ -21,7 +21,7 @@ A typical example is a sync job that reads a list of order IDs from a queue and 
 
 Same ASP.NET Core 8 OData service, same `Orders` entity set, same 50 IDs, measured from a .NET 8 console client over HTTPS on a 12 ms RTT link. Each row is the median of 20 runs.
 
-![Table comparing four approaches for fetching 50 orders: 50 sequential GETs take 2,640 ms and 118 KB; 50 parallel GETs with 8 concurrent take 610 ms and 118 KB; one $batch with 50 GET subrequests takes 190 ms, 4 ms p99 per item and 92 KB; one JSON $batch with $select takes 84 ms and 21 KB](/assets/img/posts/odata/odata-batch-vs-sequential-table.webp)
+![Table comparing four approaches for fetching 50 orders: 50 sequential GETs take 2,640 ms and 118 KB; 50 parallel GETs with 8 concurrent take 610 ms and 118 KB; one $batch with 50 GET subrequests takes 190 ms, 4 ms p99 per item and 92 KB; one JSON $batch with $select takes 84 ms and 21 KB](/assets/img/posts/odata/odata-batch-vs-sequential-table.webp){: width="1200" height="420" }
 _Parallelism helps, but the service still does 50 pipelines of auth, model binding and serialization. `$batch` collapses that to one pipeline with 50 small operations inside it._
 
 The two things worth noticing:

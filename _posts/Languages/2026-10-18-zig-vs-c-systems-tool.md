@@ -23,7 +23,7 @@ So, same experiment as before: one small tool written twice. `tinyproxy` accepts
 
 ## Runtime: a wash
 
-![Terminal screenshot of hyperfine comparing proxy-zig at 3.641 s mean against proxy-c at 3.566 s mean for a 4 GB loopback copy, 1.02 times faster for C, followed by ls -lh showing 92K and 41K binaries, clean build times of 1.9 s for zig build and 0.8 s for clang, and two zig build cross-compile commands exiting 0](/assets/img/headers/languages/zig-vs-c-hyperfine-terminal.webp)
+![Terminal screenshot of hyperfine comparing proxy-zig at 3.641 s mean against proxy-c at 3.566 s mean for a 4 GB loopback copy, 1.02 times faster for C, followed by ls -lh showing 92K and 41K binaries, clean build times of 1.9 s for zig build and 0.8 s for clang, and two zig build cross-compile commands exiting 0](/assets/img/headers/languages/zig-vs-c-hyperfine-terminal.webp){: width="1200" height="720" }
 
 | | Zig 0.13 | C (clang 18) |
 |---|---|---|

@@ -27,7 +27,7 @@ Each version uses the idiomatic stack for its ecosystem: Fastify + `pg` + `zod`,
 
 Both languages catch the classic backend bug at build time - a route parameter that might be missing flowing into a function that wants a definite string.
 
-![Terminal output showing tsc reporting TS2345 for a string | undefined route parameter in 1.9 seconds, and the Kotlin compiler reporting a String? to String type mismatch for the same bug in 14.2 seconds](/assets/img/posts/languages/typescript-vs-kotlin-compiler-output.webp)
+![Terminal output showing tsc reporting TS2345 for a string | undefined route parameter in 1.9 seconds, and the Kotlin compiler reporting a String? to String type mismatch for the same bug in 14.2 seconds](/assets/img/posts/languages/typescript-vs-kotlin-compiler-output.webp){: width="1200" height="700" }
 
 The difference is what happens *after* the compiler. TypeScript's types are erased: the `Order` type on your handler says nothing about the JSON that actually arrived. Unless you add a runtime validator (`zod`, `typebox`, `class-validator`) and derive the static type from it, the type system is describing what you hope the payload is. Every TypeScript team I have worked with has shipped a `Cannot read properties of undefined` to production at least once because a type and a payload disagreed.
 

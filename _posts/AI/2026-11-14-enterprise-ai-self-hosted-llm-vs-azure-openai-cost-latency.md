@@ -11,7 +11,7 @@ image:
   alt: "Two bar charts for one 1.4 billion token per month workload: monthly cost of 1,092 dollars for Azure OpenAI gpt-4o-mini, 5,376 for two pay-as-you-go A100 VMs, 3,387 reserved, 10,161 for a three-node HA cluster; p95 latency 2.9 seconds Azure OpenAI, 1.6 seconds self-hosted at 40 percent GPU utilisation, 4.7 seconds at 85 percent, 11.2 seconds at 95 percent"
 ---
 
-![Bar charts: monthly cost $1,092 Azure OpenAI gpt-4o-mini, $5,376 self-hosted pay-as-you-go VMs, $3,387 reserved, $10,161 three-node HA; p95 latency 2.9 s, 1.6 s, 4.7 s, 11.2 s](/assets/img/headers/ai/enterprise-ai-self-hosted-llm-vs-azure-openai-cost-latency.webp)
+![Bar charts: monthly cost $1,092 Azure OpenAI gpt-4o-mini, $5,376 self-hosted pay-as-you-go VMs, $3,387 reserved, $10,161 three-node HA; p95 latency 2.9 s, 1.6 s, 4.7 s, 11.2 s](/assets/img/headers/ai/enterprise-ai-self-hosted-llm-vs-azure-openai-cost-latency.webp){: width="1200" height="630" }
 
 The second most common question in an enterprise AI architecture review, right after [PTU or pay-as-you-go]({% post_url AI/2026-11-06-enterprise-ai-azure-openai-ptu-vs-pay-as-you-go-sustained-load %}), is *"why don't we just run an open model ourselves?"* The pitch is usually data residency, no per-token bill, and no dependency on a vendor's rate limits. The counter is usually "GPUs are expensive". Both sides tend to argue without a spreadsheet.
 
@@ -70,7 +70,7 @@ The three-node row is the one that reflects what "production" means in an enterp
 
 This is the part the spreadsheet cannot tell you. A managed API gives you roughly flat latency regardless of your load because you are a small fraction of a huge pool. A self-hosted node gives you excellent latency when idle and terrible latency as it saturates, with a cliff instead of a slope.
 
-![Terminal output of llmbench against the vLLM node: at 8 concurrent clients 3.9 req/s, 38 % GPU, p95 1.58 s; at 16 clients 7.1 req/s, 61 %, p95 2.33 s; at 32 clients 10.4 req/s, 85 %, p95 4.68 s; at 48 clients 11.2 req/s, 95 %, p95 11.2 s; at 64 clients 11.3 req/s, p95 19.6 s with 41 timeouts; then Azure OpenAI gpt-4o-mini at 32 and 64 clients with p95 2.9 and 3.1 s](/assets/img/posts/ai/enterprise-ai-self-hosted-vllm-llmbench-output.webp)
+![Terminal output of llmbench against the vLLM node: at 8 concurrent clients 3.9 req/s, 38 % GPU, p95 1.58 s; at 16 clients 7.1 req/s, 61 %, p95 2.33 s; at 32 clients 10.4 req/s, 85 %, p95 4.68 s; at 48 clients 11.2 req/s, 95 %, p95 11.2 s; at 64 clients 11.3 req/s, p95 19.6 s with 41 timeouts; then Azure OpenAI gpt-4o-mini at 32 and 64 clients with p95 2.9 and 3.1 s](/assets/img/posts/ai/enterprise-ai-self-hosted-vllm-llmbench-output.webp){: width="1200" height="720" }
 
 | Concurrency | req/s | Output tok/s | GPU util | p50 | p95 | p99 |
 |---|---|---|---|---|---|---|

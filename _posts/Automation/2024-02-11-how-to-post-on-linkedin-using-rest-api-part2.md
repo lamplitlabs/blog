@@ -25,7 +25,7 @@ Let's dive in!
 
 ## How does LinkedIn v2/posts Api work?
 
-![How API Works](/assets/img/posts/automation/linkedin-automation/api-flow.webp)
+![How API Works](/assets/img/posts/automation/linkedin-automation/api-flow.webp){: width="1258" height="194" }
 
 1.  #### Fetch Profile Information
 

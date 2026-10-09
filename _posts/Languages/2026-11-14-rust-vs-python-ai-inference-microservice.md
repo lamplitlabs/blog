@@ -67,7 +67,7 @@ The load generator shares the CPU with the server, and ONNX Runtime uses 4 threa
 
 ## Results
 
-![Table comparing Rust 1.91 and Python 3.13 serving the same MiniLM ONNX embedding endpoint with 32 keep-alive connections: throughput 1,862 vs 1,174 req/s in run 1 and 1,818 vs 1,246 req/s in run 2, p50 latency 11.1-11.7 vs 19.2-20.4 ms, p99 latency 36-40 vs 104-120 ms, p99.9 latency 61-68 vs 188-215 ms, resident memory 210 vs 640 MB, cold start 0.41 vs 2.9 s, Rust 38 s release build producing a 14 MB binary versus pip install of about 70 s for Python, 118 vs 46 lines of code](/assets/img/posts/languages/rust-vs-python-inference-results-table.webp)
+![Table comparing Rust 1.91 and Python 3.13 serving the same MiniLM ONNX embedding endpoint with 32 keep-alive connections: throughput 1,862 vs 1,174 req/s in run 1 and 1,818 vs 1,246 req/s in run 2, p50 latency 11.1-11.7 vs 19.2-20.4 ms, p99 latency 36-40 vs 104-120 ms, p99.9 latency 61-68 vs 188-215 ms, resident memory 210 vs 640 MB, cold start 0.41 vs 2.9 s, Rust 38 s release build producing a 14 MB binary versus pip install of about 70 s for Python, 118 vs 46 lines of code](/assets/img/posts/languages/rust-vs-python-inference-results-table.webp){: width="1200" height="560" }
 
 | Metric | Rust 1.91 | Python 3.13 | Ratio |
 |---|---|---|---|

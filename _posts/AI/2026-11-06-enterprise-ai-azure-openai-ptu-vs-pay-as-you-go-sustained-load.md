@@ -11,7 +11,7 @@ image:
   alt: "Two bar charts for one gpt-4o workload at 60 requests per minute around the clock: monthly cost of 13,600 dollars pay-as-you-go, 86,400 hourly PTU, 15,600 reserved PTU and 12,440 for 40 reserved PTU with pay-as-you-go spillover; p95 latency 4.8 seconds pay-as-you-go, 1.7 seconds PTU, 2.4 seconds PTU with spillover"
 ---
 
-![Bar charts: monthly cost $13,600 pay-as-you-go, $86,400 hourly PTU, $15,600 reserved PTU, $12,440 PTU + spillover; p95 latency 4.8 s, 1.7 s, 2.4 s](/assets/img/headers/ai/enterprise-ai-ptu-vs-payg-azure-openai.webp)
+![Bar charts: monthly cost $13,600 pay-as-you-go, $86,400 hourly PTU, $15,600 reserved PTU, $12,440 PTU + spillover; p95 latency 4.8 s, 1.7 s, 2.4 s](/assets/img/headers/ai/enterprise-ai-ptu-vs-payg-azure-openai.webp){: width="1200" height="630" }
 
 Every Azure OpenAI cost review I have sat in eventually reaches the same question: *"Should we just buy PTUs?"* The honest answer is "it depends on your utilisation curve", which is true and useless. This post replaces it with numbers from one real, sustained enterprise workload priced five different ways, plus the latency we actually measured at the gateway.
 
@@ -43,7 +43,7 @@ Prices below are list prices for one region when we did the exercise; your enter
 
 ## The five options, priced
 
-![Table comparing five options for the same workload: pay-as-you-go $13,600 per month, $5.25 per 1K requests, p95 4.8 s, 0.6 % 429s; 60 PTU hourly $86,400, p95 1.7 s; 60 PTU monthly reservation $15,600, p95 1.7 s; 40 PTU reserved plus pay-as-you-go spillover $12,440, p95 2.4 s, 15 % spilled; pay-as-you-go plus Batch API for the 30 % async share $11,560](/assets/img/posts/ai/enterprise-ai-ptu-vs-payg-cost-latency-table.webp)
+![Table comparing five options for the same workload: pay-as-you-go $13,600 per month, $5.25 per 1K requests, p95 4.8 s, 0.6 % 429s; 60 PTU hourly $86,400, p95 1.7 s; 60 PTU monthly reservation $15,600, p95 1.7 s; 40 PTU reserved plus pay-as-you-go spillover $12,440, p95 2.4 s, 15 % spilled; pay-as-you-go plus Batch API for the 30 % async share $11,560](/assets/img/posts/ai/enterprise-ai-ptu-vs-payg-cost-latency-table.webp){: width="1200" height="700" }
 
 ### 1. Pay-as-you-go (Global Standard)
 

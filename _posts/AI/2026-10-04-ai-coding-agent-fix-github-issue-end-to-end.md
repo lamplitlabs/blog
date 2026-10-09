@@ -25,7 +25,7 @@ The repository is a .NET 8 reporting library. The bug is a classic CSV one.
 
 Triage is where the agent earns its first keep. It reads the issue, searches the repo for the exporter, and comes back with a plan before touching a file. I run the agent with *plan first, edit only after approval*; the approval prompt at the bottom is the human gate.
 
-![Agent plan for issue #412: reproduce with a failing test, root cause in WriteRow splitting on newline, fix by RFC 4180 quoting, run dotnet test, open PR](/assets/img/posts/ai/ai-agent-issue-plan.webp)
+![Agent plan for issue #412: reproduce with a failing test, root cause in WriteRow splitting on newline, fix by RFC 4180 quoting, run dotnet test, open PR](/assets/img/posts/ai/ai-agent-issue-plan.webp){: width="1200" height="428" }
 
 Two things to check in a plan like this before saying yes:
 
@@ -38,7 +38,7 @@ The risk line is also worth reading. The agent searched for callers relying on o
 
 With the plan approved the agent edits two files. This is the whole change:
 
-![Diff of CsvExporter.cs replacing Split on newline with an RFC 4180 Quote helper, plus the new xUnit test Export_PreservesEmbeddedNewline](/assets/img/posts/ai/ai-agent-issue-diff.webp)
+![Diff of CsvExporter.cs replacing Split on newline with an RFC 4180 Quote helper, plus the new xUnit test Export_PreservesEmbeddedNewline](/assets/img/posts/ai/ai-agent-issue-diff.webp){: width="1200" height="766" }
 
 The `Quote` helper does what RFC 4180 asks for: a field containing a comma, a double quote, a CR or an LF is wrapped in quotes and embedded quotes are doubled. Everything else passes through untouched, so existing output for plain fields is byte-for-byte the same.
 
@@ -52,7 +52,7 @@ Reading the diff took me about three minutes, and this is the review I would giv
 
 The agent runs the suite itself and shows the result alongside the failure it got before the fix:
 
-![dotnet test output: 87 passed, 0 failed, including Export_PreservesEmbeddedNewline; before the fix the same test failed with expected 1 data row, actual 2 rows](/assets/img/posts/ai/ai-agent-issue-tests.webp)
+![dotnet test output: 87 passed, 0 failed, including Export_PreservesEmbeddedNewline; before the fix the same test failed with expected 1 data row, actual 2 rows](/assets/img/posts/ai/ai-agent-issue-tests.webp){: width="1200" height="506" }
 
 Red-then-green is the evidence I care about. The before-fix failure message, *expected 1 data row, actual 2 rows*, is the bug from #412 stated by a machine, and the after-fix line shows nothing else in the 87 tests moved. If the agent had skipped the "before" run I would have asked for it; a test that was never seen failing has not demonstrated anything.
 

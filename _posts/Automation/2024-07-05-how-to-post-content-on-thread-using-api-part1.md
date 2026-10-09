@@ -53,25 +53,25 @@ Now, let's walk through the steps to obtain your API access token specifically f
 2.  ##### **Set Up a New App**
 
     - Navigate to the "My Apps" dashboard within your developer account.
-      ![Figure 1](/assets/img/posts/automation/facebook-automation/facebook-1.webp)
+      ![Figure 1](/assets/img/posts/automation/facebook-automation/facebook-1.webp){: width="1410" height="784" }
     - Click "Create App"
-      ![Figure 2](/assets/img/posts/automation/facebook-automation/facebook-2.webp)
+      ![Figure 2](/assets/img/posts/automation/facebook-automation/facebook-2.webp){: width="1394" height="784" }
     - Click on Other radio button.
-      ![Figure 3](/assets/img/posts/automation/facebook-automation/facebook-3.webp)
+      ![Figure 3](/assets/img/posts/automation/facebook-automation/facebook-3.webp){: width="1394" height="754" }
     - Click Next
-      ![Figure 4](/assets/img/posts/automation/facebook-automation/facebook-4.webp)
+      ![Figure 4](/assets/img/posts/automation/facebook-automation/facebook-4.webp){: width="1394" height="754" }
     - Select Business app type
-      ![Figure 5](/assets/img/posts/automation/facebook-automation/facebook-5.webp)
+      ![Figure 5](/assets/img/posts/automation/facebook-automation/facebook-5.webp){: width="1410" height="804" }
     - Click "Next"
-      ![Figure 6](/assets/img/posts/automation/facebook-automation/facebook-6.webp)
+      ![Figure 6](/assets/img/posts/automation/facebook-automation/facebook-6.webp){: width="1410" height="804" }
     - Fill The form
-      ![Figure 7](/assets/img/posts/automation/facebook-automation/facebook-7.webp)
+      ![Figure 7](/assets/img/posts/automation/facebook-automation/facebook-7.webp){: width="1410" height="804" }
     - Click on "Create app"
-      ![Figure 8](/assets/img/posts/automation/facebook-automation/facebook-8.webp)
+      ![Figure 8](/assets/img/posts/automation/facebook-automation/facebook-8.webp){: width="1394" height="772" }
     - You may ask to Login Again
     - After creation of Business app, go to https://developers.facebook.com/apps/creation/ and create a new app, which we will use to access thread apis.
     - Dusring the creation you will be ask to select a use case, please select Access the Thread API. 
-      ![Figure 9](/assets/img/posts/automation/thread-automation/thread-1.webp)
+      ![Figure 9](/assets/img/posts/automation/thread-automation/thread-1.webp){: width="1054" height="789" }
     - Fill all the form correctly and submit.
 
     {% include article-ads.html %}
@@ -79,7 +79,7 @@ Now, let's walk through the steps to obtain your API access token specifically f
 3. #### **Setting Permissions**
  
     Next, set the nec^essary permissions for your app. If you only intend to post content, the `threads_basic` and `threads_content_publish` permissions should suffice. Additional permissions can be added later if needed.
-    ![Figure 10](/assets/img/posts/automation/thread-automation/thread-2.webp)
+    ![Figure 10](/assets/img/posts/automation/thread-automation/thread-2.webp){: width="1198" height="654" }
 
     {% include article-ads.html %}
 
@@ -91,7 +91,7 @@ Now, let's walk through the steps to obtain your API access token specifically f
     - https://oauth.pstmn.io/v1/callback (postman app)
     - https://oauth.pstmn.io/v1/browser-callback (postman in browser).
 
-    ![Figure 11](/assets/img/posts/automation/thread-automation/thread-3.webp)
+    ![Figure 11](/assets/img/posts/automation/thread-automation/thread-3.webp){: width="1203" height="337" }
 
     {% include article-ads.html %}
 
@@ -111,7 +111,7 @@ Now, let's walk through the steps to obtain your API access token specifically f
 
     App Settings: Find these values under App settings and then Basic.
 
-    ![Figure 12](/assets/img/posts/automation/thread-automation/thread-4.webp)
+    ![Figure 12](/assets/img/posts/automation/thread-automation/thread-4.webp){: width="974" height="198" }
 
     {% include article-ads.html %}
 

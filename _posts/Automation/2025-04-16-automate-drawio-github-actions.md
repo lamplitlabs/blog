@@ -111,7 +111,7 @@ jobs:
 
 Once the workflow runs, the **Export PNG Images from Draw.io** step prints one line per diagram page and the **Commit and Push Exported Images** step lists the new PNGs it committed back to the repository - if you see `create mode` lines for each page, the export worked.
 
-![GitHub Actions job log of the Export Draw.io Diagrams workflow with the Export PNG Images step expanded, showing deathstar-blueprint.drawio exported to page-0, page-1 and page-2 PNGs, followed by the commit step creating the three files under docs/images and pushing to main](/assets/img/posts/github/drawio-github-actions-export-job-log.webp)
+![GitHub Actions job log of the Export Draw.io Diagrams workflow with the Export PNG Images step expanded, showing deathstar-blueprint.drawio exported to page-0, page-1 and page-2 PNGs, followed by the commit step creating the three files under docs/images and pushing to main](/assets/img/posts/github/drawio-github-actions-export-job-log.webp){: width="1200" height="560" }
 *The expanded export and commit steps in the GitHub Actions job log. One PNG per diagram page lands under `docs/images/` and is pushed back with `[skip ci]` so the workflow does not retrigger itself.*
 
 {% include article-ads.html %}

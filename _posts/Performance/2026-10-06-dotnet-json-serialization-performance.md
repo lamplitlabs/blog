@@ -15,7 +15,7 @@ Most .NET web services spend a surprising share of their CPU turning objects int
 
 This post benchmarks the same 1 KB `Order` payload four ways with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) on .NET 8: `Newtonsoft.Json` 13.0.3, `System.Text.Json` with the default reflection-based metadata, `System.Text.Json` with a source-generated `JsonSerializerContext`, and the source generator combined with a pooled `Utf8JsonWriter`. As always, the absolute numbers are from one laptop; the *ratios* are what carry over.
 
-![Bar chart of mean serialization time per 1 KB order across Newtonsoft.Json, System.Text.Json reflection and source generators](/assets/img/headers/performance/json-serialization-source-generators.webp)
+![Bar chart of mean serialization time per 1 KB order across Newtonsoft.Json, System.Text.Json reflection and source generators](/assets/img/headers/performance/json-serialization-source-generators.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -137,7 +137,7 @@ This is what Kestrel effectively does for you when you return an object from an 
 
 ## The results
 
-![BenchmarkDotNet console output comparing Newtonsoft.Json, System.Text.Json reflection and System.Text.Json source generators for serialize and deserialize, with source-generated rows highlighted](/assets/img/posts/performance/json-serialization-benchmarkdotnet-output.webp)
+![BenchmarkDotNet console output comparing Newtonsoft.Json, System.Text.Json reflection and System.Text.Json source generators for serialize and deserialize, with source-generated rows highlighted](/assets/img/posts/performance/json-serialization-benchmarkdotnet-output.webp){: width="1400" height="602" }
 _BenchmarkDotNet output on .NET 8.0.8. The source-generated rows are highlighted; `Alloc Ratio` is the column that explains the GC behaviour under load._
 
 | Method                        |       Mean | Ratio |   Gen0 | Allocated | Alloc Ratio |

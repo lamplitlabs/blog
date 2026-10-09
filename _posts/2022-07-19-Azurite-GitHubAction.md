@@ -56,7 +56,7 @@ jobs:
 
 When the workflow runs, the **Run Azurite** step finishes in about a second and the job log shows the emulator starting its Blob, Queue and Table endpoints on `127.0.0.1:10000-10002`; because the process is backgrounded with `&`, the job moves straight on to the next step while Azurite keeps listening.
 
-![GitHub Actions job log of the Build And Test workflow with the Run Azurite step expanded, showing Azurite Blob, Queue and Table services successfully listening on 127.0.0.1 ports 10000, 10001 and 10002, followed by the integration test step passing](/assets/img/posts/github/azurite-github-actions-run-azurite-step-log.webp)
+width=
 *The expanded **Run Azurite** step in the GitHub Actions job log. If you see these three "successfully listening" lines, your integration tests can connect with `UseDevelopmentStorage=true`.*
 
 Add your Integration test steps after this, and Voila YOU ARE DONE.

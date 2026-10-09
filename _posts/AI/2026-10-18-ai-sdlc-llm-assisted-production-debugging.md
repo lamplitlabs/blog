@@ -13,7 +13,7 @@ image:
 
 The [flaky test triage post]({% post_url AI/2026-10-16-ai-sdlc-flaky-test-triage %}) covered the red pipeline before a change ships. This one is about the pager after it ships. On a set of about forty .NET services behind Azure API Management we were spending a median of two hours and forty minutes from "alert fires" to "we know why". Most of that time was not fixing anything; it was an engineer opening six Application Insights tabs, guessing a KQL query, reading a stack trace and checking what deployed yesterday. That is text-heavy, repetitive work with a lot of context switching, so we tried putting an LLM in front of it. This post is what the agent is allowed to read, what it is allowed to run, what it is never allowed to do, and what moved over one quarter.
 
-![Diagram of the LLM-assisted debugging loop in five steps, alert, read-only evidence bundle, ranked JSON hypotheses, verification by allow-listed KQL queries and a human decision, followed by a table showing median time to root cause falling from 2h 40m to 38 minutes across 64 incidents with 71% first-hypothesis accuracy](/assets/img/posts/ai/ai-sdlc-llm-debugging-loop-results.webp)
+![Diagram of the LLM-assisted debugging loop in five steps, alert, read-only evidence bundle, ranked JSON hypotheses, verification by allow-listed KQL queries and a human decision, followed by a table showing median time to root cause falling from 2h 40m to 38 minutes across 64 incidents with 71% first-hypothesis accuracy](/assets/img/posts/ai/ai-sdlc-llm-debugging-loop-results.webp){: width="1400" height="820" }
 
 {% include feed-ads.html %}
 

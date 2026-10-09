@@ -15,7 +15,7 @@ Most production LLM code does not end with a chat bubble. It ends with a databas
 
 Azure OpenAI's **structured outputs** feature fixes this class of bugs. You hand the service a JSON Schema, set `strict: true`, and the model is constrained at decode time to produce output that matches the schema. No regex clean-up, no retry loops for malformed JSON. This post shows how to use it from .NET and the rules you must follow to make it work.
 
-![Structured outputs flow: prompt, JSON schema, model reply, C# record](/assets/img/headers/ai/structured-outputs-azure-openai.webp)
+![Structured outputs flow: prompt, JSON schema, model reply, C# record](/assets/img/headers/ai/structured-outputs-azure-openai.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

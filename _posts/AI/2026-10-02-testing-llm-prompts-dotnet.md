@@ -15,7 +15,7 @@ A prompt is code. It ships to production, a colleague edits one sentence of it t
 
 This post shows a practical setup I use for Azure OpenAI prompts in .NET: a small set of **golden cases**, **structural assertions** that never flake, a **recorded-response fake** so CI stays free and fast, and a **nightly live run** that scores the real model and fails only when quality drops below a threshold.
 
-![LLM prompt regression suite: golden cases, recorded fake, structural asserts, nightly live run](/assets/img/headers/ai/testing-llm-prompts-dotnet.webp)
+![LLM prompt regression suite: golden cases, recorded fake, structural asserts, nightly live run](/assets/img/headers/ai/testing-llm-prompts-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

@@ -15,7 +15,7 @@ The [Node vs Deno vs Bun post]({% post_url Performance/2026-10-04-node-vs-deno-v
 
 Three candidates, all talking to the same PostgreSQL 16 through the same connection pool: the raw [`pg`](https://node-postgres.com/) driver, [Drizzle ORM](https://orm.drizzle.team/) (a typed query builder that compiles to SQL and runs it through `pg`), and [Prisma](https://www.prisma.io/) (a schema-first ORM with a separate Rust query engine process).
 
-![Bar chart of p99 latency for a primary-key SELECT from Node.js 22 across pg, Drizzle and Prisma](/assets/img/headers/performance/pg-vs-prisma-vs-drizzle-latency.webp)
+![Bar chart of p99 latency for a primary-key SELECT from Node.js 22 across pg, Drizzle and Prisma](/assets/img/headers/performance/pg-vs-prisma-vs-drizzle-latency.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -81,7 +81,7 @@ All three are served by the same Fastify 5 app with a response schema, since the
 
 Here is the raw autocannon output:
 
-![Terminal screenshot of autocannon output for the pg, Drizzle and Prisma servers showing 47,812, 44,106 and 27,941 requests per second with p99 latency of 4.8 ms, 5.4 ms and 9.7 ms](/assets/img/posts/performance/pg-prisma-drizzle-autocannon-output.webp)
+![Terminal screenshot of autocannon output for the pg, Drizzle and Prisma servers showing 47,812, 44,106 and 27,941 requests per second with p99 latency of 4.8 ms, 5.4 ms and 9.7 ms](/assets/img/posts/performance/pg-prisma-drizzle-autocannon-output.webp){: width="1200" height="604" }
 
 ## Results
 

@@ -13,7 +13,7 @@ image:
 
 Most RAG quality problems I have debugged were not model problems. The LLM did exactly what it was told with the chunks it was given; the chunks were simply the wrong ones. Yet almost every team I meet evaluates their pipeline end-to-end ("does the answer look right?") and almost nobody measures the retriever on its own. That is backwards: the retriever is deterministic, cheap to run thousands of times, and the single biggest lever on answer quality. This post shows how to build a **golden set**, compute **Precision@k, Recall@k, MRR and nDCG** in plain C#, and turn the numbers into an xUnit test that fails the build when a chunking or embedding change silently makes retrieval worse.
 
-![Bar chart of Precision@5, Recall@5, MRR and Hit@5 for a RAG retriever next to a golden set of 200 queries](/assets/img/headers/ai/rag-retriever-evaluation-dotnet.webp)
+![Bar chart of Precision@5, Recall@5, MRR and Hit@5 for a RAG retriever next to a golden set of 200 queries](/assets/img/headers/ai/rag-retriever-evaluation-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -189,7 +189,7 @@ public static class RetrieverEvaluator
 
 Running this against a 200-query golden set and an Azure AI Search index of about 9,000 chunks takes under ten seconds with `parallelism = 8`, dominated by the embedding calls. Cache query embeddings on disk (keyed by model name + query text) and the second run is well under two seconds.
 
-![Offline retriever evaluation loop: golden set JSONL feeds the retriever under test, metrics are computed, and a CI gate fails if Precision@5 drops](/assets/img/posts/ai/rag-retriever-eval-loop.webp)
+![Offline retriever evaluation loop: golden set JSONL feeds the retriever under test, metrics are computed, and a CI gate fails if Precision@5 drops](/assets/img/posts/ai/rag-retriever-eval-loop.webp){: width="1200" height="700" }
 
 ## Step 5: Turn it into a CI gate
 

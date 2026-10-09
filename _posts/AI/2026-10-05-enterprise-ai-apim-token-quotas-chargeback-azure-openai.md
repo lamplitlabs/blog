@@ -106,7 +106,7 @@ customMetrics
 
 The prices are the `gpt-4o` global-standard list prices at the time of writing; keep them in a lookup table rather than the query if you run several models. Join on the `tokens-per-minute` you configured and you also get "percent of quota used", which is what the eng-runbooks team sees when they ask why they were throttled:
 
-![Azure Monitor table of prompt tokens, completion tokens, cost and quota used per team subscription, with eng-runbooks at 99 percent and throttled three times](/assets/img/posts/ai/enterprise-ai-apim-token-usage-per-team.webp)
+![Azure Monitor table of prompt tokens, completion tokens, cost and quota used per team subscription, with eng-runbooks at 99 percent and throttled three times](/assets/img/posts/ai/enterprise-ai-apim-token-usage-per-team.webp){: width="1100" height="520" }
 
 Pin this to a workbook, export it monthly, and the "one line item" ticket is closed for good. Cost per team also becomes a quality signal: if one team's completion tokens double without more users, a prompt changed, and the [observability traces](/posts/enterprise-llm-observability-opentelemetry-dotnet/) tell you which one.
 

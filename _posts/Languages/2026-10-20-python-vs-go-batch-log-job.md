@@ -24,7 +24,7 @@ So, the same method again: one job, written twice, measured rather than argued a
 
 ## Wall time and memory
 
-![Terminal screenshot of hyperfine comparing python3 agg.py at 148.212 s mean against ./agg-go at 9.812 s mean, 15.11 times faster for Go, followed by /usr/bin/time showing 1992294400 and 220200960 bytes maximum resident set size, a Polars version of the Python job at 14.306 s, and go build producing a 7.1M binary](/assets/img/headers/languages/python-vs-go-batch-hyperfine-terminal.webp)
+![Terminal screenshot of hyperfine comparing python3 agg.py at 148.212 s mean against ./agg-go at 9.812 s mean, 15.11 times faster for Go, followed by /usr/bin/time showing 1992294400 and 220200960 bytes maximum resident set size, a Polars version of the Python job at 14.306 s, and go build producing a 7.1M binary](/assets/img/headers/languages/python-vs-go-batch-hyperfine-terminal.webp){: width="1200" height="760" }
 
 | | Python 3.12 | Go 1.23 |
 |---|---|---|

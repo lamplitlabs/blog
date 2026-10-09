@@ -74,7 +74,7 @@ cosine(A, B) = (A · B) / (|A| × |B|)
 
 Real embeddings have 1536 numbers, which is too many to follow by eye, so here is the same calculation on two three-number vectors. Nothing changes except the length of the lists.
 
-![Table working through cosine similarity for A equals 1 2 3 and B equals 2 3 4: the dot product is 20, the length of A is the square root of 14 which is 3.742, the length of B is the square root of 29 which is 5.385, and the cosine is 20 divided by their product which is 0.9926, shown on a scale from 0 to 1 as very similar](/assets/img/posts/beginner/embeddings_cosine_worked_example.webp)
+![Table working through cosine similarity for A equals 1 2 3 and B equals 2 3 4: the dot product is 20, the length of A is the square root of 14 which is 3.742, the length of B is the square root of 29 which is 5.385, and the cosine is 20 divided by their product which is 0.9926, shown on a scale from 0 to 1 as very similar](/assets/img/posts/beginner/embeddings_cosine_worked_example.webp){: width="1200" height="700" }
 
 Step by step with `A = [1, 2, 3]` and `B = [2, 3, 4]`:
 

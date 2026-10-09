@@ -13,7 +13,7 @@ image:
 
 Asking an LLM to "write unit tests for this class" is the single most popular AI-in-the-SDLC request I see in .NET teams, and the single most misleading. The tests compile, they pass, and coverage jumps. Then a real bug slips through a month later and nobody can explain how a method with 94% line coverage shipped a broken boundary check. This post walks through what happened when we ran **Stryker.NET** against 48 Copilot-generated xUnit tests for a pricing service, why the **mutation score** exposed what coverage hid, and the prompt rules and review loop that took the score from 41% to 83% without writing the tests by hand.
 
-![Bar chart comparing 94% line coverage against a 41% mutation score for raw LLM-generated tests and 83% after a review loop](/assets/img/headers/ai/llm-test-generation-mutation-testing-dotnet.webp)
+![Bar chart comparing 94% line coverage against a 41% mutation score for raw LLM-generated tests and 83% after a review loop](/assets/img/headers/ai/llm-test-generation-mutation-testing-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -33,7 +33,7 @@ Stryker rewrites the production code one small change at a time (`>` becomes `>=
 
 ## What the survivors had in common
 
-![Stryker.NET report excerpt listing survived mutants in PricingService.cs: boundary, arithmetic, conditional and block-removal mutations that the generated tests never detected](/assets/img/posts/ai/llm-test-generation-stryker-survived-mutants.webp)
+![Stryker.NET report excerpt listing survived mutants in PricingService.cs: boundary, arithmetic, conditional and block-removal mutations that the generated tests never detected](/assets/img/posts/ai/llm-test-generation-stryker-survived-mutants.webp){: width="1200" height="700" }
 
 Reading the survived mutants side by side, four patterns covered almost all of them.
 

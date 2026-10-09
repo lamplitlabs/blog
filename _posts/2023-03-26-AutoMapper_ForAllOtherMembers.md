@@ -22,7 +22,7 @@ AutoMapper 11 came with a breaking change, which we all hate. I hope this blog p
 
 After digging into Stackoverflow and Internet, I found a dirty way to work with the breaking change.
 
-![Code diff for migrating off AutoMapper's removed ForAllOtherMembers: the compiler error CS1061 'IMappingExpression does not contain a definition for ForAllOtherMembers' after upgrading to AutoMapper 11, the removed .ForAllOtherMembers(o => o.Ignore()) call, and the added AutomapperExtensions class that restores it as an extension method so the build succeeds](/assets/img/posts/dotnet/automapper-forallothermembers-removed-diff.webp)
+width=
 
 {% include article-ads.html %}
 

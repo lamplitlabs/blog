@@ -49,7 +49,7 @@ One common use case for Logic Apps is automating the posting of updates from an 
 
   1. Add an RSS trigger, we will be using this [RSS connector](https://learn.microsoft.com/en-us/connectors/rss/)
   2. Fill in the values in the trigger, In the image below I have set the sync time daily you can change this according to your needs.
-     ![trigger rss](/assets/img/posts/automation/rss-trigger.webp "Fig 1. Trigger RSS")
+     ![trigger rss](/assets/img/posts/automation/rss-trigger.webp "Fig 1. Trigger RSS"){: width="1198" height="528" }
 
 {% include article-ads.html %}
 
@@ -80,7 +80,7 @@ One common use case for Logic Apps is automating the posting of updates from an 
   - Content-Type: application/x-www-form-urlencoded
   - Body: status=Your message goes here
 
-![mastodon-toot](/assets/img/posts/automation/mastodon-toot.webp "Fig 2. Mastodon Toot")
+![mastodon-toot](/assets/img/posts/automation/mastodon-toot.webp "Fig 2. Mastodon Toot"){: width="1198" height="858" }
 
 {% include article-ads.html %}
 
@@ -127,7 +127,7 @@ One common use case for Logic Apps is automating the posting of updates from an 
 
   Once you've configured the workflow, save your Logic App and test it to ensure that new RSS feed items trigger posts on both Twitter and Mastodon.
 
-  ![logic-app](/assets/img/posts/automation/logicapp.webp "Fig 2. Logic App")
+  ![logic-app](/assets/img/posts/automation/logicapp.webp "Fig 2. Logic App"){: width="2622" height="1138" }
 
 {% include article-ads.html %}
 

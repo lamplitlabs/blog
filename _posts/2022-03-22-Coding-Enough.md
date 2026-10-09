@@ -50,7 +50,7 @@ Coding is only 30% of total backend engineering. if you have an degree of CSE th
 5. Terraform -> This is good to have thing, if you know terraform then you can crack any of the startup jobs, startup prefer people who has all the stack knowledge, BTW Terraform is IAAC (you can write code to create you infra on cloud), its good to have but not mandatory (5%)
 6. Design and Architecture -> Last but not least design and architecture, if you want to become an software architecture or principal engineer this is a mandatory things to adopt, just see how you can design a system from scratch, take feedback from you peers and keep on improving. (5%)
 
-![Bar chart of the skill weights from this article: coding 30%, CI/CD 20%, cloud computing 20%, databases 10%, Docker and Kubernetes 10%, Terraform 5%, design and architecture 5%](/assets/img/posts/backend-engineer-skill-weights.webp)
+width=
 
 {% include feed-ads.html %}
 

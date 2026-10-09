@@ -13,7 +13,7 @@ image:
 
 "We use AI in our SDLC" usually means one thing: developers have Copilot turned on in Visual Studio. That is a fine start, but it leaves most of the lifecycle untouched and gives the team no shared rule about what the AI may do on its own. This post walks the six phases of a typical .NET delivery pipeline and, for each one, lists what I have found worth delegating to an LLM, what has burned us, and the one gate I keep firmly human.
 
-![AI-assisted SDLC: six phases, what AI drafts and which gate stays human](/assets/img/headers/ai/ai-sdlc-dotnet-teams.webp)
+![AI-assisted SDLC: six phases, what AI drafts and which gate stays human](/assets/img/headers/ai/ai-sdlc-dotnet-teams.webp){: width="1600" height="900" }
 
 {% include feed-ads.html %}
 

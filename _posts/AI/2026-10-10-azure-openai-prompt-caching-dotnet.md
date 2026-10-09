@@ -89,7 +89,7 @@ Emit that as a metric. I added it to the OpenTelemetry pipeline from the [LLM ob
 
 I ran 200 requests through a .NET 8 console app against a `gpt-4o` deployment in East US 2 with a 3 100-token prefix (system prompt plus six tool schemas) and a ~120-token user turn. Two variants: one where a `// generated at {timestamp}` line sat at the top of the system prompt, one with the layout above.
 
-![Table of results for 200 Azure OpenAI gpt-4o requests: cache hit ratio 0% vs 91%, p50 time-to-first-token 1740 ms vs 610 ms, p95 2960 ms vs 1120 ms, billed input tokens per request 3220 vs 1810 equivalent, input cost per 1000 requests $8.05 vs $4.53](/assets/img/posts/ai/azure-openai-prompt-caching-results.webp)
+![Table of results for 200 Azure OpenAI gpt-4o requests: cache hit ratio 0% vs 91%, p50 time-to-first-token 1740 ms vs 610 ms, p95 2960 ms vs 1120 ms, billed input tokens per request 3220 vs 1810 equivalent, input cost per 1000 requests $8.05 vs $4.53](/assets/img/posts/ai/azure-openai-prompt-caching-results.webp){: width="1200" height="700" }
 
 The latency gain is the part people underestimate. The service skips re-processing the cached prefix, so time-to-first-token dropped by roughly 65 % at p50 and p95. The cost column uses the 50 % discount Azure applies to cached input tokens; your exact numbers depend on the model and region price sheet, but the ratio holds.
 

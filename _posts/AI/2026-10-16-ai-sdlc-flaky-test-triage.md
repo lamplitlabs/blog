@@ -13,7 +13,7 @@ image:
 
 In the [phase-by-phase AI SDLC post]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %}) the test phase got one line: "AI writes tests, humans decide what they assert". That leaves out the ugliest part of a mature .NET test suite, which is not writing tests but keeping a red pipeline honest. On a repo with ~6,000 xUnit tests we were seeing about 400 non-deterministic failures a week. Nobody triaged them; people hit **Re-run failed jobs** and moved on. This post is about the triage agent we put in front of that button, what it is allowed to do on its own, and what it is not.
 
-![Bar chart of one sprint of flaky test failures grouped by AI-assigned root cause: shared test DB state 118, async timing 96, port collision 61, time zone 44, real network dependency 38, order-dependent fixtures 27, genuine product bug 17, unclassified 11](/assets/img/posts/ai/ai-flaky-test-triage-clusters.webp)
+![Bar chart of one sprint of flaky test failures grouped by AI-assigned root cause: shared test DB state 118, async timing 96, port collision 61, time zone 44, real network dependency 38, order-dependent fixtures 27, genuine product bug 17, unclassified 11](/assets/img/posts/ai/ai-flaky-test-triage-clusters.webp){: width="1400" height="820" }
 
 {% include feed-ads.html %}
 

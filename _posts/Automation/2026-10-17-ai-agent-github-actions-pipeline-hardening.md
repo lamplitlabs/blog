@@ -74,7 +74,7 @@ The justification it attached: *"`contents: write` is required because the final
 
 That last sentence is the kind of thing a human reviewer would otherwise have to look up, and it is why the agent is given the run history, not just the file.
 
-![Screenshot-style mockup of the agent's pull request on a GitHub Actions workflow: title Harden drawio-export workflow, four rubric findings each with a check mark, the YAML diff pinning actions to SHAs and adding permissions, timeout and concurrency, and three green status checks for actionlint, workflow dry run and rubric verifier](/assets/img/headers/automation/ai-agent-workflow-hardening-pr.webp)
+![Screenshot-style mockup of the agent's pull request on a GitHub Actions workflow: title Harden drawio-export workflow, four rubric findings each with a check mark, the YAML diff pinning actions to SHAs and adding permissions, timeout and concurrency, and three green status checks for actionlint, workflow dry run and rubric verifier](/assets/img/headers/automation/ai-agent-workflow-hardening-pr.webp){: width="1200" height="820" }
 
 ## The deterministic gate before a human sees it
 

@@ -13,7 +13,7 @@ image:
 
 A model version bump is a deploy. So is a prompt change. Most enterprise teams treat the first with a change ticket and the second with a `git push` to a config repo at 4 pm on Friday, and then spend the weekend working out why the copilot started answering in Markdown tables instead of the JSON the frontend parses. The failure modes are the same as any other production change: the new thing behaves differently for a subset of inputs, nobody notices until users complain, and rolling back takes longer than it should because "the old prompt" is three commits away. This post describes the rollout pattern we settled on for Azure OpenAI: **shadow traffic, a weighted canary in Azure API Management, a quality score computed continuously from the canary's real answers, and a controller that sets the canary weight to zero when the score regresses.** It builds on the [observability](/posts/enterprise-llm-observability-opentelemetry-dotnet/) and [governance](/posts/enterprise-ai-governance-azure-openai/) setup from earlier posts; if you already have those, the canary is mostly configuration.
 
-![Canary rollout architecture: APIM weighted routing between a stable and a canary Azure OpenAI deployment, scored by an eval loop with automatic rollback](/assets/img/headers/ai/enterprise-ai-canary-rollout-llm-model-prompt.webp)
+![Canary rollout architecture: APIM weighted routing between a stable and a canary Azure OpenAI deployment, scored by an eval loop with automatic rollback](/assets/img/headers/ai/enterprise-ai-canary-rollout-llm-model-prompt.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -134,7 +134,7 @@ Promotion is the mirror image but deliberately manual at each step: 24 healthy h
 
 ## What it looked like on a real rollout
 
-![Two-panel chart of a six-day canary rollout: golden-set pass rate for stable and canary with an automatic rollback on day 3 when canary dropped 3.5 points, and canary weight moving from shadow to 5 percent, rolled back to 0, re-canaried at 5 percent with prompt v7.1, then promoted to 25 and 100 percent](/assets/img/headers/ai/enterprise-ai-canary-rollout-timeline.webp)
+![Two-panel chart of a six-day canary rollout: golden-set pass rate for stable and canary with an automatic rollback on day 3 when canary dropped 3.5 points, and canary weight moving from shadow to 5 percent, rolled back to 0, re-canaried at 5 percent with prompt v7.1, then promoted to 25 and 100 percent](/assets/img/headers/ai/enterprise-ai-canary-rollout-timeline.webp){: width="1200" height="560" }
 
 The chart above is the rollout of prompt v7 together with the `gpt-4o` 2024-11 version for an internal summarisation copilot. Shadow traffic on day 1 showed a 9 percent token reduction and nothing alarming. At 5 percent on day 3 the golden-set pass rate on the canary slid from 91.8 to 88.6 while stable held 92.1; the controller rolled back after the 15-minute window at 14:12, and the sampled answers showed the cause within ten minutes: the new model version was dropping a JSON schema instruction we had moved to the end of the system prompt, and about one in twelve answers came back as prose. Nobody outside the team noticed; the blast radius was 5 percent of traffic for 15 minutes. Prompt v7.1 moved the schema instruction back to the top, re-ran through shadow and 5 percent, and was at 100 percent by day 6. The same change pushed directly would have affected every user for however long it took someone to open a ticket.
 

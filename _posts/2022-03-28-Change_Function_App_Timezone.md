@@ -34,7 +34,7 @@ Now lets get to the point, before starting please check whether your function ap
 - Save the configuration
 - Done
 
-![Azure portal screenshot of a Function App's Environment variables blade, App settings tab, listing application settings with their values and an Add button for new settings](/assets/img/posts/azure/function-app-website-time-zone-setting.webp)
+width=
 *In the portal open your Function App → **Settings → Environment variables → App settings** (older portals: **Configuration → Application settings**), click **Add**, enter `WEBSITE_TIME_ZONE` as the name and your time-zone id as the value, then **Apply/Save**. The app restarts and timer triggers start firing in that zone.*
 
 {% include article-ads.html %}

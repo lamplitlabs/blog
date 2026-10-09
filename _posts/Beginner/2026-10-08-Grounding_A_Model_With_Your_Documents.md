@@ -15,7 +15,7 @@ image:
 
 A language model only knows what was in its training data and what is in your prompt. If you want it to answer questions about *your* documents, you put the relevant parts of those documents **into the prompt** and tell it to answer only from them. That is "grounding" (the simplest form of what the industry calls RAG). Then, instead of asking for a paragraph, you ask for a **fixed JSON shape** so your code can check the reply before anyone sees it. This post builds both steps on top of the request from the previous article.
 
-![Diagram showing three documents on the left, a prompt in the middle that pastes relevant snippets as context, and a JSON reply on the right with answer, source and confidence fields](/assets/img/headers/beginner/grounding_and_structured_replies.webp)
+![Diagram showing three documents on the left, a prompt in the middle that pastes relevant snippets as context, and a JSON reply on the right with answer, source and confidence fields](/assets/img/headers/beginner/grounding_and_structured_replies.webp){: width="1200" height="630" }
 
 This is the sixth article in the beginner series. It continues directly from [Calling a Language Model from Code](/posts/Calling_A_Model_From_Code/), which showed the HTTP request we will now extend. The earlier posts are [How to Become a Software Engineer](/posts/Software_Engineer-Beginner/), [The Language of Computers](/posts/Language_Of_Computers/), [Variables, Values and References](/posts/Variables_Values_References/) and [How a Language Model Answers You](/posts/How_Language_Models_Work/).
 

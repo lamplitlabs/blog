@@ -116,7 +116,7 @@ public async Task<Answer> AskAsync(ChatRequest req, CancellationToken ct)
 
 ## Results after four weeks
 
-![Table comparing four weeks of internal copilot traffic before and after tiered routing: 71 percent of requests on gpt-4o-mini, 9 percent escalation rate, daily cost down 61 percent, p50 latency down 58 percent, eval pass rate down half a point; below it a flow diagram classify, route to mini, answer check, escalate](/assets/img/posts/ai/enterprise-ai-model-routing-results.webp)
+![Table comparing four weeks of internal copilot traffic before and after tiered routing: 71 percent of requests on gpt-4o-mini, 9 percent escalation rate, daily cost down 61 percent, p50 latency down 58 percent, eval pass rate down half a point; below it a flow diagram classify, route to mini, answer check, escalate](/assets/img/posts/ai/enterprise-ai-model-routing-results.webp){: width="1200" height="760" }
 
 - **71%** of requests were served by `gpt-4o-mini`; **9%** of those escalated to `gpt-4o`. Fewer than 1% reached `o1`.
 - Daily cost dropped from about **$1,940 to $760** (-61%) at the same request volume.

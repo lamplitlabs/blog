@@ -68,7 +68,7 @@ Now that we have a basic understanding of these terms, let's dive into the proce
 - Your application sends this code to LinkedIn and LinkedIn returns an access token.
 - Your application uses this token to make API calls on behalf of the member.
 
-## ![oauth-3-legged-flow](/assets/img/posts/automation/linkedin-automation/oauth-3-legged-flow.webp "Fig 1: OAuth Flow Credit [Microsoft Learn](https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow?tabs=HTTPS1#authorization-code-flow)")
+## ![oauth-3-legged-flow](/assets/img/posts/automation/linkedin-automation/oauth-3-legged-flow.webp "Fig 1: OAuth Flow Credit [Microsoft Learn](https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow?tabs=HTTPS1#authorization-code-flow)"){: width="1470" height="888" }
 
 {% include article-ads.html %}
 
@@ -78,33 +78,33 @@ Now that we have a basic understanding of these terms, let's dive into the proce
 
   1.  Sign in to the [LinkedIn developer portal](https://developer.linkedin.com/).
   2.  Click "Create app" to create a new app.
-      ![Create app](/assets/img/posts/automation/linkedin-automation/linkedin-1.webp)
+      ![Create app](/assets/img/posts/automation/linkedin-automation/linkedin-1.webp){: width="1368" height="768" }
   3.  Click the "App name" field.
-      ![App name](/assets/img/posts/automation/linkedin-automation/linkedin-2.webp)
+      ![App name](/assets/img/posts/automation/linkedin-automation/linkedin-2.webp){: width="1368" height="794" }
   4.  Type your app name, it can be anything
   5.  You will need to associate your app with a company page. If you don't have any pages, create one.
-      ![create company page](/assets/img/posts/automation/linkedin-automation/linkedin-3.webp)
+      ![create company page](/assets/img/posts/automation/linkedin-automation/linkedin-3.webp){: width="1368" height="776" }
   6.  Click the "LinkedIn Page" field and Type your company/page name.
       [on the LinkedIn Page](/assets/img/posts/automation/linkedin-automation/linkedin-4.webp)
   7.  Click "I have read and agree to these terms"
-      ![I have read and agree to these terms](/assets/img/posts/automation/linkedin-automation/linkedin-5.webp)
+      ![I have read and agree to these terms](/assets/img/posts/automation/linkedin-automation/linkedin-5.webp){: width="1368" height="542" }
   8.  Click "Create app"
-      ![Click Create app](/assets/img/posts/automation/linkedin-automation/linkedin-6.webp)
+      ![Click Create app](/assets/img/posts/automation/linkedin-automation/linkedin-6.webp){: width="1368" height="776" }
   9.  Request App Verification From the Company Page: go to the Settings tab and press the "Verify" button to receive a verification link. Open this link if you're the company's page administrator or send it to the administrator(s) of the company page you previously selected. When you/the administrator opens the link, you/they will be prompted to confirm their responsibility for your app. If you/they confirm, you will receive a notification that your app has been verified and you can continue with other settings.
-      ![Verify](/assets/img/posts/automation/linkedin-automation/linkedin-7.webp)
+      ![Verify](/assets/img/posts/automation/linkedin-automation/linkedin-7.webp){: width="445" height="320" }
 
 {% include article-ads.html %}
 
 - ### Request Access to Features
 
   1.  Go to the Products tab, Do you see “Share on LinkedIn” and “Sign In with LinkedIn v2 (custom OAUTH)”
-      ![Verify](/assets/img/posts/automation/linkedin-automation/linkedin-8.webp)
+      ![Verify](/assets/img/posts/automation/linkedin-automation/linkedin-8.webp){: width="1494" height="896" }
   2.  The review process for your application may take some time, and it is not uncommon to experience a few rejections before it is ultimately approved. (Mine was instant)
   3.  Review the authorization process for your application
   4.  Go to the Auth tab, and scroll down. You should see a screen similar to the one below
-      ![the Auth](/assets/img/posts/automation/linkedin-automation/linkedin-9.webp)
+      ![the Auth](/assets/img/posts/automation/linkedin-automation/linkedin-9.webp){: width="1466" height="988" }
   5.  Now, locate the section called OAuth 2.0 settings. You need to edit this Authorized redirect URL for your app to https://oauth.pstmn.io/v1/callback like the image below.
-      ![Callback Url](/assets/img/posts/automation/linkedin-automation/linkedin-10.webp)
+      ![Callback Url](/assets/img/posts/automation/linkedin-automation/linkedin-10.webp){: width="1466" height="544" }
   6.  Now, Take note of the client ID and client secret (displayed in the Application credentials section)
 
 {% include article-ads.html %}

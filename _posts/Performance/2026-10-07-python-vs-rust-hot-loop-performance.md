@@ -15,7 +15,7 @@ The earlier posts in this folder were all .NET: [allocations with Span<T>]({% po
 
 The workload is deliberately boring: compute the sum of squares of 10 million 64-bit integers. It is the shape of a feature-extraction loop, a checksum, a histogram pass, or the inner step of a tokenizer. Five implementations, same machine, same input, timed with [hyperfine](https://github.com/sharkdp/hyperfine).
 
-![Bar chart of mean wall time for a 10 million element sum-of-squares loop across Python, NumPy, Rust and Rust with rayon](/assets/img/headers/performance/python-vs-rust-hot-loop.webp)
+![Bar chart of mean wall time for a 10 million element sum-of-squares loop across Python, NumPy, Rust and Rust with rayon](/assets/img/headers/performance/python-vs-rust-hot-loop.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 
@@ -83,7 +83,7 @@ Build with `cargo build --release`. Debug builds are 20-50x slower and are the s
 
 hyperfine runs each command repeatedly after warmup and reports mean and standard deviation, so Python interpreter start-up (~15 ms) is included in every Python number. That is fair: it is the cost you pay when you shell out to a script.
 
-![hyperfine console output comparing the Python for loop, generator, NumPy, Rust and Rust with rayon implementations, with the summary line showing Rust with rayon 1578x faster than the Python loop](/assets/img/posts/performance/python-vs-rust-hyperfine-output.webp)
+![hyperfine console output comparing the Python for loop, generator, NumPy, Rust and Rust with rayon implementations, with the summary line showing Rust with rayon 1578x faster than the Python loop](/assets/img/posts/performance/python-vs-rust-hyperfine-output.webp){: width="1100" height="560" }
 
 | Implementation            | Mean time | vs. Python loop |
 | ------------------------- | --------: | --------------: |

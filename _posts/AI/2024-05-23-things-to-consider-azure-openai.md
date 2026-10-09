@@ -23,7 +23,7 @@ Before integrating AI into your business operations, you need to thoroughly unde
 - **Industry Standards**: Confirm that the AI solutions meet specific industry standards, whether you're in healthcare, finance, or another regulated sector. Check Microsoft's [compliance offerings](https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy).
 - As per Microsoft, Data can leave EU geoboundry, that means if compute is not available then there might be chances of data may be processed outside EU. 
 
-![Compliance](/assets/img/posts/ai/things-to-consider/compliance.webp){: width="500px" }
+width=
 
 {% include feed-ads.html %}
 
@@ -36,7 +36,7 @@ Data security is paramount when dealing with AI. Azure OpenAI provides robust se
 - **Data Anonymization**: Consider anonymizing data before using it with AI models to protect user privacy.
 - Please visit [this](https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy#how-does-the-azure-openai-service-process-data) and make sure before going to production opt out for abuse monitoring data storage.
 
-![Data Security](/assets/img/posts/ai/things-to-consider/security.webp){: width="500px" }
+width=
 
 {% include feed-ads.html %}
 
@@ -48,7 +48,7 @@ AI models can inadvertently perpetuate biases present in the training data. Azur
 - **Inclusive Data Sets**: Use diverse and representative data sets for training AI models to minimize biases.
 - **Transparency**: Maintain transparency in how AI models are developed and used within your organization. Learn more about [Microsoft's Responsible AI principles](https://www.microsoft.com/en-us/ai/responsible-ai).
 
-![Ethical AI](/assets/img/posts/ai/things-to-consider/ethical.webp){: width="500px" }
+width=
 
 {% include feed-ads.html %}
 
@@ -60,7 +60,7 @@ Before deploying Azure OpenAI, consider how it will scale with your business and
 - **Scalability**: Plan for scalability to handle increased workloads as your AI initiatives grow.
 - **Interoperability**: Ensure that Azure OpenAI can work alongside other tools and platforms you use, such as CRM systems or data analytics tools.
 
-![Scalability](/assets/img/posts/ai/things-to-consider/scalability.webp){: width="500px" }
+width=
 
 {% include feed-ads.html %}
 
@@ -72,7 +72,7 @@ AI services can be resource-intensive, leading to significant costs. Manage your
 - **Cost-Effective Models**: Choose cost-effective AI models and optimize them to reduce computational costs.
 - **Azure Cost Management Tools**: Utilize Azure’s [cost management and billing tools](https://azure.microsoft.com/en-us/services/cost-management/) to keep track of your spending and identify savings opportunities.
 
-![Cost Management](/assets/img/posts/ai/things-to-consider/expense.webp){: width="500px" }
+width=
 
 {% include feed-ads.html %}
 
@@ -84,7 +84,7 @@ Successful AI implementation requires skilled professionals. Consider the follow
 - **Hiring**: Hire experienced AI professionals or collaborate with AI consultants to guide your projects.
 - **Community and Support**: Engage with the [Azure AI community](https://techcommunity.microsoft.com) and leverage Microsoft’s [support resources](https://azure.microsoft.com/en-us/support/) for troubleshooting and best practices.
 
-![AI Talent](/assets/img/posts/ai/things-to-consider/talent.webp){: width="500px" }
+width=
 
 {% include feed-ads.html %}
 

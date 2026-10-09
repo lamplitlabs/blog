@@ -9,7 +9,7 @@ image:
   alt: "Bar chart of cold start time for the same internal CLI: Python plain 412 ms, Python with pydantic and click 688 ms, TypeScript via tsx 931 ms, TypeScript bundled with esbuild 298 ms, TypeScript compiled with bun 141 ms"
 ---
 
-![Bar chart of cold start time for the same CLI: Python plain 412 ms, Python with pydantic and click 688 ms, TypeScript via tsx 931 ms, TypeScript bundled with esbuild 298 ms, TypeScript compiled with bun 141 ms](/assets/img/headers/languages/python-vs-typescript-internal-cli.webp)
+![Bar chart of cold start time for the same CLI: Python plain 412 ms, Python with pydantic and click 688 ms, TypeScript via tsx 931 ms, TypeScript bundled with esbuild 298 ms, TypeScript compiled with bun 141 ms](/assets/img/headers/languages/python-vs-typescript-internal-cli.webp){: width="1200" height="630" }
 
 Internal CLIs are where language debates get personal. The platform team writes Python, the frontend team writes TypeScript, and both want the `tool deploy` command that every developer runs twenty times a day to be in their language. The earlier [Python vs Rust hot loop]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) post was about throughput; this one is about the thing a CLI user actually feels, which is cold start.
 
@@ -26,7 +26,7 @@ Same tests, same fixtures, same behaviour. The line counts are close enough that
 
 The number that matters is how long `tool deploy --dry-run` takes before the first byte of output on a developer laptop (M2, warm disk cache). `hyperfine`, 3 warmup, 20 timed runs.
 
-![Terminal screenshot of hyperfine: python -m tool deploy --dry-run 688.4 ms mean, node dist/tool.js 298.1 ms, bun-compiled ./tool 141.3 ms, the compiled binary 2.11 times faster than node and 4.87 times faster than python, followed by wc -l showing 1,412 Python lines and 1,655 TypeScript lines](/assets/img/posts/languages/python-vs-typescript-cli-hyperfine.webp)
+![Terminal screenshot of hyperfine: python -m tool deploy --dry-run 688.4 ms mean, node dist/tool.js 298.1 ms, bun-compiled ./tool 141.3 ms, the compiled binary 2.11 times faster than node and 4.87 times faster than python, followed by wc -l showing 1,412 Python lines and 1,655 TypeScript lines](/assets/img/posts/languages/python-vs-typescript-cli-hyperfine.webp){: width="1200" height="760" }
 
 | Variant | Mean cold start |
 |---|---|

@@ -15,7 +15,7 @@ Keyword search fails the moment a user types "how do I reset my password" and th
 
 This post walks through generating embeddings with Azure OpenAI from .NET, storing them in memory, ranking a query against them, and the details that bite in practice: chunk size, batching, and never mixing vectors from two different models.
 
-![Semantic search pipeline: documents, embeddings API, vectors, cosine similarity](/assets/img/headers/ai/azure-openai-embeddings-dotnet.webp)
+![Semantic search pipeline: documents, embeddings API, vectors, cosine similarity](/assets/img/headers/ai/azure-openai-embeddings-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

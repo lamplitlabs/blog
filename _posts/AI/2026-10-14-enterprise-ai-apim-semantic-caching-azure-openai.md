@@ -71,7 +71,7 @@ The chat model deployment itself needs no change. Streaming responses are cached
 
 `score-threshold` is cosine similarity. Too low and the cache answers the wrong question; too high and nothing hits. We replayed one week of the help-desk bot's logs (48,210 requests, exported from the [cost dashboard](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)) against four thresholds and had two support engineers review a 500-request sample of hits at each level for wrong answers.
 
-![Table comparing one week of help-desk bot traffic before and after APIM semantic caching: model requests down 59 percent, p50 latency down 89 percent to 210 milliseconds, daily cost down 58 percent, plus a bar chart of cache hit ratio by score threshold with 0.85 chosen](/assets/img/posts/ai/enterprise-ai-apim-semantic-cache-results.webp)
+![Table comparing one week of help-desk bot traffic before and after APIM semantic caching: model requests down 59 percent, p50 latency down 89 percent to 210 milliseconds, daily cost down 58 percent, plus a bar chart of cache hit ratio by score threshold with 0.85 chosen](/assets/img/posts/ai/enterprise-ai-apim-semantic-cache-results.webp){: width="1100" height="560" }
 
 - **0.95**: 31% hits, zero wrong answers. Safe but leaves money on the table.
 - **0.90**: 47% hits, zero wrong answers.

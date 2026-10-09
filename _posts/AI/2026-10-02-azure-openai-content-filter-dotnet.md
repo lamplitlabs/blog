@@ -15,7 +15,7 @@ Sooner or later a user of your Azure OpenAI feature types something the content 
 
 This post walks through the two places a filter can fire, what each one looks like from the .NET SDK, and how to turn both into a clear message instead of an exception.
 
-![Azure OpenAI content filter pipeline and the C# checks for a blocked prompt or completion](/assets/img/headers/ai/azure-openai-content-filter-dotnet.webp)
+![Azure OpenAI content filter pipeline and the C# checks for a blocked prompt or completion](/assets/img/headers/ai/azure-openai-content-filter-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

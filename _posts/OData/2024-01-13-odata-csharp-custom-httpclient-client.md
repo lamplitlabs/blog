@@ -67,7 +67,7 @@ public class MyCustomDummyService(IHttpClientFactory httpClientFactory)
 
 Now you can just use httpclient method to fetch the data.
 
-![OData query request with $filter, $select, $orderby and $top sent through HttpClient, and the JSON response with @odata.context, value array and @odata.nextLink](/assets/img/posts/odata/odata-query-request-and-response.webp)
+![OData query request with $filter, $select, $orderby and $top sent through HttpClient, and the JSON response with @odata.context, value array and @odata.nextLink](/assets/img/posts/odata/odata-query-request-and-response.webp){: width="1920" height="1040" }
 
 If you are working on a console app or something where you can't use the dependency injections, in that case, you can just create a new instance of HttpClient and use it.
 you can get some code [here](https://github.com/lamplitlabs/bites-in-byte-blog/blob/main/src/ODataBenchmark/BenchmarkODataHttp.cs)

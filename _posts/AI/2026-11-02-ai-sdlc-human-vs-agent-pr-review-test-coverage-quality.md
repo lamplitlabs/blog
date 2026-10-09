@@ -28,7 +28,7 @@ A PR counted if it touched at least one test file. That gave 412 PRs over the qu
 
 The agent in the "agent" arms is the same GPT-4o review bot from the metrics post, with one addition: it is given the Stryker report for the PR and asked specifically about surviving mutants in changed tests.
 
-![Table comparing three PR review arms over 412 PRs: human only had 6 escaped defects (4.1%), 64% median mutation score, 11 PRs with assertion-free tests and 19.6 hour turnaround; agent only had 8 escapes (6.8%), 71% mutation score, 3 assertion-free PRs and 1.2 hour turnaround; agent plus human had 4 escapes (2.7%), 78% mutation score, 1 assertion-free PR and 7.3 hour turnaround, with 17 human reviewer minutes per PR instead of 41](/assets/img/posts/ai/ai-sdlc-human-vs-agent-review-arms-table.webp)
+![Table comparing three PR review arms over 412 PRs: human only had 6 escaped defects (4.1%), 64% median mutation score, 11 PRs with assertion-free tests and 19.6 hour turnaround; agent only had 8 escapes (6.8%), 71% mutation score, 3 assertion-free PRs and 1.2 hour turnaround; agent plus human had 4 escapes (2.7%), 78% mutation score, 1 assertion-free PR and 7.3 hour turnaround, with 17 human reviewer minutes per PR instead of 41](/assets/img/posts/ai/ai-sdlc-human-vs-agent-review-arms-table.webp){: width="1400" height="760" }
 _Arm-by-arm results. Green cells are the best value in the row; red is the number that got agent-only review switched off after month two's data was in._
 
 ## Reading the table
@@ -39,7 +39,7 @@ _Arm-by-arm results. Green cells are the best value in the row; red is the numbe
 
 **Agent then human is the arm that moved every metric.** The agent posts first (it sees the Stryker surviving-mutant list and the assertion-free detector), the author fixes what it flags, and the human reviews a PR that is already mechanically clean. Human time per PR fell from 41 to 17 minutes, turnaround from 19.6 to 7.3 hours, and escapes from 4.1 to 2.7 per 100 PRs. Across the quarter that is roughly 2 fewer production defects per 100 PRs from a bot that costs 14 cents each.
 
-![Grouped bar chart of mutation score bands for tests changed in a PR, by review arm: under human-only review 14% of PRs scored below 50% and 8% scored 90% or more; under agent-only 7% and 10%; under agent plus human 3% scored below 50% and 18% scored 90% or more](/assets/img/posts/ai/ai-sdlc-human-vs-agent-mutation-score-bands.webp)
+![Grouped bar chart of mutation score bands for tests changed in a PR, by review arm: under human-only review 14% of PRs scored below 50% and 8% scored 90% or more; under agent-only 7% and 10%; under agent plus human 3% scored below 50% and 18% scored 90% or more](/assets/img/posts/ai/ai-sdlc-human-vs-agent-mutation-score-bands.webp){: width="1400" height="700" }
 _The distribution matters more than the median. The agent + human arm nearly eliminated the sub-50% tail, which is where the escaped defects lived: 7 of the 18 escapes across all arms came from PRs whose changed tests scored under 50%._
 
 ## Wiring the mutation score into the review

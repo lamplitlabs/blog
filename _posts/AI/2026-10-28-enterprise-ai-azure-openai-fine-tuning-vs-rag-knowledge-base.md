@@ -11,7 +11,7 @@ image:
   alt: "Grouped bar chart comparing fine-tuned gpt-4o-mini, RAG and RAG plus fine-tuning on a 400-question golden set: correct answers 61, 87 and 91 percent; answers with a valid citation 0, 84 and 86 percent; wrong but confident 22, 6 and 5 percent; stale after 30 days of edits 29, 3 and 3 percent"
 ---
 
-![Grouped bar chart: correct answers 61% fine-tuned, 87% RAG, 91% hybrid; valid citation 0%, 84%, 86%; wrong but confident 22%, 6%, 5%; stale after 30 days 29%, 3%, 3%](/assets/img/headers/ai/enterprise-ai-fine-tuning-vs-rag-knowledge-base.webp)
+![Grouped bar chart: correct answers 61% fine-tuned, 87% RAG, 91% hybrid; valid citation 0%, 84%, 86%; wrong but confident 22%, 6%, 5%; stale after 30 days 29%, 3%, 3%](/assets/img/headers/ai/enterprise-ai-fine-tuning-vs-rag-knowledge-base.webp){: width="1200" height="630" }
 
 The [RAG vs fine-tuning for an internal copilot]({% post_url AI/2026-10-04-rag-vs-fine-tuning-enterprise-internal-copilot %}) post made the argument from first principles. This one is the experiment: the same knowledge base, the same 400 questions, three builds on Azure OpenAI, measured for a month. If you only want the decision rule, jump to [the decision table](#the-decision-table). If you have been asked "why don't we just fine-tune it on our docs?" in a steering meeting, the numbers below are what I now put on the slide.
 
@@ -58,7 +58,7 @@ Build C beat B by four points mostly by eliminating answers that were right but 
 
 ## Cost and maintenance
 
-![Line chart of monthly cost against questions per month from 0 to 500k: RAG starts near 250 dollars and rises slowly with tokens; fine-tuned starts near 2,500 dollars for two hosted deployments and rises more slowly; RAG plus one fine-tuned format model sits between them; at 40k questions per month RAG is about 430 dollars and fine-tuned about 2,550](/assets/img/posts/ai/fine-tuning-vs-rag-kb-cost-vs-volume.webp)
+![Line chart of monthly cost against questions per month from 0 to 500k: RAG starts near 250 dollars and rises slowly with tokens; fine-tuned starts near 2,500 dollars for two hosted deployments and rises more slowly; RAG plus one fine-tuned format model sits between them; at 40k questions per month RAG is about 430 dollars and fine-tuned about 2,550](/assets/img/posts/ai/fine-tuning-vs-rag-kb-cost-vs-volume.webp){: width="1200" height="700" }
 
 List prices at the time of writing; treat the absolute numbers as order of magnitude and the shape as the point.
 

@@ -15,7 +15,7 @@ A non-streaming chat completion that takes eight seconds *feels* broken, even wh
 
 This post shows how to consume Azure OpenAI's streaming API from .NET, expose it from ASP.NET Core as Server-Sent Events (SSE), and deal with the parts people forget: cancellation, errors that arrive halfway through, and usage numbers that only show up in the final chunk.
 
-![Streaming flow: client, ASP.NET Core SSE endpoint, Azure OpenAI, tokens arriving one by one](/assets/img/headers/ai/azure-openai-streaming-dotnet.webp)
+![Streaming flow: client, ASP.NET Core SSE endpoint, Azure OpenAI, tokens arriving one by one](/assets/img/headers/ai/azure-openai-streaming-dotnet.webp){: width="1200" height="630" }
 
 {% include feed-ads.html %}
 

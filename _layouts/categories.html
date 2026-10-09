@@ -5,8 +5,11 @@ layout: page
 
 {% include lang.html %}
 
-<!-- Site override of the Chirpy 7.6.0 layout: the stock layout drops the tab's
-     Markdown body, so render it here as an intro above the category cards. -->
+<!-- Synced from jekyll-theme-chirpy 7.6.0 (_layouts/categories.html).
+     The only site change is the {{ content }} line below: the stock layout drops
+     the tab's Markdown body, so render it here as an intro above the category cards.
+     On a theme upgrade, re-diff this file against the gem's copy
+     (`bundle show jekyll-theme-chirpy`) and re-apply upstream fixes. -->
 {{ content }}
 
 {% assign HEAD_PREFIX = 'h_' %}

@@ -126,6 +126,14 @@ included) and prints one summary line per check:
   `forward-link-coverage: 0/<total> posts linking to a not-yet-published
   later-dated /posts/<slug>/ (...)`.
 
+- `tag-conflict-coverage`: the build **fails** if the Jekyll build log
+  contains a `Conflict: The following destination is shared by multiple
+  files.` warning, since Jekyll exits 0 but silently lets one tag or category
+  page overwrite another with the same output path (the archive then lists
+  only part of the posts). When the build log is clean it prints
+  `tag-conflict-coverage: 0 'Conflict: The following destination is shared by
+  multiple files' warnings in the jekyll build log (...)`.
+
 It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`
 to see the config options.

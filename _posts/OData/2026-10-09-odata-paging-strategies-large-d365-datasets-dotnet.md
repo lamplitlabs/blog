@@ -127,7 +127,7 @@ Where it breaks down:
 4. Add `$select` before adding parallelism: it cut 78 s here, the parallel ranges cut another 129 s on top.
 5. Find your tenant's parallelism ceiling by watching for 429 + `Retry-After`, then run one below it.
 
-The next post in the series will look at the write side: upserting those 250,000 rows back without hitting the same throttles.
+The [next post in the series](/posts/odata-bulk-writes-d365-dotnet-throttling/) looks at the write side: upserting those 250,000 rows back without hitting the same throttles.
 
 ## Related
 

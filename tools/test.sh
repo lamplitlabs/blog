@@ -62,13 +62,23 @@ preflight() {
     exit 1
   fi
 
+  # Fail fast when the Ruby on PATH is not the pinned one. Under `set -e` the
+  # silenced `bundle install --local` below otherwise exits 7 with no output when
+  # a global Ruby (e.g. Homebrew 4.x) shadows the pinned 3.3.5, and the gem-set
+  # diagnostic further down is never reached.
+  local found_ruby pinned_ruby
+  found_ruby="$(ruby -e 'print RUBY_VERSION' 2>/dev/null || echo 'none')"
+  pinned_ruby="$(tr -d '[:space:]' <.ruby-version 2>/dev/null || echo 'unknown')"
+  if [[ $found_ruby != "$pinned_ruby" ]]; then
+    echo "error: ruby on PATH is $found_ruby ($(command -v ruby 2>/dev/null || echo 'not found')) but .ruby-version pins $pinned_ruby." >&2
+    echo "       Run 'mise exec ruby@$pinned_ruby -- bash tools/test.sh' so bundle uses the pinned Ruby." >&2
+    exit 1
+  fi
+
   # Recover a stale-but-cached gem set without touching the network or the lockfile.
   bundle check >/dev/null 2>&1 || bundle install --local >/dev/null 2>&1
 
   if ! bundle exec ruby -e 'exit 0' >/dev/null 2>&1; then
-    local found_ruby pinned_ruby
-    found_ruby="$(ruby -e 'print RUBY_VERSION' 2>/dev/null || echo 'none')"
-    pinned_ruby="$(tr -d '[:space:]' <.ruby-version 2>/dev/null || echo 'unknown')"
     echo "error: required gems are not available for this Ruby/bundler." >&2
     echo "       ruby on PATH: $found_ruby; pinned in .ruby-version: $pinned_ruby" >&2
     if [[ $found_ruby != "$pinned_ruby" ]]; then

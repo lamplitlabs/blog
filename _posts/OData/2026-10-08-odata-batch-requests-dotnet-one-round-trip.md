@@ -122,3 +122,9 @@ Two caveats from production:
 5. Cap batch size at 100-200 and verify every gateway timeout on the path.
 
 Batching will not fix a bad query - that was the previous post - but once the queries are right, it is usually the single largest remaining win in an OData integration.
+
+## Related
+
+- [Navigating OData APIs with Dotnet 8 and C#: Exploring Options and Drawbacks](/posts/odata/) - the baseline client options this post assumes you already picked from.
+- [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained](/posts/odata-query-performance-pitfalls-dotnet/) - make each subrequest in the batch cheap before you batch fifty of them.
+- [Benchmarking OData Clients in Dotnet 8](/posts/odata-csharp-benchmark/) - the per-request client overhead measured here, at a smaller scale.

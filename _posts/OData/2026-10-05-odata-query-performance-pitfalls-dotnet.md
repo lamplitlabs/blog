@@ -98,6 +98,8 @@ while (url is not null)
 }
 ```
 
+Following `@odata.nextLink` is the right one-line answer here, but on a 250,000-row D365 export it can still take minutes. If that's your case, see [OData Paging Strategies for Large D365 Datasets in .NET: $skiptoken vs Keyset Paging, Measured]({% post_url OData/2026-10-09-odata-paging-strategies-large-d365-datasets-dotnet %}) for what happens after `nextLink` is correct but slow.
+
 ```csharp
 public sealed record ODataPage<T>(
     [property: JsonPropertyName("value")] List<T> Value,

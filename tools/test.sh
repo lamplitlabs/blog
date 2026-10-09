@@ -62,6 +62,9 @@ preflight() {
     exit 1
   fi
 
+  # Recover a stale-but-cached gem set without touching the network or the lockfile.
+  bundle check >/dev/null 2>&1 || bundle install --local >/dev/null 2>&1
+
   if ! bundle exec ruby -e 'exit 0' >/dev/null 2>&1; then
     local found_ruby pinned_ruby
     found_ruby="$(ruby -e 'print RUBY_VERSION' 2>/dev/null || echo 'none')"

@@ -6,7 +6,9 @@ order: 5
 
 Lamplit Labs is a blog about building real software with .NET, C#, Azure, DevOps and AI.
 That includes Enterprise AI (bringing models like Azure OpenAI into business systems such as
-Dynamics 365) and Performance (SDK pitfalls, serialization, gRPC and cloud cost).
+Dynamics 365), Performance (SDK pitfalls, serialization, gRPC and cloud cost), and Programming
+Languages (practical comparisons such as Rust vs Go, TypeScript vs Kotlin, and Java vs Kotlin
+for real workloads).
 Posts here are written from hands-on work: debugging production issues, wiring up Azure
 services, streaming responses from Azure OpenAI, and the small fixes that take an afternoon
 to find and a sentence to explain.

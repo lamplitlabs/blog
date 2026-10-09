@@ -32,6 +32,9 @@ Nothing in your code changed. What changed is that you are now calling a remote 
 
 None of these mean your program is wrong. They mean your program has to be prepared for a *temporary* failure. This post is about that preparation.
 
+![Diagram of a program sending requests to a model API: one returns 200 OK, one 429 with a 1 second wait, one 503 with a 2 second wait, one times out after a 4 second wait, then the program falls back](/assets/img/headers/beginner/retries_timeouts_rate_limits.webp)
+_The four outcomes a model call can have, and how the waits grow between retries._
+
 ## Step 1: always set a timeout
 
 The worst outcome is not an error; it is silence. A request with no timeout can sit for minutes, holding a thread, a database connection, and a user's patience. Every HTTP library lets you say how long you are willing to wait:

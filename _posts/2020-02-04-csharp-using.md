@@ -17,7 +17,7 @@ redirect_from:
 
 C# 8 officially got released on 23rd Sep 2019 and It has several new features.
 
-width=
+![Visual Studio editor showing the C# 8 using declaration example](/assets/img/posts/csharp-using-developer-workspace.webp){: width="430" height="327" }
 
 Today we will talk about one of the new feature using-declaration.
 

@@ -29,7 +29,7 @@ we will be using Azure DevOps and Azure storage for this.
 
 <br/>
 
-width=
+![Azure DevOps pipeline that automatically backs up the D365 F&O golden configuration database](/assets/img/posts/azure-devops-d365-auto-backup.png){: width="1692" height="578" }
 
 In this article, we will assume that our environment is stopped and we have to start it and create a backup and then stop again. <br>
 In _summary_, we will be creating an Azure DevOps pipeline that will run every day(this can be hanged), start the virtual machine then run a PowerShell script in the VM which will create a backup and store it in an Azure blob.

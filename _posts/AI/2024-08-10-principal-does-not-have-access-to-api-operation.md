@@ -25,7 +25,7 @@ This issue can occur when you or application does not have correct permissions t
 
 In the Azure portal the fix looks like this: open the Azure OpenAI resource, go to **Access control (IAM)** > **Add role assignment**, pick the `Cognitive Services OpenAI User` role and add your user or app identity as a member:
 
-width=
+![Azure portal Add role assignment dialog granting the Cognitive Services OpenAI User role](/assets/img/posts/ai/principal-does-not-have-access-to-api-operation.webp){: width="900" height="520" }
 
 {% include feed-ads.html %}
 

@@ -42,7 +42,7 @@ as a developer you should only worry about 4 commands
    Show changes required by the current configuration, this is the most crucial step, the output of this step will give you all the things terraform will do, so before applying just make sure you are not
    destroying anything.
 
-   width=
+   ![Console output of terraform init, plan and apply](/assets/img/posts/terraform/terraform-init-plan-apply-console.webp){: width="1000" height="560" }
 
 3. <h6>terraform apply</h6>
    Create or update infrastructure, this will trigger the cloud resources and create all the infra for you.

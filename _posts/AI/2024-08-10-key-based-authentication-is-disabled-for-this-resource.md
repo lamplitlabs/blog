@@ -29,7 +29,7 @@ Make sure when accessing the AI service API do not use api keys instead try to u
 
 Once the identity is enabled, the fix on your screen looks like this: the **System assigned** status is **On** and an Object (principal) ID is shown. Keys stay disabled (`disableLocalAuth: true`), so your application must now call the API with an Entra ID token (for example `DefaultAzureCredential` in the Azure SDK) instead of the `api-key` header:
 
-width=
+![Azure OpenAI resource Identity blade with System assigned status On and an Object (principal) ID shown](/assets/img/posts/ai/key-based-authentication-is-disabled-for-this-resource-fix.webp){: width="1120" height="560" }
 
 {% include feed-ads.html %}
 

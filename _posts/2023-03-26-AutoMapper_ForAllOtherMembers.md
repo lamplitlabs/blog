@@ -22,7 +22,7 @@ AutoMapper 11 came with a breaking change, which we all hate. I hope this blog p
 
 After digging into Stackoverflow and Internet, I found a dirty way to work with the breaking change.
 
-width=
+![Diff showing the AutoMapper ForAllOtherMembers call removed and replaced after the breaking change](/assets/img/posts/dotnet/automapper-forallothermembers-removed-diff.webp){: width="1280" height="678" }
 
 {% include article-ads.html %}
 

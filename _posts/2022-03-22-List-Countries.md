@@ -25,7 +25,7 @@ I am using geonames dumps to create this gist so if you find any incorrect data 
 
 Here is the JSON shape each country entry follows in the gist, with its ISO codes and nested list of states/provinces:
 
-width=
+![JSON shape of a country entry with ISO codes and nested states/provinces from the gist](/assets/img/posts/gist/countries-states-json-shape.webp){: width="1200" height="620" }
 *Each country object carries `name`, `iso2`, `iso3`, and a `states` array - use `state_code` to match a province/state back to its parent country.*
 
 {% include feed-ads.html %}

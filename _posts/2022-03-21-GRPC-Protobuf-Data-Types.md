@@ -39,7 +39,7 @@ message Something {
 }
 ```
 
-width=
+![Table mapping gRPC Protobuf scalar data types to their C# types](/assets/img/posts/grpc-protobuf-csharp-type-mapping.webp){: width="1200" height="640" }
 
 <h4>Well known types</h4>
 there are more advance types provided by google. these supports null values.

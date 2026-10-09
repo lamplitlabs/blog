@@ -29,7 +29,7 @@ To connect Azure API Gateway with Azure Key Vault, you will need to perform the 
 
 3. Grant access to Azure API Gateway: In order for Azure API Gateway to access your secrets in Azure Key Vault, you will need to grant it access. To do this, click on the Key Vault and then select “Access policies” from the menu. Click on the “Add Access Policy” button and then select “API Management” from the list of services. Follow the prompts to grant Azure API Gateway access to your Key Vault.
 
-width=
+![Azure API Management portal: adding a named value backed by an Azure Key Vault secret](/assets/img/posts/azure/apim-add-named-value-key-vault.webp){: width="988" height="622" }
 *In the APIM "Named values" blade, pick type **Key vault** and select the secret you stored in step 2; APIM reads it with the managed identity you granted access in step 3.*
 
 4. Configure Azure API Gateway to use Azure Key Vault: Once you have granted Azure API Gateway access to your Azure Key Vault, you can configure your API Gateway to use it. To do this, sign in to the Azure portal and navigate to your API Gateway. Select the API you want to secure and then click on “Policies” in the menu. Add the following policy to your API:

@@ -32,7 +32,7 @@ In the example, I am using Firestore, but I think it should work with all other 
 
 Here is the whole flow we are going to build, from configuration to a working `FirestoreDb`:
 
-width=
+![Flow of GCP authentication without a JSON key file, from configuration to a working FirestoreDb](/assets/img/posts/gcp/gcp-auth-without-json-flow.webp){: width="1200" height="420" }
 
 First thing first, we need to add some NuGets
 

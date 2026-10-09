@@ -662,6 +662,20 @@ main() {
     rm -f "$_build_log"
     exit 1
   fi
+  # Jekyll also prints "Conflict: The following destination is shared by multiple
+  # files." (exit 0) when two tag or category pages resolve to the same output
+  # path; one page silently overwrites the other and that archive lists only
+  # part of the posts. Fail so the colliding tag/category is fixed before merge.
+  local _conflicts
+  _conflicts="$(sed 's/\x1b\[[0-9;]*m//g' "$_build_log" | grep -c 'Conflict: The following destination is shared by multiple files' || true)"
+  if ((_conflicts > 0)); then
+    echo "ERROR: jekyll build emitted $_conflicts 'Conflict:' destination warning(s); one tag/category page silently overwrites another:" >&2
+    sed 's/\x1b\[[0-9;]*m//g' "$_build_log" | grep -A 3 'Conflict: The following destination' >&2
+    echo "       Use one spelling per tag/category so every archive page lists all its posts." >&2
+    rm -f "$_build_log"
+    exit 1
+  fi
+  echo "tag-conflict-coverage: $_conflicts 'Conflict: The following destination is shared by multiple files' warnings in the jekyll build log (rule: grep -c on the captured build output; any >0 fails)"
   rm -f "$_build_log"
 
   # test

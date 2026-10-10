@@ -16,6 +16,8 @@ description: ""
 # Header image: set path to the file under /assets/img/headers/ and fill in alt
 # with what the image shows; tools/test.sh alt-coverage lists posts whose image
 # block has no nested alt (screen readers and image search get an empty alt).
+# Use a path unique to this post: reusing another post's header image makes
+# both posts look identical in the feed, tag pages and social previews.
 image:
   path: /assets/img/headers/some-title.webp
   alt: ""

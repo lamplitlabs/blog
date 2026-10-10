@@ -257,3 +257,4 @@ If you are starting today: write 50 queries from real tickets this week, compute
 - [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
 - [Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)
 - [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)
+- [Embeddings and Cosine Similarity: How a Program Tells That Two Sentences Mean the Same Thing](/posts/Embeddings_And_Cosine_Similarity/) - beginner-level background for the embedding similarity scoring this post uses

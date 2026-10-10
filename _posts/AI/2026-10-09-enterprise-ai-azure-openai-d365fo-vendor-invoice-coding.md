@@ -17,8 +17,6 @@ Most "AI in the ERP" demos stop at a chat box next to the form. The work that ac
 
 This post is the integration we built for one Dynamics 365 Finance & Operations (D365FO) tenant: an Azure Function that reads pending vendor invoices over OData, asks Azure OpenAI for a coding suggestion as strictly typed JSON, writes it back as a *draft* with a confidence score, and leaves the clerk in the approval workflow. Four weeks and 18,400 invoice lines later: **86 % of suggestions accepted unchanged, median clerk time per line from 41 s to 9 s, $0.0021 per line.** The design choices that got us there matter more than the prompt.
 
-{% include feed-ads.html %}
-
 ## Where the model sits
 
 The deliberate decision is that the model never touches the posting path. It fills in fields on a `VendorInvoiceLine` that the workflow already treats as editable until approval.

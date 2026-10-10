@@ -15,8 +15,6 @@ Most Azure OpenAI pilots in banks, insurers and healthcare organisations do not 
 
 ![Six governance controls for Azure OpenAI in a regulated enterprise](/assets/img/headers/ai/enterprise-ai-governance-azure-openai.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## 1. Data residency and retention
 
 The first question is always "where does our data go?" Be ready with three facts:

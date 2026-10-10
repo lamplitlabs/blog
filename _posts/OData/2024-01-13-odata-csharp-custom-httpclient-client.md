@@ -15,8 +15,6 @@ A custom HTTP client is a generic HTTP client implementation that is created and
 
 Comparison with other techniques is available [here](/posts/odata-csharp-benchmark)
 
-{% include article-ads.html %}
-
 ## How to integrate in c#
 
 For testing and development, I will be using a dummy service provided by [odata.org](<https://services.odata.org/V4/(S(y5tuj04bxbfsxzimbxbnauqg))/TripPinServiceRW/>)
@@ -94,8 +92,6 @@ Custom HttpClient can be easily integrated into existing projects, as it's a bui
 
 Custom HttpClient doesn't rely on OData-specific libraries, making it more versatile and adaptable to different OData service implementations.
 
-{% include article-ads.html %}
-
 ## Disadvantages of Custom HttpClient
 
 - #### Increased Development Complexity
@@ -118,8 +114,6 @@ Improper handling of HTTP requests or responses can lead to performance issues, 
 
 Custom HttpClient is not as widely used as OData client libraries, which may mean fewer resources available for troubleshooting and support.
 
-{% include article-ads.html %}
-
 ## Use cases for custom HTTP clients
 
 - #### Integration with non-standard OData services or APIs
@@ -138,13 +132,9 @@ A custom HTTP client can be integrated with custom middleware or logging mechani
 
 For experimental or research projects, a custom HTTP client allows for more flexibility and experimentation with different approaches.
 
-{% include article-ads.html %}
-
 ## Conclusion
 
 In summary, Custom HttpClient provides maximum flexibility and control for fine-tuning OData interactions but comes with a higher development overhead and potential for errors. It's suitable for experienced developers who need to handle specific OData requirements or integrate with non-standard OData services. For simpler scenarios or projects with limited resources, consider using OData client libraries that offer a higher level of abstraction and automatic data handling.
-
-{% include article-ads.html %}
 
 ## Other
 

@@ -15,8 +15,6 @@ In the [phase-by-phase AI SDLC post]({% post_url AI/2026-10-03-ai-sdlc-dotnet-te
 
 ![Code-review agent dashboard for one sprint: precision 71%, 4.2 comments per PR, 22% ignored-comment rate, 2 escaped defects, a precision trend line crossing the 60% target, accepted vs ignored comments per category, and a turnaround and cost table](/assets/img/posts/ai/ai-code-review-agent-metrics-dashboard.webp){: width="1400" height="820" }
 
-{% include feed-ads.html %}
-
 ## Why "developers like it" is not a metric
 
 The first month we ran the agent, the only feedback we had was a thumbs-up emoji reaction in Teams. Developers liked it. Three sprints later two engineers admitted they had muted the bot because most comments were style nits on code they were about to delete anyway. Liking a tool and acting on its output are different things, and only the second one changes the quality of the code that ships.

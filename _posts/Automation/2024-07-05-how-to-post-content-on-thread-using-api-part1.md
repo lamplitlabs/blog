@@ -17,8 +17,6 @@ This blog series aims to unlock the potential of your Instagram Threads account 
 
 [Part 2](/posts/how-to-post-content-on-thread-using-api-part2) is out now.
 
-{% include article-ads.html %}
-
 ## Prerequisites
 
 Before diving into obtaining your API access token, ensure you have the following:
@@ -28,27 +26,18 @@ Before diving into obtaining your API access token, ensure you have the followin
 - **Technical Knowledge**: Basic understanding of web development concepts such as APIs, authentication, and HTTP requests will be beneficial.
 - **Patience**: The process of setting up your Facebook Developer account, creating an app, and obtaining an API access token may require some time and patience.
 
-{% include article-ads.html %}
-
 ## Understanding the API Access Token for Post Creation
 
 Before we delve into the process of obtaining your API access token, let's clarify its role in post creation. An API access token serves as a unique identifier granting permission to interact with the Instagram Threads API. In this context, it allows you to automate the process of posting content to your Instagram Threads account.
 
-{% include article-ads.html %}
-
-{% include article-ads.html %}
 
 ## Obtaining Your API Access Token for Post Creation
 
 Now, let's walk through the steps to obtain your API access token specifically for post creation:
 
-{% include article-ads.html %}
-
 1.  ##### **Create a Facebook Developer Account**
 
     If you haven't already, sign up for a Facebook Developer account on the [Facebook for Developers website](https://developers.facebook.com/).
-
-{% include article-ads.html %}
 
 2.  ##### **Set Up a New App**
 
@@ -74,14 +63,10 @@ Now, let's walk through the steps to obtain your API access token specifically f
       ![Figure 9](/assets/img/posts/automation/thread-automation/thread-1.webp){: width="1054" height="789" }
     - Fill all the form correctly and submit.
 
-    {% include article-ads.html %}
-
 3. #### **Setting Permissions**
  
     Next, set the nec^essary permissions for your app. If you only intend to post content, the `threads_basic` and `threads_content_publish` permissions should suffice. Additional permissions can be added later if needed.
     ![Figure 10](/assets/img/posts/automation/thread-automation/thread-2.webp){: width="1198" height="654" }
-
-    {% include article-ads.html %}
 
 4. #### **Configuring OAuth**
  
@@ -93,8 +78,6 @@ Now, let's walk through the steps to obtain your API access token specifically f
 
     ![Figure 11](/assets/img/posts/automation/thread-automation/thread-3.webp){: width="1203" height="337" }
 
-    {% include article-ads.html %}
-
 5. #### **Adding Testers**
  
     If you want to invite specific people to test your app, you can add them as testers. However, this step is optional since OAuth will handle the authorization.
@@ -103,8 +86,6 @@ Now, let's walk through the steps to obtain your API access token specifically f
 
     To add test user, Expend App roles and click on Roles. Click on Add People and select Thread Tester. please note when you add a user as tester, it sends a invite, you have to accept that invite. 
 
-    {% include article-ads.html %}
-
 6. #### **App Settings**
  
     To make API calls to the Threads API, you'll need the CLIENT_ID and CLIENT_SECRET. Be cautious with your client secret to prevent unauthorized access.
@@ -112,8 +93,6 @@ Now, let's walk through the steps to obtain your API access token specifically f
     App Settings: Find these values under App settings and then Basic.
 
     ![Figure 12](/assets/img/posts/automation/thread-automation/thread-4.webp){: width="974" height="198" }
-
-    {% include article-ads.html %}
 
 7. #### **Authorization**
  
@@ -125,8 +104,6 @@ Now, let's walk through the steps to obtain your API access token specifically f
     
     You'll receive an authorization code at the redirect URL, which you can then use to request an access token.
     
-    {% include article-ads.html %}
-
 8.  ##### **Generate an Short Lived API Access Token**
 
     To convert the authorization code into an Short Lived access token, send a POST request:
@@ -170,23 +147,15 @@ Now, let's walk through the steps to obtain your API access token specifically f
 
       - You'll receive a long-lived access token, which you can use for extended access.
 
-    {% include article-ads.html %}
-
 10. ##### **Securely Store Your Access Token**
   
     Treat your access token like a sensitive piece of information and store it securely. Avoid hardcoding tokens in your application code or sharing them indiscriminately.
-
-    {% include article-ads.html %}
 
 ## Wrapping Up
 
 Obtaining your API access token for post creation marks the initial step towards optimizing your Thread Page's performance through automation. In [Part 2](/posts/how-to-post-content-on-thread-using-api-part2) of this series, we'll delve into leveraging your access token to programmatically create and schedule posts, empowering you to elevate your social media strategy.
 
-{% include article-ads.html %}
-
 [Part 2](/posts/how-to-post-content-on-thread-using-api-part2) is out now.
-
-{% include article-ads.html %}
 
 ## Related posts
 

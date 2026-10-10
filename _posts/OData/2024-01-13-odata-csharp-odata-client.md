@@ -16,8 +16,6 @@ OData Client, a library provided by Microsoft for accessing OData services, offe
 > **Which OData client library is this?** This post covers Microsoft's **OData Connected Service / `Microsoft.OData.Client`**, which generates a typed `DefaultContainer` from the service `$metadata`. If you want a lightweight, metadata-free fluent API instead, read the sibling post on [Simple.OData.Client](/posts/odata-csharp-simple-odata-client/) - it uses the same TripPin sample service, so the two walkthroughs are directly comparable. Latency numbers for both (plus raw `HttpClient`) are in the [OData client benchmark](/posts/odata-csharp-benchmark/).
 {: .prompt-info }
 
-{% include article-ads.html %}
-
 ## How to integrate in c#
 
 This is copied from the [Microsoft Learn](https://learn.microsoft.com/en-us/odata/client/getting-started)
@@ -95,13 +93,9 @@ OData Client requires some understanding of OData concepts and the underlying HT
 
 OData Client is a proprietary library from Microsoft, which may limit flexibility and options for integrating with OData services from other vendors.
 
-{% include article-ads.html %}
-
 ## Conclusion
 
 In summary, OData Client is a valuable tool for developers who want to simplify OData development and leverage its capabilities efficiently. However, it's crucial to weigh the advantages and disadvantages against the specific needs of the project and the developer's expertise. For simpler OData interactions, using the HttpClient directly may be sufficient, while for more complex scenarios, OData Client offers a robust and feature-rich solution.
-
-{% include article-ads.html %}
 
 ## Other
 

@@ -18,14 +18,10 @@ image:
 In this article, I will talk about automated database backup of Golden Configuration Environment or any tier 1 or 2 cloud-hosted environments. <br>
 we will be using Azure DevOps and Azure storage for this.
 
-{% include article-ads.html %}
-
 ## Prerequisites
 
 1. Must have an Azure DevOps organization
 2. Must have an Azure subscription with a storage account
-
-{% include feed-ads.html %}
 
 <br/>
 
@@ -58,8 +54,6 @@ In _summary_, we will be creating an Azure DevOps pipeline that will run every d
   - Adding cron in the YAML, I personally don't like this, each time I want to update the time I have to update the repository and raise a PR and then wait for approvals. you can follow the [official docs](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/scheduled-triggers?view=azure-devops&tabs=yaml) for this.
   - Adding the cron on Azure DevOps pipeline settings (classic approach). To add a schedule please follow the [official docs](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/scheduled-triggers?view=azure-devops&tabs=classic), Edit the pipeline, and then from top right menu click on trigger and create a schedule.
 - Done.
-
-{% include article-ads.html %}
 
 ## Conclusion
 

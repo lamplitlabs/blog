@@ -15,8 +15,6 @@ The earlier posts in this series put [Rust against Go]({% post_url Languages/202
 
 So, same method as before: one small program written twice (then a third time), one input, numbers from `/usr/bin/time -l`, no frameworks.
 
-{% include article-ads.html %}
-
 ## The tool
 
 `agg` reads a CSV of service calls - `ts,region,service,status,latency_ms,amount` - groups rows by `region|service`, and prints the row count, the p50 latency and the summed amount per group. The input is 5,000,000 generated rows, 247 MB, 48 groups. That is the shape of a lot of internal tooling: a log export or a billing dump that is too big for a spreadsheet and too small to justify a Spark job.
@@ -52,8 +50,6 @@ Run-to-run variance is also worth a note: the byte-level Swift build ranged 2.35
 - **Latency-sensitive or memory-constrained:** Rust's predictability (narrow min/max spread) matters more than the median. Swift's ARC and copy-on-write collections produce occasional outliers that are hard to see in a single run.
 
 The honest summary: Swift is not slow, but idiomatic Swift string code is, and the language does not warn you. Rust's defaults put you on the fast path before you know you need it.
-
-{% include article-ads.html %}
 
 ## Related
 

@@ -21,8 +21,6 @@ To objectively compare the performance of these OData client libraries, we condu
 
 - <strong>Simple GET All Request:</strong> Involving an all entities read operation.
 
-{% include article-ads.html %}
-
 ## Device Information
 
 OS Windows 10
@@ -30,8 +28,6 @@ OS Windows 10
 Intel i7-9750H, CPU 2.60 GHz, 1CPU, 12 logical and 6 physical core
 
 .Net 8.0.101 SDK
-
-{% include article-ads.html %}
 
 ## Benchmark Results
 
@@ -44,31 +40,21 @@ Intel i7-9750H, CPU 2.60 GHz, 1CPU, 12 logical and 6 physical core
 
 The results indicated that ODataClient exhibited a slight performance advantage over Simple OData Client, while custom HttpClient consistently outperformed both libraries. This difference in performance is attributed to the optimization capabilities of custom HttpClient, which allow for fine-tuning of HTTP requests and responses.
 
-{% include article-ads.html %}
-
 ## Simple OData Client Benchmark
 
 ![simple-odata-benchmark](/assets/img/posts/simpleodataclient.webp "Simple.OData.Client Benchmark"){: width="756" height="381" }
-
-{% include article-ads.html %}
 
 ## OData Client Benchmark
 
 ![odata-client-benchmark](/assets/img/posts/odataclient.webp "OData Client Benchmark"){: width="777" height="410" }
 
-{% include article-ads.html %}
-
 ## Http Client Benchmark
 
 ![httpclient-benchmark](/assets/img/posts/httpclient.webp "Custom Http Client Benchmark"){: width="750" height="339" }
 
-{% include article-ads.html %}
-
 ## Conclusion
 
 The choice between ODataClient, custom HttpClient, and Simple OData Client hinges on the specific requirements of the project. For straightforward OData interactions and a focus on data manipulation, ODataClient provides a balanced combination of ease of use and performance. In cases demanding granular control over HTTP communication and performance optimization, custom HttpClient emerges as the preferred choice. For beginners or those prioritizing simplicity, Simple OData Client offers a lightweight and approachable entry point into the world of OData development.
-
-{% include article-ads.html %}
 
 ## Other
 

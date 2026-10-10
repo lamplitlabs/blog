@@ -13,8 +13,6 @@ image:
 
 A cost dashboard tells you what happened. An SLO tells you when to act. Once a few teams share an Azure OpenAI platform, the questions change from "how much did we spend" to "is the payments bot about to blow its daily budget *right now*, and is the 2.8 second p95 a model problem or a retrieval problem?". This post defines **cost and latency SLOs per team and deployment**, computes **burn rates** in KQL over two windows, and wires alerts that page on real incidents and open a ticket for slow drift. It builds on the cost dashboard and the [OpenTelemetry tracing](/posts/enterprise-llm-observability-opentelemetry-dotnet/) from earlier posts; if you have those, this is a day of work.
 
-{% include feed-ads.html %}
-
 ## Why spend needs an SLO, not a threshold
 
 Classic SRE SLOs are about availability: "99.9% of requests succeed within 500 ms". LLM workloads add a second resource that behaves like availability: **budget**. A team has a monthly token budget, it burns it unevenly, and a runaway batch job can consume a week of budget in an hour. Treating budget as an error budget gives you the same tools SRE already has:

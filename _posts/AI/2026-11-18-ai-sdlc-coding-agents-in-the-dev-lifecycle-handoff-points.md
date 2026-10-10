@@ -17,8 +17,6 @@ This post describes the four hand-off points I use to place an agent in a .NET t
 
 ![Coding agents in the SDLC: task contract, sandboxed run, deterministic gates, human review](/assets/img/headers/ai/ai-sdlc-coding-agent-handoff-points.webp){: width="1600" height="900" }
 
-{% include feed-ads.html %}
-
 ## 1. The task contract: an issue the agent can finish
 
 Most agent failures I have seen were briefing failures. "Fix the flaky checkout test" produces a wandering session; "Make `CheckoutTests.PlacesOrder_WhenStockAvailable` deterministic; the flake is a `DateTime.Now` comparison in `OrderService.cs`; do not change the public API of `IOrderService`" produces a small, reviewable diff.

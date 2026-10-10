@@ -15,8 +15,6 @@ Every internal-copilot pitch I have reviewed this year ends in the same argument
 
 ![RAG vs fine-tuning side-by-side for an internal copilot](/assets/img/headers/ai/rag-vs-fine-tuning-internal-copilot.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The scenario
 
 To keep the comparison honest, fix the use case:

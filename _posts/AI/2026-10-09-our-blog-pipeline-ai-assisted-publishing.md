@@ -15,8 +15,6 @@ Most of the posts here are about building things with .NET, Azure OpenAI and AI 
 
 ![Terminal output of tools/test.sh: Jekyll build done, then tag-case-duplicates, image-coverage 0/58, alt-coverage 0/58, body-image-coverage 18/58, description-coverage all 58 posts, folder-categories, and HTML-Proofer finished successfully](/assets/img/posts/ai/our-blog-pipeline-test-sh-output.webp){: width="1200" height="620" }
 
-{% include feed-ads.html %}
-
 ## The stack: Jekyll on GitHub Pages
 
 The site is a plain [Jekyll](https://jekyllrb.com/) project using the Chirpy theme, built and deployed by GitHub Pages. There is no CMS, no database and no server-side code. A post is one Markdown file under `_posts/<Topic>/`, for example `_posts/AI/2026-10-09-our-blog-pipeline-ai-assisted-publishing.md`, with YAML front matter on top:

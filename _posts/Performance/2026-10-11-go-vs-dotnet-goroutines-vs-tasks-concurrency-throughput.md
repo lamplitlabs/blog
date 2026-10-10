@@ -18,8 +18,6 @@ The workload is an HTTP JSON echo endpoint, the shape of nearly every internal s
 
 ![Bar chart of wrk requests per second for Go net/http and .NET 8 Minimal API, with and without a 1 ms per-request wait](/assets/img/headers/performance/go-vs-dotnet-concurrency-throughput.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The two servers
 
 **Go, standard library only.** One goroutine per connection is what `net/http` gives you for free.

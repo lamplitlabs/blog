@@ -16,13 +16,9 @@ Hey there, welcome back to our journey in supercharging your Thread Account! In 
 TLDR
 Please visit [https://github.com/lamplitlabs/ferret/blob/main/pkg/external/thread.go](https://github.com/lamplitlabs/ferret/blob/main/pkg/external/thread.go) for golang code.
 
-{% include article-ads.html %}
-
 ## Why REST APIs, You Ask?
 
 Alright, so let's break it down. REST APIs are like the magic wand for tech folks. They let you talk to all sorts of web services, and in our case, Thread's API is the one we're interested in. By tapping into these APIs, you can weave Threads right into your existing tools and workflows. It's like having a social media genie at your command, ready to whip up posts whenever you need them!
-
-{% include article-ads.html %}
 
 ## Prerequisites
 
@@ -35,8 +31,6 @@ Before you start, make sure you have:
 
 All the requests below go to `https://graph.threads.net/v1.0/` and send the token in the `access_token` query parameter.
 
-{% include article-ads.html %}
-
 ## How publishing works on Threads
 
 Unlike the Facebook Page API, where a single `POST /feed` call publishes a post, Threads uses a **two-step flow**:
@@ -45,8 +39,6 @@ Unlike the Facebook Page API, where a single `POST /feed` call publishes a post,
 2. **Publish the container** with `POST /{USER_ID}/threads_publish?creation_id={CONTAINER_ID}`. This turns the container into a real post and returns the Threads post `id`.
 
 Keep that in mind: if you only ever call step 1, your "posts" will never show up.
-
-{% include article-ads.html %}
 
 ## Step 1: Create a Text Post
 
@@ -77,8 +69,6 @@ Keep that in mind: if you only ever call step 1, your "posts" will never show up
       The `id` is the **container id**. Save it, you need it for the publish call.
 
 - When you create a post, it will not be published until you hit the publish API below.
-
-{% include article-ads.html %}
 
 ## Step 1 (alternative): Create an Image or Video Post
 
@@ -111,8 +101,6 @@ The call is the same endpoint; only the parameters change.
 
 - **Important:** for image and video posts the container is created immediately, but Threads downloads and processes the media in the background. Meta recommends waiting around **30 seconds** before publishing, or polling the container status (next step). Publishing too early returns an error like `Media ID is not available`.
 
-{% include article-ads.html %}
-
 ## Step 2 (optional): Check the Container Status
 
 Use this before publishing media posts, or when a publish call fails.
@@ -132,8 +120,6 @@ Use this before publishing media posts, or when a publish call fails.
         - **ERROR** - something went wrong; `error_message` tells you what (bad URL, unsupported format, media too large, ...)
         - **EXPIRED** - the container was never published within 24 hours and has been discarded
         - **PUBLISHED** - already published
-
-{% include article-ads.html %}
 
 ## Step 3: Publish the Post
 
@@ -163,8 +149,6 @@ Use this before publishing media posts, or when a publish call fails.
   ![Terminal showing the three Threads API calls in order: a GET on the container id returns status FINISHED, a POST to threads_publish with that creation_id returns the published post id 17920251442154329, and a GET on the post id with fields id,text,media_type,permalink,timestamp returns the post text, media_type TEXT_POST and its public threads.net permalink](/assets/img/posts/automation/thread-automation/threads-api-status-publish-readback.webp){: width="1200" height="760" }
   _Verify your result: the container status, the publish response and the read-back of the published post. Open the `permalink` in a browser to see the post on your profile._
 
-{% include article-ads.html %}
-
 ## Bonus: Carousel Posts
 
 A carousel is a single post with 2 to 20 images/videos. It takes one extra round of containers:
@@ -193,8 +177,6 @@ A carousel is a single post with 2 to 20 images/videos. It takes one extra round
 
 3. Publish the carousel container with `threads_publish` exactly as in Step 3.
 
-{% include article-ads.html %}
-
 ## Limits and Gotchas
 
 - **Rate limit**: 250 published posts per 24 hours per account (check `GET /{USER_ID}/threads_publishing_limit?fields=quota_usage,config` to see where you stand).
@@ -204,19 +186,13 @@ A carousel is a single post with 2 to 20 images/videos. It takes one extra round
 - **Media must be public** `https://` URLs; signed URLs work as long as they are valid while Threads downloads them.
 - **Token expiry**: long-lived tokens last 60 days. Refresh them with `GET https://graph.threads.net/refresh_access_token?grant_type=th_refresh_token&access_token=[ACCESS_TOKEN]` before they expire, otherwise every call above returns an `OAuthException`.
 
-{% include article-ads.html %}
-
 ## Wrapping Up
 
 And there you have it – a crash course in creating Threads posts like a pro using REST APIs! Create a container, (wait for media to finish), publish, and read back the permalink. With these tools in your arsenal, you're ready to take your Threads account to new heights.
 
-{% include article-ads.html %}
-
 ## Other
 
 - I am not considering all the use cases here but you can visit [https://developers.facebook.com/docs/threads](https://developers.facebook.com/docs/threads/) for more use cases, including replies, insights and deleting posts.
-
-{% include article-ads.html %}
 
 ## Related posts
 

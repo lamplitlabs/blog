@@ -24,8 +24,6 @@ After digging into Stackoverflow and Internet, I found a dirty way to work with 
 
 ![Diff showing the AutoMapper ForAllOtherMembers call removed and replaced after the breaking change](/assets/img/posts/dotnet/automapper-forallothermembers-removed-diff.webp){: width="1280" height="678" }
 
-{% include article-ads.html %}
-
 Create an extension Method called `ForAllOtherMembers`.
 
 ```cs
@@ -55,12 +53,8 @@ Create an extension Method called `ForAllOtherMembers`.
  }
 ```
 
-{% include article-ads.html %}
-
 there are more ways which you can find in [this stack overflow](https://stackoverflow.com/questions/71311303/replacement-for-automappers-forallothermembers) article.
 <br>
-
-{% include feed-ads.html %}
 
 **PS: I would not recommend this, because this method goes against the [auto mapper's design philosophy](https://jimmybogard.com/automappers-design-philosophy/).** <br>
 As mentioned in the [GitHub discussion](https://github.com/AutoMapper/AutoMapper/discussions/4036), the author of AutoMapper **"regrets ever adding it in the first place"**.

@@ -17,13 +17,9 @@ redirect_from:
 
 Azure API Gateway is a fully managed service that enables developers to create, publish, maintain, monitor, and secure APIs. Azure Key Vault is a cloud-based service that provides secure storage of secrets, such as keys, passwords, and certificates. By connecting Azure API Gateway with Azure Key Vault, you can secure your APIs by storing and managing sensitive information, such as API keys and secrets, in a secure and centralized location.
 
-{% include article-ads.html %}
-
 To connect Azure API Gateway with Azure Key Vault, you will need to perform the following steps:
 
 1. Create an Azure Key Vault: If you do not already have an Azure Key Vault, you will need to create one. To do this, sign in to the Azure portal and click on “Create a resource” in the top left corner. Select “Security + Identity” from the categories and then select “Key Vault” from the list of resources. Follow the prompts to create a new Key Vault.
-
-{% include article-ads.html %}
 
 2. Store your secrets in Azure Key Vault: Once you have created an Azure Key Vault, you can store your secrets in it by clicking on the Key Vault and then selecting “Secrets” from the menu. Click on the “Generate/Import” button to create a new secret, and then enter the name and value of the secret you want to store.
 
@@ -51,8 +47,6 @@ To connect Azure API Gateway with Azure Key Vault, you will need to perform the 
   </on-error>
 </policies>
 ```
-
-{% include feed-ads.html %}
 
 5. Test your API: Once you have configured your API Gateway to use Azure Key Vault, you can test your API to ensure that it is working correctly. To do this, send a request to your API and verify that you receive the expected response.
 

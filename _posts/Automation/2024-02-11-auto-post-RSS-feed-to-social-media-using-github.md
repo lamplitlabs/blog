@@ -17,13 +17,9 @@ In my last post about [automation using Logic App](/posts/auto-post-RSS-feed-to-
 
 ![ferret](/assets/img/posts/automation/ferret.webp){: width="1776" height="896" }
 
-{% include article-ads.html %}
-
 ## Why the name Ferret?
 
 Before diving into the technical details, let's address the curious choice of name—Ferret. Ferrets are renowned for their adeptness at gathering information. Their agile and inquisitive nature resonates with the core functionality of this automation tool. Just like a ferret scavenging for information, this tool diligently collects and disseminates content from RSS feeds to various social media platforms.
-
-{% include article-ads.html %}
 
 ## What is Ferret?
 
@@ -31,21 +27,15 @@ Ferret is a lightweight yet powerful automation tool designed to streamline the 
 
 Additionally, if you've arrived at this blog post from social media, it's worth noting that the very post you're reading was shared by Ferret, showcasing its effectiveness in automating content distribution.
 
-{% include article-ads.html %}
-
 ## How does Ferret Work?
 
 Ferret operates on a simple yet efficient workflow. Upon detecting new content in the specified RSS feeds, Ferret triggers a series of predefined actions using GitHub Actions. These actions include fetching the content, formatting it according to user-defined preferences, and posting it across the designated social media platforms.
 
 ![ferret-work](/assets/img/posts/automation/ferret-worl.webp){: width="1678" height="896" }
 
-{% include article-ads.html %}
-
 ## Getting Started with Ferret
 
 Getting started with Ferret is a breeze. Simply [fork the Ferret repository](https://github.com/lamplitlabs/ferret/fork) on GitHub and customize the configuration according to your requirements. With comprehensive documentation and a user-friendly interface, setting up Ferret requires minimal effort.
-
-{% include article-ads.html %}
 
 ## Conclusion
 

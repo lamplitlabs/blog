@@ -15,8 +15,6 @@ image:
 
 This issue can occur when you or application does not have correct permissions to use the AI resource.
 
-{% include feed-ads.html %}
-
 ## How to fix?
 
 - Identify which role you want to assign, in our case we will consider Azure Open AI resource and it supports [these](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/role-based-access-control#azure-openai-roles) roles.
@@ -26,8 +24,6 @@ This issue can occur when you or application does not have correct permissions t
 In the Azure portal the fix looks like this: open the Azure OpenAI resource, go to **Access control (IAM)** > **Add role assignment**, pick the `Cognitive Services OpenAI User` role and add your user or app identity as a member:
 
 ![Azure portal Add role assignment dialog granting the Cognitive Services OpenAI User role](/assets/img/posts/ai/principal-does-not-have-access-to-api-operation.webp){: width="900" height="520" }
-
-{% include feed-ads.html %}
 
 ## Related posts
 

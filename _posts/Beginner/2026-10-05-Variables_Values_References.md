@@ -34,8 +34,6 @@ print(copy_of_age)  # 43
 
 Here `copy_of_age = age` created a **second box** with its own `42`. Changing one does not touch the other. Numbers, booleans and (in most languages) single characters behave like this. They are *value types*.
 
-{% include article-ads.html %}
-
 ## Big things are not copied, they are pointed at
 
 Now try the same experiment with a list:
@@ -95,8 +93,6 @@ println!("{}", r.len());
 ```
 
 **Python** has only references under the hood, but numbers and strings are *immutable*, so you can never observe sharing: `b = b + 1` builds a brand-new number instead of changing the shared one. Lists and dicts are mutable, which is exactly why the surprise above happens.
-
-{% include article-ads.html %}
 
 ## When you really want a copy
 

@@ -15,8 +15,6 @@ The [six governance controls post]({% post_url AI/2026-10-03-enterprise-ai-gover
 
 ![Table of Azure Policy assignments for the Azure OpenAI landing zone: deny public network access, deny local auth, deny disallowed regions and models, deploy diagnostic settings if missing, deny missing cost-center tags, and budget alerts at 80 and 100 percent; compliance went from 11 non-compliant accounts to 0 in six weeks](/assets/img/posts/ai/enterprise-ai-azure-policy-controls-table.webp){: width="1200" height="700" }
 
-{% include feed-ads.html %}
-
 ## Why policy and not a wiki page
 
 Three reasons we kept coming back to:

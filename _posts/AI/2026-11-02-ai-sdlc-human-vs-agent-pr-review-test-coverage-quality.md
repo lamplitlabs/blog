@@ -15,8 +15,6 @@ The [code-review agent metrics post]({% post_url AI/2026-10-08-ai-sdlc-code-revi
 
 We ran a one-quarter comparison across twelve .NET 8 services with three review arms - human only, agent only, agent plus human - and measured each arm on the same three numbers: **defect escape rate**, **mutation score of the tests changed in the PR**, and **review turnaround**. The short version: the agent alone shipped more escaped defects than humans alone, but agent-then-human cut escapes by roughly a third while more than halving turnaround.
 
-{% include article-ads.html %}
-
 ## What we measured and how
 
 A PR counted if it touched at least one test file. That gave 412 PRs over the quarter. Arms were assigned per repository and rotated monthly, so every service spent one month in each arm and the same nine engineers reviewed across all of them.

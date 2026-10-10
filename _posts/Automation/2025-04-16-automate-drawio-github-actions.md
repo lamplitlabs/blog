@@ -17,8 +17,6 @@ Whether you're documenting microservices, infrastructure, or galactic weapons (�
 
 This post walks you through automating the export of `.drawio` diagrams to PNG using **GitHub Actions**, so your visuals are always up-to-date and versioned alongside your code.
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧩 The Objective
@@ -39,8 +37,6 @@ docs/images/deathstar-blueprint-page-1.png
 ...
 ```
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧰 Prerequisites
@@ -48,8 +44,6 @@ docs/images/deathstar-blueprint-page-1.png
 - GitHub repo with `.drawio` files under `docs/drawio/`
 - GitHub Actions enabled
 - A personal access token (PAT) with repo push access (used to commit image changes)
-
-{% include article-ads.html %}
 
 ---
 
@@ -114,8 +108,6 @@ Once the workflow runs, the **Export PNG Images from Draw.io** step prints one l
 ![GitHub Actions job log of the Export Draw.io Diagrams workflow with the Export PNG Images step expanded, showing deathstar-blueprint.drawio exported to page-0, page-1 and page-2 PNGs, followed by the commit step creating the three files under docs/images and pushing to main](/assets/img/posts/github/drawio-github-actions-export-job-log.webp){: width="1200" height="560" }
 *The expanded export and commit steps in the GitHub Actions job log. One PNG per diagram page lands under `docs/images/` and is pushed back with `[skip ci]` so the workflow does not retrigger itself.*
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧠 Why Automate This?
@@ -125,8 +117,6 @@ Once the workflow runs, the **Export PNG Images from Draw.io** step prints one l
 ✅ Eliminates manual exports  
 ✅ Git-tracks your documentation like your code
 
-{% include article-ads.html %}
-
 ---
 
 ## 💡 Bonus Ideas
@@ -134,8 +124,6 @@ Once the workflow runs, the **Export PNG Images from Draw.io** step prints one l
 - Export diagrams to SVG or PDF
 - Publish diagrams to GitHub Pages or a wiki
 - Trigger exports nightly or per release branch
-
-{% include article-ads.html %}
 
 ---
 
@@ -145,13 +133,9 @@ Documentation is better when it’s automated. By integrating Draw.io diagram ex
 
 Turn your `deathstar-blueprint.drawio` into a blueprint the rebellion would envy. ✨
 
-{% include article-ads.html %}
-
 ---
 
 Need help extending this workflow? Feel free to fork, adapt, or drop a question!
-
-{% include article-ads.html %}
 
 ## Related posts
 

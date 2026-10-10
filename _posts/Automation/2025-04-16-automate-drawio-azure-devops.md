@@ -20,8 +20,6 @@ But what if you could automate that?
 
 In this post, you’ll learn how to **automatically export your `.drawio` diagrams into PNG images using Azure DevOps Pipelines** every time the file changes. Our example will revolve around a diagram file called `deathstar-blueprint.drawio`, because let’s face it—good DevOps is how the Empire *should* have built the Death Star.
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧩 The Objective
@@ -36,8 +34,6 @@ Whenever `deathstar-blueprint.drawio` is updated in your Git repository, this pi
 
 All hands-off. All automated.
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧰 Prerequisites
@@ -49,15 +45,11 @@ Make sure your repo:
 - Has permissions to push changes to branches (PAT or system access)
 - Uses Git version control
 
-{% include article-ads.html %}
-
 ---
 
 ## 🔁 Pipeline Overview
 
 Here’s the full pipeline YAML and a breakdown of how each step works.
-
-{% include article-ads.html %}
 
 ---
 
@@ -71,8 +63,6 @@ trigger:
 ```
 
 Only runs when files inside `docs/drawio/` are modified.
-
-{% include article-ads.html %}
 
 ---
 
@@ -105,8 +95,6 @@ Uses Microsoft’s `ubuntu-latest` hosted agent.
 - Downloads and extracts **Draw.io Desktop**
 - Prepares output folder `docs/images/`
 
-{% include article-ads.html %}
-
 ---
 
 ### 📄 Count Pages in the Diagram
@@ -119,8 +107,6 @@ Uses Microsoft’s `ubuntu-latest` hosted agent.
 ```
 
 Parses XML to count `<diagram>` nodes (pages).
-
-{% include article-ads.html %}
 
 ---
 
@@ -165,8 +151,6 @@ When the pipeline runs, the **Export Draw.io Pages to PNG** step logs the page c
 ![Azure DevOps pipeline run of the Export Draw.io Diagrams pipeline with the Export Draw.io Pages to PNG step expanded, showing Total pages to export: 3, deathstar-blueprint.drawio exported to page-0, page-1 and page-2 PNGs, followed by the Cleanup and Push Changes step committing the three files under docs/images with skip ci](/assets/img/posts/azure-devops/drawio-azure-devops-export-pipeline-log.webp){: width="1200" height="720" }
 *The expanded export and push steps in the Azure DevOps job log. One PNG per diagram page lands under `docs/images/` and is pushed back to the source branch with `[skip ci]` so the pipeline does not retrigger itself.*
 
-{% include article-ads.html %}
-
 ---
 
 ### 🧹 Cleanup and Push Changes
@@ -188,8 +172,6 @@ When the pipeline runs, the **Export Draw.io Pages to PNG** step logs the page c
 - Commits image exports back to the same branch
 - Skips triggering another pipeline run (`[skip ci]`)
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧠 Why Automate This?
@@ -207,8 +189,6 @@ When the pipeline runs, the **Export Draw.io Pages to PNG** step logs the page c
 - Publish images to a static site (e.g., GitHub Pages)
 - Auto-generate README previews or Confluence pages
 
-{% include article-ads.html %}
-
 ---
 
 ## 🧨 Final Thoughts
@@ -217,13 +197,9 @@ By integrating Draw.io exports into your CI pipeline, your diagrams become as ma
 
 And just like that—your `deathstar-blueprint.drawio` evolves into a living artifact of your software system.
 
-{% include article-ads.html %}
-
 ---
 
 **Need help extending this setup?** Reach out, comment, or fork this into your own DevOps Death Star ✨
-
-{% include article-ads.html %}
 
 ## Related posts
 

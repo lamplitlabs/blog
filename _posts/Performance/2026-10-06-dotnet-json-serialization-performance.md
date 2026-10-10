@@ -17,8 +17,6 @@ This post benchmarks the same 1 KB `Order` payload four ways with [BenchmarkDotN
 
 ![Bar chart of mean serialization time per 1 KB order across Newtonsoft.Json, System.Text.Json reflection and source generators](/assets/img/headers/performance/json-serialization-source-generators.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The payload
 
 A typical order document: a header, a customer and five lines. Nothing exotic, which is the point. This is the shape most enterprise APIs move around all day.

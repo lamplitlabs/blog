@@ -17,8 +17,6 @@ The workload is the most common shape of service we write: a `GET /users/:id` th
 
 ![Bar chart of requests per second for a 1.2 KB JSON endpoint across Node.js 22, Fastify, Deno 2 and Bun 1.1](/assets/img/headers/performance/node-vs-deno-vs-bun-http.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The four implementations
 
 **1. Node.js 22, built-in `http` module.** The baseline everyone has somewhere.

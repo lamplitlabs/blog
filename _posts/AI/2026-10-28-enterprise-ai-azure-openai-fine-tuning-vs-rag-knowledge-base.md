@@ -15,8 +15,6 @@ image:
 
 The [RAG vs fine-tuning for an internal copilot]({% post_url AI/2026-10-04-rag-vs-fine-tuning-enterprise-internal-copilot %}) post made the argument from first principles. This one is the experiment: the same knowledge base, the same 400 questions, three builds on Azure OpenAI, measured for a month. If you only want the decision rule, jump to [the decision table](#the-decision-table). If you have been asked "why don't we just fine-tune it on our docs?" in a steering meeting, the numbers below are what I now put on the slide.
 
-{% include feed-ads.html %}
-
 ## The knowledge base
 
 - **18,000 documents** (SharePoint policies, Confluence runbooks, a ticketing system's resolved-incident notes), about 95 MB of text after HTML stripping.

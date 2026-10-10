@@ -29,8 +29,6 @@ For more information, You can watch the video from CS50 and also try [this](http
 
 <iframe width="560" height="315" src="/assets/videos/binary.mp4" title="CS50 - Lecture 0 - Binary" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
 
-{% include article-ads.html %}
-
 ## ASCII: A Universal Alphabet for Computers
 
 To represent the vast array of text and symbols we use, computers use a standardized encoding system called ASCII. ASCII stands for American Standard Code for Information Interchange, and it defines a mapping of 128 characters to their corresponding binary code.
@@ -38,8 +36,6 @@ To represent the vast array of text and symbols we use, computers use a standard
 These characters include letters, numbers, punctuation marks, and control symbols. ASCII is a universal encoding system, meaning that it is understood by all computers, regardless of their operating system or hardware.
 
 <iframe width="560" height="315" src="/assets/videos/ascii.mp4" title="CS50 - Lecture 0 - Ascii" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
-
-{% include article-ads.html %}
 
 ## Unicode: Embracing Global Language Diversity
 
@@ -49,15 +45,11 @@ Unicode is a complex and evolving system, but it has become the standard for rep
 
 <iframe width="560" height="315" src="/assets/videos/unicode.mp4" title="CS50 - Lecture 0 - Unicode" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
 
-{% include article-ads.html %}
-
 ## Other Encodings for Specialized Data
 
 Beyond ASCII and Unicode, there are many other encodings used for specialized data types, such as images, audio, and video. These encodings take into account the unique characteristics of each data type and use specific methods to represent them digitally.
 
 For instance, JPEG is a widely used encoding for images, while MP3 and AAC are commonly used for audio compression. These encodings help to conserve storage space and improve data transmission efficiency.
-
-{% include article-ads.html %}
 
 ## Conclusion
 

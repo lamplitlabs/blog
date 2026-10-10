@@ -13,8 +13,6 @@ image:
 
 Azure OpenAI bills you per token, not per request. The first time a team ships a chat feature, the surprise usually comes a month later on the invoice: a long system prompt that is resent on every turn, conversation history that is never trimmed, and completions with no upper bound. This post shows how to **count tokens before you call the model** from .NET, and three cheap habits that keep the bill predictable.
 
-{% include feed-ads.html %}
-
 ## What a token is (and why it matters)
 
 A token is a chunk of text - roughly 4 characters of English, or about ¾ of a word. The sentence `Counting tokens before you call the model` is 8 tokens. Every request is billed on **input tokens + output tokens**, and each model has a context window (for example 128k tokens for `gpt-4o`) that input and output must fit into together.
@@ -105,8 +103,6 @@ foreach (int turns in new[] { 1, 5, 10, 20, 30, 40 })
 
 Replace `Pad(...)` with your own system prompt and a real transcript and the table shows what *your* feature costs per 10k requests. The counts may differ from the screenshot by a token or two per message depending on the tokenizer version; the cost per 10k requests should match within a cent.
 
-{% include feed-ads.html %}
-
 ## Habit 1: trim history before it grows
 
 Chat history is the most common leak. Keep the system prompt, then drop the **oldest** turns until the estimate fits a budget you choose (not the model maximum - leave room for the answer):
@@ -174,8 +170,6 @@ return answer;
 ```
 
 Use a low temperature (or `0`) for cached endpoints so the answer is stable enough to be worth reusing. Also note that Azure OpenAI applies **prompt caching** automatically on supported models when the first 1,024+ tokens of a prompt repeat exactly - so put the static system prompt first and the variable user content last.
-
-{% include feed-ads.html %}
 
 ## Log the usage on every call
 

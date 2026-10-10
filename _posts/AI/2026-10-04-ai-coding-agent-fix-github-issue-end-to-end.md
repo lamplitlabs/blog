@@ -15,8 +15,6 @@ The [previous AI SDLC post]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %}) l
 
 The repository is a .NET 8 reporting library. The bug is a classic CSV one.
 
-{% include feed-ads.html %}
-
 ## The issue
 
 > **#412 Export to CSV drops rows when a cell contains a newline**

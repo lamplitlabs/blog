@@ -21,8 +21,6 @@ In this blog post, I will explain how we can authenticate GCP or Firebase withou
 If you are just interested in code, you can just visit the [GitHub](https://github.com/lamplitlabs/bites-in-byte-blog/tree/main/src/GcpWithoutJson) repository.
 The code is compatible with **.NET 7**.
 
-{% include feed-ads.html %}
-
 <br>
 Recently I got a chance to work on Firebase with .Net 7. all over the internet all the docs were saying to add the JSON file and then connect. <br>
 In my case, I had to use Azure Key vault with an [option pattern](https://learn.microsoft.com/en-us/dotnet/core/extensions/options). <br>
@@ -35,8 +33,6 @@ Here is the whole flow we are going to build, from configuration to a working `F
 ![Flow of GCP authentication without a JSON key file, from configuration to a working FirestoreDb](/assets/img/posts/gcp/gcp-auth-without-json-flow.webp){: width="1200" height="420" }
 
 First thing first, we need to add some NuGets
-
-{% include article-ads.html %}
 
 ```cs
 Google.Cloud.Channel.V1
@@ -99,8 +95,6 @@ Add following section on you `appsettings.json` file
   }
 ```
 
-{% include article-ads.html %}
-
 In the example, I am using a console application so I am creating configurations using `ConfigurationBuilder`. <br>
 but if you are using Minimal API or Web app, you should use DI. <br>
 
@@ -121,7 +115,6 @@ var credJson = JsonSerializer.Serialize(creds);
 var gcpCreds = GoogleCredential.FromJson(credJson);
 ```
 
-{% include article-ads.html %}
 after this, the code is related to Firestore, but I think the approach should be similar to other services. <br>
 create FirestoreDb using FirestoreDbBuilder <br>
 
@@ -133,8 +126,6 @@ var firestoreDbBuilder = new FirestoreDbBuilder
 };
 var firestoreDb = await firestoreDbBuilder.BuildAsync();
 ```
-
-{% include article-ads.html %}
 
 Now your code is ready. you can add data to the Firestore collection.
 

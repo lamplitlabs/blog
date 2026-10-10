@@ -23,8 +23,6 @@ If your answer is YES, then you are in a correct place, in this story I will tal
 
 First thing first, add some Integration Tests in your projects and on the configuration file set <strong>UseDevelopmentStorage=true</strong>, this will tell your code to use the local instance of storage account.
 
-{% include article-ads.html %}
-
 Next step is to add the following steps in you build.yml file.
 
 ```yml
@@ -52,8 +50,6 @@ jobs:
         shell: bash
 ```
 
-{% include feed-ads.html %}
-
 When the workflow runs, the **Run Azurite** step finishes in about a second and the job log shows the emulator starting its Blob, Queue and Table endpoints on `127.0.0.1:10000-10002`; because the process is backgrounded with `&`, the job moves straight on to the next step while Azurite keeps listening.
 
 ![GitHub Actions job log of the Run Azurite step starting Blob, Queue and Table endpoints on 127.0.0.1](/assets/img/posts/github/azurite-github-actions-run-azurite-step-log.webp){: width="1200" height="620" }
@@ -63,8 +59,6 @@ Add your Integration test steps after this, and Voila YOU ARE DONE.
 
 You can use the same trick with azure DevOps or any other CI/CD Tool.
 Change the azurite version according to your need.
-
-{% include article-ads.html %}
 
 Hope it help you,
 Cheers 🍻

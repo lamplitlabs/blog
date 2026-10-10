@@ -17,8 +17,6 @@ This post shows how to consume Azure OpenAI's streaming API from .NET, expose it
 
 ![Streaming flow: client, ASP.NET Core SSE endpoint, Azure OpenAI, tokens arriving one by one](/assets/img/headers/ai/azure-openai-streaming-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## How streaming works on the wire
 
 With `stream: true`, Azure OpenAI keeps the HTTP response open and sends a sequence of `data:` events. Each event carries a small JSON `chat.completion.chunk` with a `delta` (usually a few characters of content). The stream ends with a literal `data: [DONE]` line. You do not have to parse this yourself: the `Azure.AI.OpenAI` SDK exposes it as an `IAsyncEnumerable`.

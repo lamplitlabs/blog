@@ -17,8 +17,6 @@ Azure OpenAI's **structured outputs** feature fixes this class of bugs. You hand
 
 ![Structured outputs flow: prompt, JSON schema, model reply, C# record](/assets/img/headers/ai/structured-outputs-azure-openai.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## Why "JSON mode" was not enough
 
 The older `response_format: { type: "json_object" }` only guaranteed that the reply was *valid JSON*. It did not guarantee any shape, so you still had to validate every field and handle missing or extra keys. Structured outputs (`type: "json_schema"`) guarantee the reply conforms to *your* schema: required keys present, no unknown keys, correct primitive types and enum values.

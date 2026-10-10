@@ -17,8 +17,6 @@ This post shows a practical setup I use for Azure OpenAI prompts in .NET: a smal
 
 ![LLM prompt regression suite: golden cases, recorded fake, structural asserts, nightly live run](/assets/img/headers/ai/testing-llm-prompts-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## What goes wrong without tests
 
 Three failure modes show up again and again:

@@ -15,8 +15,6 @@ The [paging post](/posts/odata-paging-strategies-large-d365-datasets-dotnet/) en
 
 Reading is forgiving. Writing is where the service-protection limits in D365 Finance and Dataverse actually bite, because every write is a transaction, every transaction holds locks, and the platform throttles you per user the moment you look like you are trying to load a table. The job that produced the numbers below started life as a `foreach` with one `PATCH` per row and took **35 minutes**. The last version takes **two and a half**.
 
-{% include article-ads.html %}
-
 ## The measurement
 
 Same sandbox tenant as the paging post, same .NET 8 console client over a 12 ms RTT link, same 250,000 rows. Each row needs one `PATCH` that updates two columns (`LineDiscountPercentage`, `LineDiscountAmount`). Numbers are the median of 5 runs.

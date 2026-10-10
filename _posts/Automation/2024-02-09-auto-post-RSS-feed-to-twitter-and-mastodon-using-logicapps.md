@@ -19,13 +19,9 @@ In today's digital age, social media platforms have become essential tools for r
 
 Microsoft Logic Apps is a cloud-based service that allows users to automate workflows and integrate various applications and services. With Logic Apps, users can create workflows, or "logic," that connect different systems and services, enabling seamless automation of tasks.
 
-{% include article-ads.html %}
-
 ## Automating RSS Feed Posts
 
 One common use case for Logic Apps is automating the posting of updates from an RSS feed to social media platforms like Twitter and Mastodon. By creating a Logic App workflow, you can monitor an RSS feed for new items and automatically post them to your Twitter and Mastodon accounts.
-
-{% include article-ads.html %}
 
 ## Here's a step-by-step guide on how to set up this automation
 
@@ -41,8 +37,6 @@ One common use case for Logic Apps is automating the posting of updates from an 
   az logic workflow create --resource-group "testResourceGroup" --location "westus" --name "testLogicApp"
   ```
 
-{% include article-ads.html %}
-
 - ##### Trigger: RSS Feed
 
   Add the RSS trigger to your Logic App workflow. Specify the RSS feed URL you want to monitor for new updates.
@@ -50,8 +44,6 @@ One common use case for Logic Apps is automating the posting of updates from an 
   1. Add an RSS trigger, we will be using this [RSS connector](https://learn.microsoft.com/en-us/connectors/rss/)
   2. Fill in the values in the trigger, In the image below I have set the sync time daily you can change this according to your needs.
      ![trigger rss](/assets/img/posts/automation/rss-trigger.webp "Fig 1. Trigger RSS"){: width="1198" height="528" }
-
-{% include article-ads.html %}
 
 - ##### Action: Mastodon - Create a toot
 
@@ -69,8 +61,6 @@ One common use case for Logic Apps is automating the posting of updates from an 
     - Scopes: uncheck everything except - _write:statuses_
     - Save changes
 
-{% include article-ads.html %}
-
 - ###### Add an HTTP action
 
   we will be using this [HTTP Action](https://learn.microsoft.com/en-us/azure/connectors/connectors-native-http?tabs=standard#add-an-http-action)
@@ -81,8 +71,6 @@ One common use case for Logic Apps is automating the posting of updates from an 
   - Body: status=Your message goes here
 
 ![mastodon-toot](/assets/img/posts/automation/mastodon-toot.webp "Fig 2. Mastodon Toot"){: width="1198" height="858" }
-
-{% include article-ads.html %}
 
 - ##### Action: Twitter - Post a tweet (Only Works with X Enterprise)
 
@@ -108,8 +96,6 @@ One common use case for Logic Apps is automating the posting of updates from an 
       - Add "https://global.consent.azure-apim.net/redirect" for the callback URLs
       - Set "Website URL" (required field, but its value does not affect the flow)
 
-{% include article-ads.html %}
-
 - ###### Add an action
 
   we will be using this [Twitter Connector](https://learn.microsoft.com/en-us/connectors/twitter/)
@@ -121,15 +107,11 @@ One common use case for Logic Apps is automating the posting of updates from an 
     - Click Connect and it will open a popup
   - Now add a tweet text
 
-{% include article-ads.html %}
-
 - ##### Save and test your Logic App
 
   Once you've configured the workflow, save your Logic App and test it to ensure that new RSS feed items trigger posts on both Twitter and Mastodon.
 
   ![logic-app](/assets/img/posts/automation/logicapp.webp "Fig 2. Logic App"){: width="2622" height="1138" }
-
-{% include article-ads.html %}
 
 ## Benefits of Automation:
 
@@ -139,8 +121,6 @@ Automating the posting of RSS feed updates to Twitter and Mastodon using Logic A
 - <strong>Consistency:</strong> Ensure that your social media accounts are regularly updated with new content from your RSS feed.
 - <strong>Reach:</strong> Reach a broader audience by automatically sharing content across multiple platforms.
 - <strong>Customization:</strong> Tailor your posts for each platform and leverage dynamic content from the RSS feed.
-
-{% include article-ads.html %}
 
 ## Conclusion:
 

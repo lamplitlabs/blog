@@ -17,8 +17,6 @@ This post walks through three patterns I see constantly (parsing a delimited lin
 
 ![Bar chart comparing allocated bytes per call for string.Split with Substring versus Span<char> parsing](/assets/img/headers/performance/span-memory-allocation-reduction.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## Span<T> versus Memory<T> in one paragraph
 
 - `Span<T>` is a `ref struct`: a pointer plus a length that can only live on the stack. It can wrap an array, a slice of an array, `stackalloc` memory, or unmanaged memory, and slicing it never allocates. Because it is stack-only you cannot store it in a field, capture it in a lambda, or use it across an `await`.

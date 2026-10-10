@@ -19,8 +19,6 @@ Sorry :( there are no shortcuts to becoming a software engineer, but I can tell 
 
 I still remember the day when I first started my programming journey, it was back in 2013, and had no prior experience in coding, I felt a bit lost at that time, so today I am writing this to give you a basic guide to create a solid foundation in software engineering.
 
-{% include article-ads.html %}
-
 Let´s start with a simple question, <strong>What is Software Engineering?</strong>
 As Per ChatGpt, Software engineering is a discipline that involves the systematic design, development, testing, maintenance, and documentation of software. It encompasses a structured and organized approach to software development, aiming to produce high-quality software that meets specified requirements and is reliable, efficient, and scalable.
 
@@ -40,21 +38,15 @@ Next step, How to improve your Computational Thinking?
 
 For this let´s take think of a detective.
 
-{% include article-ads.html %}
-
 1. Breaking Down the problem, Computational thinking is like being a detective. When a detective solves a mystery, they break it down into smaller clues and figure out how they fit together. Similarly, when we face a problem, we can break it down into smaller parts to understand and solve it.
 
 2. Finding patterns, For example, if a thief always leaves a certain mark at the scene, the detective can recognize that pattern and catch the thief. In computational thinking, we also look for patterns in problems to understand how things work.
-
-{% include article-ads.html %}
 
 3. Simplifying Things, detectives have a lot of information, but they focus on the most important details to solve the case. In computational thinking, we also simplify problems by focusing on the most crucial parts and ignoring things that don't matter much.
 
 4. Step-by-Step Plans (Algorithms), detectives make plans to catch the bad guys. These plans are like step-by-step instructions or algorithms. Similarly, in computational thinking, we create step-by-step plans to solve problems.
 
 5. Logical Reasoning - Thinking Like a Detective, detectives use their brains to think logically. They make smart decisions based on the information they have. In computational thinking, we also use logical reasoning to make smart choices and solve problems.
-
-{% include article-ads.html %}
 
 So, Let's wrap up this post here, I hope it helped you a bit.
 

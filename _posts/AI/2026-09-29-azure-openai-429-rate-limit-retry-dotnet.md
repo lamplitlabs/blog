@@ -17,8 +17,6 @@ This post explains what the 429 really means, how to retry it properly from .NET
 
 ![Timeline of four Azure OpenAI calls: three 429 responses with growing waits, then a 200 success](/assets/img/headers/ai/azure-openai-429-retry-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## Why you get 429 when you are "under quota"
 
 An Azure OpenAI deployment has two limits that are derived from each other:

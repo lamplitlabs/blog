@@ -15,8 +15,6 @@ If your Azure OpenAI requests carry a long system prompt, a pile of tool schemas
 
 This post shows what the cache actually keys on, how to lay out a prompt in C# so the cache hits, how to read the hit count from the response, and what I measured when I did it.
 
-{% include feed-ads.html %}
-
 ## How the cache decides
 
 The rules are simple but unforgiving:

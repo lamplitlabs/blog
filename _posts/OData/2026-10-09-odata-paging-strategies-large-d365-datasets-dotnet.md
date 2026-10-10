@@ -15,8 +15,6 @@ The [query pitfalls post](/posts/odata-query-performance-pitfalls-dotnet/) said 
 
 This post measures the three ways to walk a large entity set - client-driven `$skip`/`$top`, server-driven `$skiptoken`/`@odata.nextLink`, and keyset paging on a sorted key - and shows exactly where each one stops working.
 
-{% include article-ads.html %}
-
 ## The measurement
 
 Entity set: `SalesOrderLines`, 250,000 rows, 38 columns, in a Dynamics 365 Finance sandbox (the same shape reproduces on an ASP.NET Core 8 OData service over SQL Server). Client: .NET 8 console app, `HttpClient` with a single connection, 14 ms RTT, page size 1,000 unless the server overrides it. Each row is the median of 5 full runs.

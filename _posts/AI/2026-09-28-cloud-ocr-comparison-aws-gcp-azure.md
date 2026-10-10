@@ -15,8 +15,6 @@ Invoices, receipts, scanned contracts and forms still arrive as images or PDFs. 
 
 This post compares **Amazon Textract**, **Google Cloud Vision / Document AI** and **Azure AI Document Intelligence** (formerly Form Recognizer) on the points that usually decide the choice.
 
-{% include feed-ads.html %}
-
 ## The three services at a glance
 
 | | Amazon Textract | Google Cloud Vision / Document AI | Azure AI Document Intelligence |
@@ -38,8 +36,6 @@ On clean printed text all three are close to each other and mistakes are rare. T
 
 The practical advice: build a small benchmark from *your* documents (20 to 50 real pages) and measure character error rate and field accuracy. Vendor benchmarks are not your documents.
 
-{% include feed-ads.html %}
-
 ## Supported languages
 
 - **Textract** supports a shorter list (English, Spanish, Italian, Portuguese, French, German) for text extraction.
@@ -57,8 +53,6 @@ All three bill per page (or per image), with cheaper tiers for plain OCR and pri
 - Prebuilt domain models (invoice, receipt, ID) are the most expensive per page.
 
 Two things people forget: multi-page PDFs are billed per page, not per file, and asynchronous jobs on AWS have separate request limits per region. Always price your *page* volume, not your document count.
-
-{% include feed-ads.html %}
 
 ## Security and compliance
 

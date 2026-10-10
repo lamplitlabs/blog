@@ -15,8 +15,6 @@ The [production debugging post]({% post_url AI/2026-10-18-ai-sdlc-llm-assisted-p
 
 ![Diagram of the upgrade loop in five steps, Dependabot PR, evidence bundle of release notes and build errors and call sites, LLM patch proposal, CI gate and human review, followed by a table showing PRs needing hand edits falling from 41 of 47 to 6 of 47, median engineer time per bump falling from 11 hours to 3.5 hours and zero upgrade PRs merged without a green build](/assets/img/posts/ai/ai-sdlc-dependency-upgrade-loop-results.webp){: width="1400" height="900" }
 
-{% include feed-ads.html %}
-
 ## The rule, again: the agent proposes, CI gates, a human merges
 
 Same posture as our other AI SDLC work. The agent cannot merge, cannot push to `main`, and cannot touch anything outside the branch Dependabot created. It opens a commit on that branch, the normal pipeline runs, and a human reviews a diff that is already green or already explained. Nothing about the review process changed; what changed is that the reviewer gets a working patch instead of a red PR.

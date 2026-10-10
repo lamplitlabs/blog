@@ -17,8 +17,6 @@ This post walks through the full loop in .NET with the `Azure.AI.OpenAI` SDK, pl
 
 ![Function-calling loop: prompt, tool call, C# execution, final answer](/assets/img/headers/ai/azure-openai-function-calling-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The four-step loop
 
 1. You send the user's message **and** a list of tool definitions (name, description, JSON schema for the arguments).

@@ -17,8 +17,6 @@ This post walks through the two places a filter can fire, what each one looks li
 
 ![Azure OpenAI content filter pipeline and the C# checks for a blocked prompt or completion](/assets/img/headers/ai/azure-openai-content-filter-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## Two filters, two failure shapes
 
 Every Azure OpenAI chat completion passes through two classifiers:

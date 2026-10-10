@@ -18,8 +18,6 @@ This post walks through the five pitfalls I see most often in production code ta
 ![Bar chart from the OData client benchmark showing OData Client, Simple.OData.Client and a custom HttpClient within a few milliseconds of each other on add, delete and get operations](/assets/img/headers/odata-benchmark.webp){: width="608" height="1080" }
 _The benchmark that started this: three clients, nearly identical numbers. The query, not the library, is what you need to tune._
 
-{% include article-ads.html %}
-
 ## Where the time actually goes
 
 ```text
@@ -120,8 +118,6 @@ $filter=createdon ge 2025-01-01T00:00:00Z and createdon lt 2026-01-01T00:00:00Z
 ```
 
 The OData grammar lets you write anything; the database only rewards the sargable forms. When you see a slow query, the first thing to check is whether a function is wrapped around the column you filter on.
-
-{% include article-ads.html %}
 
 ## A quick checklist
 

@@ -18,8 +18,6 @@ The workload is deliberately boring: an HTTP endpoint that waits 20 ms on a down
 
 ![Bar chart of requests per second for Java platform threads, Java virtual threads, .NET sync-over-async, .NET async/await and Go goroutines at 1,000 connections](/assets/img/headers/performance/java-virtual-threads-vs-dotnet-async.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The six servers
 
 **Java 21, platform threads (Tomcat, default pool).** Spring Boot 3.3 with `server.tomcat.threads.max=200` (the default). The handler calls the downstream with `HttpClient.send(...)`, which blocks the Tomcat worker thread.

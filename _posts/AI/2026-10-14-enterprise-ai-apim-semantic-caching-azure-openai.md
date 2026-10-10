@@ -13,8 +13,6 @@ image:
 
 Most enterprise chat workloads are repetitive. The help-desk bot answers "how do I reset my VPN token" a few hundred times a day, phrased a few hundred different ways. Every one of those calls goes to `gpt-4o`, waits almost two seconds and bills the same ~1,200 tokens. **Semantic caching** stores the answer the first time and serves it for every later question that *means* the same thing, without a model call. Azure API Management ships this as two policies, and if you already run [APIM in front of Azure OpenAI for quotas and chargeback](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/) it is a half-day change. This post walks through the setup, how to pick the similarity threshold, and what went wrong on the way.
 
-{% include feed-ads.html %}
-
 ## How it works
 
 1. APIM takes the incoming chat request and sends the prompt to a small **embeddings** deployment (`text-embedding-3-small`).

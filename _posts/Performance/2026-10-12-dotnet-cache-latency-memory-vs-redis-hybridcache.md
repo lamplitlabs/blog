@@ -18,8 +18,6 @@ The working set is 10,000 small records (an `int` id, two strings, a `decimal`),
 
 ![Bar chart of p50 Get latency for ConcurrentDictionary, IMemoryCache, HybridCache and StackExchange.Redis against a 10k-item working set](/assets/img/headers/performance/dotnet-cache-latency-memory-vs-redis.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The four caches
 
 All four sit behind the same interface so the calling code does not change:

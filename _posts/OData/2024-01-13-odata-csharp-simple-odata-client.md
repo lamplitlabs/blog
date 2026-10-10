@@ -16,8 +16,6 @@ Simple.OData.Client is a multi-platform OData client library supporting .NET 4.x
 > **Which OData client library is this?** This post covers the community **Simple.OData.Client** NuGet package, which needs no code generation. If you prefer Microsoft's typed, metadata-generated client, read the sibling post on [OData Connected Service / OData Client](/posts/odata-csharp-odata-client/) - it uses the same TripPin sample service, so the two walkthroughs are directly comparable. Latency numbers for both (plus raw `HttpClient`) are in the [OData client benchmark](/posts/odata-csharp-benchmark/).
 {: .prompt-info }
 
-{% include article-ads.html %}
-
 ## How to integrate in c#
 
 - Add Simple.OData.Client NuGet package
@@ -110,8 +108,6 @@ Simple OData Client provides a flexible data mapping mechanism that allows devel
 
 Simple OData Client supports various data providers, including OData services, Web APIs, and embedded data resources. This makes it versatile for connecting to different data sources.
 
-{% include article-ads.html %}
-
 ## Disadvantages of Simple OData Client
 
 - #### Limited Features
@@ -134,13 +130,9 @@ Simple OData Client has a smaller community compared to more established OData c
 
 Manual parsing and data manipulation in Simple OData Client introduce more opportunities for errors compared to libraries that handle these tasks automatically. Developers need to carefully handle and validate data to prevent issues.
 
-{% include article-ads.html %}
-
 ## Conclusion
 
 In summary, Simple OData Client is a lightweight and easy-to-use library that is suitable for simple OData interactions. However, its limited features, manual parsing, and reduced developer productivity may make it less suitable for complex OData scenarios or projects with tight development timelines. For more advanced OData development, consider using other OData client libraries that offer a wider range of features and abstraction.
-
-{% include article-ads.html %}
 
 ## Other
 

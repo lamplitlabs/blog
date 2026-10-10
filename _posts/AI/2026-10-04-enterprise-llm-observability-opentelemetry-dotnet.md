@@ -15,8 +15,6 @@ Most enterprise LLM features ship with exactly one metric: the Azure bill at the
 
 ![LLM observability pipeline: one trace per user request with retrieval, Azure OpenAI and guardrail spans, span attributes for tokens and cost, and dashboards for latency, cost per tenant and quality](/assets/img/posts/ai/enterprise-llm-observability-trace-pipeline.webp){: width="1200" height="640" }
 
-{% include feed-ads.html %}
-
 ## What you want on every trace
 
 Before writing code, agree on the questions the trace must answer. In the reviews I have done these five cover almost everything:

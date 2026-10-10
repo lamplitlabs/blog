@@ -17,8 +17,6 @@ This post takes one realistic query, an order list page with its lines and custo
 
 ![Bar chart of mean EF Core query time per request across four tuning steps](/assets/img/headers/performance/ef-core-query-performance.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The model and the data
 
 ```csharp

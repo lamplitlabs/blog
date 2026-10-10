@@ -15,8 +15,6 @@ In today's digital era, harnessing the power of social media is essential for bu
 
 This series aims to unlock the potential of your Facebook Page through API integration, beginning with the crucial step of obtaining your API access token, specifically tailored for post creation.
 
-{% include article-ads.html %}
-
 ## Prerequisites
 
 Before diving into obtaining your API access token, ensure you have the following:
@@ -26,13 +24,9 @@ Before diving into obtaining your API access token, ensure you have the followin
 - **Technical Knowledge**: Basic understanding of web development concepts such as APIs, authentication, and HTTP requests will be beneficial.
 - **Patience**: The process of setting up your Facebook Developer account, creating an app, and obtaining an API access token may require some time and patience.
 
-{% include article-ads.html %}
-
 ## Understanding the API Access Token for Post Creation
 
 Before we delve into the process of obtaining your API access token, let's clarify its role in post creation. An API access token serves as a unique identifier granting permission to interact with Facebook's API. In this context, it allows you to automate the process of posting content to your Facebook Page.
-
-{% include article-ads.html %}
 
 ## The Importance of Automated Posting
 
@@ -42,19 +36,13 @@ Automating posting offers several advantages:
 2. **Efficiency**: Save time and resources by scheduling posts in advance, freeing you up to focus on other aspects of your business or content strategy.
 3. **Flexibility**: Tailor your posting schedule to align with your audience's peak engagement times, maximizing the impact of your content.
 
-{% include article-ads.html %}
-
 ## Obtaining Your API Access Token for Post Creation
 
 Now, let's walk through the steps to obtain your API access token specifically for post creation:
 
-{% include article-ads.html %}
-
 1.  ##### **Create a Facebook Developer Account**
 
     If you haven't already, sign up for a Facebook Developer account on the [Facebook for Developers website](https://developers.facebook.com/).
-
-{% include article-ads.html %}
 
 2.  ##### **Set Up a New App**
 
@@ -75,8 +63,6 @@ Now, let's walk through the steps to obtain your API access token specifically f
     - Click on "Create app"
       ![Figure 8](/assets/img/posts/automation/facebook-automation/facebook-8.webp){: width="1394" height="772" }
     - You may ask to Login Again
-
-{% include article-ads.html %}
 
 3.  ##### **Generate an API Access Token**
 
@@ -137,12 +123,8 @@ Now, let's walk through the steps to obtain your API access token specifically f
 
       - Check access token on ["Meta Token Debugger"](https://developers.facebook.com/tools/debug/accesstoken), Make sure you have "pages_manage_posts" and Expire should be Never
 
-{% include article-ads.html %}
-
 4.  ##### **Securely Store Your Access Token**
     Treat your access token like a sensitive piece of information and store it securely. Avoid hardcoding tokens in your application code or sharing them indiscriminately.
-
-{% include article-ads.html %}
 
 ## Wrapping Up
 

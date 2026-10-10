@@ -17,8 +17,6 @@ The workload is deliberately boring: compute the sum of squares of 10 million 64
 
 ![Bar chart of mean wall time for a 10 million element sum-of-squares loop across Python, NumPy, Rust and Rust with rayon](/assets/img/headers/performance/python-vs-rust-hot-loop.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The five implementations
 
 **1. Plain Python `for` loop.** The code everyone writes first.

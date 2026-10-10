@@ -15,8 +15,6 @@ Two of the older posts in this category show how to make GitHub Actions do work 
 
 This post is about the agent we put in front of those workflows. It follows the same rule as the rest of the [AI SDLC series]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %}): *AI drafts, humans decide, something deterministic checks*. The agent never pushes to `main`; it opens a PR with one hardening change and the evidence for it.
 
-{% include feed-ads.html %}
-
 ## What "hardening" means here
 
 Across 23 workflow files in 9 repositories we audited the same list by hand first, so the agent has a fixed rubric rather than an open-ended "make it better":

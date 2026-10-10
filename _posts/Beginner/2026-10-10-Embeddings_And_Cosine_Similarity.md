@@ -59,8 +59,6 @@ Three things to notice:
 - The individual numbers mean nothing on their own. You never read them; you only compare vectors with each other.
 - The call can fail like any other API call, so the retry and timeout habits from [Retries, Timeouts and Rate Limits](/posts/Retries_Timeouts_And_Rate_Limits/) apply here too.
 
-{% include article-ads.html %}
-
 ## Step 2: cosine similarity, by hand
 
 Picture each vector as an arrow from the origin. Two arrows pointing the same way have a small angle between them; two unrelated arrows have a large one. Cosine similarity is the cosine of that angle, and you can compute it without any trigonometry:
@@ -103,8 +101,6 @@ print(round(cosine([1, 2, 3], [3, 0, 0]), 4))   # 0.2673
 ```
 
 Run it, change a number, and watch the score move. Once it matches the table above, you understand everything a vector database does when it "finds similar documents".
-
-{% include article-ads.html %}
 
 ## Step 3: put the two halves together
 

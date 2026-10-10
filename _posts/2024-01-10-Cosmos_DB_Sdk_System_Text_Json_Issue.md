@@ -18,8 +18,6 @@ and System.Text.Json is the default serializer for .NET 6 and later. To solve th
 
 ---
 
-{% include article-ads.html %}
-
 Nowadays everyone wants to use System.Text.Json as the Default Serializer for their dotnet project but there are still some issues with this.
 
 Recently while working on a project I was using Azure Cosmos Db with dotnet 8 and I decided to use Cosmos DB SDK v3, I managed to create the code and when I started debugging
@@ -28,8 +26,6 @@ I faced an issue, the error was <strong>required field id is missing</strong>, b
 ![Cosmos DB SDK error: required property id is missing](/assets/img/posts/azure/cosmosdb-sdk-required-property-id-missing.webp){: width="1200" height="560" }
 
 When I checked the dependency of the Azure Cosmos Db SDK v3, I found that it is using NewtonSoft.Json, So when internally it was calling cosmos db it was unable to parse the ID.
-
-{% include article-ads.html %}
 
 So after digging into the internet I found some open Github issues and found answers, so I am writing this so you can save some time.
 
@@ -72,8 +68,6 @@ public class CosmosSystemTextJsonSerializer : CosmosSerializer
     }
 }
 ```
-
-{% include article-ads.html %}
 
 And then while creating the client, pass the options with a custom serializer.
 

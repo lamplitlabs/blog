@@ -15,8 +15,6 @@ Most RAG quality problems I have debugged were not model problems. The LLM did e
 
 ![Bar chart of Precision@5, Recall@5, MRR and Hit@5 for a RAG retriever next to a golden set of 200 queries](/assets/img/headers/ai/rag-retriever-evaluation-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## Why evaluate the retriever separately
 
 End-to-end LLM evaluation ("LLM-as-judge") is slow, costs tokens, and is noisy: the same chunks can produce a good answer on one run and a hedged one on the next. Retriever evaluation has none of those problems:

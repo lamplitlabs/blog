@@ -23,8 +23,6 @@ redirect_from:
 
 we are living in a world where most of the things are dominated by targeted ads and search engine ranking, whenever I try to watch anything on YouTube I always greeted with ads and to be honest these ads sometimes misleading for example now days I am seeing so many people are promoting there websites to learn data structures, algorithms etc. so here is the main question does coding or DS, algorithm or programming language if enough to be a GOOD software engineer?
 
-{% include article-ads.html %}
-
 this can be a very controversial topic but this is my thoughts so if you have any disagreement please add a comment.
 
 <strong>About me</strong>
@@ -39,8 +37,6 @@ so now you will be asking so what is important, should I stop practicing coding?
 
 Don't worry I will provide a list of things a backend software should know.
 
-{% include article-ads.html %}
-
 Coding is only 30% of total backend engineering. if you have an degree of CSE then you are expected to know something and it should work, so what additional things you should know?
 
 1. CI/CD -> Now days whenever I take interviews I always prefer people who knows how to create a build and release pipelines and TBH it is essential because if you know coding you should be able to automate the building process and deployment process. (20%)
@@ -51,8 +47,6 @@ Coding is only 30% of total backend engineering. if you have an degree of CSE th
 6. Design and Architecture -> Last but not least design and architecture, if you want to become an software architecture or principal engineer this is a mandatory things to adopt, just see how you can design a system from scratch, take feedback from you peers and keep on improving. (5%)
 
 ![Chart of suggested skill weights for a backend engineer: coding, databases, cloud, testing, DevOps, design and architecture](/assets/img/posts/backend-engineer-skill-weights.webp){: width="1200" height="640" }
-
-{% include feed-ads.html %}
 
 <strong>Conclusion</strong>
 

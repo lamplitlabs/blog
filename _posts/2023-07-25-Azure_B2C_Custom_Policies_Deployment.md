@@ -23,8 +23,6 @@ image:
 After testing for a while, I found a few issues for example validation failed if we add more tokens to replace.
 so for fixing this, we need to tweak a few things in the policy.
 
-{% include article-ads.html %}
-
 - Add new folder ´templates´ inside pipelines
 - Add a new YML file, azure-b2c-jobs.yml, and add following
 
@@ -67,8 +65,6 @@ jobs:
           pwsh: true
 ```
 
-{% include article-ads.html %}
-
 - Update the azure-pipeline.yml file
 
 ```yaml
@@ -99,8 +95,6 @@ stages:
 
 ---
 
-{% include article-ads.html %}
-
 After creating a [build and deployment](https://marketplace.visualstudio.com/items?itemName=ManishTiwari-Azureb2c.AzureADB2CBuildTask) task 4 years back, I am back with another trick.
 
 ##### Why not use the old [task](https://marketplace.visualstudio.com/items?itemName=ManishTiwari-Azureb2c.AzureADB2CBuildTask)?
@@ -113,8 +107,6 @@ Even though it was a fun project, it is very hard to maintain it, so I decided t
 - Create the following folder structure
 
   ![Folder structure for the Azure B2C custom policy deployment script](/assets/img/posts/folder-structure.png){: width="288" height="780" }
-
-{% include article-ads.html %}
 
 - [Deploy.ps1](https://gist.github.com/manishtiwari25/bad34a5544c8c709db31457d9cc94ebb#file-deploy-ps1) contains the script to deploy the files in azure b2c, it takes clientId, clientSectet, tenantId, and folderPath as input.
 
@@ -200,8 +192,6 @@ catch {
 
 exit 0
 ```
-
-{% include article-ads.html %}
 
 <br/>
 
@@ -328,8 +318,6 @@ finally {
 
 <br/>
 
-{% include feed-ads.html %}
-
 - [azure-pipelines.yml](https://gist.github.com/manishtiwari25/bad34a5544c8c709db31457d9cc94ebb#file-azure-pipelines-yml) code for the pipeline, it is a multi-stage pipeline, with approvals.
 
 ```yml
@@ -393,8 +381,6 @@ stages:
 - Create another variable group QAPolicy and add the keys you want to replace with their values. for example TenantName and tenant name value.
 - Create an environment and name it QA, we can add approvals here or you can skip this part.
 - Now in Azure DevOps create a new pipeline and point it to the YML file, and validate it.
-
-{% include article-ads.html %}
 
 #### Conclusion
 

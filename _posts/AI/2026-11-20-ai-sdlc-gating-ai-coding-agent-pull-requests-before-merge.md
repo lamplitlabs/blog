@@ -15,8 +15,6 @@ The [hand-off points post]({% post_url AI/2026-11-18-ai-sdlc-coding-agents-in-th
 
 ![Pipeline of five merge gates for AI coding-agent pull requests, provenance, scope diff, sandboxed build and tests, mutation score plus SAST and human review, followed by a table of 412 agent PRs in one quarter: 61 blocked by scope diff, 48 by build and tests, 45 by mutation and SAST, 37 by human review and 221 merged](/assets/img/posts/ai/ai-sdlc-agent-pr-merge-gates-results.webp){: width="1400" height="820" }
 
-{% include feed-ads.html %}
-
 ## Why agent PRs need their own gate
 
 A human PR carries implicit evidence: the author ran it, the author understood the ticket, the author knows which files are off limits. An agent PR carries none of that unless you record it. The failure modes are also different. Humans ship bugs; agents ship *plausible* bugs - tests that assert nothing, a retry loop added to make a flaky test pass, a public method renamed because the compiler suggested it. Classic CI catches none of those because the build is green. So the question we asked was not "is this PR correct?" but "what evidence would make a reviewer trust it in ten minutes?", and we turned each answer into a gate.

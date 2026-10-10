@@ -13,8 +13,6 @@ image:
 
 Azure Cost Management tells you what the Azure OpenAI *resource* cost last month. It cannot tell you which team spent it, which model ate most of it, or that Thursday's spike was one batch job re-indexing a document library for the third time. Those answers live in the **token counts**, and token counts live in the diagnostic logs you probably have not turned on yet. This post builds a cost observability dashboard from those logs: a KQL query that prices every call, an Azure Monitor Workbook that shows cost per team per day, and an alert that pages the platform team when a team blows through its daily budget.
 
-{% include feed-ads.html %}
-
 ## Why the invoice is too late
 
 Azure OpenAI bills per 1,000 tokens, split into input and output at different prices per model. The invoice arrives as one line per deployment, weeks after the spend. By then:

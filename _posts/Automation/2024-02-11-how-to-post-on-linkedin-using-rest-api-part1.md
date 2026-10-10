@@ -15,8 +15,6 @@ image:
 
 In the fast-paced world of professional networking, LinkedIn stands as a beacon for career advancement and business connections. While manual posting on the platform has long been the norm, there exists a powerful tool that can revolutionize the way you share updates, articles, and thoughts: the LinkedIn REST API.
 
-{% include article-ads.html %}
-
 ## Prerequisites
 
 1. #### Postman
@@ -30,8 +28,6 @@ In the fast-paced world of professional networking, LinkedIn stands as a beacon 
 3. #### Technical Proficiency
 
    While this guide aims to simplify the process, a foundational understanding of web technologies, HTTP methods, and RESTful principles will facilitate your journey in leveraging LinkedIn's REST API effectively.
-
-{% include article-ads.html %}
 
 ---
 
@@ -56,8 +52,6 @@ Before we embark on our journey, let's take a moment to get familiar with some k
 
 Now that we have a basic understanding of these terms, let's dive into the process of crafting and publishing LinkedIn posts using REST API.
 
-{% include article-ads.html %}
-
 ---
 
 ## How Does Authorization Code Flow Work?
@@ -69,8 +63,6 @@ Now that we have a basic understanding of these terms, let's dive into the proce
 - Your application uses this token to make API calls on behalf of the member.
 
 ## ![oauth-3-legged-flow](/assets/img/posts/automation/linkedin-automation/oauth-3-legged-flow.webp "Fig 1: OAuth Flow Credit [Microsoft Learn](https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow?tabs=HTTPS1#authorization-code-flow)"){: width="1470" height="888" }
-
-{% include article-ads.html %}
 
 ## Steps to get the access token
 
@@ -93,8 +85,6 @@ Now that we have a basic understanding of these terms, let's dive into the proce
   9.  Request App Verification From the Company Page: go to the Settings tab and press the "Verify" button to receive a verification link. Open this link if you're the company's page administrator or send it to the administrator(s) of the company page you previously selected. When you/the administrator opens the link, you/they will be prompted to confirm their responsibility for your app. If you/they confirm, you will receive a notification that your app has been verified and you can continue with other settings.
       ![Verify](/assets/img/posts/automation/linkedin-automation/linkedin-7.webp){: width="445" height="320" }
 
-{% include article-ads.html %}
-
 - ### Request Access to Features
 
   1.  Go to the Products tab, Do you see “Share on LinkedIn” and “Sign In with LinkedIn v2 (custom OAUTH)”
@@ -106,8 +96,6 @@ Now that we have a basic understanding of these terms, let's dive into the proce
   5.  Now, locate the section called OAuth 2.0 settings. You need to edit this Authorized redirect URL for your app to https://oauth.pstmn.io/v1/callback like the image below.
       ![Callback Url](/assets/img/posts/automation/linkedin-automation/linkedin-10.webp){: width="1466" height="544" }
   6.  Now, Take note of the client ID and client secret (displayed in the Application credentials section)
-
-{% include article-ads.html %}
 
 - ### Generate Access Token Using Postman
   1.  Open Postman
@@ -126,8 +114,6 @@ Now that we have a basic understanding of these terms, let's dive into the proce
   14. Client Authentication: Send Client credentials in the body
   15. Click on <strong>Generate New Access Token</strong>, this should pop up a new window and if you configure everything correctly it should generate an access token and copy the access token for [part 2](/posts/how-to-post-on-linkedin-using-rest-api-part2).
 
-{% include article-ads.html %}
-
 ---
 
 ## Conclusion
@@ -137,8 +123,6 @@ In this first part of our series, we've laid the foundation for communicating wi
 If you encounter any challenges or have questions about the process, don't hesitate to reach out. I'm here to assist you every step of the way.
 
 Now that we've successfully obtained the access token, the hard part is behind us. Take a moment to celebrate your accomplishment, perhaps with a well-deserved break. When you're ready, we'll dive into the next steps with renewed energy and confidence.
-
-{% include article-ads.html %}
 
 ---
 

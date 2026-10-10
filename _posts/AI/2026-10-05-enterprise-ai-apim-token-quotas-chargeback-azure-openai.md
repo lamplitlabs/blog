@@ -13,8 +13,6 @@ image:
 
 The second month an enterprise shares one Azure OpenAI deployment across teams, the same two tickets arrive. Finance: "the AI bill is one line item, who do I charge?" Engineering: "our copilot gets 429s every afternoon because another team's batch job eats the whole tokens-per-minute (TPM) budget." Both have the same fix: stop letting applications talk to the deployment directly and put **Azure API Management (APIM)** in front of it with its GenAI gateway policies. Each team gets a subscription key, a token quota and a line in a usage report. This post shows the configuration, the client change (almost none) and the report that ends the chargeback argument.
 
-{% include feed-ads.html %}
-
 ## Why not just one deployment per team?
 
 You can create a `gpt-4o` deployment per team, each with its own TPM allocation. It works until you have eleven teams and the regional quota is split into eleven slices that are each too small for anyone's peak, while the sum sits idle most of the day. A gateway lets you keep **one or two large deployments** (pooled capacity, better utilisation) and apply the fairness rules in software:

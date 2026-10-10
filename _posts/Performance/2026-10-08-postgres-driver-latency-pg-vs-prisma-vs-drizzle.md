@@ -17,8 +17,6 @@ Three candidates, all talking to the same PostgreSQL 16 through the same connect
 
 ![Bar chart of p99 latency for a primary-key SELECT from Node.js 22 across pg, Drizzle and Prisma](/assets/img/headers/performance/pg-vs-prisma-vs-drizzle-latency.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The query
 
 The endpoint is the same `GET /users/:id` as last time, except the record now lives in a `users` table with 1 million rows, a primary key on `id`, and the same 1.2 KB JSON shape (name, email, a JSONB address, a `text[]` of roles). One round trip, one row, by primary key: the most common query in any CRUD service and the one where the driver's overhead is the largest share of the total.

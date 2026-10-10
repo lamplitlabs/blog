@@ -15,8 +15,6 @@ A model version bump is a deploy. So is a prompt change. Most enterprise teams t
 
 ![Canary rollout architecture: APIM weighted routing between a stable and a canary Azure OpenAI deployment, scored by an eval loop with automatic rollback](/assets/img/headers/ai/enterprise-ai-canary-rollout-llm-model-prompt.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## Why LLM changes need a canary more than code changes do
 
 With ordinary code, a unit test suite that passes gives you reasonable confidence. With a model or prompt change, the [offline prompt tests](/posts/testing-llm-prompts-dotnet/) and a [golden set](/posts/evaluating-rag-retriever-golden-set-dotnet/) catch the obvious regressions, but three things only show up on real traffic:

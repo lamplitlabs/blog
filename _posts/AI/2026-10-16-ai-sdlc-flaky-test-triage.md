@@ -15,8 +15,6 @@ In the [phase-by-phase AI SDLC post]({% post_url AI/2026-10-03-ai-sdlc-dotnet-te
 
 ![Bar chart of one sprint of flaky test failures grouped by AI-assigned root cause: shared test DB state 118, async timing 96, port collision 61, time zone 44, real network dependency 38, order-dependent fixtures 27, genuine product bug 17, unclassified 11](/assets/img/posts/ai/ai-flaky-test-triage-clusters.webp){: width="1400" height="820" }
 
-{% include feed-ads.html %}
-
 ## The problem with "re-run failed jobs"
 
 A retry hides two different things behind one green check mark:

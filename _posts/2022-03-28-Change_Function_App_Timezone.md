@@ -23,8 +23,6 @@ By default Azure function app uses UTC Timezone.
 
 Now lets get to the point, before starting please check whether your function app is using Windows or Linux.
 
-{% include article-ads.html %}
-
 <strong>Using Azure portal</strong>
 
 - Go to the azure function app configurations
@@ -37,8 +35,6 @@ Now lets get to the point, before starting please check whether your function ap
 ![Azure Function App configuration showing the WEBSITE_TIME_ZONE application setting](/assets/img/posts/azure/function-app-website-time-zone-setting.webp){: width="1200" height="614" }
 *In the portal open your Function App → **Settings → Environment variables → App settings** (older portals: **Configuration → Application settings**), click **Add**, enter `WEBSITE_TIME_ZONE` as the name and your time-zone id as the value, then **Apply/Save**. The app restarts and timer triggers start firing in that zone.*
 
-{% include article-ads.html %}
-
 <strong>Using PowerShell</strong>
 
 Run following command and add a new app settings, don’t forget to change the values (for windows, for Linux)
@@ -46,8 +42,6 @@ Run following command and add a new app settings, don’t forget to change the v
 ```bash
 Update-AzFunctionAppSetting -Name <MyAppName> -ResourceGroupName <MyResourceGroupName> -AppSetting @{"WEBSITE_TIME_ZONE" = "CHANGE_THIS"}
 ```
-
-{% include article-ads.html %}
 
 If you face any issues or if you have any question please add a comment, and please don’t forget to follow me.
 

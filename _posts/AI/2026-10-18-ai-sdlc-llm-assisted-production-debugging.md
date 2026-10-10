@@ -15,8 +15,6 @@ The [flaky test triage post]({% post_url AI/2026-10-16-ai-sdlc-flaky-test-triage
 
 ![Diagram of the LLM-assisted debugging loop in five steps, alert, read-only evidence bundle, ranked JSON hypotheses, verification by allow-listed KQL queries and a human decision, followed by a table showing median time to root cause falling from 2h 40m to 38 minutes across 64 incidents with 71% first-hypothesis accuracy](/assets/img/posts/ai/ai-sdlc-llm-debugging-loop-results.webp){: width="1400" height="820" }
 
-{% include feed-ads.html %}
-
 ## The rule we set before writing a line of code
 
 The agent is **read-only until a human acts**. It can read telemetry, read source and run queries from an allow-list. It cannot restart a pod, flip a feature flag, roll back a deployment or open a shell. Every suggestion it makes ends in a button for a person. We wrote that rule down first because the demo where an agent "fixes production on its own" is exactly the demo that gets an enterprise AI programme shut down after the first bad night.

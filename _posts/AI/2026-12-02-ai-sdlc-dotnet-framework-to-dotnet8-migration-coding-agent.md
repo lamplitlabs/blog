@@ -15,8 +15,6 @@ Framework-to-modern .NET migrations are the kind of work nobody volunteers for: 
 
 ![Table of migration work split between coding agent and humans for one 4.8 WCF and ASP.NET service: agent converted 9 projects to SDK-style, removed 184 System.Web call sites, ported 38 WCF operations, 121 EF queries and 212 integration tests; humans rewrote binary serialization and fixed 67 ConfigureAwait findings; agent did 71% of changed lines in 11 working days against 7-9 weeks estimated manually](/assets/img/posts/ai/ai-sdlc-dotnet8-migration-agent-vs-human-work-split.webp){: width="1400" height="820" }
 
-{% include feed-ads.html %}
-
 ## Why the migration was planned around PRs, not around the agent
 
 The first instinct was to point the agent at the solution and say "upgrade to .NET 8". We did that on a branch for an afternoon to see what happened. It produced a 9,000-line diff that compiled and failed 140 integration tests, and nobody could review it. So the real plan started from the other end: what is the list of PRs we would open if two engineers did this by hand, in what order, and which of those PRs can an agent own end-to-end?

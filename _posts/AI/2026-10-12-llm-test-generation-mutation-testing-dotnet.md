@@ -15,8 +15,6 @@ Asking an LLM to "write unit tests for this class" is the single most popular AI
 
 ![Bar chart comparing 94% line coverage against a 41% mutation score for raw LLM-generated tests and 83% after a review loop](/assets/img/headers/ai/llm-test-generation-mutation-testing-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The setup
 
 The class under test is a deliberately boring `PricingService`: compute a total from line items, apply a tier discount, apply an optional coupon, write an audit entry, return a `PriceResult`. About 90 lines, no I/O except an injected `IAuditLog`. We prompted GitHub Copilot Chat with the file open and the instruction *"Generate xUnit tests for PricingService with full coverage"*. It produced 48 `[Fact]` and `[Theory]` methods in under a minute. All green, 94% line coverage in Coverlet.

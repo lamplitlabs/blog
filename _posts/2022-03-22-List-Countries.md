@@ -17,8 +17,6 @@ redirect_from:
 
 Last year when I was working on a project I also came across same question, I did some research I manage to find few sources but all of them were outdated so I decided to create my own gist for that.
 
-{% include article-ads.html %}
-
 this contains all the countries and there states and this list will update automatically every month so you don’t have to worry about outdated data.
 
 I am using geonames dumps to create this gist so if you find any incorrect data you can update at geonames side and it will reflect in next release.
@@ -27,8 +25,6 @@ Here is the JSON shape each country entry follows in the gist, with its ISO code
 
 ![JSON shape of a country entry with ISO codes and nested states/provinces from the gist](/assets/img/posts/gist/countries-states-json-shape.webp){: width="1200" height="620" }
 *Each country object carries `name`, `iso2`, `iso3`, and a `states` array - use `state_code` to match a province/state back to its parent country.*
-
-{% include feed-ads.html %}
 
 [Here](https://gist.github.com/manishtiwari25/0fa055ee14f29ee6a7654d50af20f095) you can find the gist.
 

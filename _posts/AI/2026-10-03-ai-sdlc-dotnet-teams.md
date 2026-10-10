@@ -15,8 +15,6 @@ image:
 
 ![AI-assisted SDLC: six phases, what AI drafts and which gate stays human](/assets/img/headers/ai/ai-sdlc-dotnet-teams.webp){: width="1600" height="900" }
 
-{% include feed-ads.html %}
-
 ## The rule that makes everything else work
 
 **AI drafts, humans decide, and something deterministic checks.** Every suggestion below follows that shape. The model produces a first version; a person owns the decision to accept it; and wherever possible a compiler, a test suite, an analyzer or a policy check verifies the output before a human even looks at it. If a step has no deterministic check, keep the human review heavier, not lighter.

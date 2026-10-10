@@ -13,19 +13,13 @@ image:
 
 Hey there, welcome back to our journey in supercharging your Facebook Page! In our [last chat](/posts/how-to-post-on-facebook-page-using-rest-api-part1), we talked about getting your hands on that special API access token tailor-made for creating posts on your Page. Now, armed with that token, let's dive into the fun part – crafting and scheduling posts using REST APIs.
 
-{% include article-ads.html %}
-
 ## Why REST APIs, You Ask?
 
 Alright, so let's break it down. REST APIs are like the magic wand for tech folks. They let you talk to all sorts of web services, and in our case, Facebook's API is the one we're interested in. By tapping into these APIs, you can weave Facebook right into your existing tools and workflows. It's like having a social media genie at your command, ready to whip up posts whenever you need them!
 
-{% include article-ads.html %}
-
 ## Getting Cozy with the Facebook Graph API
 
 Now, before we jump into the action, let's chat about the Facebook Graph API. Think of it as your backstage pass to Facebook's world. This API is your gateway to interacting with Facebook's data and features. And guess what? There's a whole set of tools just for managing your Page's posts!
-
-{% include article-ads.html %}
 
 ## Creating a Post
 
@@ -74,8 +68,6 @@ Now, before we jump into the action, let's chat about the Facebook Graph API. Th
 
       ![Published Facebook Page post created with the Graph API: the Page avatar and name at the top, the message text "Text" below it, a link preview card for blogs.lamplitlabs.com/posts/odata/, the Like, Comment and Share actions, and the Page post ID returned by POST /{page-id}/feed](/assets/img/posts/automation/facebook-automation/facebook-page-post-published.webp){: width="720" height="520" }
 
-{% include article-ads.html %}
-
 ## Audience targeting
 
 To limit who can see a Page post, you can add the targeting.geo_locations object or feed_targeting.geo_locations parameter in your POST request.
@@ -96,15 +88,11 @@ To limit who can see a Page post, you can add the targeting.geo_locations object
 }
 ```
 
-{% include article-ads.html %}
-
 ## Publish Media Posts
 
 - [Publish a photo](https://developers.facebook.com/docs/graph-api/reference/page/photos/)
 
 - [Publish a video](https://developers.facebook.com/docs/video-api/guides/publishing)
-
-{% include article-ads.html %}
 
 ## Best Practices for Post Perfection
 
@@ -115,13 +103,9 @@ Hey, crafting posts is an art form, right? Here are a few tips to make sure your
 - **Listen and Learn**: Pay attention to how your audience interacts with your posts. Use those insights to fine-tune your posting strategy and keep the engagement train rolling.
 - **Stay on the Nice List**: Remember to play by Facebook's rules. Stick to their guidelines and policies to keep your Page in good standing.
 
-{% include article-ads.html %}
-
 ## Wrapping Up
 
 And there you have it – a crash course in creating Facebook posts like a pro using REST APIs! With these tools in your arsenal, you're ready to take your Page to new heights.
-
-{% include article-ads.html %}
 
 ## Other
 

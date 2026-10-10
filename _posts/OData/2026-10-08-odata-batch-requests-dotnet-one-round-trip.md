@@ -15,8 +15,6 @@ The [previous OData post](/posts/odata-query-performance-pitfalls-dotnet/) was a
 
 A typical example is a sync job that reads a list of order IDs from a queue and fetches each order from Dynamics 365. Every call is fast (40-70 ms), but the job runs them one after another, and the per-request cost - TLS, auth header validation, OData parsing, JSON serialization - is paid fifty times. OData v4's `$batch` endpoint lets the client ship all fifty operations in a single HTTP request, and the service answers with a single multipart (or JSON) response.
 
-{% include article-ads.html %}
-
 ## The measurement
 
 Same ASP.NET Core 8 OData service, same `Orders` entity set, same 50 IDs, measured from a .NET 8 console client over HTTPS on a 12 ms RTT link. Each row is the median of 20 runs.

@@ -17,8 +17,6 @@ This post shows the whole loop from .NET: building the JSONL input, uploading it
 
 ![Azure OpenAI Batch API flow: JSONL, upload, create batch, poll, download results](/assets/img/headers/ai/azure-openai-batch-api-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## When batch is the right tool
 
 Batch trades latency for throughput and price. Use it when:

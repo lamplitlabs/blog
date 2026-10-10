@@ -23,8 +23,6 @@ I have now watched three of these pilots stall at the same place, in three diffe
 
 This post is about what stage 2 actually buys you, why skipping it makes stage 3 fail quietly, and what the three stages looked like for the three workflows this blog has covered most: [vendor invoice line coding]({% post_url AI/2026-10-09-enterprise-ai-azure-openai-d365fo-vendor-invoice-coding %}), support ticket routing, and [code review]({% post_url AI/2026-10-08-ai-sdlc-code-review-agent-metrics %}).
 
-{% include feed-ads.html %}
-
 ## The three misconceptions behind the jump
 
 ### "AI is the integration"

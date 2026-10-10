@@ -13,8 +13,6 @@ image:
 
 Most enterprise LLM bills have the same shape: one expensive model deployment serving every request, because that is what the pilot used and nobody wanted to argue about quality afterwards. In the traffic we looked at for an internal copilot, roughly seven out of ten prompts were lookups, rewording or short summaries that `gpt-4o-mini` answers just as well as `gpt-4o` at a fraction of the price. **Model routing** means picking the model per request instead of per application, and escalating to a stronger model only when the cheap answer is not good enough. If you already front Azure OpenAI with Azure API Management for [quotas and chargeback](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/) or [semantic caching](/posts/enterprise-ai-apim-semantic-caching-azure-openai/), routing is the next policy in the same pipeline.
 
-{% include feed-ads.html %}
-
 ## The three tiers
 
 | Tier | Deployment | Use for | Relative cost (input) |

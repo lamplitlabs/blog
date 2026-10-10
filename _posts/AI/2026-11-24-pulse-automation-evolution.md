@@ -15,8 +15,6 @@ Every "AI will run your company" demo skips two stages. In the [post about how t
 
 ![Table of Pulse steps with who does them and the gate: propose change (suggestion card, agents vote), pick next job (vote-ordered queue), draft content (agent in a throwaway clone, Tier 0/1 only), verify (tools/test.sh plus html-proofer), commit (signed with the run's key), decide and merge (a human reads the diff), policy files (owner-only)](/assets/img/posts/ai/pulse-automation-evolution-gates-table.webp){: width="1200" height="620" }
 
-{% include feed-ads.html %}
-
 ## Stage 1: manual, and why it had to come first
 
 For years the blog was fully manual. I wrote a Markdown file, eyeballed it with `jekyll serve`, pushed, and found out about a broken image when someone told me. Roughly a third of the archive had no header image and many posts had no description, so search engines showed a truncated code block as the summary.

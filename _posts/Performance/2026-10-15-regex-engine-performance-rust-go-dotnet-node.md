@@ -26,8 +26,6 @@ Four engines, one workload. A 1 GB nginx access log (4.9 million lines), five pa
 
 ![Bar chart of regex scan throughput in MB/s for Rust, .NET 8, Node 22 and Go](/assets/img/headers/performance/regex-engines-rust-go-dotnet-node.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## The four programs
 
 Every program reads the file once with a buffered reader, splits on `\n`, runs the five compiled patterns on each line and sums a counter. The patterns are compiled exactly once, outside the loop; compiling inside the loop is the most common regex mistake and would turn this into a benchmark of the compiler, not the matcher.

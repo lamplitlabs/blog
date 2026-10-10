@@ -17,8 +17,6 @@ This post walks through generating embeddings with Azure OpenAI from .NET, stori
 
 ![Semantic search pipeline: documents, embeddings API, vectors, cosine similarity](/assets/img/headers/ai/azure-openai-embeddings-dotnet.webp){: width="1200" height="630" }
 
-{% include feed-ads.html %}
-
 ## What an embedding is
 
 An embedding is a fixed-length array of floats that represents the meaning of a piece of text. `text-embedding-3-small` returns 1536 numbers per input; `text-embedding-3-large` returns 3072. Texts with similar meaning produce vectors that point in similar directions, which is why cosine similarity (the angle between two vectors) is the usual comparison. The absolute numbers are meaningless on their own; only comparisons between vectors from the *same model* mean anything.

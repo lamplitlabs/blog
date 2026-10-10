@@ -27,7 +27,7 @@ Every number in that estimate is correct. What is missing is everything that hap
 
 ## What month three actually looked like
 
-![Table comparing the hype estimate with measured month-three cost per driver: tokens 1,800, human review 6,400, failures and rollback 1,500, monitoring 1,100, governance 1,600, total 12,400](/assets/img/posts/ai/real-cost-of-ai-automation-cost-breakdown-table.webp)
+![Table comparing the hype estimate with measured month-three cost per driver: tokens 1,800, human review 6,400, failures and rollback 1,500, monitoring 1,100, governance 1,600, total 12,400](/assets/img/posts/ai/real-cost-of-ai-automation-cost-breakdown-table.webp){: width="1400" height="560" }
 
 ### 1. Tokens and compute: $1,800 (13 percent)
 

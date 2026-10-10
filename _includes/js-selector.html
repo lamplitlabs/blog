@@ -9,18 +9,6 @@ assign js = 'commons' %} {% endcase %} {% capture script %}/assets/js/dist/{{ js
 }}.min.js{% endcapture %}
 <script defer src="{{ script | relative_url }}"></script>
 
-<script
-  async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2889277787752693"
-  crossorigin="anonymous"
-></script>
-
-<script
-  async
-  custom-element="amp-ad"
-  src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"
-></script>
-
 {% if page.math %}
 <!-- MathJax -->
 <script>
@@ -48,4 +36,3 @@ assign js = 'commons' %} {% endcase %} {% capture script %}/assets/js/dist/{{ js
 ></script>
 {% endif %}
 {% include js-pwa-analytics.html %}
-{% include ad-recovery.html %}

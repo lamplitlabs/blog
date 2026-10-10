@@ -2,7 +2,7 @@
 layout: post
 title: "Enterprise AI: Azure OpenAI Provisioned Throughput (PTU) vs Pay-as-you-go - Cost and Latency Under Sustained Load"
 date: 2026-11-06 08:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise enterprise-ai cost performance architecture apim
 author: manishtiwari25
 description: "One gpt-4o workload at 60 req/min 24x7 priced five ways: pay-as-you-go, hourly PTU, reserved PTU, PTU plus spillover and Batch. Monthly cost, p95 latency, 429s."

@@ -2,7 +2,7 @@
 layout: post
 title: "Enterprise AI: Self-Hosted Llama 3.1 70B on vLLM vs Azure OpenAI - Cost and Latency at 1.4 B Tokens a Month"
 date: 2026-11-14 08:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise enterprise-ai cost performance architecture vllm llama self-hosted gpu
 author: manishtiwari25
 description: "A 1.4 B token a month enterprise workload priced as Azure OpenAI gpt-4o-mini and as self-hosted Llama 3.1 70B on vLLM: cost, p95 per GPU load, break-even."

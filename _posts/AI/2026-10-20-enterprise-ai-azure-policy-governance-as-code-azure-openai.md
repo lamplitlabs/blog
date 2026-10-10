@@ -2,7 +2,7 @@
 layout: post
 title: "Enterprise AI: Governance as Code for Azure OpenAI - Azure Policy Guardrails and Budget Alerts Before the First Deployment Exists"
 date: 2026-10-20 00:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise enterprise-ai governance finops cost security compliance bicep
 author: manishtiwari25
 description: "Turn the Azure OpenAI governance checklist into Azure Policy and budget alerts in Bicep, so bad configurations are denied at creation, not found in an audit."

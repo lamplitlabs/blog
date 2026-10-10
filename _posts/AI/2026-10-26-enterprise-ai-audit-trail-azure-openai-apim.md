@@ -1,7 +1,7 @@
 ---
 title: "Enterprise AI: An Audit Trail for Every Azure OpenAI Call with APIM, Event Hubs and Immutable Storage"
 date: 2026-10-26 08:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise governance security compliance apim audit enterprise-ai
 description: "How we made 99.6% of production Azure OpenAI calls traceable to user, app, prompt version and model with an APIM policy, no app code changed."
 image:

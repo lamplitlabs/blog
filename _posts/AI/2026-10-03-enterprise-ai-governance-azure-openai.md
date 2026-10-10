@@ -2,7 +2,7 @@
 layout: post
 title: "Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org"
 date: 2026-10-03 00:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise governance security compliance dotnet enterprise-ai
 author: manishtiwari25
 description: "Governance checklist for Azure OpenAI in regulated enterprises: data residency, Entra ID, private network, prompt logging, content safety, human review."

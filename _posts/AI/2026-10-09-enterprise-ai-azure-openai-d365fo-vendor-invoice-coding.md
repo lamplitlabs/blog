@@ -2,7 +2,7 @@
 layout: post
 title: "Enterprise AI: Wiring Azure OpenAI into a Dynamics 365 Finance & Operations Workflow - Vendor Invoice Line Coding with Structured Outputs"
 date: 2026-10-09 00:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise enterprise-ai d365 d365fo dynamics365 odata dotnet structured-outputs workflow
 author: manishtiwari25
 description: "An Azure Function reads pending D365FO vendor invoices over OData, gets line coding from Azure OpenAI as JSON and drafts it for clerk approval. Measured."

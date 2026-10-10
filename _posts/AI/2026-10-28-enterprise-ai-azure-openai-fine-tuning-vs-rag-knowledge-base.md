@@ -2,7 +2,7 @@
 layout: post
 title: "Enterprise AI: Azure OpenAI Fine-tuning vs RAG for an Enterprise Knowledge Base - A Worked Example with Numbers"
 date: 2026-10-28 08:00:00 +0200
-categories: ai
+categories: ai enterprise-ai
 tags: ai azure openai enterprise rag fine-tuning architecture knowledge-base enterprise-ai
 author: manishtiwari25
 description: "Fine-tuned gpt-4o-mini, RAG and a hybrid run against one 400-question golden set on an 18,000-document knowledge base: accuracy, citations, staleness, cost."

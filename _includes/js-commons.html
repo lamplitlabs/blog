@@ -1,4 +1,4 @@
-{% comment %} Commons: CDN libraries every page loads (jQuery, Bootstrap, search). Appends to `urls`. {% endcomment %}
-{% assign urls = site.data.origin[type].jquery.js | append: ',' | append:
-site.data.origin[type].bootstrap.js | append: ',' | append:
-site.data.origin[type].search.js %}
+{% comment %} Commons: CDN libraries every page loads. jQuery/Bootstrap JS bundles were dropped by
+the vendored theme (jekyll-theme-chirpy 7.6.0 ships Bootstrap's JS pre-bundled in assets/js/dist/*.min.js
+and no longer needs a separate jQuery), so only the search script remains. Appends to `urls`. {% endcomment %}
+{% assign urls = site.data.origin[type].search.js %}

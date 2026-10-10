@@ -1,9 +1,9 @@
-{% comment %} Layout-specific CDN libraries (lazysizes, magnific-popup, clipboard, dayjs). Appends to `urls`. {% endcomment %}
+{% comment %} Layout-specific CDN libraries (clipboard, dayjs). Lazysizes and magnific-popup were
+dropped by the vendored theme (jekyll-theme-chirpy 7.6.0 no longer ships their origin entries), so
+they are no longer appended here to avoid emitting empty <script src=""> tags. Appends to `urls`. {% endcomment %}
 {% if page.layout == 'post' or page.layout == 'page' or page.layout == 'home' %}
-{% assign urls = urls | append: ',' | append: site.data.origin[type].lazysizes.js %}
 {% unless page.layout == 'home' %}
 {% assign urls = urls | append: ',' | append:
-site.data.origin[type]['magnific-popup'].js | append: ',' | append:
 site.data.origin[type].clipboard.js %}
 {% endunless %}
 {% endif %}

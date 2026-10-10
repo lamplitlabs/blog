@@ -89,3 +89,8 @@ Looking across the three, the scripted stage removed the same four things each t
 Jumping straight to the model is defensible in two situations. First, when the input is unstructured and there is genuinely no deterministic majority - free-text contract clauses, for instance - so stage 2 would be a contract and logging layer with no rules in it. Build that layer anyway; it is two weeks, not six. Second, when the process is low volume and low stakes enough that the "observability" can be a human looking at every output, which is a stage 3 pilot in name only.
 
 Everywhere else, the sequencing is the project. The model is the smallest part of it, and in all three workflows above it arrived last, cost the least, and was the only part that looked good on a slide.
+
+## Related
+
+- [AI SDLC: Code Review Agent Metrics]({% post_url AI/2026-10-08-ai-sdlc-code-review-agent-metrics %})
+- [AI SDLC: Gating AI Coding Agent Pull Requests Before Merge]({% post_url AI/2026-11-20-ai-sdlc-gating-ai-coding-agent-pull-requests-before-merge %})

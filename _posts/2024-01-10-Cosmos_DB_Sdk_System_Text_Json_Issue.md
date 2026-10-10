@@ -91,5 +91,6 @@ cheers :)
 ## Related posts
 
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/)
+- [Azure Cosmos DB .NET SDK v3: The Serialization Cost Hiding in Every ReadItemAsync, Measured with BenchmarkDotNet](/posts/cosmos-db-sdk-serialization-cost-dotnet/) - the performance half of this same SDK serializer issue, with newer measured numbers per configuration.
 - [AutoMapper ForAllOtherMembers](/posts/AutoMapper_ForAllOtherMembers/)
 - [Updating Azure Function App From V3 to V4](/posts/Updating-Azure-Function-v3-v4/)

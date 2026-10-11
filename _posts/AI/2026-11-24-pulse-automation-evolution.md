@@ -68,7 +68,7 @@ The pattern generalises beyond a blog:
 - **Add a gate per failure, not a framework up front.** Every one of the 13 checks exists because a real defect reached a reader. That keeps the gates short, understandable and tied to a user outcome, which is also what makes them cheap for an agent to satisfy.
 - **Measure the loop with the checks you already have.** The success metric for this post is that the coverage counts move by exactly one and stay at zero misses. If a change cannot name the check that moves, it is churn.
 
-The other tools we ship at Lamplit Labs follow the same shape: the [EDMX Trimmer and OData metadata explorer](https://edmx.lamplitlabs.com/#/explore), the [cron expression tester](https://tools.lamplitlabs.com/#/cron) and [Ferret](https://github.com/lamplitlabs/ferret) are all built and checked with deterministic gates before any AI-assisted step touches them. The sequence is the product: manual until you know the failure modes, scripted until the failures are caught, and only then AI, with a human still deciding what ships.
+The other tools we ship at Lamplit Labs follow the same shape: the [EDMX Trimmer and OData metadata explorer](https://edmx.lamplitlabs.com/#/explore), the [cron expression tester](https://tools.lamplitlabs.com/cron) and [Ferret](https://github.com/lamplitlabs/ferret) are all built and checked with deterministic gates before any AI-assisted step touches them. The sequence is the product: manual until you know the failure modes, scripted until the failures are caught, and only then AI, with a human still deciding what ships.
 
 ## Related posts
 

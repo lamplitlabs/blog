@@ -108,3 +108,4 @@ Numbers above are from an Apple M2 (8 cores), macOS 14.6, `ulimit -n 65536`, JDK
 - [Go Goroutines vs .NET Tasks]({% post_url Performance/2026-09-30-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - the same two runtimes on a CPU-and-I/O mixed workload.
 - [Node.js 22 vs Deno 2 vs Bun 1.1]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - the single-threaded event-loop answer to the same question.
 - [In-Process Cache vs Redis in .NET 8]({% post_url Performance/2026-09-30-dotnet-cache-latency-memory-vs-redis-hybridcache %}) - what the 20 ms downstream wait costs once it is a cache instead of a service.
+- [Java vs Kotlin for a Spring Boot Microservice](/posts/java-vs-kotlin-spring-boot-microservice/) - the language choice on top of the same JVM and Spring Boot stack measured here.

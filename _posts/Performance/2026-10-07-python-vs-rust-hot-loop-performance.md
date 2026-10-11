@@ -138,3 +138,5 @@ Outside .NET, the same interpreter-vs-compiled trade-off measured at the HTTP an
 - [Node vs Deno vs Bun: HTTP Server Performance Under Load]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - what JIT-compiled JavaScript runtimes cost once a network is in the way.
 - Go vs .NET: Goroutines vs Tasks Concurrency Throughput - two compiled runtimes under the same wrk load.
 - pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22 - where the time goes when the hot loop is a database round trip.
+- [Swift vs Rust for a Data-Crunching CLI](/posts/swift-vs-rust-data-cli/) - the same Rust toolchain against another compiled language, where idiomatic Swift loses 5x in a hot loop.
+- [Python vs Go for a Batch Log-Processing Job](/posts/python-vs-go-batch-log-job/) - the interpreter-vs-compiled gap measured on a whole job instead of a single loop.

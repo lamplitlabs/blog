@@ -127,3 +127,4 @@ What moved for users of the pipeline:
 - [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
 - [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It]({% post_url AI/2026-10-08-ai-sdlc-code-review-agent-metrics %})
 - [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest]({% post_url AI/2026-10-01-llm-test-generation-mutation-testing-dotnet %})
+- [AI SDLC: LLM-Assisted Production Debugging for .NET Services, With Guardrails](/posts/ai-sdlc-llm-assisted-production-debugging/) - the same read-only, evidence-first approach applied to production incidents.

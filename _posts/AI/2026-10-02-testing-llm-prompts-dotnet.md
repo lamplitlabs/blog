@@ -199,3 +199,4 @@ If you are building on Azure OpenAI from .NET, the earlier posts on [structured 
 - Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI
 - LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest
 - [Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text](/posts/structured-outputs-azure-openai-dotnet/)
+- [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest](/posts/llm-test-generation-mutation-testing-dotnet/) - the flip side: when the LLM writes the tests, how do you know they test anything?

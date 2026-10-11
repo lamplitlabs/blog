@@ -140,3 +140,4 @@ Outside .NET, the same interpreter-vs-compiled trade-off measured at the HTTP an
 - pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22 - where the time goes when the hot loop is a database round trip.
 - [Swift vs Rust for a Data-Crunching CLI](/posts/swift-vs-rust-data-cli/) - the same Rust toolchain against another compiled language, where idiomatic Swift loses 5x in a hot loop.
 - [Python vs Go for a Batch Log-Processing Job](/posts/python-vs-go-batch-log-job/) - the interpreter-vs-compiled gap measured on a whole job instead of a single loop.
+- [Node.js 22 vs Deno 2 vs Bun 1.1: HTTP JSON API Throughput](/posts/node-vs-deno-vs-bun-http-performance/) - another runtime-overhead comparison, this time with a network in the way.

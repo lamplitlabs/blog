@@ -134,3 +134,4 @@ The hard part of enterprise AI is rarely the model call. It is making a shared, 
 - [LLM observability with OpenTelemetry in .NET](/posts/enterprise-llm-observability-opentelemetry-dotnet/)
 - [Handling Azure OpenAI 429s with retry in .NET](/posts/azure-openai-429-rate-limit-retry-dotnet/)
 - [Azure OpenAI token cost: counting before you spend](/posts/azure-openai-token-counting-cost-dotnet/)
+- [Enterprise AI: Governance as Code for Azure OpenAI - Azure Policy Guardrails and Budget Alerts](/posts/enterprise-ai-azure-policy-governance-as-code-azure-openai/) - the subscription-level guardrails that sit underneath the APIM quotas.

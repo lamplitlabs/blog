@@ -148,3 +148,4 @@ The same principle extends to LLM-generated tests for prompts themselves, covere
 - [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It](/posts/ai-sdlc-code-review-agent-metrics/)
 - [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)
 - [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase](/posts/ai-sdlc-dotnet-teams/)
+- [AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines](/posts/ai-sdlc-flaky-test-triage/) - once generated tests are honest, the next noise source in the pipeline is flakiness.

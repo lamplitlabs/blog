@@ -144,3 +144,4 @@ Numbers above are from Go 1.23.1, .NET SDK 8.0.401 (runtime 8.0.8), wrk 4.2.0 on
 - [Cutting .NET Allocations with Span<T> and Memory<T>]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - where the per-request allocation gap on the .NET side comes from.
 - [System.Text.Json Source Generators vs Newtonsoft.Json]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - how to shave the serialization step this echo endpoint spends most of its time in.
 - [Go vs Node.js for a Small JSON API](/posts/go-vs-nodejs-json-api/) - the same Go HTTP stack against Node.js, with build, deploy and day-two costs included.
+- [Java 21 Virtual Threads vs .NET 8 async/await: Blocking I/O Throughput](/posts/java-virtual-threads-vs-dotnet-async-throughput/) - the same blocking-I/O throughput question with Java's virtual threads in place of goroutines.

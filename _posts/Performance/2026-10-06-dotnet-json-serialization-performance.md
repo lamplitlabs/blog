@@ -176,3 +176,4 @@ The serializer is usually the last of three stops on the same `[MemoryDiagnoser]
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the database side.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine](/posts/python-vs-rust-hot-loop-performance/) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.
 - [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained]({% post_url OData/2026-10-05-odata-query-performance-pitfalls-dotnet %}) - how to shrink the OData payload before it ever reaches the serializer.
+- [gRPC vs REST JSON: What the Protocol Actually Buys You, Measured on .NET 8 and Go](/posts/grpc-vs-rest-json-performance-dotnet-go/) - what happens to the serialization cost when the wire format is protobuf instead of JSON.

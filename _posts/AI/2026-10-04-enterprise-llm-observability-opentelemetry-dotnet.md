@@ -144,3 +144,4 @@ With this in place, "why did AI spend double?" becomes a 30-second query, and "t
 - Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
 - [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)
+- [AI SDLC: LLM-Assisted Production Debugging for .NET Services, With Guardrails](/posts/ai-sdlc-llm-assisted-production-debugging/) - what to do with these traces when an incident is open.

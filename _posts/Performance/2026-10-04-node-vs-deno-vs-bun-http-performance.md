@@ -151,3 +151,4 @@ Run each three times and keep the median; the first run on every runtime is 5-10
 - [Python vs Rust in a Hot Loop](/posts/python-vs-rust-hot-loop-performance/) - what interpreter overhead costs when there is no network in the way.
 - pg vs Prisma vs Drizzle: PostgreSQL Driver Latency from Node.js 22 - the next bottleneck once your Node HTTP layer is fast.
 - [Go vs Node.js for a Small JSON API](/posts/go-vs-nodejs-json-api/) - Node.js measured against a compiled runtime on the same kind of JSON endpoint.
+- [Java 21 Virtual Threads vs .NET 8 async/await: Blocking I/O Throughput](/posts/java-virtual-threads-vs-dotnet-async-throughput/) - the same wrk workflow pointed at two managed runtimes with very different concurrency models.

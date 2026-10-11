@@ -127,3 +127,4 @@ The two wrong actions were both reverts of a deployment that turned out to be in
 - [AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines]({% post_url AI/2026-10-03-ai-sdlc-flaky-test-triage %})
 - [Enterprise AI: LLM Observability with OpenTelemetry in .NET - Tracing Tokens, Cost and Quality per Request]({% post_url AI/2026-10-04-enterprise-llm-observability-opentelemetry-dotnet %})
 - [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
+- [AI SDLC: LLM-Assisted Dependency Upgrades for .NET](/posts/ai-sdlc-llm-assisted-dependency-upgrades-dotnet/) - the same guardrail pattern applied to major version bumps instead of incidents.

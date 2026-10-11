@@ -107,3 +107,4 @@ The same "AI drafts, checks gate, humans merge" habit shapes the tooling we ship
 - [AI SDLC for .NET Teams: a phase-by-phase guide]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
 - [AI SDLC: how to measure an AI code-review agent before you trust it]({% post_url AI/2026-10-08-ai-sdlc-code-review-agent-metrics %})
 - [An AI coding agent fixing a GitHub issue end to end]({% post_url AI/2026-10-04-ai-coding-agent-fix-github-issue-end-to-end %})
+- [The Real Cost of AI Automation vs the Hype](/posts/real-cost-of-ai-automation/) - what this pipeline actually costs once review and failed runs are counted.

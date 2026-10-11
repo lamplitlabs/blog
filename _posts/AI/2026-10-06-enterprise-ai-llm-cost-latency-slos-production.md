@@ -160,3 +160,4 @@ The data was already there in the logs. Turning it into an SLO with a burn rate 
 - [Enterprise AI: LLM Observability with OpenTelemetry in .NET - Tracing Tokens, Cost and Quality per Request](/posts/enterprise-llm-observability-opentelemetry-dotnet/)
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
 - [Azure OpenAI Batch API in .NET](/posts/azure-openai-batch-api-dotnet/)
+- [The Real Cost of AI Automation vs the Hype](/posts/real-cost-of-ai-automation/) - the costs that sit outside the token bill: review time, rework and failed runs.

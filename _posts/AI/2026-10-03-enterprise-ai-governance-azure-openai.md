@@ -115,3 +115,4 @@ Teams that arrive with this table usually leave the meeting with a conditional a
 - [Things to consider before using Azure OpenAI](/posts/things-to-consider-azure-openai/)
 - [Handling Azure OpenAI content filter results in .NET](/posts/azure-openai-content-filter-dotnet/)
 - [AI SDLC: where AI actually helps a .NET team](/posts/ai-sdlc-dotnet-teams/)
+- [Enterprise AI: Governance as Code for Azure OpenAI - Azure Policy Guardrails and Budget Alerts](/posts/enterprise-ai-azure-policy-governance-as-code-azure-openai/) - turning these controls into policy definitions that are enforced automatically.

@@ -187,3 +187,4 @@ Once the query shape is fixed, the remaining time on a read endpoint is usually 
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/) - the serialization side.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine](/posts/python-vs-rust-hot-loop-performance/) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.
 - [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained]({% post_url OData/2026-10-05-odata-query-performance-pitfalls-dotnet %}) - the client side of the same over-fetching problem when the query arrives as `$select`/`$expand` over HTTP.
+- [In-Process Cache vs Redis in .NET 8: Where the Microseconds Go](/posts/dotnet-cache-latency-memory-vs-redis-hybridcache/) - when the fastest query is the one you do not run: cache latency measured in front of these queries.

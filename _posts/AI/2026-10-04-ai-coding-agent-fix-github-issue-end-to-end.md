@@ -81,3 +81,4 @@ When the explanation and the code disagree, the code is usually wrong, so this p
 - [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase](/posts/ai-sdlc-dotnet-teams/)
 - AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It
 - How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge
+- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/) - the same agent loop applied to writing and checking posts on this site.

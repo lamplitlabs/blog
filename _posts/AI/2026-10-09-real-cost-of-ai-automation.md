@@ -109,3 +109,4 @@ AI automation is neither free nor instant. It is a production system with an unu
 - [Canary rollout and rollback for LLM model and prompt changes](/posts/enterprise-ai-canary-rollout-llm-model-prompt-rollback/)
 - [Azure OpenAI cost observability dashboard](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
 - [AI SDLC: human vs agent PR review, test coverage and quality](/posts/ai-sdlc-human-vs-agent-pr-review-test-coverage-quality/)
+- [How This Blog Is Built and Checked: Jekyll, tools/test.sh and AI Agents That Draft but Never Merge](/posts/our-blog-pipeline-ai-assisted-publishing/) - a concrete automation whose costs and checks are laid out end to end.

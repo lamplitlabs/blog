@@ -91,4 +91,6 @@ Start with code and test, where the deterministic checks already exist, and exte
 
 - AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It
 - [AI SDLC in Practice: Letting a Coding Agent Triage and Fix a GitHub Issue End-to-End](/posts/ai-coding-agent-fix-github-issue-end-to-end/)
-- LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest
+- [AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines](/posts/ai-sdlc-flaky-test-triage/) - a worked example of the test phase: clustering flaky failures before an engineer looks at them.
+- [AI SDLC: LLM-Assisted Dependency Upgrades for .NET](/posts/ai-sdlc-llm-assisted-dependency-upgrades-dotnet/) - a worked example of the maintenance phase: major version bumps with guardrails.
+- [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest](/posts/llm-test-generation-mutation-testing-dotnet/) - mutation testing as the check that keeps generated tests honest.

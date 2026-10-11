@@ -115,3 +115,4 @@ The argument "RAG vs fine-tuning" is mostly a false choice for internal copilots
 - [Azure OpenAI Embeddings in .NET: Semantic Search Without a Vector Database](/posts/azure-openai-embeddings-semantic-search-dotnet/)
 - Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI
 - [Enterprise AI: Six Governance Controls Before Azure OpenAI Goes to Production in a Regulated Org](/posts/enterprise-ai-governance-azure-openai/)
+- [Enterprise AI: Azure OpenAI Fine-tuning vs RAG for an Enterprise Knowledge Base - A Worked Example with Numbers](/posts/enterprise-ai-azure-openai-fine-tuning-vs-rag-knowledge-base/) - the worked-numbers follow-up to this decision, with token costs, retrieval latency and update-cadence figures for both options

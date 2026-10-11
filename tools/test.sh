@@ -722,6 +722,37 @@ main() {
   bundle exec htmlproofer "$SITE_DIR" \
     --disable-external \
     --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+
+  # Second pass: external links in scheduled (future-dated) posts only. The
+  # full-site pass above skips external URLs so CI stays fast and immune to the
+  # whole back catalogue's link rot; the few posts that have not gone live yet
+  # are still editable, so a dead outbound link there is caught before publish
+  # day instead of by a reader afterwards. Posts are matched to their rendered
+  # directory by the filename slug (permalink /posts/:title/). The site's own
+  # URLs are skipped (a scheduled post's canonical link is a 404 until it goes
+  # live, by definition) as are the bare font preconnect hosts, which answer 404
+  # at their root.
+  local _today _future_dirs=() _f _slug _dir
+  _today="$(date +%F)"
+  for _f in $_posts; do
+    _slug="$(basename "$_f" .md)"
+    if [[ ${_slug:0:10} > $_today ]]; then
+      _dir="$SITE_DIR$_baseurl/posts/${_slug:11}"
+      if [[ -d $_dir ]]; then
+        _future_dirs+=("$_dir")
+      else
+        echo "WARNING: scheduled post $_f has no rendered page at $_dir; external links not checked" >&2
+      fi
+    fi
+  done
+  echo "future-external-links: ${#_future_dirs[@]} scheduled post page(s) checked with external links enabled (rule: posts dated after $_today, permalink /posts/:title/)"
+  if ((${#_future_dirs[@]} > 0)); then
+    bundle exec htmlproofer "${_future_dirs[@]}" \
+      --root-dir "$SITE_DIR$_baseurl" \
+      --no-check-external-hash \
+      --ignore-status-codes "403,429,999" \
+      --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/^https:\/\/blogs\.lamplitlabs\.com\//,/^https:\/\/fonts\.(googleapis|gstatic)\.com\/?$/"
+  fi
 }
 
 while (($#)); do

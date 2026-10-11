@@ -103,3 +103,4 @@ Start with the gate, not the agent. If your pipeline does not already run `-warn
 - [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest]({% post_url AI/2026-10-01-llm-test-generation-mutation-testing-dotnet %})
 - [AI SDLC: Where AI Actually Helps a .NET Team, Phase by Phase]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
 - [Handling 429 Rate Limits from Azure OpenAI in .NET: Backoff That Actually Works]({% post_url AI/2026-09-29-azure-openai-429-rate-limit-retry-dotnet %})
+- [AI SDLC for Automation: Letting a Coding Agent Harden GitHub Actions Workflows, One PR at a Time](/posts/ai-agent-github-actions-pipeline-hardening/) - the same one-PR-at-a-time discipline applied to the pipeline instead of the package graph.

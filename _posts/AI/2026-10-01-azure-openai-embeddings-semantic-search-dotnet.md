@@ -122,3 +122,4 @@ Embeddings turn "does the document contain these words" into "does the document 
 - Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI
 - [Enterprise AI: RAG vs Fine-tuning for an Internal Copilot - Cost, Latency, Freshness and Governance](/posts/rag-vs-fine-tuning-enterprise-internal-copilot/)
 - Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management
+- [pgvector vs Qdrant: Vector Search Latency on 1M Embeddings, Measured at p99](/posts/pgvector-vs-qdrant-vector-search-latency/) - where to store the embeddings this post produces once the corpus outgrows an in-memory list.

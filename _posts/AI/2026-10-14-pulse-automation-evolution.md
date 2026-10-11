@@ -76,3 +76,4 @@ The other tools we ship at Lamplit Labs follow the same shape: the [EDMX Trimmer
 - [AI SDLC for .NET Teams: a phase-by-phase guide]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
 - [AI SDLC: gating AI coding agent pull requests before merge]({% post_url AI/2026-10-12-ai-sdlc-gating-ai-coding-agent-pull-requests-before-merge %})
 - [AI SDLC: coding agents in the dev lifecycle and their handoff points]({% post_url AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points %})
+- {% include series-link.html post="AI/2026-10-15-automation-evolution-manual-api-ai" title="Enterprise AI: The Automation Evolution Enterprises Skip - Manual Process to API Integration to AI-Assisted Automation" note=" - the enterprise-side view of the same manual-to-API-to-AI ladder that Pulse climbs for this blog." %}

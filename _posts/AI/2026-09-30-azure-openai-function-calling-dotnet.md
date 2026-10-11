@@ -157,3 +157,4 @@ Function calling is a protocol, not magic: the model emits a request, you execut
 - [Structured Outputs with Azure OpenAI in .NET: Stop Parsing Free Text](/posts/structured-outputs-azure-openai-dotnet/)
 - [Streaming Azure OpenAI Responses in .NET: First Token in Under a Second](/posts/streaming-azure-openai-responses-dotnet/)
 - [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs](/posts/testing-llm-prompts-dotnet/)
+- {% include series-link.html post="AI/2026-10-21-openapi-to-mcp-server-generator-turning-rest-apis-into-agent-tools" title="OpenAPI to MCP Server Generator: Turning REST APIs into Agent Tools" note=" - the next step once hand-written tool definitions stop scaling: generate them from the OpenAPI spec." %}

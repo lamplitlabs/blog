@@ -74,3 +74,4 @@ What I would not do is rewrite the Python job into Go *for speed alone* without 
 - [Rust vs Go for a CLI Tool: Startup, Binary Size, Build Time and the Day-Two Costs]({% post_url Languages/2026-10-03-rust-vs-go-cli-tool %}) - Go measured against a language faster than it, with the same method.
 - [Zig vs C for a Systems Tool]({% post_url Languages/2026-10-05-zig-vs-c-systems-tool %}) - the comparison one layer further down the stack.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the compute-bound case behind the Polars result here.
+- [Python vs TypeScript for an Internal CLI Tool: Startup Time, Packaging and the 1,400 Lines Both Took](/posts/python-vs-typescript-internal-cli-tool/) - Python against a different contender on an interactive tool rather than a batch job.

@@ -78,3 +78,4 @@ If the bug class that worries you is use-after-free or data races rather than bo
 - [Rust vs Go for a CLI Tool: Startup, Binary Size, Build Time and the Day-Two Costs]({% post_url Languages/2026-10-03-rust-vs-go-cli-tool %}) - the same method one layer up the stack, where runtimes start to matter.
 - [TypeScript vs Kotlin for Backend Services]({% post_url Languages/2026-10-02-typescript-vs-kotlin-backend-services %}) - the application-tier comparison in this category.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the compute-bound case where codegen, not syscalls, decides.
+- [Swift vs Rust for a Data-Crunching CLI: Where Idiomatic Swift Loses 5x and How Much You Get Back]({% post_url Languages/2026-10-08-swift-vs-rust-data-cli %}) - the same CLI method applied to a data-crunching workload, where idiomatic choices cost 5x.

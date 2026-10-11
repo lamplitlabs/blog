@@ -12,7 +12,7 @@ image:
   lqip: "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAwCdASoUAAsALvmczmclLy8vDwD4SyAF2AId/Dwa/QwkAAD+6MvmFw4L/gYTrErvdlqOGLWE4RoFrpuiNTux2VXZpIPlgDgAAA=="
 ---
 
-The [Go vs .NET concurrency post]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) compared two runtimes that both solved blocking I/O years ago: goroutines on one side, `async`/`await` on the other. Java took a different route. JDK 21 shipped virtual threads (JEP 444), which keep the plain blocking `InputStream.read()` / `JDBC` style of code but park a cheap user-mode thread instead of an OS thread. The pitch is "Go-like scaling without rewriting to async". This post checks that pitch against .NET 8's `async`/`await` and Go's `net/http` on the same workload.
+The [Go vs .NET concurrency post]({% post_url Performance/2026-10-12-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) compared two runtimes that both solved blocking I/O years ago: goroutines on one side, `async`/`await` on the other. Java took a different route. JDK 21 shipped virtual threads (JEP 444), which keep the plain blocking `InputStream.read()` / `JDBC` style of code but park a cheap user-mode thread instead of an OS thread. The pitch is "Go-like scaling without rewriting to async". This post checks that pitch against .NET 8's `async`/`await` and Go's `net/http` on the same workload.
 
 The workload is deliberately boring: an HTTP endpoint that waits 20 ms on a downstream call (a stub service on localhost that sleeps 20 ms before answering) and returns 140 bytes of JSON. Nothing is CPU-bound, so the only thing being measured is how each runtime handles 1,000 connections that are each blocked most of the time. With 1,000 connections and a 20 ms wait the theoretical ceiling is 1,000 / 0.020 s = **50,000 req/s**; a runtime that gets close is not wasting threads.
 
@@ -105,6 +105,6 @@ Numbers above are from an Apple M2 (8 cores), macOS 14.6, `ulimit -n 65536`, JDK
 
 ## Related Performance posts
 
-- [Go Goroutines vs .NET Tasks]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - the same two runtimes on a CPU-and-I/O mixed workload.
+- [Go Goroutines vs .NET Tasks]({% post_url Performance/2026-10-12-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - the same two runtimes on a CPU-and-I/O mixed workload.
 - [Node.js 22 vs Deno 2 vs Bun 1.1]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - the single-threaded event-loop answer to the same question.
 - [In-Process Cache vs Redis in .NET 8]({% post_url Performance/2026-10-12-dotnet-cache-latency-memory-vs-redis-hybridcache %}) - what the 20 ms downstream wait costs once it is a cache instead of a service.

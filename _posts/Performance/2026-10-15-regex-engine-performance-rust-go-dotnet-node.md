@@ -86,4 +86,4 @@ The second-largest lever was the five-patterns-per-line structure itself. Combin
 
 - [Python vs Rust Hot-Loop Performance]({% post_url Performance/2026-10-07-python-vs-rust-hot-loop-performance %}) - the same Rust toolchain on pure arithmetic instead of text scanning.
 - [Node.js 22 vs Deno 2 vs Bun 1.1 HTTP Performance]({% post_url Performance/2026-10-04-node-vs-deno-vs-bun-http-performance %}) - how the V8 runtime measured here compares on request handling.
-- [Go Goroutines vs .NET Tasks]({% post_url Performance/2026-10-11-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - Go and .NET head-to-head on a workload Go does win.
+- [Go Goroutines vs .NET Tasks]({% post_url Performance/2026-10-12-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput %}) - Go and .NET head-to-head on a workload Go does win.

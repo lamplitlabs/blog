@@ -107,6 +107,16 @@ included) and prints one summary line per check:
   echo "filename: $(basename "$f" | cut -c1-10)"
   echo "date:     $(grep -m1 '^date:' "$f" | sed 's/^date:[[:space:]]*//; s/["'"'"']//g' | cut -c1-10)"
   ```
+- `future-backlog`: the build **fails** if more than 10 posts in `_posts/`
+  are dated after today, or if any future-dated post is scheduled more than
+  14 days out. `_config.yml` sets `future: false`, so a future-dated post is
+  invisible on the live site until its day arrives; a large or far-out
+  backlog means finished work sits unread. It uses the filename date
+  (`YYYY-MM-DD` prefix), which `date-match-coverage` keeps equal to
+  `date:`, and never rewrites dates. When the backlog is within both caps it
+  prints `future-backlog: <count>/<total> posts dated after today <date>,
+  none more than 14 days out (...)`.
+
 - `tab-order-coverage`: the build **fails** if two `_tabs/*.md` files share the
   same front-matter `order:`, since Chirpy would silently reorder the sidebar
   nav by file name instead of the intended position. Tabs without an `order:`

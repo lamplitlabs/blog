@@ -11,7 +11,7 @@ image:
   alt: "Screenshot of the Lamplit Labs OpenAPI to MCP Server Generator with the TypeScript target selected, Server Name, Auth and Error Handling options, an OpenAPI / Swagger Spec editor on the left and a Generated MCP Server (TypeScript) editor on the right"
 ---
 
-Every team that starts wiring an LLM agent to an internal system hits the same chore: the system already has a REST API with an OpenAPI spec, but the agent speaks the [Model Context Protocol](https://modelcontextprotocol.io/) and wants tools. Writing an MCP server by hand means copying each path, each parameter and each body schema into a tool definition, then writing the fetch call that stitches it back together. It is mechanical work, it is easy to get subtly wrong, and it has to be redone every time the API changes. We built the [OpenAPI to MCP Server Generator](https://tools.lamplitlabs.com/openapi-to-mcp) at Lamplit Labs to do that translation in one paste. Like the [AI Pricing Calculator](/posts/ai-pricing-calculator-estimating-llm-api-costs-before-you-ship/) and the rest of the [tools site](https://tools.lamplitlabs.com/), it runs entirely in the browser, so an internal spec never leaves your machine.
+Every team that starts wiring an LLM agent to an internal system hits the same chore: the system already has a REST API with an OpenAPI spec, but the agent speaks the [Model Context Protocol](https://modelcontextprotocol.io/) and wants tools. Writing an MCP server by hand means copying each path, each parameter and each body schema into a tool definition, then writing the fetch call that stitches it back together. It is mechanical work, it is easy to get subtly wrong, and it has to be redone every time the API changes. We built the [OpenAPI to MCP Server Generator](https://tools.lamplitlabs.com/#/openapi-to-mcp) at Lamplit Labs to do that translation in one paste. Like the [AI Pricing Calculator](/posts/ai-pricing-calculator-estimating-llm-api-costs-before-you-ship/) and the rest of the [tools site](https://tools.lamplitlabs.com/), it runs entirely in the browser, so an internal spec never leaves your machine.
 
 ## What goes in
 
@@ -50,7 +50,7 @@ The useful property of generating the server from the spec is that the spec stay
 
 ## Try it
 
-Open [tools.lamplitlabs.com/openapi-to-mcp](https://tools.lamplitlabs.com/openapi-to-mcp), click *Load sample spec*, switch between TypeScript and Python, and toggle Auth and Error Handling to see how each option changes the output. Then paste your own spec. If the generator mis-handles a construct in it, [tell us](https://tools.lamplitlabs.com/contact); a real-world spec that breaks the translation is the most useful bug report we can get.
+Open [tools.lamplitlabs.com/#/openapi-to-mcp](https://tools.lamplitlabs.com/#/openapi-to-mcp), click *Load sample spec*, switch between TypeScript and Python, and toggle Auth and Error Handling to see how each option changes the output. Then paste your own spec. If the generator mis-handles a construct in it, [tell us](https://github.com/lamplitlabs/tools/discussions/categories/q-a); a real-world spec that breaks the translation is the most useful bug report we can get.
 
 ## Related
 

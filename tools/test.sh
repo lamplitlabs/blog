@@ -483,6 +483,45 @@ check_date_match() {
   echo "date-match-coverage: 0 mismatches between filename date and front-matter 'date:' across $_posts_total posts (rule: first 10 chars of basename equal YYYY-MM-DD of 'date:')"
 }
 
+# Fail when the backlog of future-dated posts grows past what readers can be
+# expected to wait for. _config.yml sets future:false, so a post dated after
+# today is invisible on the live site until its day arrives; a large or far-out
+# backlog (we once found 44 posts scheduled up to two months ahead) means
+# finished work sits unread. Uses the filename date (YYYY-MM-DD prefix), which
+# check_date_match keeps equal to 'date:'. Read-only: it never rewrites dates.
+# The cap and horizon may need revisiting once the backlog is compressed.
+FUTURE_POST_CAP=10
+FUTURE_POST_HORIZON_DAYS=14
+check_future_backlog() {
+  local today future count far
+  today="$(date +%Y-%m-%d)"
+  # "<days-ahead>\t<date>\t<file>" for every post dated strictly after today.
+  future="$(for f in $_posts; do n="$(basename "$f")"; printf '%s\t%s\n' "${n:0:10}" "$f"; done | awk -F '\t' -v today="$today" '
+    # Days since epoch for YYYY-MM-DD (proleptic Gregorian), no external date tool needed.
+    function days(d,  y, m, dd, a, yy, mm) {
+      y = substr(d, 1, 4) + 0; m = substr(d, 6, 2) + 0; dd = substr(d, 9, 2) + 0
+      a = int((14 - m) / 12); yy = y + 4800 - a; mm = m + 12 * a - 3
+      return dd + int((153 * mm + 2) / 5) + 365 * yy + int(yy / 4) - int(yy / 100) + int(yy / 400) - 32045
+    }
+    $1 ~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/ && $1 > today { print days($1) - days(today) "\t" $1 "\t" $2 }
+  ' | sort -n)"
+  count="$(printf '%s' "$future" | grep -c . || true)"
+  far="$(printf '%s\n' "$future" | awk -F '\t' -v max="$FUTURE_POST_HORIZON_DAYS" 'NF && $1 > max { print $3 " (dated " $2 ", " $1 " days ahead)" }')"
+  if ((count > FUTURE_POST_CAP)); then
+    echo "error: $count posts in _posts/ are dated after today ($today); the cap is $FUTURE_POST_CAP:" >&2
+    printf '%s\n' "$future" | awk -F '\t' '{ print "       " $3 " (dated " $2 ", " $1 " days ahead)" }' >&2
+    echo "       With future:false these posts are invisible to readers until their date. Publish or re-date them so the backlog stays at or under $FUTURE_POST_CAP." >&2
+    exit 1
+  fi
+  if [[ -n $far ]]; then
+    echo "error: posts in _posts/ are scheduled more than $FUTURE_POST_HORIZON_DAYS days after today ($today):" >&2
+    printf '       %s\n' "$far" >&2
+    echo "       With future:false a post this far out stays unread for weeks. Move 'date:' and the filename to within $FUTURE_POST_HORIZON_DAYS days." >&2
+    exit 1
+  fi
+  echo "future-backlog: $count/$_posts_total posts dated after today $today, none more than $FUTURE_POST_HORIZON_DAYS days out (rule: at most $FUTURE_POST_CAP future posts, each within $FUTURE_POST_HORIZON_DAYS days)"
+}
+
 # Fail when two sidebar tabs (_tabs/*.md) share the same front-matter `order:`.
 # Chirpy sorts the sidebar nav by `order`, so a collision (e.g. All Posts and
 # About both at order: 5) silently reorders the nav by file name instead of the
@@ -622,6 +661,7 @@ main() {
   check_post_descriptions
   check_folder_categories
   check_date_match
+  check_future_backlog
   check_tab_order_unique
   report_image_coverage
   report_image_link_coverage

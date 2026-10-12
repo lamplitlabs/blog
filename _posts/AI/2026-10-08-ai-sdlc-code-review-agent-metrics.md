@@ -100,3 +100,4 @@ It does not measure whether the agent made a developer *think* differently about
 - [AI SDLC in Practice: Letting a Coding Agent Triage and Fix a GitHub Issue End-to-End]({% post_url AI/2026-10-04-ai-coding-agent-fix-github-issue-end-to-end %})
 - [Testing LLM Prompts in .NET: Regression Tests for Azure OpenAI Outputs]({% post_url AI/2026-10-02-testing-llm-prompts-dotnet %})
 - [AI SDLC: What the Published Evidence Actually Says About Cycle Time, Delivery Stability and Defect Rate](/posts/ai-sdlc-what-published-evidence-says-cycle-time-stability-defects/) - the published numbers to calibrate your own agent metrics against before you trust them.
+- [AI SDLC: A Code-Review Agent Workflow That Reviewers Actually Trust](/posts/ai-sdlc-code-review-agent-workflow/) - the review workflow these metrics measure: how the agent triages, what it posts, and why its ignored-comment rate dropped.

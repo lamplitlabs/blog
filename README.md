@@ -144,8 +144,24 @@ included) and prints one summary line per check:
   `tag-conflict-coverage: 0 'Conflict: The following destination is shared by
   multiple files' warnings in the jekyll build log (...)`.
 
+- `future-external-links`: runs after the main `htmlproofer` pass, which
+  skips external URLs (`--disable-external`) so CI stays fast and immune to
+  the back catalogue's link rot. Only the rendered pages of scheduled
+  (future-dated) posts are re-checked with external links enabled, since
+  those posts are still editable and a dead outbound link there should be
+  caught before publish day instead of by a reader afterwards. The build
+  **fails** if `htmlproofer` finds a broken external link in one of those
+  pages; it **warns** (`WARNING: scheduled post ... has no rendered page`)
+  when a scheduled post has no `_site/posts/<slug>/` directory, in which
+  case that post's links go unchecked. The site's own URLs (a scheduled
+  post's canonical link is a 404 until it goes live), 403/429/999 responses
+  and the bare font preconnect hosts are ignored. Prints
+  `future-external-links: <count> scheduled post page(s) checked with
+  external links enabled (...)`.
+
 It then builds the site into `_site` and runs `htmlproofer` against the
-generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`
+generated HTML (broken links, images and HTML), followed by the
+`future-external-links` pass above. Use `bash tools/test.sh --help`
 to see the config options.
 
 ### External link watcher

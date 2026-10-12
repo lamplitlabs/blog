@@ -11,14 +11,14 @@ image:
   alt: "Screenshot of the Lamplit Labs AI Pricing Calculator with GPT-4o selected, 1,000 input and 500 output tokens per request, and a cost breakdown of $0.0075 per request and $22.50 per month"
 ---
 
-The first question a finance lead asks about an LLM feature is not "does it work" but "what will it cost at volume". Most teams answer it with a spreadsheet that goes stale the moment a provider changes a price or the prompt grows by a few hundred tokens. We built the [AI Pricing Calculator](https://tools.lamplitlabs.com/#/ai-pricing) at Lamplit Labs to make that estimate a thirty-second exercise you can repeat every time the prompt, the model or the traffic forecast changes. Like the rest of the [tools site](https://tools.lamplitlabs.com/), it runs entirely in the browser; nothing you type leaves your machine.
+The first question a finance lead asks about an LLM feature is not "does it work" but "what will it cost at volume". Most teams answer it with a spreadsheet that goes stale the moment a provider changes a price or the prompt grows by a few hundred tokens. We built the [AI Pricing Calculator](https://tools.lamplitlabs.com/ai-pricing) at Lamplit Labs to make that estimate a thirty-second exercise you can repeat every time the prompt, the model or the traffic forecast changes. Like the rest of the [tools site](https://tools.lamplitlabs.com/), it runs entirely in the browser; nothing you type leaves your machine.
 
 ## What the calculator takes as input
 
 There are only four knobs, and they map directly onto how providers bill:
 
 1. **Model.** Pick a provider model; the calculator fills in the input and output price per million tokens and the context window.
-2. **Input tokens per request.** Your system prompt plus the user message plus any retrieved context. Measure this, do not guess: the [token counter](https://tools.lamplitlabs.com/#/token-counter) on the same site gives you the number for a representative prompt.
+2. **Input tokens per request.** Your system prompt plus the user message plus any retrieved context. Measure this, do not guess: the [token counter](https://tools.lamplitlabs.com/token-counter) on the same site gives you the number for a representative prompt.
 3. **Output tokens per request.** The length of the answer. Output is usually billed at three to five times the input rate, so this knob matters more than its size suggests.
 4. **Requests per day.** Your traffic forecast. Set it to zero to see per-request cost only.
 

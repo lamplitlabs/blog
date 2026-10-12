@@ -10,7 +10,7 @@ image:
   path: /assets/img/headers/ai/api-format-converter-lamplit-tools.webp
   alt: "Lamplit Labs AI API Format Converter header showing an OpenAI chat request on the left converted into a Google Gemini contents and systemInstruction payload on the right"
 ---
-Every team that has swapped LLM providers has written the same twenty lines of glue: pull the system message out of `messages` because Anthropic wants it as a top-level `system` string, rename `assistant` to `model` because Gemini insists, move `max_tokens` into `generationConfig.maxOutputTokens`, and then discover that Ollama calls the same thing `options.num_predict`. The [AI API Format Converter](https://tools.lamplitlabs.com/#/api-format) on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) does that translation in the browser so you can see the target payload before you write the adapter. Like the [Token Counter](/posts/token-counter-checking-prompt-size-and-context-window-fit/) and the [Prompt Template Editor](/posts/prompt-template-editor-and-prompt-diff-versioning-prompts-like-code/), nothing you paste leaves the page.
+Every team that has swapped LLM providers has written the same twenty lines of glue: pull the system message out of `messages` because Anthropic wants it as a top-level `system` string, rename `assistant` to `model` because Gemini insists, move `max_tokens` into `generationConfig.maxOutputTokens`, and then discover that Ollama calls the same thing `options.num_predict`. The [AI API Format Converter](https://tools.lamplitlabs.com/api-format) on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) does that translation in the browser so you can see the target payload before you write the adapter. Like the [Token Counter](/posts/token-counter-checking-prompt-size-and-context-window-fit/) and the [Prompt Template Editor](/posts/prompt-template-editor-and-prompt-diff-versioning-prompts-like-code/), nothing you paste leaves the page.
 
 ## What the page looks like
 
@@ -80,7 +80,7 @@ That design is why the **Swap** button is cheap: it copies the current output in
 Because the canonical shape is `role + text`, the converter is lossy by design, and the losses are the exact places where provider adapters bite in production:
 
 1. **Multimodal and structured content is flattened.** An OpenAI `content` array of `{ type: "text" }` and `{ type: "image_url" }` parts becomes the text parts joined with newlines; the image reference is gone. Gemini `inlineData` parts are serialised as JSON strings rather than carried across.
-2. **Tool and function calling is not translated.** `tools`, `tool_choice`, `tool_calls` and Anthropic `tool_use` blocks are ignored; if you need that mapping, build the schema once with the [Function Call Schema Builder](https://tools.lamplitlabs.com/#/function-schema) and wire it per provider.
+2. **Tool and function calling is not translated.** `tools`, `tool_choice`, `tool_calls` and Anthropic `tool_use` blocks are ignored; if you need that mapping, build the schema once with the [Function Call Schema Builder](https://tools.lamplitlabs.com/function-schema) and wire it per provider.
 3. **Sampling parameters other than temperature and max tokens are dropped.** `top_p`, `stop`, `seed`, `response_format`, `presence_penalty` and friends do not appear in the output.
 4. **Model names are substituted, not mapped.** The tool does not know that `gpt-4o` is "roughly" any particular Claude or Gemini model; it falls back to a sensible default and leaves the choice to you.
 

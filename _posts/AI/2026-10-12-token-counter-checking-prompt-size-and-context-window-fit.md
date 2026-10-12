@@ -11,7 +11,7 @@ image:
   alt: "Lamplit Labs AI Token Counter header showing a context-window bar reading 129 of 128,000 tokens, 0.10 percent, for GPT-4o"
 ---
 
-Most LLM bugs that reach production are not about the model being wrong; they are about the prompt being bigger than the engineer thought. A system prompt grows by a paragraph, a retrieval step starts returning twelve chunks instead of eight, and one day the request is truncated or rejected with a context-length error. The [Token Counter](https://tools.lamplitlabs.com/#/token-counter) on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) exists to answer one narrow question quickly: roughly how many tokens is this text, and how much of the chosen model's context window does it use? Like the other tools on the site, it runs entirely in the browser; the prompt you paste never leaves your machine, which matters when the prompt contains customer data.
+Most LLM bugs that reach production are not about the model being wrong; they are about the prompt being bigger than the engineer thought. A system prompt grows by a paragraph, a retrieval step starts returning twelve chunks instead of eight, and one day the request is truncated or rejected with a context-length error. The [Token Counter](https://tools.lamplitlabs.com/token-counter) on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) exists to answer one narrow question quickly: roughly how many tokens is this text, and how much of the chosen model's context window does it use? Like the other tools on the site, it runs entirely in the browser; the prompt you paste never leaves your machine, which matters when the prompt contains customer data.
 
 ## What the tool shows
 
@@ -44,7 +44,7 @@ That design is a deliberate trade: the page loads instantly, works offline and n
 
 1. **Prompt reviews.** Paste the full assembled prompt, including few-shot examples and retrieved context, and read the percentage. Anything above the amber threshold gets trimmed before it goes near a deployment.
 2. **Choosing a model for a document task.** Upload a file with the upload button (plain text works best), then step through the dropdown to see which context windows actually fit the document plus room for a reply. The remaining-tokens figure is the one to watch, since output has to fit too.
-3. **Feeding the pricing calculator.** The token count from here is the "input tokens per request" field in the [AI Pricing Calculator](https://tools.lamplitlabs.com/#/ai-pricing). The copy button in the editor header copies just the token count, so moving between the two tools is paste, read, copy, paste.
+3. **Feeding the pricing calculator.** The token count from here is the "input tokens per request" field in the [AI Pricing Calculator](https://tools.lamplitlabs.com/ai-pricing). The copy button in the editor header copies just the token count, so moving between the two tools is paste, read, copy, paste.
 
 ## Small details worth knowing
 

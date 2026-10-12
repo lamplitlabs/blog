@@ -652,8 +652,10 @@ check_forward_links() {
   count="$(printf '%s\n' "$links" | cut -f1 | sort -u | grep -c . || true)"
   if ((count > 0)); then
     echo "error: $count posts have $bad links to /posts/<slug>/ whose target post is dated later than the referencing post:" >&2
-    printf '%s\n' "$links" | awk -F '\t' '{ print "       " $1 " (" $4 "): /posts/" $2 "/ (" $3 ")" }' >&2
-    echo "       With future:false the target is not built until its date, so the link is a 404 that fails htmlproofer." >&2
+    printf '%s\n' "$links" | awk -F '\t' '{ print "       " $1 " (" $4 "): /posts/" $2 "/ (target publish date " $3 ")" }' >&2
+    printf '%s\n' "$links" | awk -F '\t' '{ print "       date-gated: add this link on or after " $3 " (/posts/" $2 "/ in " $1 ")" }' >&2
+    echo "       With future:false the target is not built until its publish date, so the link is a 404 that fails htmlproofer." >&2
+    echo "       This is a date gate, not a code defect: retrying before that date fails the same way." >&2
     echo "       Drop the link (plain text) until the target is published, or link from the later post back to the earlier one." >&2
     exit 1
   fi

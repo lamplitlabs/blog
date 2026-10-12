@@ -73,3 +73,30 @@ by construction: an unbuilt target simply yields no output, never a 404.
 [{{ _sl_target.title }}]({{ _sl_target.url | relative_url }}){{ _sl_note }}
   {%- endif -%}
 {%- endif -%}
+{%- comment -%}
+Category mode (used by _includes/post-nav.html at the end of every post):
+{% include series-link.html category=true %} renders an HTML link to the next
+built post in the page's primary category (earliest post dated after this one;
+if this is the newest, the latest earlier one), so a reader who finishes a post
+can continue through the same category without going back to the index. Posts
+whose primary category holds no other built post render nothing.
+{%- endcomment -%}
+{%- if include.category -%}
+  {%- assign _sl_cat = page.categories | first -%}
+  {%- if _sl_cat -%}
+    {%- assign _sl_target = nil -%}
+    {%- assign _sl_cat_posts = site.categories[_sl_cat] | where_exp: "p", "p.url != page.url" | where_exp: "p", "p.categories[0] == _sl_cat" | sort: "date" -%}
+    {%- for p in _sl_cat_posts -%}
+      {%- if p.date > page.date -%}
+        {%- assign _sl_target = p -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- unless _sl_target -%}
+      {%- assign _sl_target = _sl_cat_posts | last -%}
+    {%- endunless -%}
+    {%- if _sl_target -%}
+<p class="post-next-in-category mt-4 mb-0">Next in <a href="{{ _sl_cat | slugify | prepend: '/categories/' | append: '/' | relative_url }}">{{ _sl_cat }}</a>: <a href="{{ _sl_target.url | relative_url }}">{{ _sl_target.title }}</a></p>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}

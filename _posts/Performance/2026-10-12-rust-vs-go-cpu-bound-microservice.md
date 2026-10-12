@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rust vs Go for a CPU-Bound Microservice: Throughput, Tail Latency, Memory and Deploy Friction, Measured"
-date: 2026-10-16 00:00:00 +0200
+date: 2026-10-12 02:30:00 +0200
 categories: performance rust go
 tags: rust go microservice performance benchmark wrk tail-latency memory tokio axum docker
 author: manishtiwari25
@@ -100,4 +100,4 @@ The same algorithm compiled by two good compilers differs by about 20% in raw sp
 - [Rust vs Python for an AI Inference Microservice](/posts/rust-vs-python-ai-inference-microservice/) - the upstream service shape this pHash dedupe scorer sits in front of.
 - [Go vs .NET: Goroutines vs Tasks Concurrency Throughput](/posts/go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput/) - how Go's scheduler compares when the workload is I/O-bound instead.
 - [Regex Engine Performance: Rust, Go, .NET and Node](/posts/regex-engine-performance-rust-go-dotnet-node/) - another CPU-bound comparison where the runtime library, not the language, decides.
-- {% include series-link.html post="Performance/2026-10-17-go-vs-rust-ai-inference-gateway-latency-memory" title="Go vs Rust for a GC-Sensitive AI Inference Gateway: p99 Latency, Memory and GC Pauses, Measured" note=" - the same pair on a latency-sensitive I/O-bound gateway, where the GC rather than the CPU decides the p99." %}
+- {% include series-link.html post="Performance/2026-10-12-go-vs-rust-ai-inference-gateway-latency-memory" title="Go vs Rust for a GC-Sensitive AI Inference Gateway: p99 Latency, Memory and GC Pauses, Measured" note=" - the same pair on a latency-sensitive I/O-bound gateway, where the GC rather than the CPU decides the p99." %}

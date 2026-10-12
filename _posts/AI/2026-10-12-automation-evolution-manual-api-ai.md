@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: The Automation Evolution Enterprises Skip - Manual Process to API Integration to AI-Assisted Automation"
-date: 2026-10-15 08:00:00 +0200
+date: 2026-10-12 02:00:00 +0200
 categories: ai enterprise-ai
 tags: ai enterprise enterprise-ai automation architecture api observability workflow ai-sdlc d365fo code-review
 author: manishtiwari25

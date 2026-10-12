@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Data Residency and Compliance Checklist for Azure OpenAI Deployments"
-date: 2026-10-20 08:00:00 +0200
+date: 2026-10-12 04:30:00 +0200
 categories: ai enterprise-ai
 tags: ai azure openai enterprise enterprise-ai compliance data-residency gdpr security governance architecture
 author: manishtiwari25

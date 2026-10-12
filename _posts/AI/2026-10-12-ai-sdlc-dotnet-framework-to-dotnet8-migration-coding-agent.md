@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI SDLC: Migrating a .NET Framework 4.8 Service to .NET 8 with a Coding Agent - What It Did, What We Did, and the Numbers"
-date: 2026-10-19 00:00:00 +0200
+date: 2026-10-12 04:00:00 +0200
 categories: ai
 tags: ai sdlc dotnet csharp migration devops testing enterprise
 author: manishtiwari25

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "OpenAPI to MCP Server Generator: Turning REST APIs into Agent Tools"
-date: 2026-10-21 08:00:00 +0200
+date: 2026-10-12 05:00:00 +0200
 categories: ai lamplit-tools
 tags: ai mcp openapi agents enterprise-ai tools typescript python
 author: manishtiwari25
@@ -54,6 +54,6 @@ Open [tools.lamplitlabs.com/#/openapi-to-mcp](https://tools.lamplitlabs.com/#/op
 
 ## Related
 
-- [AI Pricing Calculator: Estimating LLM API Costs Before You Ship]({% post_url AI/2026-10-18-ai-pricing-calculator-estimating-llm-api-costs-before-you-ship %})
+- [AI Pricing Calculator: Estimating LLM API Costs Before You Ship]({% post_url AI/2026-10-12-ai-pricing-calculator-estimating-llm-api-costs-before-you-ship %})
 - [AI SDLC: Coding Agents in the Dev Lifecycle and Their Handoff Points]({% post_url AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points %})
-- [Pulse and the Automation Evolution]({% post_url AI/2026-10-14-pulse-automation-evolution %})
+- [Pulse and the Automation Evolution]({% post_url AI/2026-10-12-pulse-automation-evolution %})

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "AI Pricing Calculator: Estimating LLM API Costs Before You Ship"
-date: 2026-10-18 08:00:00 +0200
+date: 2026-10-12 03:30:00 +0200
 categories: ai lamplit-tools
 tags: ai enterprise-ai performance cost tools llm openai
 author: manishtiwari25
@@ -49,5 +49,5 @@ The prices are published list prices and are marked as approximate; they change,
 ## Related
 
 - [The Real Cost of AI Automation]({% post_url AI/2026-10-09-real-cost-of-ai-automation %})
-- [Pulse and the Automation Evolution]({% post_url AI/2026-10-14-pulse-automation-evolution %})
-- [Enterprise AI: Azure OpenAI Data Residency and Compliance Checklist]({% post_url AI/2026-10-20-enterprise-ai-azure-openai-data-residency-compliance-checklist %})
+- [Pulse and the Automation Evolution]({% post_url AI/2026-10-12-pulse-automation-evolution %})
+- [Enterprise AI: Azure OpenAI Data Residency and Compliance Checklist]({% post_url AI/2026-10-12-enterprise-ai-azure-openai-data-residency-compliance-checklist %})

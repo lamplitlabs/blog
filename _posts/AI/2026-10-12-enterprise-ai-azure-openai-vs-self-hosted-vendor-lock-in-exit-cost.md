@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enterprise AI: Vendor Lock-In and Exit Cost - Azure OpenAI Managed Endpoints vs a Self-Hosted Open-Weights Model"
-date: 2026-10-13 08:00:00 +0200
+date: 2026-10-12 01:00:00 +0200
 categories: ai enterprise-ai
 tags: ai azure openai enterprise enterprise-ai architecture cost self-hosted vllm llama risk finops
 author: manishtiwari25

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Go vs Rust for a GC-Sensitive AI Inference Gateway: p99 Latency, Memory and GC Pauses, Measured"
-date: 2026-10-17 00:00:00 +0200
+date: 2026-10-12 03:00:00 +0200
 categories: performance languages ai
 tags: go rust ai-inference gateway batching latency garbage-collection memory performance benchmark enterprise-ai
 author: manishtiwari25

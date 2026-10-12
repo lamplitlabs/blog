@@ -10,7 +10,7 @@ image:
   path: /assets/img/headers/ai/embedding-visualizer-lamplit-tools.webp
   alt: "Lamplit Labs Embedding Visualizer header showing two eight-dimensional vectors pasted into Vector A and Vector B, the Cosine Similarity tab selected and a similarity score of 0.9961"
 ---
-The [Text Chunker](/posts/text-chunker-for-rag-previewing-chunk-boundaries-before-you-embed/) post ended where most RAG pipelines start getting opaque: once the chunks are embedded, everything that happens next is arithmetic on vectors you never look at. A retrieval bug shows up as "the wrong passage came back", and the only evidence is a float somewhere between -1 and 1. The [Embedding Visualizer](https://tools.lamplitlabs.com/#/embeddings) on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) is for the moment you need to look at two of those vectors and know what the number between them actually is. It runs entirely in the browser; the vectors never leave the tab.
+The [Text Chunker](/posts/text-chunker-for-rag-previewing-chunk-boundaries-before-you-embed/) post ended where most RAG pipelines start getting opaque: once the chunks are embedded, everything that happens next is arithmetic on vectors you never look at. A retrieval bug shows up as "the wrong passage came back", and the only evidence is a float somewhere between -1 and 1. The [Embedding Visualizer](https://tools.lamplitlabs.com/embeddings) on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) is for the moment you need to look at two of those vectors and know what the number between them actually is. It runs entirely in the browser; the vectors never leave the tab.
 
 ## What the page looks like
 

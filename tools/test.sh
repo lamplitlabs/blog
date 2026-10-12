@@ -17,7 +17,7 @@ _baseurl=""
 # Every post under _posts (subfolders included), sorted; computed once in main()
 # so all checks share one glob and one denominator.
 collect_posts() {
-  _posts="$(find _posts -name '*.md' | sort)"
+  _posts="$(find _posts -name '*.md' ! -name README.md | sort)"
   _posts_total="$(printf '%s\n' "$_posts" | wc -l | tr -d ' ')"
 }
 
@@ -222,7 +222,7 @@ check_tag_synonym_groups() {
 # A post counts as having an image when it has a front-matter `image:` key, a
 # markdown `![` image or an `<img` tag; the denominator is every `*.md` under
 # _posts including subfolders (same rule as
-# `grep -L -E '^image:|!\[|<img' $(find _posts -name '*.md')`). Lists the posts
+# `grep -L -E '^image:|!\[|<img' $(find _posts -name '*.md' ! -name README.md)`). Lists the posts
 # still lacking any image so the next one to illustrate can be picked without
 # grepping. Informational only: never fails the build.
 report_image_coverage() {
@@ -234,7 +234,7 @@ report_image_coverage() {
   fi
   # Print the exact rule so handoff cards copy this command, not a variant
   # (an unanchored 'image:' would also match "*Header image: ...*" captions).
-  echo "image-coverage: $count/$_posts_total posts without image (rule: grep -L -E '^image:|!\\[|<img' \$(find _posts -name '*.md'))"
+  echo "image-coverage: $count/$_posts_total posts without image (rule: grep -L -E '^image:|!\\[|<img' \$(find _posts -name '*.md' ! -name README.md))"
   if [[ -n $without ]]; then
     printf '  %s\n' $without
   fi
@@ -389,7 +389,7 @@ report_image_link_coverage() {
 # Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
 # Atom feed fall back to the generic site description otherwise, so every post
 # would show the same search snippet. Same rule as
-# `grep -L "^description:" $(find _posts -name '*.md')` (subfolders included).
+# `grep -L "^description:" $(find _posts -name '*.md' ! -name README.md)` (subfolders included).
 check_post_descriptions() {
   local missing
   missing="$(grep -L '^description:' $_posts || true)"
@@ -416,7 +416,7 @@ check_post_descriptions() {
     echo "       Keep descriptions between 50 and 160 characters so search engines show them uncut." >&2
     exit 1
   fi
-  echo "description-coverage: all $_posts_total posts have a front-matter description of 50-160 characters (rule: grep -L '^description:' \$(find _posts -name '*.md'), plus length check)"
+  echo "description-coverage: all $_posts_total posts have a front-matter description of 50-160 characters (rule: grep -L '^description:' \$(find _posts -name '*.md' ! -name README.md), plus length check)"
 }
 
 # Fail when a post under _posts/<Folder>/ has no front-matter `categories` value
@@ -564,18 +564,18 @@ check_tab_order_unique() {
 # category stands out.
 report_ai_related_coverage() {
   local all_posts total missing count dir dtotal dmissing
-  all_posts="$(find _posts -name '*.md' | sort)"
+  all_posts="$(find _posts -name '*.md' ! -name README.md | sort)"
   total="$(printf '%s\n' "$all_posts" | grep -c .)"
   missing="$(grep -L -E '^## Related' $all_posts || true)"
   count="$(printf '%s\n' "$missing" | grep -c . || true)"
   if [[ -n $missing ]]; then printf '       %s\n' $missing; fi
   for dir in _posts $(find _posts -mindepth 1 -type d | sort); do
-    dtotal="$(find "$dir" -maxdepth 1 -name '*.md' | grep -c . || true)"
+    dtotal="$(find "$dir" -maxdepth 1 -name '*.md' ! -name README.md | grep -c . || true)"
     [[ $dtotal -eq 0 ]] && continue
-    dmissing="$(find "$dir" -maxdepth 1 -name '*.md' -print0 | xargs -0 grep -L -E '^## Related' | grep -c . || true)"
+    dmissing="$(find "$dir" -maxdepth 1 -name '*.md' ! -name README.md -print0 | xargs -0 grep -L -E '^## Related' | grep -c . || true)"
     echo "       $dir: $dmissing/$dtotal without '## Related'"
   done
-  echo "ai-related-coverage: $count/$total _posts posts without a '## Related' heading (rule: grep -L -E '^## Related' \$(find _posts -name '*.md'))"
+  echo "ai-related-coverage: $count/$total _posts posts without a '## Related' heading (rule: grep -L -E '^## Related' \$(find _posts -name '*.md' ! -name README.md))"
 }
 
 # Fail when a `(/posts/<slug>/)` link under a post's "## Related" heading points

@@ -162,6 +162,13 @@ It checks every `https?://` link in `_posts/*.md`, prints only the broken ones
 (`UNREACHABLE <url>` or `HTTP <code> <url>`) and always exits 0 - it is a
 watcher, not a gate, so silence means nothing looked broken.
 
+Two kinds of false positives are filtered out: a `404` from a single-page-app
+host (e.g. `tools.lamplitlabs.com`, which GitHub Pages serves from `404.html`
+for every client-side route) is accepted when the host's `/sitemap.xml` lists
+the URL, and a `403` from a host whose root also answers `403` (medium.com,
+stackoverflow.com block non-browser clients) is not reported because it says
+nothing about the specific page.
+
 To run the site locally with live reload (optionally in production mode or
 bound to a non-default host, e.g. to reach the dev server from another device
 or a container):

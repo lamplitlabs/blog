@@ -148,6 +148,20 @@ It then builds the site into `_site` and runs `htmlproofer` against the
 generated HTML (broken links, images and HTML). Use `bash tools/test.sh --help`
 to see the config options.
 
+### External link watcher
+
+`tools/test.sh` runs htmlproofer with `--disable-external`, so a dead outbound
+link in a post (DNS failure, timeout, 4xx/5xx) is **not** caught by the test
+suite. To find those, run the read-only watcher:
+
+```bash
+bash tools/check_external_links.sh
+```
+
+It checks every `https?://` link in `_posts/*.md`, prints only the broken ones
+(`UNREACHABLE <url>` or `HTTP <code> <url>`) and always exits 0 - it is a
+watcher, not a gate, so silence means nothing looked broken.
+
 To run the site locally with live reload (optionally in production mode or
 bound to a non-default host, e.g. to reach the dev server from another device
 or a container):

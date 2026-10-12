@@ -9,10 +9,12 @@ description: "How the Lamplit Labs Prompt Template Editor renders {{variable}} t
 image:
   path: /assets/img/headers/ai/prompt-editor-and-diff-lamplit-tools.webp
   alt: "Lamplit Labs Prompt Template Editor and Prompt Diff header showing a system message with {{topic}} and {{language}} variables above a red and green line diff"
+excerpt_separator: <!--more-->
 ---
-{% raw %}
 A prompt is the only part of most LLM features that never goes through code review. The system message lives in a string constant, someone tweaks a sentence to fix one bad answer, and three weeks later nobody can say which wording shipped or why the regression started. Two small tools on the Lamplit Labs [tools site](https://tools.lamplitlabs.com/) attack that problem from both ends: the [Prompt Template Editor](https://tools.lamplitlabs.com/#/prompt-editor) makes the template and its variables explicit, and the [Prompt Diff & Versioner](https://tools.lamplitlabs.com/#/prompt-diff) shows exactly what changed between two revisions. Like the [Token Counter](/posts/token-counter-checking-prompt-size-and-context-window-fit/) and the [AI Pricing Calculator](/posts/ai-pricing-calculator-estimating-llm-api-costs-before-you-ship/), both run entirely in the browser; nothing you paste is sent anywhere.
+<!--more-->
 
+{% raw %}
 ## Prompt Template Editor: variables you can see
 
 The editor opens with a two-message template so you can see the shape immediately:

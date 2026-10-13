@@ -103,3 +103,7 @@ Tool definitions are an interface contract between your code and the model, and 
 - **Seeding a fixture.** Download the JSON, commit it next to the handler, and have a test assert that the handler accepts every `required` property and rejects extras, which `additionalProperties: false` already promises to the model.
 
 Combined with the [Format Converter](/posts/api-format-converter-one-chat-request-four-provider-payloads/) for the request envelope and the [Token Counter](/posts/token-counter-checking-prompt-size-and-context-window-fit/) for the budget the tool descriptions consume, you can prototype a complete provider-agnostic request in the browser before any adapter code exists.
+
+## Related
+
+- [One Workflow, Three Tools: Prompt to Schema to Validator with the Lamplit Labs Tools]({% post_url AI/2026-10-13-own-tools-workflow-prompt-to-schema-to-validator %})

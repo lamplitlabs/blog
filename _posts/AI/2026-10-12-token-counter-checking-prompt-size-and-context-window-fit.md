@@ -57,6 +57,7 @@ If a feature you expect is missing, such as an exact tokenizer for a specific pr
 
 ## Related
 
+- [One Workflow, Three Tools: Prompt to Schema to Validator with the Lamplit Labs Tools]({% post_url AI/2026-10-13-own-tools-workflow-prompt-to-schema-to-validator %})
 - [AI Pricing Calculator: Estimating LLM API Costs Before You Ship]({% post_url AI/2026-10-12-ai-pricing-calculator-estimating-llm-api-costs-before-you-ship %})
 - [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right]({% post_url AI/2026-10-10-azure-openai-prompt-caching-dotnet %})
 - [The Real Cost of AI Automation vs the Hype - Where the Money Goes After the Token Bill]({% post_url AI/2026-10-09-real-cost-of-ai-automation %})

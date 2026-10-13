@@ -62,3 +62,7 @@ A few places this has earned its keep:
 - **Debugging a provider change.** When a model upgrade starts producing `null` for optional strings, the `type` keyword count climbs before any user notices.
 
 The validator checks one document against one schema; it does not run a batch or store history. For a regression suite, keep the schema in the repository and run it with your language's JSON Schema library in CI. For the moment when a single reply looks wrong and you want to know why in ten seconds, open [tools.lamplitlabs.com/structured-output](https://tools.lamplitlabs.com/structured-output).
+
+## Related
+
+- [One Workflow, Three Tools: Prompt to Schema to Validator with the Lamplit Labs Tools]({% post_url AI/2026-10-13-own-tools-workflow-prompt-to-schema-to-validator %})

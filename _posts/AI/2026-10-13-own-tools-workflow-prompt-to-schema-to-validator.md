@@ -22,7 +22,7 @@ Three questions have to be answered before this goes anywhere near production: h
 
 ## Step 1: size the prompt in the Token Counter
 
-The system prompt is short: the role, the four fields to extract, the message, and three rules about priority and email handling. Pasted into the [Token Counter](https://tools.lamplitlabs.com/token-counter) with GPT-4o selected it comes out at **170 estimated tokens**, 659 characters, 111 words, 9 lines, 0.13% of the 128,000-token context.
+The system prompt is short: the role, the four fields to extract, the message, and three rules about priority and email handling. Pasted into the [Token Counter](https://tools.lamplitlabs.com/) (path `/token-counter`) with GPT-4o selected it comes out at **170 estimated tokens**, 659 characters, 111 words, 9 lines, 0.13% of the 128,000-token context.
 
 ![Screenshot of the Lamplit Labs AI Token Counter with GPT-4o selected showing 170 estimated tokens, 659 characters, 111 words, 9 lines, 0.13% context used and 127,830 remaining tokens for the support-triage prompt pasted in the input box](/assets/img/posts/ai/own-tools-workflow-step1-token-counter.webp){: width="1200" height="771" }
 
@@ -30,7 +30,7 @@ The number itself is not the point at this size; the point is the habit. The ins
 
 ## Step 2: build the function schema in the Schema Builder
 
-Writing the tool definition by hand is where the typos live: a `"type": "int"` that should be `integer`, an enum list that does not match the prose in the prompt, a required array that forgets a field. The [Function Call Schema Builder](https://tools.lamplitlabs.com/function-schema) takes the function name, a description and a row per parameter, and keeps the generated JSON on the right in sync as you type.
+Writing the tool definition by hand is where the typos live: a `"type": "int"` that should be `integer`, an enum list that does not match the prose in the prompt, a required array that forgets a field. The [Function Call Schema Builder](https://tools.lamplitlabs.com/) (path `/function-schema`) takes the function name, a description and a row per parameter, and keeps the generated JSON on the right in sync as you type.
 
 For `create_support_ticket` the four rows are `title` (string, required), `product` (string, enum `tools, blog, api`, required), `priority` (integer, required) and `customer_email` (string, optional). Each parameter's description is the same sentence that appears in the prompt, so the model sees one definition rather than two slightly different ones.
 
@@ -51,7 +51,7 @@ Now a model has been called with that tool and has returned arguments. Suppose t
 }
 ```
 
-It parses. It looks right. It would deserialize into a loosely typed object without complaint. Pasting the `parameters` schema from step 2 into the left pane of the [Structured Output Validator](https://tools.lamplitlabs.com/structured-output) and the reply into the right pane gives a red **Invalid - 2 errors** banner with keyword chips `enum (1)` and `type (1)`:
+It parses. It looks right. It would deserialize into a loosely typed object without complaint. Pasting the `parameters` schema from step 2 into the left pane of the [Structured Output Validator](https://tools.lamplitlabs.com/) (path `/structured-output`) and the reply into the right pane gives a red **Invalid - 2 errors** banner with keyword chips `enum (1)` and `type (1)`:
 
 1. `must be equal to one of the allowed values` at `$.product` (keyword `enum`): the model wrote `validator`, a sensible word that is not one of `tools`, `blog`, `api`.
 2. `must be integer` at `$.priority` (keyword `type`): the priority came back as the string `"1"`.

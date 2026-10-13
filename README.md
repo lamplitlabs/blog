@@ -21,6 +21,24 @@ bundle install
 bundle exec jekyll s
 ```
 
+The site opens at <http://127.0.0.1:4000> (the terminal prints
+`Server address: http://127.0.0.1:4000/`). Stop it with `Ctrl+C`.
+
+### Troubleshooting
+
+- **`jekyll: command not found`**: Jekyll is installed into the bundle, not on
+  your `PATH`. Always prefix the command with `bundle exec`
+  (`bundle exec jekyll s`), never run bare `jekyll s`.
+- **`bundle: command not found`** or a Ruby version error from `bundle
+  install`: the site expects Ruby **3.3.5**, pinned in `.ruby-version` and
+  `.tool-versions`. With [mise](https://mise.jdx.dev/) run
+  `mise install && mise exec -- bundle install && mise exec -- bundle exec jekyll s`;
+  with rbenv/asdf install Ruby 3.3.5 and re-run `bundle install`. Check with
+  `ruby -v`, which should print `ruby 3.3.5`.
+- **`Could not find gem ...` / `Bundler::GemNotFound`**: run `bundle install`
+  again in the repository root; it reads `Gemfile.lock` and installs the exact
+  versions the build uses.
+
 ## Local checks
 
 Run the same checks the build relies on before opening a pull request:

@@ -56,7 +56,18 @@ read_baseurl() {
 }
 
 preflight() {
+  local pinned_ruby
+  pinned_ruby="$(tr -d '[:space:]' <.ruby-version 2>/dev/null || echo 'unknown')"
+
   if ! command -v bundle >/dev/null 2>&1; then
+    # Scheduled runs and hooks often start with a bare PATH (no mise shims), so
+    # 'bundle' is missing even though mise has the pinned Ruby installed. Re-exec
+    # once under mise rather than failing with "command not found" (exit 127).
+    if [[ -z ${TEST_SH_REEXEC:-} ]] && command -v mise >/dev/null 2>&1 \
+      && mise exec "ruby@$pinned_ruby" -- bundle -v >/dev/null 2>&1; then
+      echo "note: 'bundle' not on PATH; re-running under mise ruby@$pinned_ruby (.ruby-version)." >&2
+      TEST_SH_REEXEC=1 exec mise exec "ruby@$pinned_ruby" -- bash "$0" ${_orig_args[@]+"${_orig_args[@]}"}
+    fi
     echo "error: 'bundle' not found on PATH." >&2
     echo "       Activate the pinned toolchain (e.g. 'mise exec -- bash tools/test.sh') and try again." >&2
     exit 1
@@ -66,9 +77,8 @@ preflight() {
   # silenced `bundle install --local` below otherwise exits 7 with no output when
   # a global Ruby (e.g. Homebrew 4.x) shadows the pinned 3.3.5, and the gem-set
   # diagnostic further down is never reached.
-  local found_ruby pinned_ruby
+  local found_ruby
   found_ruby="$(ruby -e 'print RUBY_VERSION' 2>/dev/null || echo 'none')"
-  pinned_ruby="$(tr -d '[:space:]' <.ruby-version 2>/dev/null || echo 'unknown')"
   if [[ $found_ruby != "$pinned_ruby" ]]; then
     # The scheduler and most callers run `bash tools/test.sh` with a bare PATH.
     # When mise has the pinned Ruby installed, re-exec once under it instead of

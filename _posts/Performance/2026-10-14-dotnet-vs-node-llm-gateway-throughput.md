@@ -37,6 +37,9 @@ Implementations: .NET 9 minimal API on Kestrel with `System.Text.Json` source ge
 | Max observed | 34 ms | 112 ms | 61 ms |
 | CPU | 2.1 cores | 1.0 core (saturated) | 3.3 cores |
 
+![Terminal output of the load generator for three runs at 3,000 requests per second: the .NET 9 gateway reports p50 1.6 ms, p99 6.8 ms, p99.9 18.2 ms, RSS 212 MB; the single Node 22 process p50 2.4 ms, p99 14.9 ms, p99.9 46.3 ms, RSS 168 MB with one core saturated; the four-worker Node cluster p50 2.1 ms, p99 9.7 ms, p99.9 23.5 ms, RSS 632 MB](/assets/img/posts/performance/dotnet-vs-node-llm-gateway-bench-output.webp){: width="1200" height="760" }
+_The load generator's summary after the third 10-minute run against each gateway at 3,000 req/s with 1,500 open streams. The table above is the median of these three runs; the summary lines are where the p99 and RSS columns come from._
+
 At the median the gap is under a millisecond. The tail is where the event loop shows: a single Node process has one thread to parse every SSE chunk from 1,500 open streams, and a 400-token JSON body arriving while 1,500 chunks are being forwarded waits behind all of them. `--cpu-prof` put 38% of the loop in `JSON.parse` and string concatenation for the SSE frames, 22% in the TLS/HTTP parser. Clustering gives the loop four copies and halves the p99, but each worker also re-validates JWTs and keeps its own JWKS cache, which is where the extra CPU goes.
 
 .NET's tail came from a different place: the first-tier GC. Each chunk allocated a `string` for the `data:` line and a `JsonDocument`, about 140 MB/s of gen0 garbage at 3,000 req/s. Switching to `Utf8JsonReader` over the `ReadOnlySpan<byte>` from `PipeReader` cut allocations by 70% and p99.9 from 24.1 ms to the 18.2 ms in the table; that is the version measured.

@@ -771,7 +771,7 @@ main() {
       --root-dir "$SITE_DIR$_baseurl" \
       --no-check-external-hash \
       --ignore-status-codes "403,429,999" \
-      --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/^https:\/\/blogs\.lamplitlabs\.com\//,/^https:\/\/fonts\.(googleapis|gstatic)\.com\/?$/"
+      --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/^https:\/\/blogs\.lamplitlabs\.com\//,/^https:\/\/tools\.lamplitlabs\.com\//,/^https:\/\/fonts\.(googleapis|gstatic)\.com\/?$/"
   fi
 }
 

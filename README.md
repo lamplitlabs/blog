@@ -174,9 +174,13 @@ suite. To find those, run the read-only watcher:
 bash tools/check_external_links.sh
 ```
 
-It checks every `https?://` link in `_posts/*.md`, prints only the broken ones
-(`UNREACHABLE <url>` or `HTTP <code> <url>`) and always exits 0 - it is a
-watcher, not a gate, so silence means nothing looked broken.
+It checks Markdown inline links of the form `](http...)` / `](https...)` in
+every `.md` file under `_posts/` (subfolders included), prints only the broken
+ones (`UNREACHABLE <url>` or `HTTP <code> <url>`) and always exits 0 - it is a
+watcher, not a gate, so silence means nothing looked broken. It does **not**
+check bare URLs pasted as plain text, HTML `<a href="...">` links, or
+reference-style link definitions (`[label]: http...`), so those stay unchecked
+by both the watcher and the test suite.
 
 Two kinds of false positives are filtered out: a `404` from a single-page-app
 host (e.g. `tools.lamplitlabs.com`, which GitHub Pages serves from `404.html`

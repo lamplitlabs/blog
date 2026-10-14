@@ -107,3 +107,8 @@ The whole thing is about 400 lines: a shell script, a console app, a Bicep prope
 Over two retirement cycles and eleven deployments: zero regressions reached production, one upgrade was blocked by the gate for a real schema defect, and the version mismatch between dev and prod is gone because the inventory script fails the build when it comes back. The Tuesday incident has not recurred, which is the only metric the ticket summariser's users care about.
 
 If you have one Azure OpenAI deployment, pin it and put the retirement date in your calendar. If you have more than three, write the inventory script this week; the first run will tell you something you did not know.
+
+## Related posts
+
+- [Enterprise AI: Multi-Region Failover for Azure OpenAI with APIM Backend Pools and Circuit Breakers](/posts/enterprise-ai-azure-openai-multi-region-failover-apim/)
+- [Enterprise AI: Model Routing for Azure OpenAI - Cheap Model First, Escalate Only When Needed](/posts/enterprise-ai-model-routing-azure-openai-apim/)

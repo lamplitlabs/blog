@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why This Jekyll Blog Took 8 Seconds to Build: 278 Git Subprocesses in One Plugin Hook"
-date: 2026-10-14 09:00:00 +0200
+date: 2026-10-14 03:30:00 +0200
 categories: performance programming
 tags: jekyll performance ruby git build-performance static-site github-pages profiling
 author: manishtiwari25

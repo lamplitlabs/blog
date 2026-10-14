@@ -162,3 +162,10 @@ Fifty failovers in five minutes pages the platform on-call, not the application 
 - [ ] A game day on the calendar, with the application teams not told in advance
 
 The whole thing is about 80 lines of Bicep and 30 lines of policy. It turned an eleven-minute outage into a +410 ms p95 blip nobody noticed, which is the only argument an enterprise AI platform needs.
+
+## Related posts
+
+- [Enterprise AI: Model Routing for Azure OpenAI - Cheap Model First, Escalate Only When Needed](/posts/enterprise-ai-model-routing-azure-openai-apim/)
+- [Enterprise AI: surviving Azure OpenAI model retirements without a weekend of firefighting](/posts/enterprise-ai-azure-openai-model-retirement-upgrade-gate/)
+- [Enterprise AI: Semantic Caching for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-semantic-caching-azure-openai/)
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)

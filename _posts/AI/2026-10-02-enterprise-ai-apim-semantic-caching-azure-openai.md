@@ -108,4 +108,5 @@ Semantic caching is the third layer in the gateway story: quotas keep one team f
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
 - [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right](/posts/azure-openai-prompt-caching-dotnet/)
 - [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
+- [Enterprise AI: An Audit Trail for Every Azure OpenAI Call with APIM, Event Hubs and Immutable Storage](/posts/enterprise-ai-audit-trail-azure-openai-apim/)
 - [Securing Azure APIM With Azure Key Vault](/posts/APIM-Key-Vault/)

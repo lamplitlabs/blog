@@ -105,8 +105,8 @@ Semantic caching is the third layer in the gateway story: quotas keep one team f
 
 ## Related posts
 
-- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
-- [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right](/posts/azure-openai-prompt-caching-dotnet/)
-- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/)
-- [Enterprise AI: An Audit Trail for Every Azure OpenAI Call with APIM, Event Hubs and Immutable Storage](/posts/enterprise-ai-audit-trail-azure-openai-apim/)
-- [Securing Azure APIM With Azure Key Vault](/posts/APIM-Key-Vault/)
+- [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management]({% post_url AI/2026-10-05-enterprise-ai-apim-token-quotas-chargeback-azure-openai %})
+- [Azure OpenAI Prompt Caching in .NET: Cut Latency and Input Cost by Ordering Your Prompt Right]({% post_url AI/2026-10-10-azure-openai-prompt-caching-dotnet %})
+- [Enterprise AI: A Cost Observability Dashboard for Azure OpenAI with Log Analytics, KQL and Workbooks]({% post_url AI/2026-10-01-enterprise-ai-azure-openai-cost-observability-dashboard %})
+- [Enterprise AI: An Audit Trail for Every Azure OpenAI Call with APIM, Event Hubs and Immutable Storage]({% post_url AI/2026-10-07-enterprise-ai-audit-trail-azure-openai-apim %})
+- [Securing Azure APIM With Azure Key Vault]({% post_url 2022-12-16-APIM-Key-Vault %})

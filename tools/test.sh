@@ -255,7 +255,7 @@ report_image_coverage() {
 # nested `alt:` key (Chirpy renders it as the header <img alt>); screen readers
 # and image search otherwise get an empty alt. Denominator: posts with an
 # `image:` front-matter key (subfolders included). Lists the posts still lacking
-# alt text. Informational only: never fails the build.
+# alt text and fails the build when any post lacks it.
 report_alt_coverage() {
   local with_image without
   with_image="$(grep -l '^image:' $_posts || true)"
@@ -278,10 +278,16 @@ report_alt_coverage() {
   if [[ -n $without ]]; then
     count="$(printf '%s\n' "$without" | wc -l | tr -d ' ')"
   fi
-  echo "alt-coverage: $count/$with_image_total posts with a front-matter image but no alt text (rule: 'image:' block without a nested 'alt:' key)"
-  if [[ -n $without ]]; then
-    printf '  %s\n' $without
+  # Fail, not just report: the count reached 0/148 (it was 28/42 missing on
+  # 2026-09-30), so any post with a header image and no nested `alt:` is a
+  # regression that leaves screen-reader users with an unlabelled image.
+  if ((count > 0)); then
+    echo "error: $count/$with_image_total posts have a front-matter image but no alt text (rule: 'image:' block without a nested 'alt:' key; allowed: 0):" >&2
+    printf '       %s\n' $without >&2
+    echo "       Add 'alt: <what the image shows>' under the 'image:' block so screen readers and image search get a description." >&2
+    exit 1
   fi
+  echo "alt-coverage: $count/$with_image_total posts with a front-matter image but no alt text (rule: 'image:' block without a nested 'alt:' key; any >0 fails)"
 
   # Duplicate coverage: the same alt text repeated verbatim across more than one
   # post is generic/copy-pasted and tells screen readers and image search nothing

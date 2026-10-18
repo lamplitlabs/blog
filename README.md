@@ -73,7 +73,7 @@ included) and prints one summary line per check:
 - `image-coverage`: informational only, never fails the build. Prints
   `image-coverage: <count>/<total> posts without image (...)` followed by the
   offending post paths, indented, if any.
-- `alt-coverage`: informational only, never fails the build. Prints
+- `alt-coverage`: fails the build when the count is above 0. Prints
   `alt-coverage: <count>/<with-image> posts with a front-matter image but no
   alt text (...)` followed by the offending post paths, where `<with-image>`
   is the number of posts that have a front-matter `image:` key.

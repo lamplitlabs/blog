@@ -672,6 +672,32 @@ check_forward_links() {
   echo "forward-link-coverage: $count/$_posts_total posts linking to a not-yet-published later-dated /posts/<slug>/ (rule: no link whose target filename date is after both the referencing post and today $today)"
 }
 
+# A post dated today with a time-of-day later than the current clock (or a
+# timezone offset that pushes it past now) is skipped by `future: false` in the
+# production deploy: Jekyll logs "Skipping: <post> has a future date", exits 0,
+# and the post silently does not appear on the live site even though the
+# post-count signal moved. The main build below runs with --future (so link
+# checks cover scheduled posts), which hides that warning; probe the production
+# read without --future and fail when a post dated today is the one skipped.
+check_today_not_future() {
+  local today _skipped
+  today="$(date +%Y-%m-%d)"
+  _skipped="$(JEKYLL_ENV=production bundle exec ruby -e '
+    require "jekyll"
+    cfg = Jekyll.configuration("config" => ["_config.yml"])
+    site = Jekyll::Site.new(cfg)
+    site.reset
+    site.read
+  ' 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep 'has a future date' | grep -F "_posts/$today-" || true)"
+  if [[ -n $_skipped ]]; then
+    echo "ERROR: a post dated today ($today) is skipped as a future post by the production build (future: false), so it lands invisibly on the live site:" >&2
+    printf '%s\n' "$_skipped" >&2
+    echo "       Set the post's date/time (and +offset) to a moment that has already passed, or date it tomorrow to schedule it deliberately." >&2
+    exit 1
+  fi
+  echo "today-not-future-coverage: 0 posts dated $today skipped as 'has a future date' by a production (no --future) read (rule: any >0 fails)"
+}
+
 main() {
   preflight
   collect_posts
@@ -690,6 +716,7 @@ main() {
   report_ai_related_coverage
   check_related_link_resolution
   check_forward_links
+  check_today_not_future
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

@@ -111,6 +111,8 @@ The APIM product then applies the policies that the rest of the estate already h
 </inbound>
 ```
 
+That header is what makes the register pay for itself: once it is on every log line, the cost dashboard can group spend by it. The query is in [Step 6 of the cost observability post - spend per registered use case](/posts/enterprise-ai-azure-openai-cost-observability-dashboard/#step-6-spend-per-registered-use-case); see the cost per register entry there before the invoice arrives.
+
 Twelve of the fourteen `migrate` entries moved in week 3. The two that did not were third-party-model workloads with no Azure OpenAI equivalent; they stayed `registered` with a direct-egress allow rule scoped to a single service account, and a 90-day review.
 
 ## Week 4: block, and keep discovering

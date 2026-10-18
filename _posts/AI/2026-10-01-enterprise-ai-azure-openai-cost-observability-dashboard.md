@@ -129,16 +129,67 @@ AzureDiagnostics
 
 Evaluate it every 15 minutes, fire when the result has at least one row, and route it to an action group that posts in the platform team's channel. The threshold is per team and deliberately boring; the goal is not to stop the job but to make sure a human knows about it before the second run.
 
+## Step 6: Spend per registered use case
+
+Per-team is enough for Finance. Compliance asks a different question: *what does each entry in the [LLM usage register](/posts/enterprise-ai-shadow-ai-llm-usage-register-governance/) cost?* That post stamps an `x-llm-register-id` header on every call that goes through the APIM gateway. Azure OpenAI's own diagnostic log does not record arbitrary request headers, so the cheapest way to get the register id into `AzureDiagnostics` is to let the gateway copy it into the one header that *is* logged, as a second path segment of `x-ms-client-request-id`:
+
+```xml
+<set-header name="x-ms-client-request-id" exists-action="override">
+  <value>@{
+      var original = context.Request.Headers.GetValueOrDefault("x-ms-client-request-id", "unknown/unknown/-");
+      var registerId = context.Request.Headers.GetValueOrDefault("x-llm-register-id", "unregistered");
+      var parts = original.Split('/');
+      return $"{parts[0]}/{registerId}/{(parts.Length > 2 ? parts[2] : context.RequestId.ToString())}";
+  }</value>
+</set-header>
+```
+
+The team prefix stays in segment 0, so the per-team query above keeps working unchanged. Segment 1 is now the register id, and the query becomes:
+
+```kusto
+let Register = datatable(RegisterId:string, UseCase:string, Owner:string, Status:string)
+[
+    "LLM-0003", "support-assistant faq-bot",  "support",  "registered",
+    "LLM-0007", "finance contract summariser", "finance", "registered",
+    "LLM-0011", "eng-runbooks triage",         "platform", "migrate"
+];
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.COGNITIVESERVICES" and Category == "RequestResponse"
+| where TimeGenerated > startofmonth(now())
+| extend props = parse_json(properties_s)
+| extend Model = tostring(props.modelDeploymentName),
+         RegisterId = tostring(split(props.clientRequestId, "/")[1])
+| extend RegisterId = iff(isempty(RegisterId), "unregistered", RegisterId)
+| lookup kind=leftouter Prices on Model
+| lookup kind=leftouter Register on RegisterId
+| extend CostUsd = toint(props.promptTokens) / 1000.0 * InputPer1k
+                 + toint(props.completionTokens) / 1000.0 * OutputPer1k
+| summarize Calls = count(),
+            Tokens = sum(toint(props.promptTokens) + toint(props.completionTokens)),
+            MonthToDateUsd = round(sum(CostUsd), 2)
+          by RegisterId, UseCase = coalesce(UseCase, "not in register"), Owner, Status
+| order by MonthToDateUsd desc
+```
+
+Two rows matter more than the rest:
+
+- **`unregistered`** is traffic that reached Azure OpenAI through the gateway without a register id - a product whose policy does not stamp the header yet. It should be zero after week 3 of the register rollout; if it is not, that is the next policy to fix.
+- **A `RegisterId` with `not in register` as the use case** is a stamped id that nobody filed. That is either a typo in a policy or someone reusing an old id, and both are a five-minute conversation rather than an audit finding.
+
+Add this as a third step in the workbook, rendered as a grid, and the quarterly compliance report stops being a spreadsheet exercise: every register entry has its own month-to-date spend, its owner, and its status on one page.
+
 ## What changed for the users
 
 - **Finance** gets a per-team daily cost table they can export, replacing a month-end argument.
 - **Teams** see their own spend the same day and can compare `gpt-4o` against `gpt-4o-mini` for the same workload with real numbers rather than list prices.
 - **The platform team** stops discovering runaway jobs on the invoice.
+- **Compliance** gets month-to-date spend per registered LLM use case, so the usage register and the bill reconcile.
 
 Once the `unattributed` row is near zero, the next step is to [move the quota enforcement into APIM](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/) so the alert becomes a 429 instead of a chat message. The dashboard stays: the gateway tells you who was throttled, the dashboard tells you what everything cost.
 
 ## Related posts
 
+- [Enterprise AI: Governing LLM Usage - A Shadow-AI Inventory and a Usage Register in 30 Days](/posts/enterprise-ai-shadow-ai-llm-usage-register-governance/)
 - [Enterprise AI: Per-Team Token Quotas and Chargeback for Azure OpenAI with Azure API Management](/posts/enterprise-ai-apim-token-quotas-chargeback-azure-openai/)
 - [Enterprise AI: LLM Observability with OpenTelemetry in .NET - Tracing Tokens, Cost and Quality per Request](/posts/enterprise-llm-observability-opentelemetry-dotnet/)
 - [Counting Tokens and Controlling Azure OpenAI Cost in .NET](/posts/azure-openai-token-counting-cost-dotnet/)

@@ -60,3 +60,4 @@ The number we watch most closely is the ignored rate on blocking comments. At 64
 - [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It]({% post_url AI/2026-10-08-ai-sdlc-code-review-agent-metrics %})
 - [AI SDLC: How We Evaluate and Gate AI Coding-Agent Pull Requests Before Merge]({% post_url AI/2026-10-12-ai-sdlc-gating-ai-coding-agent-pull-requests-before-merge %})
 - [AI SDLC: Human vs Agent PR Review - Measuring Test Coverage Quality With Defect Escape Rate and Mutation Score]({% post_url AI/2026-10-08-ai-sdlc-human-vs-agent-pr-review-test-coverage-quality %})
+- [AI SDLC: AGENTS.md Files Coding Agents Actually Follow - Five Rules and One Rework Metric](/posts/ai-sdlc-agents-md-instruction-files-coding-agents-actually-follow/)

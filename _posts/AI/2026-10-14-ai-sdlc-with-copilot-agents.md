@@ -90,3 +90,7 @@ The 8 reworked PRs cluster around one thing: issues that touched more than one b
 4. Keep merge and deploy identical for agent and human commits. Separate lanes hide weak gates.
 
 The screenshots above are from our own repositories with names changed. The policy and workflow files behind the `scope-diff` and review-agent checks are in the two linked posts; nothing here needs anything beyond GitHub Copilot's coding agent, Actions and a Redis you already have.
+
+## Related
+
+- [AI SDLC: AGENTS.md Files Coding Agents Actually Follow - Five Rules and One Rework Metric](/posts/ai-sdlc-agents-md-instruction-files-coding-agents-actually-follow/)

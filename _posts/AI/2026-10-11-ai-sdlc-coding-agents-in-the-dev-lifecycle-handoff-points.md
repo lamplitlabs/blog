@@ -94,3 +94,4 @@ When a run fails a gate or a reviewer rejects it, the fix goes into the **task c
 - [AI SDLC in Practice: Letting a Coding Agent Triage and Fix a GitHub Issue End-to-End](/posts/ai-coding-agent-fix-github-issue-end-to-end/)
 - [AI SDLC: How to Measure an AI Code-Review Agent Before You Trust It](/posts/ai-sdlc-code-review-agent-metrics/)
 - [AI SDLC: Prompt Injection Defences for Coding Agents That Read Untrusted Repository Content](/posts/ai-sdlc-prompt-injection-defences-for-coding-agents/)
+- [AI SDLC: AGENTS.md Files Coding Agents Actually Follow - Five Rules and One Rework Metric](/posts/ai-sdlc-agents-md-instruction-files-coding-agents-actually-follow/)

@@ -194,6 +194,8 @@ Treat prompts like code: isolate them behind a class, pin them to golden cases s
 
 If you are building on Azure OpenAI from .NET, the earlier posts on [structured outputs](/posts/structured-outputs-azure-openai-dotnet/) and [handling 429 rate limits](/posts/azure-openai-429-rate-limit-retry-dotnet/) pair well with this one.
 
+**Next step:** the nightly run catches drift the morning after a prompt change has merged. The follow-up post, [Running an LLM Eval Harness as a CI Quality Gate in .NET]({% post_url AI/2026-10-19-ai-sdlc-llm-eval-harness-ci-gates-dotnet %}), moves the same golden-case suite onto the pull request so a quality drop blocks the merge instead of being discovered afterwards.
+
 ## Related posts
 
 - Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI

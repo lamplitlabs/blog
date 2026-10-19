@@ -162,6 +162,14 @@ included) and prints one summary line per check:
   `tag-conflict-coverage: 0 'Conflict: The following destination is shared by
   multiple files' warnings in the jekyll build log (...)`.
 
+- `today-not-future-coverage`: the build **fails** if a post dated today is
+  skipped as `has a future date` by a production read (no `--future`), e.g. a
+  `date:` time later today or a `+offset` that is still ahead of now; such a
+  post would land invisibly on the live site. Set a time that has already
+  passed, or date it tomorrow to schedule it deliberately. When clean it prints
+  `today-not-future-coverage: 0 posts dated <today> skipped as 'has a future
+  date' by a production (no --future) read (...)`.
+
 - `future-external-links`: runs after the main `htmlproofer` pass, which
   skips external URLs (`--disable-external`) so CI stays fast and immune to
   the back catalogue's link rot. Only the rendered pages of scheduled

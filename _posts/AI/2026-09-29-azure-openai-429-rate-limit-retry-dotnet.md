@@ -111,6 +111,8 @@ Retries fix the symptom. Two changes fix the cause.
 
 If you are already doing both and still see sustained 429s, the deployment is under-provisioned: raise TPM in the portal, or split traffic across two regions with the same model behind a simple round-robin.
 
+> **Retries are not a throughput plan.** Everything above makes *one* request behave. It does nothing for the case where ninety requests arrive at once from a batch job or a login spike: every caller backs off politely and the deployment still spends its minute rejecting work. The fix for that lives one level up, in a client-side rate limiter shared by the whole fleet. The follow-up post *Enterprise AI: Client-Side Rate Limiting for Azure OpenAI 429 Storms* (published 21 October 2026) measures five strategies against a 60 RPM deployment; the only one that finished the work was the one that never produced a 429 in the first place.
+
 ## Summary
 
 | Symptom | Fix |

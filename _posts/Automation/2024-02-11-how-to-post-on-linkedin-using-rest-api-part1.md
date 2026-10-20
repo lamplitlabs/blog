@@ -130,7 +130,7 @@ Now that we've successfully obtained the access token, the hard part is behind u
 
 - [https://learning.postman.com/docs/sending-requests/authorization/oauth-20/](https://learning.postman.com/docs/sending-requests/authorization/oauth-20/)
 - [https://medium.com/tech-takeaways/how-to-perform-oauth-2-0-authorization-with-postman-2bfbde062959](https://learning.postman.com/docs/sending-requests/authorization/oauth-20/)
-- [https://www.azaytek.com/part-1-how-to-get-linkedin-api-access-token/](https://www.azaytek.com/part-1-how-to-get-linkedin-api-access-token/)
+- [https://www.azaytek.com/part-1-how-to-get-linkedin-api-access-token/ (archived)](https://web.archive.org/web/20251005230001/https://www.azaytek.com/part-1-how-to-get-linkedin-api-access-token/)
 
 ## Related posts
 

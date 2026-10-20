@@ -89,3 +89,4 @@ Two gates are still manual that should not be. Scope contracts are written by ha
 - [AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines]({% post_url AI/2026-10-03-ai-sdlc-flaky-test-triage %})
 - [LLM-Generated Unit Tests in .NET: Why Coverage Lies and How Mutation Testing Keeps Them Honest]({% post_url AI/2026-10-01-llm-test-generation-mutation-testing-dotnet %})
 - {% include series-link.html post="AI/2026-10-12-ai-sdlc-dotnet-framework-to-dotnet8-migration-coding-agent" title="AI SDLC: Migrating a .NET Framework 4.8 Service to .NET 8 with a Coding Agent - What It Did, What We Did, and the Numbers" note=" - a large multi-PR agent change where these merge gates were the difference between a migration and a mess." %}
+- [AI SDLC: When the Coding Agent Edits the Tests, Six Rules That Gate It]({% post_url AI/2026-10-20-ai-sdlc-gating-ai-agent-test-changes-test-integrity-rules %})

@@ -116,3 +116,4 @@ This is one organisation's log, nine services, one quarter, and reviewers knew t
 - [AI SDLC: Gating AI coding agent pull requests before merge]({% post_url AI/2026-10-12-ai-sdlc-gating-ai-coding-agent-pull-requests-before-merge %})
 - [AI SDLC: Human vs agent PR review - test coverage and quality]({% post_url AI/2026-10-08-ai-sdlc-human-vs-agent-pr-review-test-coverage-quality %})
 - [AI SDLC: AGENTS.md instruction files coding agents actually follow]({% post_url AI/2026-10-18-ai-sdlc-agents-md-instruction-files-coding-agents-actually-follow %})
+- [AI SDLC: When the Coding Agent Edits the Tests, Six Rules That Gate It]({% post_url AI/2026-10-20-ai-sdlc-gating-ai-agent-test-changes-test-integrity-rules %})

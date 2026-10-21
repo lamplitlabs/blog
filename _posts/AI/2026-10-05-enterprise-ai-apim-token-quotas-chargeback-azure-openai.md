@@ -69,6 +69,10 @@ Three things to note:
 - `estimate-prompt-tokens="true"` rejects a request *before* forwarding it when the estimated prompt alone would exceed the remaining budget, so a runaway batch job never reaches the deployment.
 - `llm-emit-token-metric` writes prompt, completion and total tokens to Application Insights with the dimensions you choose. `Subscription` is the chargeback key.
 
+![Screenshot of the Azure portal API Management policy editor for the azure-openai API, showing the inbound llm-token-limit policy with a 2,000,000 tokens-per-minute limit keyed on Subscription.Id, llm-emit-token-metric writing to the llm-usage namespace, and the subscriptions table where eng-runbooks is at 99 percent of its allowance and throttled while hr-copilot, support-assistant and finance-summary stay active](/assets/img/posts/ai/enterprise-ai-apim-token-quota-setup.webp){: width="1400" height="820" }
+
+*The setup in the Azure portal: the `llm-token-limit` and `llm-emit-token-metric` policies on the `azure-openai` API's inbound section, next to the per-subscription usage table where `eng-runbooks` has hit 99% of its 2M TPM allowance and is throttled while the other teams are unaffected.*
+
 If one team needs a different limit, override the policy at the **product** or **subscription** level, or compute it: `tokens-per-minute="@(context.Subscription.Name == "eng-runbooks" ? 4000000 : 1000000)"` works, though a named policy fragment per tier is easier to review.
 
 ## Step 3: Client change in .NET

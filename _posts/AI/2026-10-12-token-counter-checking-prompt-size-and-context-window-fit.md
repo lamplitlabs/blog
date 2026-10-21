@@ -32,6 +32,8 @@ Take a short support-assistant prompt: a one-paragraph instruction, a three-line
 
 ![Screenshot of the Lamplit Labs AI Token Counter with GPT-4o selected and a support-assistant prompt pasted in, showing 129 estimated tokens, 534 characters, 94 words, 8 lines, 0.10 percent context used and 127,871 remaining tokens above a mostly empty blue context-window bar](/assets/img/posts/ai/token-counter-gpt4o-support-prompt.webp){: width="1400" height="900" }
 
+*The Token Counter after pasting the support-assistant prompt: six counters, the model dropdown set to GPT-4o, and the context-window bar showing 0.10% used.*
+
 Switch the dropdown to GPT-4 and the same 129 tokens become 1.57% of an 8,192-token window. That is still comfortable, but the exercise shows why the percentage matters more than the raw count: a prompt that is negligible on one model can be a meaningful slice of another, and the retrieval chunks you append later scale that slice up fast.
 
 ## How the estimate works, and how far to trust it

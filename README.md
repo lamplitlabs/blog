@@ -5,15 +5,21 @@
 </p>
 <h1 align="center">Blog</h1>
 
-A space for my stories about AI, dotnet, c#, azure, devops and more
+A space for stories about AI, our products, the AI SDLC, enterprise AI, performance, Rust, Go, and more
 
 ## How to Use
 
 ### Install dependencies
 
+The site expects Ruby **3.3.5**, pinned in `.ruby-version` and `.tool-versions`. With [mise](https://mise.jdx.dev/):
+
 ```bash
+mise install   # installs Ruby 3.3.5
 bundle install
 ```
+
+With rbenv/asdf install Ruby 3.3.5 first, then run `bundle install`. Check with
+`ruby -v`, which should print `ruby 3.3.5`.
 
 ### Run the development server
 
@@ -30,11 +36,9 @@ The site opens at <http://127.0.0.1:4000> (the terminal prints
   your `PATH`. Always prefix the command with `bundle exec`
   (`bundle exec jekyll s`), never run bare `jekyll s`.
 - **`bundle: command not found`** or a Ruby version error from `bundle
-  install`: the site expects Ruby **3.3.5**, pinned in `.ruby-version` and
-  `.tool-versions`. With [mise](https://mise.jdx.dev/) run
-  `mise install && mise exec -- bundle install && mise exec -- bundle exec jekyll s`;
-  with rbenv/asdf install Ruby 3.3.5 and re-run `bundle install`. Check with
-  `ruby -v`, which should print `ruby 3.3.5`.
+  install`: the site expects Ruby **3.3.5** - run the setup in
+  [Install dependencies](#install-dependencies) above, then re-run
+  `bundle install`.
 - **`Could not find gem ...` / `Bundler::GemNotFound`**: run `bundle install`
   again in the repository root; it reads `Gemfile.lock` and installs the exact
   versions the build uses.

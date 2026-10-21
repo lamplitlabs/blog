@@ -15,6 +15,9 @@
 #   * HTTP 403 from hosts that block non-browser clients wholesale
 #     (medium.com, stackoverflow.com). When the host's root also answers 403
 #     the status says nothing about the specific page, so it is not reported.
+#   * Transient 5xx/429 answers are re-probed with a short backoff before
+#     being reported: archive hosts (web.archive.org) rate-limit bursts with
+#     a 503 that clears seconds later (seen on SCHED-013, 2026-10-20).
 #
 # Usage: tools/check_external_links.sh
 # Exit status: 0 always (it is a watcher, not a gate); problems go to stdout.
@@ -61,16 +64,23 @@ root_forbidden() {
   key="$(cache_key "$origin")"
   file="$sitemap_cache_dir/root_$key"
   if [ ! -f "$file" ]; then
-    code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 8 -L -A "$UA" "$origin/" 2>/dev/null)"
+    code="$(probe "$origin/")"
     printf '%s' "$code" > "$file"
   fi
   [ "$(cat "$file")" = "403" ]
 }
 
+# probe URL -> HTTP status code. --retry-all-errors makes --retry apply to
+# 5xx/429 too, so one burst-limit answer does not surface as a broken link.
+probe() {
+  curl -s -o /dev/null -w '%{http_code}' --max-time 8 --retry 1 --retry-delay 2 \
+    --retry-all-errors -L -A "$UA" "$1" 2>/dev/null
+}
+
 problems=0
 while IFS= read -r url; do
   [ -z "$url" ] && continue
-  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 8 --retry 1 -L -A "$UA" "$url" 2>/dev/null)"
+  code="$(probe "$url")"
   if [ -z "$code" ] || [ "$code" = "000" ]; then
     echo "UNREACHABLE  $url"
     problems=$((problems + 1))

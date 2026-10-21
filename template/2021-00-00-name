@@ -33,10 +33,7 @@ SOME DESCRIPTION
 
 ![TODO: replace with a screenshot or diagram of this post's result](/assets/img/posts/ai/name/screenshot.png){: width="1024" height="768" }
 
-## Related
+<!-- No hand-written '## Related' section needed: _layouts/post.html renders
+     an automatic related-posts block at the end of every post (up to 3 posts
+     sharing this post's categories/tags, chosen by the theme include). -->
 
-<!-- Link 2-3 published posts on the same topic so readers have a next step;
-     tools/test.sh ai-related-coverage counts posts without a '## Related' heading. -->
-- [Related post title](/path/)
-- [Related post title](/path/)
-- [Related post title](/path/)

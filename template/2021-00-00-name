@@ -8,8 +8,10 @@ date: 2021-01-01 09:00:00 -0500
 # Categories: the first value should match the post's subfolder under _posts/
 # (e.g. a post in _posts/AI/ uses `ai`); the /categories/ page groups posts by
 # this value, so an unrelated value leaves the post out of its folder's group.
-categories: homelab
-tags: homelab rancher kubernetes
+# Default `ai` (folder AI/) so a post that forgets this line lands in a real group.
+categories: ai
+# Tags are free-form, but at least the first should echo the category.
+tags: ai
 # Fill in a one-sentence description of 50-160 characters: tools/test.sh fails
 # when it is missing or outside that range (search snippets and the feed use it).
 description: ""
@@ -29,7 +31,9 @@ SOME DESCRIPTION
 
 [Watch Video](https://www.youtube.com/watch?v=BBBBBBBBBBBB)
 
-## Related posts
+![TODO: replace with a screenshot or diagram of this post's result](/assets/img/posts/ai/name/screenshot.png){: width="1024" height="768" }
+
+## Related
 
 <!-- Link 2-3 published posts on the same topic so readers have a next step;
      tools/test.sh ai-related-coverage counts posts without a '## Related' heading. -->

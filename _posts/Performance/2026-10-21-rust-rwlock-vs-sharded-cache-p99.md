@@ -140,6 +140,8 @@ The header chart shows p99 across thread counts for all three implementations. T
 | 12 | **89 ms** | 121 ms | **6.2 ms** |
 | 16 | 213 ms | 246 ms | 9.1 ms |
 
+![Grouped bar chart of p99 latency against worker-thread count for the three cache implementations: the single RwLock climbs from 14 ms at 8 threads to 89 ms at 12 and 213 ms at 16, the single Mutex reaches 246 ms at 16 threads, while the 32-shard Mutex map stays nearly flat at 3.9 ms, 6.2 ms, and 9.1 ms - 14x lower than RwLock at 12 threads](/assets/img/posts/performance/rust-rwlock-vs-sharded-cache-p99-body-chart.webp)
+
 Three things worth seeing:
 
 1. **At 1-4 threads, all three are equivalent.** Lock choice is invisible until you have real parallelism and a writer in the mix. If your service peaks at 4 busy cores, stop reading and keep the `RwLock`.

@@ -117,3 +117,7 @@ Throughput moved too, though it matters less for a latency-bound sidecar: the Cr
 4. **Alternatives exist.** `smartstring` inlines the same 24 bytes with a `String`-compatible API surface; `smol_str` is immutable but shares clones in O(1). We picked `compact_str` because the serde and `From` impls made the diff 20 lines and the benchmark numbers were within noise of each other.
 
 The small-string optimization is one of those changes that feels too simple to matter until the flamegraph says the allocator *is* your program. If your Rust service builds many short strings per request - and most parsers, extractors, and taggers do - the 24 bytes already sitting on your stack are free memory you are not using.
+
+## Related
+
+- [Go sync.Pool and String Interning: Beating GC Pressure in the Same Tokenizer Sidecar](/posts/go-sync-pool-string-interning-tokenizer-sidecar/) - the Go sidecar runs the identical workload; pooling plus interning removes 94% of its allocations.

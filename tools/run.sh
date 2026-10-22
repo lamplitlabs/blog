@@ -9,7 +9,7 @@ host="127.0.0.1"
 help() {
   echo "Usage:"
   echo
-  echo "   bash /path/to/run [options]"
+  echo "   bash tools/run.sh [options]"
   echo
   echo "Options:"
   echo "     -H, --host [HOST]    Host to bind to."

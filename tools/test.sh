@@ -234,7 +234,9 @@ check_tag_synonym_groups() {
 # _posts including subfolders (same rule as
 # `grep -L -E '^image:|!\[|<img' $(find _posts -name '*.md' ! -name README.md)`). Lists the posts
 # still lacking any image so the next one to illustrate can be picked without
-# grepping. Informational only: never fails the build.
+# grepping. Gate: posts with a filename date after 2026-10-22 must carry an
+# image and the build fails listing each one that does not; posts dated on or
+# before 2026-10-22 are grandfathered and stay informational only.
 report_image_coverage() {
   local without
   without="$(grep -L -E '^image:|!\[|<img' $_posts || true)"
@@ -247,6 +249,26 @@ report_image_coverage() {
   echo "image-coverage: $count/$_posts_total posts without image (rule: grep -L -E '^image:|!\\[|<img' \$(find _posts -name '*.md' ! -name README.md))"
   if [[ -n $without ]]; then
     printf '  %s\n' $without
+  fi
+
+  # Gate for new posts: anything dated after 2026-10-22 must have an image.
+  # Posts dated on or before the cutoff are grandfathered (report-only above),
+  # so the 100%-coverage clean-up backlog never blocks a new publish.
+  local IMAGE_GATE_CUTOFF=2026-10-22
+  local gated=""
+  if [[ -n $without ]]; then
+    gated="$(printf '%s\n' "$without" | awk -v cutoff="$IMAGE_GATE_CUTOFF" '
+      { base = $0; sub(/.*\//, "", base) }
+      substr(base, 1, 10) > cutoff { print $0 }
+    ')"
+  fi
+  if [[ -n $gated ]]; then
+    local gated_count
+    gated_count="$(printf '%s\n' "$gated" | wc -l | tr -d ' ')"
+    echo "error: $gated_count post(s) dated after $IMAGE_GATE_CUTOFF have no image (front-matter 'image:', markdown '![' or '<img'):" >&2
+    printf '  %s\n' $gated >&2
+    echo "       New posts must ship with at least one image; only posts dated on or before $IMAGE_GATE_CUTOFF are grandfathered." >&2
+    exit 1
   fi
 }
 

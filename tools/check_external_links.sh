@@ -18,6 +18,10 @@
 #   * Transient 5xx/429 answers are re-probed with a short backoff before
 #     being reported: archive hosts (web.archive.org) rate-limit bursts with
 #     a 503 that clears seconds later (seen on SCHED-013, 2026-10-20).
+#   * HTTP 404 from crates.io/crates/<name>: crates.io gates non-browser
+#     clients (Heroku router) and answers 404 to this watcher's UA while the
+#     page is fine. crates.io publishes a JSON API for exactly this kind of
+#     existence check; the crate is treated as live when the API returns 200.
 #
 # Usage: tools/check_external_links.sh
 # Exit status: 0 always (it is a watcher, not a gate); problems go to stdout.
@@ -77,6 +81,26 @@ probe() {
     --retry-all-errors -L -A "$UA" "$1" 2>/dev/null
 }
 
+# crates_crate_exists URL -> 0 when the URL is a crates.io/crates/<name>
+# page whose crate the crates.io API reports as present.
+crates_crate_exists() {
+  local url="$1" name code key file
+  case "$url" in
+    https://crates.io/crates/*) ;;
+    *) return 1 ;;
+  esac
+  name="${url#https://crates.io/crates/}"
+  name="${name%%/*}"; name="${name%%#*}"; name="${name%%\?*}"
+  [ -z "$name" ] && return 1
+  key="$(cache_key "$name")"
+  file="$sitemap_cache_dir/crates_$key"
+  if [ ! -f "$file" ]; then
+    code="$(probe "https://crates.io/api/v1/crates/$name")"
+    printf '%s' "$code" > "$file"
+  fi
+  [ "$(cat "$file")" = "200" ]
+}
+
 problems=0
 while IFS= read -r url; do
   [ -z "$url" ] && continue
@@ -86,6 +110,8 @@ while IFS= read -r url; do
     problems=$((problems + 1))
   elif [ "$code" = "404" ] && listed_in_sitemap "$url"; then
     : # SPA client-side route served from 404.html; the site itself claims it
+  elif [ "$code" = "404" ] && crates_crate_exists "$url"; then
+    : # crates.io bot-gate 404; the API confirms the crate exists
   elif [ "$code" = "403" ] && root_forbidden "$url"; then
     : # host blocks non-browser clients entirely; status is not about this page
   elif [ "${code:0:1}" = "4" ] || [ "${code:0:1}" = "5" ]; then

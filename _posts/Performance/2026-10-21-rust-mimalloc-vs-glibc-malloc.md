@@ -19,6 +19,10 @@ The tool parses newline-delimited JSON logs into typed records: 10 million lines
 
 Benchmark harness: `hyperfine --warmup 3 --min-runs 10`, binary built with `cargo build --release`, `codegen-units=1`, `lto="fat"`. Machine: 8-core Linux x86-64, glibc 2.39, Rust 1.83, pinned to 4 CPUs with `taskset` to keep numbers stable.
 
+![Grouped bar chart comparing glibc malloc and mimalloc on wall time and peak RSS: mimalloc drops runtime from 13.8 s to 9.1 s (-34%) and peak RSS from 187 MB to 110 MB (-41%)](/assets/img/posts/performance/rust-mimalloc-vs-glibc-malloc-body-chart.webp)
+
+*Wall time and peak RSS for the same 10M-line parse, glibc malloc vs mimalloc: 13.8 s to 9.1 s (-34%) and 187 MB to 110 MB (-41%).*
+
 ## The change
 
 ```toml

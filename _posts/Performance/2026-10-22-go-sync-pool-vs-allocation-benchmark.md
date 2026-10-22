@@ -109,3 +109,5 @@ The `bytes.Buffer` and parallel variants follow the same shape; the full file is
 ## Takeaway
 
 Pool the object your hot path allocates every request, once you have confirmed it escapes. For a 2 KiB scratch buffer that is a 13x reduction in per-op cost and the removal of 2 KB per request from the GC's plate. For a `bytes.Buffer` it is still a 4x win. But measure first: if escape analysis already kept your value on the stack, the pool is a tax, not a saving.
+
+> **Follow-up:** these numbers are `ns/op` from a microbenchmark — the cost of the mechanism, not the latency your users see. We pointed a load generator at a live `net/http` handler and measured p50–p999 to find out whether the pool actually moves the tail. Read [sync.Pool vs fresh allocation, round two: p99 under a live HTTP handler]({% post_url Performance/2026-10-22-go-sync-pool-http-p99-live-handler %}).

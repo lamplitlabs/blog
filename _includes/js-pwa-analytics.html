@@ -1,0 +1,6 @@
+{% comment %} Production-only scripts. PWA script (/app.min.js) is emitted by the theme's head.html; the old /app.js and /unregister.js assets no longer exist. {% endcomment %}
+{% if jekyll.environment == 'production' %}
+{% if site.google_analytics.id != empty and site.google_analytics.id %}
+  {% include google-analytics.html %}
+{% endif %}
+{% endif %}

@@ -1,0 +1,39 @@
+---
+layout: post
+title: "Some Title"
+# Date: the YYYY-MM-DD part of this filename must equal the date below; Jekyll
+# builds the permalink from the filename and sorts the feed by `date:`, so a
+# mismatch (see 2024-05-23-things-to-consider-azure-openai) drifts the two.
+date: 2021-01-01 09:00:00 -0500
+# Categories: the first value should match the post's subfolder under _posts/
+# (e.g. a post in _posts/AI/ uses `ai`); the /categories/ page groups posts by
+# this value, so an unrelated value leaves the post out of its folder's group.
+# Default `ai` (folder AI/) so a post that forgets this line lands in a real group.
+categories: ai
+# Tags are free-form, but at least the first should echo the category.
+tags: ai
+# Fill in a one-sentence description of 50-160 characters: tools/test.sh fails
+# when it is missing or outside that range (search snippets and the feed use it).
+description: ""
+# Header image: set path to the file under /assets/img/headers/ and fill in alt
+# with what the image shows; tools/test.sh alt-coverage lists posts whose image
+# block has no nested alt (screen readers and image search get an empty alt).
+# Use a path unique to this post: reusing another post's header image makes
+# both posts look identical in the feed, tag pages and social previews.
+image:
+  path: /assets/img/headers/some-title.webp
+  alt: ""
+---
+
+[![Some Title](https://img.youtube.com/vi/BBBBBBBBBBBB/0.jpg)](https://www.youtube.com/watch?v=BBBBBBBBBBBB "Some Title")
+
+SOME DESCRIPTION
+
+[Watch Video](https://www.youtube.com/watch?v=BBBBBBBBBBBB)
+
+![TODO: replace with a screenshot or diagram of this post's result](/assets/img/posts/ai/name/screenshot.png){: width="1024" height="768" }
+
+<!-- No hand-written '## Related' section needed: _layouts/post.html renders
+     an automatic related-posts block at the end of every post (up to 3 posts
+     sharing this post's categories/tags, chosen by the theme include). -->
+

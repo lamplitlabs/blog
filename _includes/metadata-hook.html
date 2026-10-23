@@ -1,0 +1,14 @@
+{%- comment -%}
+  Custom metadata appended after the theme's SEO tags (Chirpy hook).
+
+  Declare the dimensions of the site-wide social preview fallback so
+  LinkedIn/Facebook can lay out the large card on the first scrape instead of
+  showing a cropped square and needing a re-scrape. Only emitted when the
+  fallback image is in use: per-post images have varied sizes.
+{%- endcomment -%}
+{%- unless page.image -%}
+  {%- if site.social_preview_image -%}
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+  {%- endif -%}
+{%- endunless -%}

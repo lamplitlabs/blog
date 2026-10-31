@@ -608,6 +608,186 @@ report_image_link_coverage() {
   fi
 }
 
+# Fail when a post's front-matter header image is not 40:21 within 3%. Chirpy 7.6
+# draws the header in `.preview-img` with `aspect-ratio: 40 / 21` and
+# `object-fit: cover` (_sass/base/_base.scss of jekyll-theme-chirpy), so a
+# 1500x640 header loses its left and right edges on the post page and a square
+# one loses its top and bottom; text near those edges is cut for every reader.
+# Rule: |(w/h) / (40/21) - 1| <= 3%, in integers 100*|21w - 40h| <= 120h
+# (1200x630 and 1500x788 pass, 1500x640 fails). Sizes come from the file
+# headers (WebP VP8/VP8L/VP8X, PNG, GIF, JPEG) with plain Ruby, no gems.
+# HEADER_RATIO_GRANDFATHERED lists the posts whose header was already off-ratio
+# on 2026-10-31; the list only shrinks: re-export the header at 40:21 and delete
+# its line (a note names entries that pass now). Any other post fails.
+check_header_aspect_ratio() {
+  local HEADER_RATIO_GRANDFATHERED="
+    _posts/2023-03-25-GCP_Authentication_Without_JSON_file.md
+    _posts/2023-04-03-Automatic_Database_Backup_Of_Golden_Configuration_Environment_D365_FO.md
+    _posts/2023-04-21-D365_FO_EDMX_Trimmer.md
+    _posts/2023-07-25-Azure_B2C_Custom_Policies_Deployment.md
+    _posts/2023-08-09-Moq_Issue.md
+    _posts/2024-01-10-Cosmos_DB_Sdk_System_Text_Json_Issue.md
+    _posts/AI/2024-05-23-things-to-consider-azure-openai.md
+    _posts/AI/2026-10-03-ai-sdlc-dotnet-teams.md
+    _posts/AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points.md
+    _posts/AI/2026-10-11-ai-sdlc-prompt-injection-defences-for-coding-agents.md
+    _posts/AI/2026-10-12-ai-pricing-calculator-estimating-llm-api-costs-before-you-ship.md
+    _posts/AI/2026-10-12-api-format-converter-one-chat-request-four-provider-payloads.md
+    _posts/AI/2026-10-12-embedding-visualizer-checking-vector-similarity-before-you-trust-retrieval.md
+    _posts/AI/2026-10-12-function-call-schema-builder-tool-definitions-without-hand-written-json.md
+    _posts/AI/2026-10-12-model-context-window-chart-how-much-fits-before-you-start-trimming.md
+    _posts/AI/2026-10-12-openapi-to-mcp-server-generator-turning-rest-apis-into-agent-tools.md
+    _posts/AI/2026-10-12-prompt-template-editor-and-prompt-diff-versioning-prompts-like-code.md
+    _posts/AI/2026-10-12-structured-output-validator-catching-schema-drift-before-it-reaches-your-code.md
+    _posts/AI/2026-10-12-text-chunker-for-rag-previewing-chunk-boundaries-before-you-embed.md
+    _posts/AI/2026-10-12-tiktoken-playground-seeing-where-your-prompt-actually-splits.md
+    _posts/AI/2026-10-12-token-counter-checking-prompt-size-and-context-window-fit.md
+    _posts/AI/2026-10-19-enterprise-ai-use-case-intake-risk-tiers-governance.md
+    _posts/AI/2026-10-21-ai-sdlc-context-window-rot-coding-agent-pass-rate.md
+    _posts/AI/2026-10-23-enterprise-ai-retry-storm-burned-4m-tokens.md
+    _posts/AI/2026-10-27-ai-security-llm-data-exfiltration-agent-tool-egress.md
+    _posts/AI/2026-10-27-fine-tuning-data-curation-eval-set-construction.md
+    _posts/AI/2026-10-29-ai-security-prompt-injection-defenses-agents.md
+    _posts/AI/2026-10-30-ai-security-sandboxing-agent-tool-calls.md
+    _posts/AI/2026-10-30-lora-fine-tuning-practical-guide.md
+    _posts/Automation/2024-02-09-auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps.md
+    _posts/Automation/2024-02-11-auto-post-RSS-feed-to-social-media-using-github.md
+    _posts/Automation/2024-02-11-how-to-post-on-linkedin-using-rest-api-part1.md
+    _posts/Automation/2024-02-11-how-to-post-on-linkedin-using-rest-api-part2.md
+    _posts/Automation/2024-02-14-how-to-post-on-facebook-page-using-rest-api-part1.md
+    _posts/Automation/2024-02-18-how-to-post-on-facebook-page-using-rest-api-part2.md
+    _posts/Automation/2024-07-05-how-to-post-content-on-thread-using-api-part1.md
+    _posts/Automation/2024-07-05-how-to-post-content-on-thread-using-api-part2.md
+    _posts/Automation/2025-04-16-automate-drawio-azure-devops.md
+    _posts/Automation/2025-04-16-automate-drawio-github-actions.md
+    _posts/Beginner/2024-01-11-Software_Engineer-Beginner.md
+    _posts/Beginner/2024-01-12-Language_Of_Computers.md
+    _posts/Beginner/2026-10-05-Variables_Values_References.md
+    _posts/Beginner/2026-10-06-How_Language_Models_Work.md
+    _posts/Languages/2026-10-22-go-sync-pool-string-interning-tokenizer-sidecar.md
+    _posts/OData/2024-01-13-odata-csharp-benchmark.md
+    _posts/OData/2024-01-13-odata-csharp-custom-httpclient-client.md
+    _posts/OData/2024-01-13-odata-csharp-odata-client.md
+    _posts/OData/2024-01-13-odata-csharp-simple-odata-client.md
+    _posts/OData/2024-01-13-odata.md
+    _posts/OData/2026-10-05-odata-query-performance-pitfalls-dotnet.md
+    _posts/Performance/2026-10-21-rust-mimalloc-vs-glibc-malloc.md
+    _posts/Performance/2026-10-21-rust-rwlock-vs-sharded-cache-p99.md
+    _posts/Performance/2026-10-22-rust-small-string-optimization-llm-tokenizer-sidecar.md
+    _posts/Performance/2026-10-22-rust-tokio-async-llm-gateway-backpressure.md
+"
+  local measured
+  measured="$(for f in $_posts; do
+    awk -v file="$f" '
+      FNR == 1 { fm = 0; in_image = 0 }
+      /^---[[:space:]]*$/ && fm < 2 { fm++; in_image = 0; next }
+      fm != 1 { next }
+      /^image:[[:space:]]*[^[:space:]]/ {
+        v = $0; sub(/^image:[[:space:]]*/, "", v); emit(v); next
+      }
+      /^image:[[:space:]]*$/ { in_image = 1; next }
+      /^[^[:space:]]/ { in_image = 0 }
+      in_image && /^[[:space:]]+path:[[:space:]]*[^[:space:]]/ {
+        v = $0; sub(/^[[:space:]]+path:[[:space:]]*/, "", v); emit(v)
+      }
+      function emit(v) {
+        sub(/[[:space:]]+$/, "", v); gsub(/^["\x27]|["\x27]$/, "", v)
+        if (v ~ /^\// || v ~ /^assets\//) print file "\t" v
+      }
+    ' "$f"
+  done | ruby -e '
+    def dims(path)
+      File.open(path, "rb") do |f|
+        h = f.read(30).to_s
+        if h.start_with?("\x89PNG".b)
+          return h[16, 8].unpack("NN")
+        elsif h.start_with?("GIF8")
+          return h[6, 4].unpack("vv")
+        elsif h[0, 4] == "RIFF" && h[8, 4] == "WEBP"
+          case h[12, 4]
+          when "VP8 "
+            w, ht = h[26, 4].unpack("vv")
+            return [w & 0x3fff, ht & 0x3fff]
+          when "VP8L"
+            b = h[21, 4].unpack1("V")
+            return [(b & 0x3fff) + 1, ((b >> 14) & 0x3fff) + 1]
+          when "VP8X"
+            b = h[24, 6].bytes
+            return [1 + b[0] + (b[1] << 8) + (b[2] << 16), 1 + b[3] + (b[4] << 8) + (b[5] << 16)]
+          end
+        elsif h.start_with?("\xFF\xD8".b)
+          f.seek(2)
+          while (c = f.getbyte)
+            next unless c == 0xFF
+            m = f.getbyte
+            m = f.getbyte while m == 0xFF
+            break if m.nil?
+            next if m == 0x01 || (0xD0..0xD9).cover?(m)
+            len = f.read(2).unpack1("n")
+            if (0xC0..0xCF).cover?(m) && ![0xC4, 0xC8, 0xCC].include?(m)
+              ht, w = f.read(5).unpack("xnn")
+              return [w, ht]
+            end
+            f.seek(len - 2, IO::SEEK_CUR)
+          end
+        end
+      end
+      nil
+    end
+    STDIN.each_line do |line|
+      post, path = line.chomp.split("\t", 2)
+      d = (dims(path.sub(%r{\A/}, "")) rescue nil)
+      if d.nil? || d[0].to_i <= 0 || d[1].to_i <= 0
+        puts [post, path, "?", "?", "unknown"].join("\t")
+      else
+        w, ht = d
+        puts [post, path, w, ht, 100 * (21 * w - 40 * ht).abs <= 120 * ht ? "ok" : "off"].join("\t")
+      end
+    end
+  ')"
+  local report
+  report="$(printf '%s\n' "$measured" | HEADER_RATIO_GRANDFATHERED="$HEADER_RATIO_GRANDFATHERED" awk -F '\t' '
+    BEGIN {
+      n = split(ENVIRON["HEADER_RATIO_GRANDFATHERED"], list, "\n")
+      for (i = 1; i <= n; i++) {
+        g = list[i]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", g)
+        if (g != "") { keep[g] = 1; ngf++ }
+      }
+    }
+    NF < 5 { next }
+    {
+      total++; seen[$1] = $5
+      if ($5 == "ok") next
+      off++
+      if ($1 in keep) { held++; next }
+      if ($5 == "unknown") {
+        print "BAD\t" $1 " -> " $2 " (cannot read its width/height; export it as webp, png, jpeg or gif)"
+      } else {
+        printf "BAD\t%s -> %s (%sx%s, ratio %.3f; 40:21 is 1.905)\n", $1, $2, $3, $4, $3 / $4
+      }
+    }
+    END {
+      for (g in keep) if (!(g in seen) || seen[g] == "ok") print "STALE\t" g
+      printf "SUM\t%d\t%d\t%d\n", off, total, held
+    }
+  ')"
+  local bad stale sum
+  bad="$(printf '%s\n' "$report" | awk -F '\t' '$1 == "BAD" { print $2 }')"
+  stale="$(printf '%s\n' "$report" | awk -F '\t' '$1 == "STALE" { print $2 }' | sort)"
+  sum="$(printf '%s\n' "$report" | awk -F '\t' '$1 == "SUM" { print $2 "/" $3 " header images off 40:21 by more than 3%, " $4 " of them grandfathered" }')"
+  echo "header-aspect-ratio: $sum (rule: the front-matter image:/path: file of each post has width/height within 3% of 40:21, the box Chirpy crops post headers to)"
+  if [[ -n $stale ]]; then
+    echo "note: grandfathered post(s) whose header now passes or is gone; delete them from HEADER_RATIO_GRANDFATHERED in tools/test.sh:" >&2
+    printf '       %s\n' $stale >&2
+  fi
+  if [[ -n $bad ]]; then
+    echo "error: $(printf '%s\n' "$bad" | grep -c .) post header image(s) are not 40:21 within 3%, so the post page crops their edges:" >&2
+    printf '%s\n' "$bad" | sed 's/^/       /' >&2
+    echo "       Re-export the header at 40:21 (e.g. 1200x630 or 1500x788) so readers see the whole image." >&2
+    exit 1
+  fi
+}
+
 # Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
 # Atom feed fall back to the generic site description otherwise, so every post
 # would show the same search snippet. Same rule as
@@ -925,6 +1105,7 @@ main() {
   check_tab_order_unique
   report_image_coverage
   report_image_link_coverage
+  check_header_aspect_ratio
   report_alt_coverage
   report_body_image_coverage
   check_body_image_alt_length

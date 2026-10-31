@@ -1,0 +1,17 @@
+{% comment %} Layout-specific CDN libraries (clipboard, dayjs). Lazysizes and magnific-popup were
+dropped by the vendored theme (jekyll-theme-chirpy 7.6.0 no longer ships their origin entries), so
+they are no longer appended here to avoid emitting empty <script src=""> tags. Appends to `urls`. {% endcomment %}
+{% if page.layout == 'post' or page.layout == 'page' or page.layout == 'home' %}
+{% unless page.layout == 'home' %}
+{% assign urls = urls | append: ',' | append:
+site.data.origin[type].clipboard.js %}
+{% endunless %}
+{% endif %}
+{% if page.layout == 'home' or page.layout == 'post' or page.layout == 'archives' or page.layout == 'category' or page.layout == 'tag' %}
+{% assign locale = site.lang | split: '-' | first %}
+{% assign urls = urls | append: ',' | append:
+site.data.origin[type].dayjs.js.common | append: ',' | append:
+site.data.origin[type].dayjs.js.locale | replace: ':LOCALE', locale | append: ',' | append:
+site.data.origin[type].dayjs.js.relativeTime | append: ',' | append:
+site.data.origin[type].dayjs.js.localizedFormat %}
+{% endif %}

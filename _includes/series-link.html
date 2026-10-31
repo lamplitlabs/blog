@@ -1,0 +1,102 @@
+{%- comment -%}
+Series navigation link that only becomes a link once the target post is built.
+With `future: false`, a post dated after the build day is not in site.posts, so a
+hard link to it would be a 404 until publish day. Render the title as plain text
+with "(coming soon)" until then and as a link afterwards - no manual edit needed.
+Usage: {% include series-link.html post="Performance/2026-10-11-slug" title="..." note=" - why it is related." %}
+
+Fallbacks when no explicit `post` is passed (e.g. {% include series-link.html %}):
+  1. `page.series` front-matter: link to the next built post in the same series
+     (earliest post dated after this one; if none, the latest earlier one).
+  2. Tag match: take the page's first non-generic tag and link to the other
+     built post sharing it that has the most tags in common with this page
+     (newest wins a tie). Generic tags (ai, dotnet, azure, csharp, performance,
+     enterprise, openai, benchmark) are skipped because they match half the blog.
+Both fallbacks only ever see posts in site.posts, so they are link-only-when-built
+by construction: an unbuilt target simply yields no output, never a 404.
+{%- endcomment -%}
+{%- if include.post -%}
+  {%- assign _sl_path = "_posts/" | append: include.post | append: ".md" -%}
+  {%- assign _sl_target = site.posts | where: "path", _sl_path | first -%}
+  {%- if _sl_target -%}
+[{{ include.title }}]({{ _sl_target.url | relative_url }}){{ include.note }}
+  {%- else -%}
+{{ include.title }} (coming soon){{ include.note }}
+  {%- endif -%}
+{%- else -%}
+  {%- assign _sl_target = nil -%}
+  {%- assign _sl_note = include.note -%}
+  {%- if page.series -%}
+    {%- assign _sl_series = site.posts | where: "series", page.series | where_exp: "p", "p.url != page.url" | sort: "date" -%}
+    {%- for p in _sl_series -%}
+      {%- if p.date > page.date -%}
+        {%- assign _sl_target = p -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- unless _sl_target -%}
+      {%- assign _sl_target = _sl_series | last -%}
+    {%- endunless -%}
+    {%- if _sl_target and _sl_note == nil -%}
+      {%- assign _sl_note = " - next in the " | append: page.series | append: " series." -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- unless _sl_target -%}
+    {%- assign _sl_generic = "ai,dotnet,azure,csharp,performance,enterprise,openai,benchmark" | split: "," -%}
+    {%- assign _sl_tag = nil -%}
+    {%- for t in page.tags -%}
+      {%- assign _sl_t = t | downcase -%}
+      {%- unless _sl_generic contains _sl_t -%}
+        {%- assign _sl_tag = t -%}
+        {%- break -%}
+      {%- endunless -%}
+    {%- endfor -%}
+    {%- if _sl_tag -%}
+      {%- assign _sl_best = -1 -%}
+      {%- for p in site.tags[_sl_tag] -%}
+        {%- if p.url == page.url -%}{%- continue -%}{%- endif -%}
+        {%- assign _sl_score = 0 -%}
+        {%- for t in p.tags -%}
+          {%- if page.tags contains t -%}{%- assign _sl_score = _sl_score | plus: 1 -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if _sl_score > _sl_best -%}
+          {%- assign _sl_best = _sl_score -%}
+          {%- assign _sl_target = p -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if _sl_target and _sl_note == nil -%}
+        {%- assign _sl_note = " - another post tagged " | append: _sl_tag | append: "." -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endunless -%}
+  {%- if _sl_target -%}
+[{{ _sl_target.title }}]({{ _sl_target.url | relative_url }}){{ _sl_note }}
+  {%- endif -%}
+{%- endif -%}
+{%- comment -%}
+Category mode (used by _includes/post-nav.html at the end of every post):
+{% include series-link.html category=true %} renders an HTML link to the next
+built post in the page's primary category (earliest post dated after this one;
+if this is the newest, the latest earlier one), so a reader who finishes a post
+can continue through the same category without going back to the index. Posts
+whose primary category holds no other built post render nothing.
+{%- endcomment -%}
+{%- if include.category -%}
+  {%- assign _sl_cat = page.categories | first -%}
+  {%- if _sl_cat -%}
+    {%- assign _sl_target = nil -%}
+    {%- assign _sl_cat_posts = site.categories[_sl_cat] | where_exp: "p", "p.url != page.url" | where_exp: "p", "p.categories[0] == _sl_cat" | sort: "date" -%}
+    {%- for p in _sl_cat_posts -%}
+      {%- if p.date > page.date -%}
+        {%- assign _sl_target = p -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- unless _sl_target -%}
+      {%- assign _sl_target = _sl_cat_posts | last -%}
+    {%- endunless -%}
+    {%- if _sl_target -%}
+<p class="post-next-in-category mt-4 mb-0">Next in <a href="{{ _sl_cat | slugify | prepend: '/categories/' | append: '/' | relative_url }}">{{ _sl_cat }}</a>: <a href="{{ _sl_target.url | relative_url }}">{{ _sl_target.title }}</a></p>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}

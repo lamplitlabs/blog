@@ -1,0 +1,21 @@
+{
+  "name": "blog",
+  "dockerFile": "Dockerfile",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "DavidAnson.vscode-markdownlint",
+        "shardulm94.trailing-spaces",
+        "IBM.output-colorizer",
+        "GitHub.copilot",
+        "ms-vscode-remote.remote-containers",
+        "discretegames.f5anything"
+      ]
+    }
+  },
+  "postCreateCommand": "bundle install"
+}

@@ -1,0 +1,51 @@
+<!-- Cross-sell block rendered at the end of every post by _layouts/post.html.
+     Data lives in _data/products.yml; Pulse is listed there as a coming-soon
+     product under the `internal` key (rendered after the featured list). -->
+{%- assign featured = site.data.products.featured | default: empty -%}
+{%- assign internal = site.data.products.internal | default: empty -%}
+{%- assign related = site.related_posts | where_exp: 'post', 'post.url != page.url' | slice: 0, 3 -%}
+
+<aside class="related-products border-top pt-4 mt-5" aria-label="More from Lamplit Labs">
+  {%- if featured.size > 0 %}
+  <section class="mb-4">
+    <h2 class="h4 mb-3">From Lamplit Labs</h2>
+    <ul class="list-unstyled ps-1">
+      {%- for product in featured %}
+      <li class="mb-2">
+        <i class="far fa-arrow-alt-circle-right fa-fw me-1"></i>
+        <a href="{{ product.url }}">{{ product.title }}</a>
+        {%- if product.blurb %}
+        <span class="text-muted"> — {{ product.blurb }}</span>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+      {%- for product in internal %}
+      <li class="mb-2">
+        <i class="far fa-arrow-alt-circle-right fa-fw me-1"></i>
+        <a href="{{ product.url | relative_url }}">{{ product.title }}</a>
+        {%- if product.blurb %}
+        <span class="text-muted"> — {{ product.blurb }}</span>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+
+  {%- if related.size > 0 %}
+  <section>
+    <h2 class="h4 mb-3">Related posts</h2>
+    <ul class="list-unstyled ps-1">
+      {%- for post in related %}
+      <li class="mb-2">
+        <i class="far fa-file-lines fa-fw me-1"></i>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        {%- if post.description %}
+        <span class="text-muted"> — {{ post.description | strip_html | strip_newlines | truncate: 100 }}</span>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+</aside>

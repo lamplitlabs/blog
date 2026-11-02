@@ -1,0 +1,20 @@
+# gitleaks config for agent session logs, measured in
+# scripts/agent_log_secret_leak_bench.py: the default rules, one extra rule for
+# passwords in connection URLs (no default rule covers scheme://user:pass@host),
+# and an allowlist for keyed identifiers that agent logs carry by design and
+# that the default generic-api-key rule flags.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "connection-url-password"
+description = "Password in the userinfo part of a connection URL"
+regex = '''\b[a-z][a-z0-9+.-]{1,20}://[^\s:/@'"]*:([^\s@/'"]{8,})@[a-z0-9.-]+'''
+secretGroup = 1
+entropy = 3.0
+keywords = ["://"]
+
+[[allowlists]]
+description = "idempotency keys, cache keys and page tokens are identifiers, not credentials"
+regexTarget = "match"
+regexes = ['''(?i)(idempotency-key|cache_key|next_page_token)["\\]*[:=]''']

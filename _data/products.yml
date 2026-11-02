@@ -1,0 +1,32 @@
+# Products and sites shown in the cross-sell block at the end of every post
+# (_includes/related-products.html). Keep descriptions short; Pulse is listed
+# as a coming-soon product under `internal` (rendered after the featured list).
+featured:
+  - title: "New: Go pprof alloc_space - 2.87 GB of garbage from one += in a loop"
+    url: /posts/go-pprof-alloc-space-escape-analysis/
+    blurb: Our latest walkthrough with terminal screenshots - trace 2.87 GB/s of garbage to one string concat, cut it to 513 kB and CPU by 94%.
+  - title: AI Token Counter
+    url: https://tools.lamplitlabs.com/token-counter
+    blurb: Count tokens and estimate context usage before you send a prompt.
+  - title: AI Pricing Calculator
+    url: https://tools.lamplitlabs.com/ai-pricing
+    blurb: Compare LLM pricing across providers for your workload.
+  - title: OpenAPI-to-MCP Server Generator
+    url: https://tools.lamplitlabs.com/openapi-to-mcp
+    blurb: Turn an OpenAPI spec into a working MCP server skeleton.
+  - title: Structured Output Playground
+    url: https://tools.lamplitlabs.com/structured-output
+    blurb: Test JSON-schema structured outputs against model responses.
+  - title: AI Context Windows
+    url: https://tools.lamplitlabs.com/context-windows
+    blurb: Look up context window sizes and token limits by model.
+  - title: Cron Expression Helper
+    url: https://tools.lamplitlabs.com/cron-translator
+    blurb: Translate cron expressions to plain English and back for your pipelines.
+  - title: All free tools at tools.lamplitlabs.com
+    url: https://tools.lamplitlabs.com/
+    blurb: The full set of free browser tools we ship and maintain.
+internal:
+  - title: Pulse (coming soon)
+    url: /categories/lamplit-tools/
+    blurb: Our multi-project self-improving (RSI) automation product. Coming soon - this blog is its proving ground, and we write about how it works.

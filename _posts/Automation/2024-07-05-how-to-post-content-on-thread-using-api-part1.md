@@ -1,0 +1,164 @@
+---
+layout: post
+title: "Instagram Threads API - Part 1 - Obtaining Your API Access Token"
+description: "Part 1 of posting to Instagram Threads with the API: creating a Meta app, configuring permissions and obtaining an access token for your account."
+date: 2024-07-05 00:00:00 +0200
+categories: automation
+tags: thread instagram rest post api
+author: manishtiwari25
+image:
+  path: /assets/img/headers/automation/thread-api-part1.webp
+  alt: "Header image for Instagram Threads API Part 1: obtaining a Meta app access token"
+---
+
+In today's digital era, leveraging the power of social media is essential for businesses and individuals alike. Among the myriad of platforms available, Instagram Threads stands out for connecting with your audience, amplifying your brand's message, and fostering engagement. But did you know that you can take your Instagram Threads experience to greater heights by tapping into its API (Application Programming Interface)?
+
+This blog series aims to unlock the potential of your Instagram Threads account through API integration, beginning with the crucial step of obtaining your API access token, specifically tailored for post creation. By understanding and utilizing the Instagram Threads API, you can streamline your content management, enhance your engagement strategies, and gain valuable insights into your audience’s preferences and behaviors.
+
+[Part 2](/posts/how-to-post-content-on-thread-using-api-part2) is out now.
+
+## Prerequisites
+
+Before diving into obtaining your API access token, ensure you have the following:
+
+- **Facebook Developer Account**: You'll need an active Facebook account to access the Facebook for Developers platform and create a developer account.
+- **Instagram Threads Account**: Ensure you have an Instagram Threads account for your business or organization, as you'll be obtaining the API access token specifically for managing posts on this account.
+- **Technical Knowledge**: Basic understanding of web development concepts such as APIs, authentication, and HTTP requests will be beneficial.
+- **Patience**: The process of setting up your Facebook Developer account, creating an app, and obtaining an API access token may require some time and patience.
+
+## Understanding the API Access Token for Post Creation
+
+Before we delve into the process of obtaining your API access token, let's clarify its role in post creation. An API access token serves as a unique identifier granting permission to interact with the Instagram Threads API. In this context, it allows you to automate the process of posting content to your Instagram Threads account.
+
+
+## Obtaining Your API Access Token for Post Creation
+
+Now, let's walk through the steps to obtain your API access token specifically for post creation:
+
+1.  ##### **Create a Facebook Developer Account**
+
+    If you haven't already, sign up for a Facebook Developer account on the [Facebook for Developers website](https://developers.facebook.com/).
+
+2.  ##### **Set Up a New App**
+
+    - Navigate to the "My Apps" dashboard within your developer account.
+      ![Meta for Developers top navigation with Docs, Blog, Developer Products and More menus](/assets/img/posts/automation/facebook-automation/facebook-1.webp){: width="1410" height="784" }
+    - Click "Create App"
+      ![Meta My Apps dashboard with app search field, Create App button and Recently Used list](/assets/img/posts/automation/facebook-automation/facebook-2.webp){: width="1394" height="784" }
+    - Click on Other radio button.
+      ![Create an app screen asking what the app should do, with the Other option selected for unlisted products](/assets/img/posts/automation/facebook-automation/facebook-3.webp){: width="1394" height="754" }
+    - Click Next
+      ![Create an app screen with the Other option selected and the Next button to continue](/assets/img/posts/automation/facebook-automation/facebook-4.webp){: width="1394" height="754" }
+    - Select Business app type
+      ![Select an app type screen listing Consumer, Business, Instant Games and Gaming app types](/assets/img/posts/automation/facebook-automation/facebook-5.webp){: width="1410" height="804" }
+    - Click "Next"
+      ![App type list continued with None type selected and the Next button at the bottom](/assets/img/posts/automation/facebook-automation/facebook-6.webp){: width="1410" height="804" }
+    - Fill The form
+      ![App creation form asking for an app name, contact email and optional Business Account](/assets/img/posts/automation/facebook-automation/facebook-7.webp){: width="1410" height="804" }
+    - Click on "Create app"
+      ![Bottom of the app creation form with Previous and Create app buttons](/assets/img/posts/automation/facebook-automation/facebook-8.webp){: width="1394" height="772" }
+    - You may ask to Login Again
+    - After creation of Business app, go to https://developers.facebook.com/apps/creation/ and create a new app, which we will use to access thread apis.
+    - Dusring the creation you will be ask to select a use case, please select Access the Thread API. 
+      ![Meta create-app screen with use cases such as App details and Facebook Login authentication](/assets/img/posts/automation/thread-automation/thread-1.webp){: width="1054" height="789" }
+    - Fill all the form correctly and submit.
+
+3. #### **Setting Permissions**
+ 
+    Next, set the nec^essary permissions for your app. If you only intend to post content, the `threads_basic` and `threads_content_publish` permissions should suffice. Additional permissions can be added later if needed.
+    ![Threads API permission list with Add buttons for threads_basic and threads_content_publish](/assets/img/posts/automation/thread-automation/thread-2.webp){: width="1198" height="654" }
+
+4. #### **Configuring OAuth**
+ 
+    OAuth is a passwordless authorization process that allows users to access resources securely. You'll need to configure OAuth URLs for your app. If you don't have a website, you can use Postman to handle the OAuth flow.
+    
+    Use the following URL for Postman's Redirect Callback: 
+    - https://oauth.pstmn.io/v1/callback (postman app)
+    - https://oauth.pstmn.io/v1/browser-callback (postman in browser).
+
+    ![Threads API settings fields for OAuth redirect, uninstall and delete callback URLs](/assets/img/posts/automation/thread-automation/thread-3.webp){: width="1203" height="337" }
+
+5. #### **Adding Testers**
+ 
+    If you want to invite specific people to test your app, you can add them as testers. However, this step is optional since OAuth will handle the authorization.
+
+    If you are generating token for [ferret](https://github.com/bitesinbyte/ferret), you have to add your thread account as tester.
+
+    To add test user, Expend App roles and click on Roles. Click on Add People and select Thread Tester. please note when you add a user as tester, it sends a invite, you have to accept that invite. 
+
+6. #### **App Settings**
+ 
+    To make API calls to the Threads API, you'll need the CLIENT_ID and CLIENT_SECRET. Be cautious with your client secret to prevent unauthorized access.
+
+    App Settings: Find these values under App settings and then Basic.
+
+    ![Threads app settings showing the App ID, App secret and display name fields](/assets/img/posts/automation/thread-automation/thread-4.webp){: width="974" height="198" }
+
+7. #### **Authorization**
+ 
+    Now that everything is set up, you can request an authorization code by navigating to the following URL in your browser:
+
+    https://threads.net/oauth/authorize?client_id=[CLIENT_ID]&redirect_uri=[REDIRECT_URL]&scope=[SCOPES]&response_type=code  
+
+    SCOPES should be threads_basic,threads_content_publish
+    
+    You'll receive an authorization code at the redirect URL, which you can then use to request an access token.
+    
+8.  ##### **Generate an Short Lived API Access Token**
+
+    To convert the authorization code into an Short Lived access token, send a POST request:
+
+      - Url : https://graph.threads.net/oauth/access_token
+      - Method: POST
+      - Headers:
+        - Content-Type: 'application/x-www-form-urlencoded'
+      - Parameters:
+        - client_id:[CLIENT_ID]
+        - client_secret:[Client_SECRET]
+        - grant_type:authorization_code
+        - redirect_uri:https://oauth.pstmn.io/v1/browser-callback
+        - code: [CODE_FROM_LAST_STEP]
+      - Response
+
+        ```json
+        {
+          "access_token": "",
+          "user_id": "abc"
+        }
+        ```
+
+9. #### **Generating a Long-lived Access Token**
+
+    Since short-lived tokens expire quickly, convert it to a long-lived access token:
+
+      - Generate Token
+
+        - Url: https://graph.threads.net/access_token?grant_type=th_exchange_token&client_secret=[CLIENT_ID]&access_token=[ACCESST_TOKEN_FROM_LAST_STEP]
+        - Method: GET
+       
+        - Response
+
+          ```json
+          {
+            "access_token": "",
+            "id": ""
+          }
+          ```
+
+      - You'll receive a long-lived access token, which you can use for extended access.
+
+10. ##### **Securely Store Your Access Token**
+  
+    Treat your access token like a sensitive piece of information and store it securely. Avoid hardcoding tokens in your application code or sharing them indiscriminately.
+
+## Wrapping Up
+
+Obtaining your API access token for post creation marks the initial step towards optimizing your Thread Page's performance through automation. In [Part 2](/posts/how-to-post-content-on-thread-using-api-part2) of this series, we'll delve into leveraging your access token to programmatically create and schedule posts, empowering you to elevate your social media strategy.
+
+[Part 2](/posts/how-to-post-content-on-thread-using-api-part2) is out now.
+
+## Related posts
+
+- [Instagram Threads API - Part 2 - Creating Post using REST Apis](/posts/how-to-post-content-on-thread-using-api-part2/)
+- [Instagram Threads API: A Big Step Towards Taking on Twitter?](/posts/instagram-thread-api/)
+- [Maximizing Your Facebook Page: Part 1 - Obtaining Your API Access Token](/posts/how-to-post-on-facebook-page-using-rest-api-part1/)

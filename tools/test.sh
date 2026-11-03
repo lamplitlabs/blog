@@ -1090,6 +1090,51 @@ check_today_not_future() {
   echo "today-not-future-coverage: 0 posts dated $today skipped as 'has a future date' by a production (no --future) read (rule: any >0 fails)"
 }
 
+# Fail when a built page that loads the theme's post.min.js or page.min.js does
+# not load GLightbox in an earlier <script src>. Both bundles call GLightbox()
+# at load; without it the bundle throws "ReferenceError: GLightbox is not
+# defined" and stops before wiring the sidebar toggle, so the mobile hamburger,
+# the image popup and the copy-code button are dead. Jekyll still exits 0 and
+# htmlproofer passes, so only the rendered script order shows it. Every script
+# tag is `defer`, so document order is execution order. Run after the build.
+check_glightbox_before_bundle() {
+  local root="$SITE_DIR$_baseurl" rows total missing posts
+  rows="$(find "$root" -name '*.html' -print0 | xargs -0 awk '
+    FNR == 1 { gl = 0; done = 0 }
+    done { next }
+    {
+      s = $0
+      while (match(s, /<script[^>]*src="[^"]*"/)) {
+        tag = substr(s, RSTART, RLENGTH)
+        s = substr(s, RSTART + RLENGTH)
+        if (tag ~ /\/assets\/js\/dist\/(post|page)\.min\.js"/) {
+          b = tag; sub(/.*\/assets\/js\/dist\//, "", b); sub(/".*/, "", b)
+          print (gl ? "ok" : "missing") "\t" b "\t" FILENAME
+          done = 1
+          break
+        }
+        if (tag ~ /glightbox/) gl = 1
+      }
+    }
+  ')"
+  total="$(printf '%s\n' "$rows" | grep -c . || true)"
+  posts="$(printf '%s\n' "$rows" | grep -c "$(printf '\t')post\.min\.js$(printf '\t')" || true)"
+  missing="$(printf '%s\n' "$rows" | grep -c '^missing' || true)"
+  if ((_posts_total > 0 && posts == 0)); then
+    echo "error: no page under $root loads /assets/js/dist/post.min.js, so the GLightbox load-order check found nothing to check." >&2
+    echo "       The theme's bundle names or the post layout changed; update check_glightbox_before_bundle in tools/test.sh." >&2
+    exit 1
+  fi
+  if ((missing > 0)); then
+    echo "error: $missing/$total built pages load post.min.js/page.min.js without GLightbox in an earlier <script src>:" >&2
+    printf '%s\n' "$rows" | awk -F '\t' '$1 == "missing" { print "       " $3 " (" $2 ")" }' | head -20 >&2
+    echo "       The bundle calls GLightbox() at load and throws a ReferenceError, so the sidebar toggle, image popup and copy-code button stay dead." >&2
+    echo "       Keep site.data.origin[type].glightbox.js appended for post and page layouts in _includes/js-layout.html." >&2
+    exit 1
+  fi
+  echo "glightbox-load-coverage: $missing/$total built pages ($posts posts) load post.min.js/page.min.js without GLightbox before it (rule: a <script src> containing 'glightbox' precedes the bundle's <script> tag; any >0 fails)"
+}
+
 main() {
   preflight
   collect_posts
@@ -1157,6 +1202,8 @@ main() {
   fi
   echo "tag-conflict-coverage: $_conflicts 'Conflict: The following destination is shared by multiple files' warnings in the jekyll build log (rule: grep -c on the captured build output; any >0 fails)"
   rm -f "$_build_log"
+
+  check_glightbox_before_bundle
 
   # test
   bundle exec htmlproofer "$SITE_DIR" \

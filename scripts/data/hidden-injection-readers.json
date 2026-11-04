@@ -1,0 +1,704 @@
+{
+ "seed": 20261104,
+ "pages_per_carrier": 12,
+ "attack_pages": 216,
+ "control_pages": {
+  "visible_payload": 12,
+  "clean": 12
+ },
+ "browser": "Google Chrome for Testing 157.0.8103.15",
+ "html2text": "2025.4.15",
+ "bs4": "4.15.0",
+ "repeats": 3,
+ "readers": [
+  "raw_html",
+  "bs4_text",
+  "html2text",
+  "text_content",
+  "inner_text",
+  "ax_tree",
+  "ocr",
+  "visible_basic",
+  "visible",
+  "visible_ocr"
+ ],
+ "carriers": [
+  {
+   "id": "html_comment",
+   "label": "HTML comment",
+   "group": "markup",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 0,
+   "html2text": 0,
+   "text_content": 0,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "never a rendered text node": 12
+   }
+  },
+  {
+   "id": "noscript",
+   "label": "<noscript> block",
+   "group": "markup",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "never a rendered text node": 12
+   }
+  },
+  {
+   "id": "template",
+   "label": "<template> element",
+   "group": "markup",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 0,
+   "html2text": 12,
+   "text_content": 0,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "never a rendered text node": 12
+   }
+  },
+  {
+   "id": "meta_jsonld",
+   "label": "JSON-LD / meta description",
+   "group": "markup",
+   "pages": 12,
+   "variants": [
+    "json-ld",
+    "meta"
+   ],
+   "raw_html": 12,
+   "bs4_text": 0,
+   "html2text": 0,
+   "text_content": 0,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "never a rendered text node": 12
+   }
+  },
+  {
+   "id": "img_alt",
+   "label": "alt text of a decorative image",
+   "group": "markup",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 0,
+   "html2text": 12,
+   "text_content": 0,
+   "inner_text": 0,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "never a rendered text node": 12
+   }
+  },
+  {
+   "id": "aria_label",
+   "label": "aria-label on an icon button",
+   "group": "markup",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 0,
+   "html2text": 0,
+   "text_content": 0,
+   "inner_text": 0,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "never a rendered text node": 12
+   }
+  },
+  {
+   "id": "display_none",
+   "label": "display:none",
+   "group": "css",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "not rendered": 12
+   }
+  },
+  {
+   "id": "hidden_attr",
+   "label": "hidden attribute",
+   "group": "css",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "not rendered": 12
+   }
+  },
+  {
+   "id": "visibility_hidden",
+   "label": "visibility:hidden",
+   "group": "css",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "not rendered": 12
+   }
+  },
+  {
+   "id": "opacity_zero",
+   "label": "opacity:0",
+   "group": "css",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "not rendered": 12
+   }
+  },
+  {
+   "id": "closed_details",
+   "label": "closed <details>",
+   "group": "css",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 0,
+   "ax_tree": 0,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "not rendered": 12
+   }
+  },
+  {
+   "id": "same_colour",
+   "label": "text colour = background colour",
+   "group": "css",
+   "pages": 12,
+   "variants": [
+    "#fbfbfb",
+    "#fdfdfd",
+    "#fefefe",
+    "#ffffff"
+   ],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_by_variant": {
+    "#fbfbfb": "0/2",
+    "#fdfdfd": "0/2",
+    "#fefefe": "0/4",
+    "#ffffff": "0/4"
+   },
+   "visible_removed_because": {
+    "low contrast": 12
+   }
+  },
+  {
+   "id": "tiny_font",
+   "label": "font-size 0.5-2 px",
+   "group": "css",
+   "pages": 12,
+   "variants": [
+    "0.5px",
+    "1.5px",
+    "1px",
+    "2px"
+   ],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_by_variant": {
+    "0.5px": "0/3",
+    "1.5px": "0/2",
+    "1px": "0/2",
+    "2px": "0/5"
+   },
+   "visible_removed_because": {
+    "font < 6px": 12
+   }
+  },
+  {
+   "id": "offscreen",
+   "label": "positioned off-screen",
+   "group": "geometry",
+   "pages": 12,
+   "variants": [
+    "left:-9999px",
+    "text-indent:-9999px",
+    "top:-5000px"
+   ],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_by_variant": {
+    "left:-9999px": "0/5",
+    "text-indent:-9999px": "0/3",
+    "top:-5000px": "0/4"
+   },
+   "visible_removed_because": {
+    "off page": 12
+   }
+  },
+  {
+   "id": "sr_only",
+   "label": "visually-hidden (clip 1 px)",
+   "group": "geometry",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "clipped": 12
+   }
+  },
+  {
+   "id": "covered",
+   "label": "covered by another element",
+   "group": "geometry",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "covered": 12
+   }
+  },
+  {
+   "id": "gradient_bg",
+   "label": "text colour = background image",
+   "group": "geometry",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 12,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "low contrast": 12
+   }
+  },
+  {
+   "id": "unicode_tags",
+   "label": "Unicode tag characters",
+   "group": "unicode",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "format characters stripped": 12
+   }
+  },
+  {
+   "id": "ho_transparent",
+   "label": "color: transparent",
+   "group": "held-out",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "low contrast": 12
+   }
+  },
+  {
+   "id": "ho_scale_zero",
+   "label": "transform: scale(0)",
+   "group": "held-out",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "no box": 12
+   }
+  },
+  {
+   "id": "ho_clip_path",
+   "label": "clip-path: inset(50%)",
+   "group": "held-out",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 5,
+   "visible": 5,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "covered": 7
+   }
+  },
+  {
+   "id": "ho_zero_height",
+   "label": "height 0 + overflow hidden",
+   "group": "held-out",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "clipped": 12
+   }
+  },
+  {
+   "id": "ho_filter_opacity",
+   "label": "filter: opacity(0)",
+   "group": "held-out",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 12,
+   "visible": 12,
+   "visible_ocr": 0,
+   "visible_removed_because": {}
+  },
+  {
+   "id": "ho_image_bg",
+   "label": "text colour = url() background image",
+   "group": "held-out",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 0,
+   "visible_basic": 0,
+   "visible": 0,
+   "visible_ocr": 0,
+   "visible_removed_because": {
+    "low contrast": 12
+   }
+  },
+  {
+   "id": "visible",
+   "label": "visible text (control)",
+   "group": "control",
+   "pages": 12,
+   "variants": [],
+   "raw_html": 12,
+   "bs4_text": 12,
+   "html2text": 12,
+   "text_content": 12,
+   "inner_text": 12,
+   "ax_tree": 12,
+   "ocr": 11,
+   "visible_basic": 12,
+   "visible": 12,
+   "visible_ocr": 12,
+   "visible_removed_because": {}
+  }
+ ],
+ "attack_totals": {
+  "raw_html": 216,
+  "bs4_text": 156,
+  "html2text": 180,
+  "text_content": 156,
+  "inner_text": 96,
+  "ax_tree": 120,
+  "ocr": 0,
+  "visible_basic": 12,
+  "visible": 0,
+  "visible_ocr": 0
+ },
+ "held_out_pages": 72,
+ "held_out_totals": {
+  "raw_html": 72,
+  "bs4_text": 72,
+  "html2text": 72,
+  "text_content": 72,
+  "inner_text": 72,
+  "ax_tree": 72,
+  "ocr": 0,
+  "visible_basic": 17,
+  "visible": 17,
+  "visible_ocr": 0
+ },
+ "clean_pages_false_flags": {
+  "raw_html": 0,
+  "bs4_text": 0,
+  "html2text": 0,
+  "text_content": 0,
+  "inner_text": 0,
+  "ax_tree": 0,
+  "ocr": 0,
+  "visible_basic": 0,
+  "visible": 0,
+  "visible_ocr": 0
+ },
+ "retention": {
+  "raw_html": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 312,
+    "button label": 312,
+    "closed FAQ answer": 312
+   }
+  },
+  "bs4_text": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 312,
+    "button label": 0,
+    "closed FAQ answer": 312
+   }
+  },
+  "html2text": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 312,
+    "button label": 0,
+    "closed FAQ answer": 312
+   }
+  },
+  "text_content": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 312,
+    "button label": 0,
+    "closed FAQ answer": 312
+   }
+  },
+  "inner_text": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 312,
+    "button label": 0,
+    "closed FAQ answer": 0
+   }
+  },
+  "ax_tree": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 312,
+    "button label": 312,
+    "closed FAQ answer": 0
+   }
+  },
+  "ocr": {
+   "sentences_kept": 2605,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 0,
+    "button label": 0,
+    "closed FAQ answer": 0
+   }
+  },
+  "visible_basic": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 0,
+    "button label": 0,
+    "closed FAQ answer": 0
+   }
+  },
+  "visible": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 0,
+    "button label": 0,
+    "closed FAQ answer": 0
+   }
+  },
+  "visible_ocr": {
+   "sentences_kept": 2667,
+   "sentences_total": 2667,
+   "legit_hidden": {
+    "skip link": 0,
+    "button label": 0,
+    "closed FAQ answer": 0
+   }
+  }
+ },
+ "median_ms_per_page": {
+  "bs4_text": 0.65,
+  "html2text": 0.57,
+  "text_content": 0.0,
+  "inner_text": 0.1,
+  "ax_tree": 2.5,
+  "ocr": 544.19,
+  "visible_basic": 0.4,
+  "visible": 0.8,
+  "visible_ocr": 545.39
+ },
+ "median_page_height_px": 900.0,
+ "tokens_unicode_tags": {
+  "tokenizer": "HuggingFaceTB/SmolLM2-135M-Instruct",
+  "median_chars": 165.0,
+  "median_tokens_plain": 41.5,
+  "median_tokens_tagged": 660.0
+ }
+}

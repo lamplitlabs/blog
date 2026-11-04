@@ -2,6 +2,8 @@
 // Apple Vision text recognition (accurate level, no language correction), the
 // "agent that reads pixels" reader in scripts/hidden-injection/bench.py.
 // Build: xcrun swiftc -O scripts/hidden-injection/ocr.swift -o <work>/ocr
+//    or: swift build -c release --package-path scripts/hidden-injection (Package.swift;
+//        CodeQL's Swift autobuild uses this one)
 import Foundation
 import Vision
 

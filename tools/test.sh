@@ -496,9 +496,13 @@ report_body_image_coverage() {
 # above while staying useless; this rule moves alt coverage from "present" to
 # "useful": every `![alt](path)` in a post body must have a non-empty alt of at
 # least 20 characters (a short sentence like "Build output showing the
-# SponsorLink warning"). Fenced code blocks are stripped before scanning so a
-# `![alt text](...)` placeholder quoted in a markdown example does not count as
-# a real image. The dated-cutoff gate pattern is the same one
+# SponsorLink warning"). Fenced code blocks and inline code spans (a run of N
+# backticks closed by the next run of exactly N backticks on the same line) are
+# stripped before scanning so a `![alt text](...)` placeholder quoted in a
+# markdown example or in prose does not count as a real image; Kramdown renders
+# both as literal code, not as an <img>. A backtick run with no closing run on
+# the line stays literal, as in CommonMark, so a real image after a stray
+# backtick is still scanned. The dated-cutoff gate pattern is the same one
 # report_body_image_coverage uses: posts dated on or before the pinned cutoff
 # (the day before this check landed) are grandfathered, so their 45 short alts
 # across 9 older posts stay listed as report output instead of failing the
@@ -511,6 +515,40 @@ check_body_image_alt_length() {
   local scan
   scan="$(for f in $_posts; do
     awk -v file="$f" -v min="$ALT_MIN_LENGTH" -v cutoff="$ALT_GATE_CUTOFF" '
+      # Length of the backtick run that starts at position p of s.
+      function tick_run(s, p,   n) {
+        n = 0
+        while (substr(s, p + n, 1) == "`") n++
+        return n
+      }
+      # Replace every inline code span with one space; an opening run with
+      # no closing run of the same length is kept as literal text.
+      function strip_code_spans(s,   out, i, n, j, m, closed) {
+        out = ""
+        while ((i = index(s, "`")) > 0) {
+          out = out substr(s, 1, i - 1)
+          n = tick_run(s, i)
+          closed = 0
+          j = i + n
+          while (j <= length(s)) {
+            if (substr(s, j, 1) == "`") {
+              m = tick_run(s, j)
+              if (m == n) { closed = 1; break }
+              j += m
+            } else {
+              j++
+            }
+          }
+          if (closed) {
+            out = out " "
+            s = substr(s, j + n)
+          } else {
+            out = out substr(s, i, n)
+            s = substr(s, i + n)
+          }
+        }
+        return out s
+      }
       FNR == 1 { fm = 0 }
       /^---[[:space:]]*$/ && fm < 2 { fm++; next }
       fm != 2 { next }
@@ -519,6 +557,7 @@ check_body_image_alt_length() {
       /^[[:space:]]*(`{3,}|~{3,})/ { fence = !fence; next }
       fence { next }
       {
+        $0 = strip_code_spans($0)
         while (match($0, /!\[[^]]*\]\(/)) {
           alt = substr($0, RSTART + 2, RLENGTH - 4)
           if (length(alt) < min) {

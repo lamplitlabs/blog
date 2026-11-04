@@ -5,7 +5,7 @@ date: 2026-10-30 04:30:00 +0100
 categories: ai
 description: "Sandbox every AI agent tool call: per-call sandbox schemas, isolated execution, environments with no secrets, and output scanning before results come back."
 image:
-  path: /assets/img/posts/ai/ai-security-sandboxing-agent-tool-calls.webp
+  path: /assets/img/headers/ai/ai-security-sandboxing-agent-tool-calls.webp
   alt: "Poster-style blueprint titled Tool-Call Sandbox: five isolated vault chambers hold the tool calls fs.read, net.fetch, shell.exec and browser.open behind green outlines, while a fifth chamber labelled secrets.get glows red as a tamper claw fails to breach it, with keyhole vaults above each chamber and isolated network bubbles below."
 tags: [ai-security, sandboxing, agents, secrets, llm, isolation, egress, policy, least-privilege]
 ---

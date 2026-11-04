@@ -438,6 +438,50 @@ report_alt_coverage() {
   fi
 }
 
+# Awk functions shared by the body-image scans (report_body_image_coverage,
+# check_body_image_alt_length, report_image_link_coverage): strip_code_spans(s)
+# replaces every inline code span (a run of N backticks closed by the next run
+# of exactly N backticks on the same line) with one space; an opening run with
+# no closing run stays literal text, as in CommonMark. Each scan also skips
+# fenced code blocks (``` or ~~~), so a `![alt](path)` quoted in a markdown
+# example is neither counted as a body image nor resolved as an image path.
+_AWK_STRIP_CODE='
+      # Length of the backtick run that starts at position p of s.
+      function tick_run(s, p,   n) {
+        n = 0
+        while (substr(s, p + n, 1) == "`") n++
+        return n
+      }
+      # Replace every inline code span with one space; an opening run with
+      # no closing run of the same length is kept as literal text.
+      function strip_code_spans(s,   out, i, n, j, m, closed) {
+        out = ""
+        while ((i = index(s, "`")) > 0) {
+          out = out substr(s, 1, i - 1)
+          n = tick_run(s, i)
+          closed = 0
+          j = i + n
+          while (j <= length(s)) {
+            if (substr(s, j, 1) == "`") {
+              m = tick_run(s, j)
+              if (m == n) { closed = 1; break }
+              j += m
+            } else {
+              j++
+            }
+          }
+          if (closed) {
+            out = out " "
+            s = substr(s, j + n)
+          } else {
+            out = out substr(s, i, n)
+            s = substr(s, i + n)
+          }
+        }
+        return out s
+      }
+'
+
 # Report inline-image coverage of post bodies so "publish more posts with
 # screenshots" has a numerator/denominator. A post counts as covered when its
 # body (after the closing front-matter '---') contains at least one Markdown
@@ -448,10 +492,13 @@ report_alt_coverage() {
 report_body_image_coverage() {
   local without
   without="$(for f in $_posts; do
-    awk '
-      FNR == 1 { fm = 0; found = 0 }
+    awk "$_AWK_STRIP_CODE"'
+      FNR == 1 { fm = 0; found = 0; fence = 0 }
       /^---[[:space:]]*$/ && fm < 2 { fm++; next }
-      fm == 2 && /!\[.*\]\(/ { found = 1 }
+      fm != 2 { next }
+      /^[[:space:]]*(`{3,}|~{3,})/ { fence = !fence; next }
+      fence { next }
+      strip_code_spans($0) ~ /!\[.*\]\(/ { found = 1 }
       END { exit found ? 0 : 1 }
     ' "$f" || echo "$f"
   done)"
@@ -514,41 +561,7 @@ check_body_image_alt_length() {
   local ALT_GATE_CUTOFF="2026-10-25"
   local scan
   scan="$(for f in $_posts; do
-    awk -v file="$f" -v min="$ALT_MIN_LENGTH" -v cutoff="$ALT_GATE_CUTOFF" '
-      # Length of the backtick run that starts at position p of s.
-      function tick_run(s, p,   n) {
-        n = 0
-        while (substr(s, p + n, 1) == "`") n++
-        return n
-      }
-      # Replace every inline code span with one space; an opening run with
-      # no closing run of the same length is kept as literal text.
-      function strip_code_spans(s,   out, i, n, j, m, closed) {
-        out = ""
-        while ((i = index(s, "`")) > 0) {
-          out = out substr(s, 1, i - 1)
-          n = tick_run(s, i)
-          closed = 0
-          j = i + n
-          while (j <= length(s)) {
-            if (substr(s, j, 1) == "`") {
-              m = tick_run(s, j)
-              if (m == n) { closed = 1; break }
-              j += m
-            } else {
-              j++
-            }
-          }
-          if (closed) {
-            out = out " "
-            s = substr(s, j + n)
-          } else {
-            out = out substr(s, i, n)
-            s = substr(s, i + n)
-          }
-        }
-        return out s
-      }
+    awk -v file="$f" -v min="$ALT_MIN_LENGTH" -v cutoff="$ALT_GATE_CUTOFF" "$_AWK_STRIP_CODE"'
       FNR == 1 { fm = 0 }
       /^---[[:space:]]*$/ && fm < 2 { fm++; next }
       fm != 2 { next }
@@ -602,8 +615,8 @@ check_body_image_alt_length() {
 report_image_link_coverage() {
   local broken
   broken="$(for f in $_posts; do
-    awk -v file="$f" '
-      FNR == 1 { fm = 0; in_image = 0 }
+    awk -v file="$f" "$_AWK_STRIP_CODE"'
+      FNR == 1 { fm = 0; in_image = 0; fence = 0 }
       /^---[[:space:]]*$/ && fm < 2 { fm++; in_image = 0; next }
       fm == 1 && /^image:[[:space:]]*[^[:space:]]/ {
         v = $0; sub(/^image:[[:space:]]*/, "", v); emit(v); next
@@ -613,8 +626,10 @@ report_image_link_coverage() {
       fm == 1 && in_image && /^[[:space:]]+path:[[:space:]]*[^[:space:]]/ {
         v = $0; sub(/^[[:space:]]+path:[[:space:]]*/, "", v); emit(v)
       }
+      fm == 2 && /^[[:space:]]*(`{3,}|~{3,})/ { fence = !fence; next }
+      fm == 2 && fence { next }
       fm == 2 {
-        line = $0
+        line = strip_code_spans($0)
         while (match(line, /!\[[^]]*\]\([^)]*\)/)) {
           img = substr(line, RSTART, RLENGTH)
           line = substr(line, RSTART + RLENGTH)

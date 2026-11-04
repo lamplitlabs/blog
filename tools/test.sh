@@ -701,7 +701,6 @@ check_header_aspect_ratio() {
     _posts/AI/2026-10-23-enterprise-ai-retry-storm-burned-4m-tokens.md
     _posts/AI/2026-10-27-ai-security-llm-data-exfiltration-agent-tool-egress.md
     _posts/AI/2026-10-27-fine-tuning-data-curation-eval-set-construction.md
-    _posts/AI/2026-10-30-ai-security-sandboxing-agent-tool-calls.md
     _posts/Automation/2024-02-09-auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps.md
     _posts/Automation/2024-02-11-auto-post-RSS-feed-to-social-media-using-github.md
     _posts/Automation/2024-02-11-how-to-post-on-linkedin-using-rest-api-part1.md

@@ -684,7 +684,6 @@ check_header_aspect_ratio() {
     _posts/AI/2024-05-23-things-to-consider-azure-openai.md
     _posts/AI/2026-10-03-ai-sdlc-dotnet-teams.md
     _posts/AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points.md
-    _posts/AI/2026-10-11-ai-sdlc-prompt-injection-defences-for-coding-agents.md
     _posts/AI/2026-10-12-ai-pricing-calculator-estimating-llm-api-costs-before-you-ship.md
     _posts/AI/2026-10-12-api-format-converter-one-chat-request-four-provider-payloads.md
     _posts/AI/2026-10-12-embedding-visualizer-checking-vector-similarity-before-you-trust-retrieval.md
@@ -699,7 +698,6 @@ check_header_aspect_ratio() {
     _posts/AI/2026-10-19-enterprise-ai-use-case-intake-risk-tiers-governance.md
     _posts/AI/2026-10-21-ai-sdlc-context-window-rot-coding-agent-pass-rate.md
     _posts/AI/2026-10-23-enterprise-ai-retry-storm-burned-4m-tokens.md
-    _posts/AI/2026-10-27-ai-security-llm-data-exfiltration-agent-tool-egress.md
     _posts/AI/2026-10-27-fine-tuning-data-curation-eval-set-construction.md
     _posts/Automation/2024-02-09-auto-post-RSS-feed-to-twitter-and-mastodon-using-logicapps.md
     _posts/Automation/2024-02-11-auto-post-RSS-feed-to-social-media-using-github.md
@@ -722,10 +720,7 @@ check_header_aspect_ratio() {
     _posts/OData/2024-01-13-odata-csharp-simple-odata-client.md
     _posts/OData/2024-01-13-odata.md
     _posts/OData/2026-10-05-odata-query-performance-pitfalls-dotnet.md
-    _posts/Performance/2026-10-21-rust-mimalloc-vs-glibc-malloc.md
     _posts/Performance/2026-10-21-rust-rwlock-vs-sharded-cache-p99.md
-    _posts/Performance/2026-10-22-rust-small-string-optimization-llm-tokenizer-sidecar.md
-    _posts/Performance/2026-10-22-rust-tokio-async-llm-gateway-backpressure.md
 "
   local measured
   measured="$(for f in $_posts; do

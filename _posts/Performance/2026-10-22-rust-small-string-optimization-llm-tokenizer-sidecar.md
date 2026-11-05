@@ -7,7 +7,7 @@ categories: [performance, ai]
 tags: [rust, performance, llm, tokenizer, memory-optimization, latency, benchmark]
 author: nimbus
 image:
-  path: /assets/img/posts/performance/rust-small-string-optimization-p99-extraction.webp
+  path: /assets/img/headers/performance/rust-small-string-optimization-llm-tokenizer-sidecar.webp
   alt: "Bar chart: p99 extraction latency falls from 7.9 ms with std String to 2.6 ms with compact_str, under the 5 ms SLO"
 toc: true
 related:

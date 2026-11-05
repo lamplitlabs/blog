@@ -834,6 +834,156 @@ check_header_aspect_ratio() {
   fi
 }
 
+# Fail when a post's front-matter header image (image: or image.path:) is also
+# embedded in its own body as an image (`![alt](path)`, the Liquid
+# `({{ 'path' | relative_url }})` form, or `<img src="path">`). Chirpy draws the
+# header in a 40:21 box with object-fit: cover, so re-exporting or padding a
+# shared file to fix the header crop also changes the body figure (white bands,
+# a shrunk diagram), and readers see the same picture twice at the top of the
+# post. Fix: give the header its own file under assets/img/headers/<cat>/ and
+# repoint only the front matter, or embed a different body figure. Fenced code
+# blocks and inline code spans are skipped, as in the other body-image scans.
+# HEADER_INLINE_GRANDFATHERED lists the posts that already shared the file on
+# 2026-11-05; the list only shrinks: split the files and delete the line (a note
+# names entries that pass now). Any other post fails.
+check_header_not_inline_body_image() {
+  local HEADER_INLINE_GRANDFATHERED="
+    _posts/AI/2026-09-29-azure-openai-429-rate-limit-retry-dotnet.md
+    _posts/AI/2026-09-29-structured-outputs-azure-openai-dotnet.md
+    _posts/AI/2026-09-30-azure-openai-function-calling-dotnet.md
+    _posts/AI/2026-09-30-evaluating-rag-retriever-golden-set-dotnet.md
+    _posts/AI/2026-09-30-streaming-azure-openai-responses-dotnet.md
+    _posts/AI/2026-10-01-azure-openai-batch-api-dotnet.md
+    _posts/AI/2026-10-01-azure-openai-embeddings-semantic-search-dotnet.md
+    _posts/AI/2026-10-01-llm-test-generation-mutation-testing-dotnet.md
+    _posts/AI/2026-10-02-azure-openai-content-filter-dotnet.md
+    _posts/AI/2026-10-02-testing-llm-prompts-dotnet.md
+    _posts/AI/2026-10-03-ai-sdlc-dotnet-teams.md
+    _posts/AI/2026-10-03-enterprise-ai-governance-azure-openai.md
+    _posts/AI/2026-10-04-enterprise-ai-canary-rollout-llm-model-prompt-rollback.md
+    _posts/AI/2026-10-04-rag-vs-fine-tuning-enterprise-internal-copilot.md
+    _posts/AI/2026-10-07-enterprise-ai-audit-trail-azure-openai-apim.md
+    _posts/AI/2026-10-07-enterprise-ai-azure-openai-fine-tuning-vs-rag-knowledge-base.md
+    _posts/AI/2026-10-08-enterprise-ai-azure-openai-ptu-vs-pay-as-you-go-sustained-load.md
+    _posts/AI/2026-10-09-enterprise-ai-azure-openai-d365fo-vendor-invoice-coding.md
+    _posts/AI/2026-10-10-enterprise-ai-self-hosted-llm-vs-azure-openai-cost-latency.md
+    _posts/AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points.md
+    _posts/AI/2026-10-12-automation-evolution-manual-api-ai.md
+    _posts/AI/2026-10-12-enterprise-ai-azure-openai-data-residency-compliance-checklist.md
+    _posts/AI/2026-10-12-enterprise-ai-azure-openai-vs-self-hosted-vendor-lock-in-exit-cost.md
+    _posts/AI/2026-10-13-enterprise-ai-azure-openai-multi-region-failover-apim.md
+    _posts/AI/2026-10-14-ai-sdlc-with-copilot-agents.md
+    _posts/AI/2026-10-21-ai-sdlc-context-window-rot-coding-agent-pass-rate.md
+    _posts/AI/2026-10-21-enterprise-ai-client-side-rate-limiting-azure-openai-429-storms.md
+    _posts/AI/2026-10-27-lora-vs-full-fine-tuning-cost-quality-enterprise.md
+    _posts/AI/2026-10-29-enterprise-ai-llm-assistant-rollout-governance.md
+    _posts/Beginner/2026-10-05-Variables_Values_References.md
+    _posts/Beginner/2026-10-06-How_Language_Models_Work.md
+    _posts/Beginner/2026-10-07-Calling_A_Model_From_Code.md
+    _posts/Beginner/2026-10-08-Grounding_A_Model_With_Your_Documents.md
+    _posts/Beginner/2026-10-09-Retries_Timeouts_And_Rate_Limits.md
+    _posts/Languages/2026-10-06-python-vs-typescript-internal-cli-tool.md
+    _posts/Languages/2026-10-22-go-sync-pool-string-interning-tokenizer-sidecar.md
+    _posts/Performance/2026-09-30-dotnet-cache-latency-memory-vs-redis-hybridcache.md
+    _posts/Performance/2026-09-30-go-vs-dotnet-goroutines-vs-tasks-concurrency-throughput.md
+    _posts/Performance/2026-10-01-java-virtual-threads-vs-dotnet-async-throughput.md
+    _posts/Performance/2026-10-03-regex-engine-performance-rust-go-dotnet-node.md
+    _posts/Performance/2026-10-03-span-memory-allocation-reduction-dotnet.md
+    _posts/Performance/2026-10-04-node-vs-deno-vs-bun-http-performance.md
+    _posts/Performance/2026-10-05-ef-core-query-performance-dotnet.md
+    _posts/Performance/2026-10-06-dotnet-json-serialization-performance.md
+    _posts/Performance/2026-10-06-grpc-vs-rest-json-performance-dotnet-go.md
+    _posts/Performance/2026-10-07-grpc-server-streaming-vs-rest-long-polling-latency-dotnet.md
+    _posts/Performance/2026-10-07-python-vs-rust-hot-loop-performance.md
+    _posts/Performance/2026-10-08-postgres-driver-latency-pg-vs-prisma-vs-drizzle.md
+    _posts/Performance/2026-10-24-rust-lto-codegen-units-release-profile.md
+"
+  local report
+  report="$(for f in $_posts; do
+    awk "$_AWK_STRIP_CODE"'
+      # Normalise an image target: drop a Liquid {{ "x" | filter }} wrapper,
+      # quotes, a markdown title, ?query/#fragment and the leading slash.
+      function norm(v) {
+        if (v ~ /^\{\{/) {
+          sub(/^\{\{[[:space:]]*/, "", v); sub(/[[:space:]]*\|.*$/, "", v); sub(/[[:space:]]*\}\}$/, "", v)
+        }
+        sub(/^[[:space:]]+/, "", v); sub(/[[:space:]]+$/, "", v)
+        gsub(/^["\x27<]|["\x27>]$/, "", v)
+        sub(/[[:space:]].*$/, "", v)
+        sub(/[?#].*$/, "", v)
+        sub(/^\//, "", v)
+        return v
+      }
+      FNR == 1 { fm = 0; in_image = 0; fence = 0; header = ""; hit = 0 }
+      /^---[[:space:]]*$/ && fm < 2 { fm++; in_image = 0; next }
+      fm == 1 {
+        if ($0 ~ /^image:[[:space:]]*[^[:space:]]/) {
+          v = $0; sub(/^image:[[:space:]]*/, "", v); header = norm(v); next
+        }
+        if ($0 ~ /^image:[[:space:]]*$/) { in_image = 1; next }
+        if ($0 ~ /^[^[:space:]]/) in_image = 0
+        if (in_image && $0 ~ /^[[:space:]]+path:[[:space:]]*[^[:space:]]/) {
+          v = $0; sub(/^[[:space:]]+path:[[:space:]]*/, "", v); header = norm(v)
+        }
+        next
+      }
+      fm != 2 || header == "" || header == "none" || hit { next }
+      /^[[:space:]]*(`{3,}|~{3,})/ { fence = !fence; next }
+      fence { next }
+      {
+        s = strip_code_spans($0)
+        while (match(s, /!\[[^]]*\]\([^)]*\)/)) {
+          t = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
+          sub(/^!\[[^]]*\]\(/, "", t); sub(/\)$/, "", t)
+          if (norm(t) == header) { hit = 1; break }
+        }
+        s = strip_code_spans($0)
+        while (!hit && match(s, /<img[^>]*[[:space:]]src=["\x27][^"\x27]*/)) {
+          t = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
+          sub(/^.*src=["\x27]/, "", t)
+          if (norm(t) == header) hit = 1
+        }
+      }
+      END { if (header != "" && header != "none") print (hit ? "HIT" : "OK") "\t" FILENAME "\t/" header }
+    ' "$f"
+  done | HEADER_INLINE_GRANDFATHERED="$HEADER_INLINE_GRANDFATHERED" awk -F '\t' '
+    BEGIN {
+      n = split(ENVIRON["HEADER_INLINE_GRANDFATHERED"], list, "\n")
+      for (i = 1; i <= n; i++) {
+        g = list[i]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", g)
+        if (g != "") keep[g] = 1
+      }
+    }
+    NF < 3 { next }
+    {
+      total++; seen[$2] = $1
+      if ($1 != "HIT") next
+      hits++
+      if ($2 in keep) { held++; next }
+      print "BAD\t" $2 " -> " $3
+    }
+    END {
+      for (g in keep) if (!(g in seen) || seen[g] != "HIT") print "STALE\t" g
+      printf "SUM\t%d\t%d\t%d\n", hits, total, held
+    }
+  ')"
+  local bad stale sum
+  bad="$(printf '%s\n' "$report" | awk -F '\t' '$1 == "BAD" { print $2 }')"
+  stale="$(printf '%s\n' "$report" | awk -F '\t' '$1 == "STALE" { print $2 }' | sort)"
+  sum="$(printf '%s\n' "$report" | awk -F '\t' '$1 == "SUM" { print $2 "/" $3 " posts embed their header image in the body, " $4 " of them grandfathered" }')"
+  echo "header-inline-body-image: $sum (rule: the front-matter image:/path: file is not also a body ![...]() or <img> of the same post)"
+  if [[ -n $stale ]]; then
+    echo "note: grandfathered post(s) whose header is no longer embedded in the body; delete them from HEADER_INLINE_GRANDFATHERED in tools/test.sh:" >&2
+    printf '       %s\n' $stale >&2
+  fi
+  if [[ -n $bad ]]; then
+    echo "error: $(printf '%s\n' "$bad" | grep -c .) post(s) embed their front-matter header image in the body:" >&2
+    printf '%s\n' "$bad" | sed 's/^/       /' >&2
+    echo "       Give the header its own file (e.g. assets/img/headers/<category>/) and repoint only image.path, so a 40:21 re-export of the header leaves the body figure intact." >&2
+    exit 1
+  fi
+}
+
 # Fail when a post has no front-matter `description:` key. jekyll-seo-tag and the
 # Atom feed fall back to the generic site description otherwise, so every post
 # would show the same search snippet. Same rule as
@@ -1197,6 +1347,7 @@ main() {
   report_image_coverage
   report_image_link_coverage
   check_header_aspect_ratio
+  check_header_not_inline_body_image
   report_alt_coverage
   report_body_image_coverage
   check_body_image_alt_length

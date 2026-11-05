@@ -249,6 +249,7 @@ The leak fix alone delivers most of the p99 win. The lock and regexp fixes add t
 
 - [Go pprof alloc_space: 2.87 GB of garbage from one `+=` in a loop](/posts/go-pprof-alloc-space-escape-analysis/): the heap-profile half of this guide.
 - [Go pprof vs SLO Burn Rate: Finding the p99 Leak Before the Pager Fires](/posts/go-pprof-slo-burn-rate-llm-streaming/): when to start profiling, driven by an SLO alert.
+- [Rust Profiling Practical Guide: sample, Flame Graphs and a Counting Allocator, Measured](/posts/rust-profiling-practical-guide-sample-flamegraph/): the same profile-fix-measure loop for a Rust program on macOS.
 - [Go Context Cancellation for LLM Streaming and Agent Calls](/posts/go-context-cancellation-llm-streaming-agents/): the right way to stop the upstream call that leaked here.
 - [GOGC=off with runtime.SetMemoryLimit](/posts/go-gogc-off-memory-limit-p99/): GC tuning, for when the GC cost is real and not a leak.
 - [Hedged Requests and Load Shedding in Our Go LLM Gateway](/posts/go-llm-gateway-hedged-requests-load-shedding/): tail-latency tools beyond profiling.

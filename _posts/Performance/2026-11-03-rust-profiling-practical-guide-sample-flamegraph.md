@@ -235,6 +235,8 @@ The log generator is seeded, so you get the same one million lines and the same 
 
 - [Profiling a Rust LLM Token Batcher with cargo flamegraph](/posts/rust-flamegraph-llm-token-batcher-allocation-reduction/): the same loop on a Linux service with `cargo flamegraph` and `SmallVec`.
 - [Go pprof Profiling Guide: CPU, Goroutine and Mutex Profiles](/posts/go-pprof-profiling-guide-cpu-goroutine-mutex/): the Go version of this guide.
+- [Go pprof alloc_space: 2.87 GB of garbage from one `+=` in a loop](/posts/go-pprof-alloc-space-escape-analysis/): Go's allocation profile, the counterpart of the counting allocator used here.
+- [Go pprof vs SLO Burn Rate: Finding the p99 Leak Before the Pager Fires](/posts/go-pprof-slo-burn-rate-llm-streaming/): deciding when to profile a live Go service.
 - [Rust mimalloc vs glibc malloc](/posts/rust-mimalloc-vs-glibc-malloc/): for when the allocations cannot be removed.
 - [Rust Release Profiles: LTO, codegen-units and target-cpu](/posts/rust-lto-codegen-units-release-profile/): build settings to try once the code is right.
 - [Profiling an ASP.NET Core endpoint with dotnet-trace and dotnet-counters](/posts/profiling-aspnet-core-endpoint-dotnet-trace-counters/): the same workflow in .NET.

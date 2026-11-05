@@ -120,3 +120,4 @@ One-off profiling fixes one hot loop; the garbage comes back in the next feature
 - [Go pprof, SLO Burn Rate, and the Regex That Ate 245 GB](/posts/go-pprof-slo-burn-rate-llm-streaming/) — the same alloc_space workflow applied to a live LLM streaming SLO.
 - [GOGC=off, GOMEMLIMIT, and Our Go LLM Gateway's p99](/posts/go-gogc-off-memory-limit-p99/) — what to do when the garbage is unavoidable but the pauses aren't.
 - [Hedged Requests and Load Shedding in Our Go LLM Gateway](/posts/go-llm-gateway-hedged-requests-load-shedding/) — the tail-latency toolkit beyond allocation tuning.
+- [Rust Profiling Practical Guide: sample, Flame Graphs and a Counting Allocator, Measured](/posts/rust-profiling-practical-guide-sample-flamegraph/) — the same allocation hunt in Rust, with a counting global allocator instead of a heap profile.

@@ -7,7 +7,7 @@ tags: ai sdlc security agents devops dotnet enterprise prompt-injection
 author: manishtiwari25
 description: "How a coding agent gets hijacked by text in a README or PR comment, and the five layers that stop injected instructions from widening scope or leaking secrets."
 image:
-  path: /assets/img/headers/ai/ai-sdlc-prompt-injection-defences-coding-agents.webp
+  path: /assets/img/headers/ai/ai-sdlc-prompt-injection-defences-coding-agents-header.webp
   alt: "Five-layer defence diagram for coding agents against prompt injection: untrusted inputs, trust boundary, least privilege, deterministic gates, human review, each assuming the previous layer was bypassed"
 ---
 

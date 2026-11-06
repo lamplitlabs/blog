@@ -189,6 +189,7 @@ exclude:
   - "*.gem"
   - "*.gemspec"
   - tools
+  - scripts
   - README.md
   - LICENSE
   - template

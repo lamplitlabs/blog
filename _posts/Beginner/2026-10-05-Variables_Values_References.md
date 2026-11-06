@@ -152,5 +152,5 @@ Ten minutes with this exercise will save you hours of debugging later.
 ## Related posts
 
 - [The Language Of Computers](/posts/Language_Of_Computers/)
-- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers](/posts/span-memory-allocation-reduction-dotnet/)
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;: Before/After BenchmarkDotNet Numbers](/posts/span-memory-allocation-reduction-dotnet/)
 - [How a Language Model Answers You: Tokens, Prediction and Repetition](/posts/How_Language_Models_Work/)

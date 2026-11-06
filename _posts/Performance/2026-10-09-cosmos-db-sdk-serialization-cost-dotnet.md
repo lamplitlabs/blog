@@ -129,6 +129,6 @@ Absolute numbers depend on the machine and on whether the account is local or in
 
 - [System.Text.Json Serialization Issue With Azure Cosmos DB SDK V3 For dotnet8](/posts/Cosmos_DB_Sdk_System_Text_Json_Issue/) - the correctness problem that the same `CosmosClientOptions.Serializer` swap fixes.
 - [.NET JSON Serialization Performance](/posts/dotnet-json-serialization-performance/) - System.Text.Json vs Newtonsoft on their own, without the SDK in the way.
-- [Cutting .NET Allocations with Span<T> and Memory<T>](/posts/span-memory-allocation-reduction-dotnet/) - the same `[MemoryDiagnoser]` workflow applied to in-memory hot loops.
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;](/posts/span-memory-allocation-reduction-dotnet/) - the same `[MemoryDiagnoser]` workflow applied to in-memory hot loops.
 - [EF Core Query Tuning](/posts/ef-core-query-performance-dotnet/) - the relational counterpart: what the data-access layer costs before the serializer sees a byte.
 - [In-Process Cache vs Redis in .NET 8: Where the Microseconds Go](/posts/dotnet-cache-latency-memory-vs-redis-hybridcache/) - the cache tier that keeps repeated reads away from the SDK path measured here.

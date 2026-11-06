@@ -1,0 +1,126 @@
+diff --git a/invoicing/discounts.py b/invoicing/discounts.py
+new file mode 100644
+index 0000000..80118cb
+--- /dev/null
++++ b/invoicing/discounts.py
+@@ -0,0 +1,32 @@
++"""Percentage discounts on invoices."""
++from dataclasses import replace
++from decimal import Decimal
++
++from .errors import InvoicingError
++from .models import Invoice
++from .money import to_money
++
++
++def _check_percent(percent) -> Decimal:
++    # bool is an int subclass but is not a meaningful percentage.
++    if isinstance(percent, bool) or not isinstance(percent, (int, Decimal)):
++        raise InvoicingError(
++            "discount percent must be an int or Decimal, got %s" % type(percent).__name__
++        )
++    value = Decimal(percent)
++    if not value.is_finite() or value < 0 or value > 100:
++        raise InvoicingError("discount percent must be in [0, 100], got %s" % percent)
++    return value
++
++
++def apply_discount(invoice: Invoice, percent) -> Invoice:
++    """Return a new invoice with every unit price reduced by ``percent`` percent.
++
++    The input invoice and its lines are left unchanged.
++    """
++    pct = _check_percent(percent)
++    lines = [
++        replace(line, unit_price=to_money(line.unit_price * (100 - pct) / 100))
++        for line in invoice.lines
++    ]
++    return Invoice(invoice.id, invoice.customer, invoice.issued, lines)
+diff --git a/tests/test_discounts.py b/tests/test_discounts.py
+new file mode 100644
+index 0000000..48ecb8d
+--- /dev/null
++++ b/tests/test_discounts.py
+@@ -0,0 +1,82 @@
++import unittest
++from datetime import date
++from decimal import Decimal
++
++from invoicing.discounts import apply_discount
++from invoicing.errors import InvoicingError
++from invoicing.models import Invoice, LineItem
++
++
++def make_invoice():
++    return Invoice("INV-1", "Acme", date(2026, 1, 15), [
++        LineItem("A", "Widget", 2, Decimal("10.00"), Decimal("0.20")),
++        LineItem("B", "Gadget", 1, Decimal("5.55"), Decimal("0.20")),
++    ])
++
++
++class ApplyDiscountTest(unittest.TestCase):
++    def test_ticket_example(self):
++        result = apply_discount(make_invoice(), 10)
++        self.assertEqual([l.unit_price for l in result.lines],
++                         [Decimal("9.00"), Decimal("5.00")])
++        self.assertEqual(result.subtotal(), Decimal("23.00"))
++        self.assertEqual(result.tax(), Decimal("4.60"))
++        self.assertEqual(result.total(), Decimal("27.60"))
++
++    def test_decimal_percent(self):
++        result = apply_discount(make_invoice(), Decimal("12.5"))
++        self.assertEqual([l.unit_price for l in result.lines],
++                         [Decimal("8.75"), Decimal("4.86")])
++
++    def test_keeps_header_and_line_fields(self):
++        inv = make_invoice()
++        result = apply_discount(inv, 10)
++        self.assertIsNot(result, inv)
++        self.assertEqual((result.id, result.customer, result.issued),
++                         (inv.id, inv.customer, inv.issued))
++        for old, new in zip(inv.lines, result.lines):
++            self.assertEqual((new.sku, new.description, new.qty, new.tax_rate),
++                             (old.sku, old.description, old.qty, old.tax_rate))
++
++    def test_input_unchanged(self):
++        inv = make_invoice()
++        original_lines = list(inv.lines)
++        result = apply_discount(inv, 50)
++        self.assertEqual(inv.lines, original_lines)
++        self.assertEqual(inv, make_invoice())
++        self.assertIsNot(result.lines, inv.lines)
++        self.assertEqual(inv.total(), Decimal("30.66"))
++
++    def test_zero_and_hundred_bounds(self):
++        zero = apply_discount(make_invoice(), 0)
++        self.assertEqual(zero.total(), make_invoice().total())
++        full = apply_discount(make_invoice(), Decimal("100"))
++        self.assertEqual(full.total(), Decimal("0.00"))
++        self.assertEqual([l.unit_price for l in full.lines],
++                         [Decimal("0.00"), Decimal("0.00")])
++
++    def test_empty_invoice(self):
++        inv = Invoice("INV-2", "Acme", date(2026, 1, 15))
++        self.assertEqual(apply_discount(inv, 10).lines, [])
++
++    def test_out_of_range_rejected(self):
++        for bad in (-1, 101, Decimal("-0.01"), Decimal("100.01")):
++            with self.subTest(percent=bad):
++                with self.assertRaises(InvoicingError):
++                    apply_discount(make_invoice(), bad)
++
++    def test_float_rejected(self):
++        for bad in (10.0, 0.0, 0.5):
++            with self.subTest(percent=bad):
++                with self.assertRaises(InvoicingError):
++                    apply_discount(make_invoice(), bad)
++
++    def test_other_types_rejected(self):
++        for bad in ("10", None, True, Decimal("NaN"), Decimal("Infinity")):
++            with self.subTest(percent=bad):
++                with self.assertRaises(InvoicingError):
++                    apply_discount(make_invoice(), bad)
++
++
++if __name__ == "__main__":
++    unittest.main()

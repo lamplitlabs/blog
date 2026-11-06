@@ -1,0 +1,147 @@
+diff --git a/invoicing/fees.py b/invoicing/fees.py
+new file mode 100644
+index 0000000..60e6dfe
+--- /dev/null
++++ b/invoicing/fees.py
+@@ -0,0 +1,55 @@
++"""Late fees for overdue invoices (T1)."""
++import calendar
++from datetime import date, timedelta
++from decimal import Decimal
++
++from .errors import InvoicingError
++from .models import Invoice
++from .money import to_money
++
++# Invoices carry no due date, so payment terms are net 30 from the issue date.
++PAYMENT_TERMS_DAYS = 30
++# Simple (not compounded) monthly rate applied to the invoice total.
++MONTHLY_LATE_FEE_RATE = Decimal("0.015")
++
++
++def due_date(invoice: Invoice) -> date:
++    """Date by which the invoice must be paid (issue date + net terms)."""
++    return invoice.issued + timedelta(days=PAYMENT_TERMS_DAYS)
++
++
++def _add_months(d: date, months: int) -> date:
++    """Same day `months` calendar months later, clamped to the month's last day."""
++    index = d.month - 1 + months
++    year, month = d.year + index // 12, index % 12 + 1
++    day = min(d.day, calendar.monthrange(year, month)[1])
++    return date(year, month, day)
++
++
++def months_overdue(invoice: Invoice, today: date) -> int:
++    """Number of started months the invoice is overdue; 0 if not overdue.
++
++    Each started month counts in full: 1 day late is 1 month, one month
++    and one day late is 2 months.
++    """
++    due = due_date(invoice)
++    if today <= due:
++        return 0
++    months = (today.year - due.year) * 12 + (today.month - due.month)
++    if _add_months(due, months) > today:
++        months -= 1  # complete calendar months elapsed since the due date
++    if _add_months(due, months) < today:
++        months += 1  # a started month counts as a full month
++    return months
++
++
++def late_fee(invoice: Invoice, today: date) -> Decimal:
++    """Late fee owed on `invoice` as of `today`.
++
++    1.5% of the invoice total per started month past the due date, simple
++    interest, rounded half-up to cents. Not overdue (or a zero total) gives 0.00.
++    """
++    if not isinstance(today, date):
++        raise InvoicingError(f"today must be a date, got {type(today).__name__}")
++    months = months_overdue(invoice, today)
++    return to_money(invoice.total() * MONTHLY_LATE_FEE_RATE * months)
+diff --git a/tests/test_fees.py b/tests/test_fees.py
+new file mode 100644
+index 0000000..dfdb941
+--- /dev/null
++++ b/tests/test_fees.py
+@@ -0,0 +1,80 @@
++import unittest
++from datetime import date, datetime
++from decimal import Decimal
++
++from invoicing.errors import InvoicingError
++from invoicing.fees import due_date, late_fee, months_overdue
++from invoicing.models import Invoice, LineItem
++
++
++def make_invoice(issued=date(2026, 1, 15), price=Decimal("1000.00")):
++    # total 1000.00, so one month of fee is 15.00
++    return Invoice("INV-1", "Acme", issued, [LineItem("A", "Widget", 1, price)])
++
++
++class DueDateTest(unittest.TestCase):
++    def test_net_30(self):
++        self.assertEqual(due_date(make_invoice()), date(2026, 2, 14))
++
++
++class LateFeeTest(unittest.TestCase):
++    def test_before_due_date_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 2, 1)), Decimal("0.00"))
++
++    def test_on_due_date_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 2, 14)), Decimal("0.00"))
++
++    def test_before_issue_date_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(), date(2025, 12, 1)), Decimal("0.00"))
++
++    def test_one_day_late_is_one_month(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 2, 15)), Decimal("15.00"))
++
++    def test_exactly_one_month_late(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 3, 14)), Decimal("15.00"))
++
++    def test_one_month_and_a_day_is_two_months(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 3, 15)), Decimal("30.00"))
++
++    def test_simple_not_compounded(self):
++        # 12 months overdue: 12 * 1.5% = 18%, not 1.015**12 - 1
++        self.assertEqual(late_fee(make_invoice(), date(2027, 2, 14)), Decimal("180.00"))
++
++    def test_fee_on_total_including_tax(self):
++        inv = Invoice("INV-2", "Acme", date(2026, 1, 15),
++                      [LineItem("A", "Widget", 1, Decimal("100.00"), Decimal("0.20"))])
++        self.assertEqual(late_fee(inv, date(2026, 2, 20)), Decimal("1.80"))
++
++    def test_rounds_half_up_to_cents(self):
++        # 0.30 * 0.015 = 0.0045 -> 0.00; 0.70 * 0.015 = 0.0105 -> 0.01
++        self.assertEqual(late_fee(make_invoice(price=Decimal("0.30")), date(2026, 2, 15)), Decimal("0.00"))
++        self.assertEqual(late_fee(make_invoice(price=Decimal("0.70")), date(2026, 2, 15)), Decimal("0.01"))
++        # 33.33 * 0.015 = 0.49995 -> 0.50
++        self.assertEqual(late_fee(make_invoice(price=Decimal("33.33")), date(2026, 2, 15)), Decimal("0.50"))
++
++    def test_empty_invoice_is_zero(self):
++        inv = Invoice("INV-3", "Acme", date(2026, 1, 15))
++        self.assertEqual(late_fee(inv, date(2026, 6, 1)), Decimal("0.00"))
++
++    def test_returns_decimal(self):
++        self.assertIsInstance(late_fee(make_invoice(), date(2026, 5, 1)), Decimal)
++
++    def test_today_must_be_date(self):
++        with self.assertRaises(InvoicingError):
++            late_fee(make_invoice(), "2026-03-01")
++
++    def test_datetime_accepted(self):
++        self.assertEqual(late_fee(make_invoice(), datetime(2026, 2, 15, 9, 0).date()), Decimal("15.00"))
++
++
++class MonthsOverdueTest(unittest.TestCase):
++    def test_month_end_clamping(self):
++        # issued 2026-01-01 -> due 2026-01-31; one month later clamps to 2026-02-28
++        inv = make_invoice(issued=date(2026, 1, 1))
++        self.assertEqual(months_overdue(inv, date(2026, 2, 28)), 1)
++        self.assertEqual(months_overdue(inv, date(2026, 3, 1)), 2)
++
++    def test_across_year_end(self):
++        inv = make_invoice(issued=date(2025, 11, 20))  # due 2025-12-20
++        self.assertEqual(months_overdue(inv, date(2026, 1, 20)), 1)
++        self.assertEqual(months_overdue(inv, date(2026, 1, 21)), 2)

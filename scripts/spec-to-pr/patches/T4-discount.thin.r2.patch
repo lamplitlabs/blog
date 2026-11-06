@@ -1,0 +1,128 @@
+diff --git a/invoicing/discounts.py b/invoicing/discounts.py
+new file mode 100644
+index 0000000..32d049f
+--- /dev/null
++++ b/invoicing/discounts.py
+@@ -0,0 +1,40 @@
++"""Percentage discounts on invoices (T4)."""
++from dataclasses import replace
++from decimal import Decimal, InvalidOperation
++
++from .errors import InvoicingError
++from .models import Invoice
++
++HUNDRED = Decimal("100")
++
++
++class InvalidDiscount(InvoicingError):
++    """The discount percentage is not a number between 0 and 100."""
++
++
++def _to_percent(percent) -> Decimal:
++    if isinstance(percent, bool) or not isinstance(percent, (int, float, str, Decimal)):
++        raise InvalidDiscount(f"discount percent must be a number, got {percent!r}")
++    try:
++        value = Decimal(str(percent))
++    except InvalidOperation:
++        raise InvalidDiscount(f"discount percent must be a number, got {percent!r}") from None
++    if not value.is_finite():
++        raise InvalidDiscount(f"discount percent must be finite, got {percent!r}")
++    if value < 0 or value > HUNDRED:
++        raise InvalidDiscount(f"discount percent must be between 0 and 100, got {percent!r}")
++    return value
++
++
++def apply_discount(invoice: Invoice, percent) -> Invoice:
++    """Return a copy of `invoice` with every line discounted by `percent` %.
++
++    The discount is taken off each line's net amount before tax, so tax is
++    charged on the discounted amount. Unit prices are kept unrounded so the
++    only rounding is the usual half-up-to-cents rounding of line net and tax.
++    The original invoice is not modified. Raises InvalidDiscount unless
++    0 <= percent <= 100.
++    """
++    factor = (HUNDRED - _to_percent(percent)) / HUNDRED
++    lines = [replace(line, unit_price=line.unit_price * factor) for line in invoice.lines]
++    return replace(invoice, lines=lines)
+diff --git a/tests/test_discounts.py b/tests/test_discounts.py
+new file mode 100644
+index 0000000..2e5e2c1
+--- /dev/null
++++ b/tests/test_discounts.py
+@@ -0,0 +1,76 @@
++import unittest
++from datetime import date
++from decimal import Decimal
++
++from invoicing.discounts import InvalidDiscount, apply_discount
++from invoicing.errors import InvoicingError
++from invoicing.models import Invoice, LineItem
++
++
++def make_invoice():
++    return Invoice("INV-1", "Acme", date(2026, 1, 15), [
++        LineItem("A", "Widget", 2, Decimal("10.00"), Decimal("0.20")),
++        LineItem("B", "Gadget", 1, Decimal("5.55"), Decimal("0.20")),
++    ])
++
++
++class ApplyDiscountTest(unittest.TestCase):
++    def test_ten_percent_discounts_subtotal_tax_and_total(self):
++        discounted = apply_discount(make_invoice(), 10)
++        # A: 20.00 -> 18.00; B: 5.55 -> 4.995 -> 5.00 (half-up)
++        self.assertEqual(discounted.subtotal(), Decimal("23.00"))
++        # tax on discounted nets: 3.60 + 1.00
++        self.assertEqual(discounted.tax(), Decimal("4.60"))
++        self.assertEqual(discounted.total(), Decimal("27.60"))
++
++    def test_zero_percent_leaves_amounts_unchanged(self):
++        discounted = apply_discount(make_invoice(), 0)
++        self.assertEqual(discounted.subtotal(), Decimal("25.55"))
++        self.assertEqual(discounted.total(), Decimal("30.66"))
++
++    def test_hundred_percent_makes_invoice_free(self):
++        discounted = apply_discount(make_invoice(), 100)
++        self.assertEqual(discounted.subtotal(), Decimal("0.00"))
++        self.assertEqual(discounted.tax(), Decimal("0.00"))
++        self.assertEqual(discounted.total(), Decimal("0.00"))
++
++    def test_accepts_decimal_and_string_percent(self):
++        inv = make_invoice()
++        self.assertEqual(apply_discount(inv, Decimal("12.5")).subtotal(), Decimal("22.36"))
++        self.assertEqual(apply_discount(inv, "12.5").subtotal(), Decimal("22.36"))
++
++    def test_unit_price_not_rounded_per_unit(self):
++        inv = Invoice("INV-2", "Acme", date(2026, 1, 15), [
++            LineItem("C", "Bolt", 3, Decimal("0.05")),
++        ])
++        # 0.15 * 0.5 = 0.075 -> 0.08; per-unit rounding would give 0.03 * 3 = 0.09
++        self.assertEqual(apply_discount(inv, 50).subtotal(), Decimal("0.08"))
++
++    def test_original_invoice_unchanged(self):
++        inv = make_invoice()
++        discounted = apply_discount(inv, 25)
++        self.assertIsNot(discounted, inv)
++        self.assertEqual(inv.subtotal(), Decimal("25.55"))
++        self.assertEqual(inv.lines[0].unit_price, Decimal("10.00"))
++        self.assertEqual(discounted.id, inv.id)
++        self.assertEqual(discounted.customer, inv.customer)
++        self.assertEqual(discounted.issued, inv.issued)
++        self.assertEqual([l.sku for l in discounted.lines], ["A", "B"])
++
++    def test_empty_invoice(self):
++        inv = Invoice("INV-3", "Acme", date(2026, 1, 15))
++        self.assertEqual(apply_discount(inv, 10).total(), Decimal("0.00"))
++
++    def test_invalid_percent_rejected(self):
++        for bad in (-1, Decimal("100.01"), 101, "abc", None, True, float("nan"), "Infinity"):
++            with self.subTest(percent=bad):
++                with self.assertRaises(InvalidDiscount):
++                    apply_discount(make_invoice(), bad)
++
++    def test_invalid_discount_is_domain_error(self):
++        self.assertTrue(issubclass(InvalidDiscount, InvoicingError))
++        self.assertTrue(issubclass(InvalidDiscount, ValueError))
++
++
++if __name__ == "__main__":
++    unittest.main()

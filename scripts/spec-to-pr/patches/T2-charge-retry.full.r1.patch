@@ -1,0 +1,179 @@
+diff --git a/invoicing/payments.py b/invoicing/payments.py
+index 428dba2..d1c3a7f 100644
+--- a/invoicing/payments.py
++++ b/invoicing/payments.py
+@@ -1,5 +1,8 @@
++import time
+ from decimal import Decimal
+-from typing import Optional
++from typing import Callable, Optional
++
++from invoicing.errors import InvoicingError
+ 
+ 
+ class TransientError(Exception):
+@@ -24,3 +27,40 @@ class PaymentClient:
+ 
+ def charge(client: PaymentClient, invoice_id: str, amount: Decimal, idempotency_key: str) -> str:
+     return client.charge(invoice_id, amount, idempotency_key)
++
++
++INITIAL_BACKOFF_SECONDS = 0.5
++MAX_RETRY_AFTER_SECONDS = 30.0
++
++
++def _retry_delay(error: TransientError, failed_attempts: int) -> float:
++    """Seconds to wait after `failed_attempts` failures (1-based) before the next try."""
++    if error.retry_after is not None:
++        return min(max(float(error.retry_after), 0.0), MAX_RETRY_AFTER_SECONDS)
++    return INITIAL_BACKOFF_SECONDS * (2 ** (failed_attempts - 1))
++
++
++def charge_with_retry(
++    client: PaymentClient,
++    invoice_id: str,
++    amount: Decimal,
++    idempotency_key: str,
++    max_attempts: int = 3,
++    sleep: Callable[[float], None] = time.sleep,
++) -> str:
++    """Charge with retries on TransientError, reusing the same idempotency key.
++
++    CardDeclined and any other exception propagate after the first call.
++    When every attempt fails, the last TransientError is re-raised.
++    """
++    if max_attempts < 1:
++        raise InvoicingError(f"max_attempts must be at least 1, got {max_attempts}")
++    attempt = 1
++    while True:
++        try:
++            return client.charge(invoice_id, amount, idempotency_key)
++        except TransientError as error:
++            if attempt >= max_attempts:
++                raise
++            sleep(_retry_delay(error, attempt))
++            attempt += 1
+diff --git a/tests/test_charge_with_retry.py b/tests/test_charge_with_retry.py
+new file mode 100644
+index 0000000..f6f091e
+--- /dev/null
++++ b/tests/test_charge_with_retry.py
+@@ -0,0 +1,118 @@
++import unittest
++from decimal import Decimal
++
++from invoicing.errors import InvoicingError
++from invoicing.payments import CardDeclined, PaymentClient, TransientError, charge_with_retry
++
++
++class ScriptedClient(PaymentClient):
++    """Returns or raises the scripted outcomes in order, recording every call."""
++
++    def __init__(self, outcomes):
++        self.outcomes = list(outcomes)
++        self.calls = []
++
++    def charge(self, invoice_id, amount, idempotency_key):
++        self.calls.append((invoice_id, amount, idempotency_key))
++        outcome = self.outcomes.pop(0)
++        if isinstance(outcome, BaseException):
++            raise outcome
++        return outcome
++
++
++class FakeSleep:
++    def __init__(self):
++        self.waits = []
++
++    def __call__(self, seconds):
++        self.waits.append(seconds)
++
++
++def run(client, sleep, **kwargs):
++    return charge_with_retry(client, "INV-1", Decimal("12.50"), "key-1", sleep=sleep, **kwargs)
++
++
++class ChargeWithRetryTest(unittest.TestCase):
++    def test_success_first_try_does_not_sleep(self):
++        client, sleep = ScriptedClient(["ch_1"]), FakeSleep()
++        self.assertEqual(run(client, sleep), "ch_1")
++        self.assertEqual(client.calls, [("INV-1", Decimal("12.50"), "key-1")])
++        self.assertEqual(sleep.waits, [])
++
++    def test_retries_transient_with_same_idempotency_key(self):
++        client = ScriptedClient([TransientError(), TransientError(), "ch_3"])
++        sleep = FakeSleep()
++        self.assertEqual(run(client, sleep), "ch_3")
++        self.assertEqual(len(client.calls), 3)
++        self.assertEqual({call[2] for call in client.calls}, {"key-1"})
++        self.assertEqual(sleep.waits, [0.5, 1.0])
++
++    def test_card_declined_is_not_retried(self):
++        client, sleep = ScriptedClient([CardDeclined("no funds"), "ch_2"]), FakeSleep()
++        with self.assertRaises(CardDeclined):
++            run(client, sleep)
++        self.assertEqual(len(client.calls), 1)
++        self.assertEqual(sleep.waits, [])
++
++    def test_declined_after_transient_stops_retrying(self):
++        client = ScriptedClient([TransientError(), CardDeclined(), "ch_3"])
++        sleep = FakeSleep()
++        with self.assertRaises(CardDeclined):
++            run(client, sleep)
++        self.assertEqual(len(client.calls), 2)
++        self.assertEqual(sleep.waits, [0.5])
++
++    def test_other_exceptions_propagate_immediately(self):
++        client, sleep = ScriptedClient([RuntimeError("boom"), "ch_2"]), FakeSleep()
++        with self.assertRaises(RuntimeError):
++            run(client, sleep)
++        self.assertEqual(len(client.calls), 1)
++        self.assertEqual(sleep.waits, [])
++
++    def test_exhausted_reraises_last_transient_without_final_sleep(self):
++        errors = [TransientError("t1"), TransientError("t2"), TransientError("t3")]
++        client, sleep = ScriptedClient(errors + ["never"]), FakeSleep()
++        with self.assertRaises(TransientError) as ctx:
++            run(client, sleep)
++        self.assertIs(ctx.exception, errors[-1])
++        self.assertEqual(len(client.calls), 3)
++        self.assertEqual(sleep.waits, [0.5, 1.0])
++
++    def test_backoff_doubles_after_third_attempt(self):
++        client = ScriptedClient([TransientError()] * 5)
++        sleep = FakeSleep()
++        with self.assertRaises(TransientError):
++            run(client, sleep, max_attempts=5)
++        self.assertEqual(len(client.calls), 5)
++        self.assertEqual(sleep.waits, [0.5, 1.0, 2.0, 4.0])
++
++    def test_retry_after_overrides_backoff_and_is_capped(self):
++        client = ScriptedClient(
++            [TransientError(retry_after=7), TransientError(retry_after=120), TransientError(), "ch_4"]
++        )
++        sleep = FakeSleep()
++        self.assertEqual(run(client, sleep, max_attempts=4), "ch_4")
++        self.assertEqual(sleep.waits, [7, 30, 2.0])
++
++    def test_retry_after_zero_is_respected(self):
++        client, sleep = ScriptedClient([TransientError(retry_after=0), "ch_2"]), FakeSleep()
++        self.assertEqual(run(client, sleep), "ch_2")
++        self.assertEqual(sleep.waits, [0])
++
++    def test_single_attempt_never_sleeps(self):
++        client, sleep = ScriptedClient([TransientError(), "ch_2"]), FakeSleep()
++        with self.assertRaises(TransientError):
++            run(client, sleep, max_attempts=1)
++        self.assertEqual(len(client.calls), 1)
++        self.assertEqual(sleep.waits, [])
++
++    def test_max_attempts_below_one_raises(self):
++        for bad in (0, -1):
++            client, sleep = ScriptedClient(["ch_1"]), FakeSleep()
++            with self.assertRaises(InvoicingError):
++                run(client, sleep, max_attempts=bad)
++            self.assertEqual(client.calls, [])
++
++
++if __name__ == "__main__":
++    unittest.main()

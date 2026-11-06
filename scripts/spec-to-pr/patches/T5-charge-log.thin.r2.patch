@@ -1,0 +1,111 @@
+diff --git a/invoicing/logs.py b/invoicing/logs.py
+index dfba159..06e6e15 100644
+--- a/invoicing/logs.py
++++ b/invoicing/logs.py
+@@ -1,8 +1,47 @@
+ from datetime import datetime, timezone
+ 
++from invoicing.money import fmt
++
+ 
+ def log_line(event: str, **fields) -> str:
+     """Format one structured log line: `<ts> <event> k=v k=v`."""
+     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+     parts = [ts, event] + [f"{k}={v}" for k, v in sorted(fields.items())]
+     return " ".join(parts)
++
++
++def _mask_card(card_number) -> str:
++    """Keep only the last four digits of a card number (PCI DSS display rule)."""
++    digits = "".join(ch for ch in str(card_number) if ch.isdigit())
++    if len(digits) < 4:
++        return "****"
++    return "****" + digits[-4:]
++
++
++def _mask_email(email) -> str:
++    """Hide the local part of an email, keeping its first character and the domain."""
++    text = str(email)
++    local, sep, domain = text.rpartition("@")
++    if not sep or not local or not domain:
++        return "***"
++    return f"{_clean(local[0])}***@{_clean(domain)}"
++
++
++def _clean(value) -> str:
++    """Make a value safe for a single `k=v` field: no whitespace or control characters."""
++    return "".join("_" if ch.isspace() or not ch.isprintable() else ch for ch in str(value))
++
++
++def log_charge(invoice_id, amount, card_number, email) -> str:
++    """Log line for a card charge, with the card number and email masked.
++
++    The full card number and email address never reach the log: the card is reduced
++    to its last four digits and the email to its first character plus domain.
++    """
++    return log_line(
++        "charge",
++        invoice=_clean(invoice_id),
++        amount=fmt(amount),
++        card=_mask_card(card_number),
++        email=_mask_email(email),
++    )
+diff --git a/tests/test_log_charge.py b/tests/test_log_charge.py
+new file mode 100644
+index 0000000..c9b0c2d
+--- /dev/null
++++ b/tests/test_log_charge.py
+@@ -0,0 +1,53 @@
++import re
++import unittest
++from decimal import Decimal
++
++from invoicing.logs import log_charge
++
++
++class LogChargeTest(unittest.TestCase):
++    def line(self, **kw):
++        args = dict(invoice_id="INV-7", amount=Decimal("12.345"),
++                    card_number="4111 1111 1111 4242", email="jane.doe@example.com")
++        args.update(kw)
++        return log_charge(**args)
++
++    def test_format(self):
++        line = self.line()
++        self.assertRegex(line, r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ charge ")
++        self.assertTrue(line.endswith(
++            " charge amount=12.35 card=****4242 email=j***@example.com invoice=INV-7"))
++
++    def test_full_card_number_never_logged(self):
++        line = self.line(card_number="4111-1111-1111-4242")
++        digits = re.sub(r"\D", "", line.split(" charge ", 1)[1])
++        self.assertNotIn("4111111111114242", digits)
++        self.assertNotIn("41111111", line)
++        self.assertIn("card=****4242", line)
++
++    def test_short_or_garbage_card_fully_masked(self):
++        self.assertIn("card=**** ", self.line(card_number="12"))
++        self.assertIn("card=**** ", self.line(card_number=""))
++
++    def test_email_local_part_hidden(self):
++        line = self.line(email="jane.doe@example.com")
++        self.assertNotIn("jane.doe", line)
++        self.assertIn("email=j***@example.com", line)
++
++    def test_malformed_email_fully_masked(self):
++        self.assertIn("email=*** ", self.line(email="not-an-email"))
++        self.assertIn("email=*** ", self.line(email="@example.com"))
++
++    def test_amount_rounded_half_up(self):
++        self.assertIn("amount=10.00", self.line(amount=Decimal("10")))
++        self.assertIn("amount=0.13", self.line(amount=Decimal("0.125")))
++
++    def test_invoice_id_cannot_forge_lines(self):
++        line = self.line(invoice_id="INV-1\n2026-01-01T00:00:00Z refund amount=999")
++        self.assertNotIn("\n", line)
++        self.assertNotIn(" refund ", line)
++        self.assertEqual(len(line.split(" ")), 6)
++
++
++if __name__ == "__main__":
++    unittest.main()

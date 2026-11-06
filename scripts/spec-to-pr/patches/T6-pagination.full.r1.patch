@@ -1,0 +1,198 @@
+diff --git a/invoicing/store.py b/invoicing/store.py
+index 5000aea..6ddcae3 100644
+--- a/invoicing/store.py
++++ b/invoicing/store.py
+@@ -1,9 +1,16 @@
+-from typing import Dict, List
++from typing import Dict, List, Optional
+ 
+ from .errors import InvoicingError, NotFound
+ from .models import Invoice
+ 
+ 
++MAX_PAGE_SIZE = 100
++
++
++def _is_int(value) -> bool:
++    return isinstance(value, int) and not isinstance(value, bool)
++
++
+ class InvoiceStore:
+     """In-memory invoice store."""
+ 
+@@ -23,3 +30,30 @@ class InvoiceStore:
+ 
+     def all(self) -> List[Invoice]:
+         return list(self._items.values())
++
++    def list(
++        self,
++        customer: Optional[str] = None,
++        page: int = 1,
++        page_size: int = 20,
++    ) -> List[Invoice]:
++        """Return one page of invoices, newest first, then by id ascending.
++
++        ``customer`` filters by case-insensitive exact match. ``page`` is
++        1-based; a page past the end returns an empty list.
++        """
++        if not _is_int(page) or page < 1:
++            raise InvoicingError(f"page must be an integer >= 1, got {page!r}")
++        if not _is_int(page_size) or not 1 <= page_size <= MAX_PAGE_SIZE:
++            raise InvoicingError(
++                f"page_size must be an integer in 1..{MAX_PAGE_SIZE}, got {page_size!r}"
++            )
++        items = self._items.values()
++        if customer is not None:
++            wanted = customer.casefold()
++            items = [i for i in items if i.customer.casefold() == wanted]
++        # Two stable sorts: id ascending, then issued descending.
++        ordered = sorted(items, key=lambda i: i.id)
++        ordered.sort(key=lambda i: i.issued, reverse=True)
++        start = (page - 1) * page_size
++        return ordered[start:start + page_size]
+diff --git a/tests/test_store_list.py b/tests/test_store_list.py
+new file mode 100644
+index 0000000..eefc648
+--- /dev/null
++++ b/tests/test_store_list.py
+@@ -0,0 +1,139 @@
++import unittest
++from datetime import date
++
++from invoicing.errors import InvoicingError
++from invoicing.models import Invoice
++from invoicing.store import InvoiceStore
++
++
++def _store(*invoices):
++    s = InvoiceStore()
++    for inv in invoices:
++        s.add(inv)
++    return s
++
++
++def _ids(invoices):
++    return [i.id for i in invoices]
++
++
++class StoreListOrderTest(unittest.TestCase):
++    def test_empty_store(self):
++        self.assertEqual(InvoiceStore().list(), [])
++
++    def test_issued_descending_then_id_ascending(self):
++        s = _store(
++            Invoice("INV-3", "Acme", date(2026, 1, 1)),
++            Invoice("INV-2", "Acme", date(2026, 3, 1)),
++            Invoice("INV-5", "Acme", date(2026, 2, 1)),
++            Invoice("INV-4", "Acme", date(2026, 3, 1)),
++            Invoice("INV-1", "Acme", date(2026, 3, 1)),
++        )
++        self.assertEqual(
++            _ids(s.list()), ["INV-1", "INV-2", "INV-4", "INV-5", "INV-3"]
++        )
++
++    def test_order_independent_of_insertion(self):
++        invs = [
++            Invoice("B", "Acme", date(2026, 1, 1)),
++            Invoice("A", "Acme", date(2026, 1, 1)),
++            Invoice("C", "Acme", date(2026, 1, 2)),
++        ]
++        self.assertEqual(_ids(_store(*invs).list()), ["C", "A", "B"])
++        self.assertEqual(_ids(_store(*reversed(invs)).list()), ["C", "A", "B"])
++
++
++class StoreListFilterTest(unittest.TestCase):
++    def setUp(self):
++        self.s = _store(
++            Invoice("INV-1", "Acme", date(2026, 1, 1)),
++            Invoice("INV-2", "ACME", date(2026, 1, 2)),
++            Invoice("INV-3", "Acme Corp", date(2026, 1, 3)),
++            Invoice("INV-4", "Globex", date(2026, 1, 4)),
++        )
++
++    def test_customer_case_insensitive_exact_match(self):
++        self.assertEqual(_ids(self.s.list(customer="acme")), ["INV-2", "INV-1"])
++
++    def test_customer_is_not_prefix_match(self):
++        self.assertEqual(_ids(self.s.list(customer="Acme Corp")), ["INV-3"])
++
++    def test_unknown_customer(self):
++        self.assertEqual(self.s.list(customer="Initech"), [])
++
++    def test_no_customer_returns_all(self):
++        self.assertEqual(len(self.s.list()), 4)
++
++
++class StoreListPagingTest(unittest.TestCase):
++    def setUp(self):
++        # INV-01 is oldest, INV-25 newest -> newest-first order is 25..01.
++        self.s = _store(*(
++            Invoice(f"INV-{n:02d}", "Acme", date(2026, 1, n)) for n in range(1, 26)
++        ))
++
++    def test_default_page_size_is_20(self):
++        page = self.s.list()
++        self.assertEqual(len(page), 20)
++        self.assertEqual(page[0].id, "INV-25")
++        self.assertEqual(page[-1].id, "INV-06")
++
++    def test_second_page_holds_the_rest(self):
++        self.assertEqual(
++            _ids(self.s.list(page=2)), ["INV-05", "INV-04", "INV-03", "INV-02", "INV-01"]
++        )
++
++    def test_pages_do_not_overlap_and_cover_all(self):
++        seen = []
++        for p in range(1, 5):
++            seen.extend(_ids(self.s.list(page=p, page_size=7)))
++        self.assertEqual(seen, _ids(self.s.list(page_size=100)))
++        self.assertEqual(len(seen), 25)
++
++    def test_page_past_end_is_empty(self):
++        self.assertEqual(self.s.list(page=3), [])
++        self.assertEqual(self.s.list(page=100, page_size=100), [])
++
++    def test_page_size_bounds_accepted(self):
++        self.assertEqual(_ids(self.s.list(page_size=1)), ["INV-25"])
++        self.assertEqual(len(self.s.list(page_size=100)), 25)
++
++    def test_paging_applies_after_filter(self):
++        s = _store(
++            Invoice("A1", "Acme", date(2026, 1, 1)),
++            Invoice("G1", "Globex", date(2026, 1, 2)),
++            Invoice("A2", "acme", date(2026, 1, 3)),
++            Invoice("A3", "ACME", date(2026, 1, 4)),
++        )
++        self.assertEqual(_ids(s.list(customer="Acme", page=2, page_size=2)), ["A1"])
++
++
++class StoreListValidationTest(unittest.TestCase):
++    def test_invalid_page(self):
++        s = InvoiceStore()
++        for page in (0, -1):
++            with self.subTest(page=page), self.assertRaises(InvoicingError):
++                s.list(page=page)
++
++    def test_invalid_page_size(self):
++        s = InvoiceStore()
++        for size in (0, -5, 101, 1000):
++            with self.subTest(page_size=size), self.assertRaises(InvoicingError):
++                s.list(page_size=size)
++
++    def test_validation_error_is_value_error(self):
++        with self.assertRaises(ValueError):
++            InvoiceStore().list(page=0)
++
++
++class StoreAllUnchangedTest(unittest.TestCase):
++    def test_all_keeps_insertion_order(self):
++        s = _store(
++            Invoice("INV-2", "Acme", date(2026, 1, 1)),
++            Invoice("INV-1", "Globex", date(2026, 3, 1)),
++        )
++        self.assertEqual(_ids(s.all()), ["INV-2", "INV-1"])
++
++
++if __name__ == "__main__":
++    unittest.main()

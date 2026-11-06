@@ -1,0 +1,157 @@
+diff --git a/invoicing/fees.py b/invoicing/fees.py
+new file mode 100644
+index 0000000..8a80d16
+--- /dev/null
++++ b/invoicing/fees.py
+@@ -0,0 +1,56 @@
++"""Late fees for overdue invoices (ticket T1)."""
++import calendar
++from datetime import date, timedelta
++from decimal import Decimal
++
++from .money import to_money
++
++# 1.5% of the invoice total per month overdue (simple interest, not compounded).
++LATE_FEE_RATE_PER_MONTH = Decimal("0.015")
++
++# Invoice has no due date field; invoices are taken to be due this many days
++# after they were issued (net 30).
++PAYMENT_TERMS_DAYS = 30
++
++
++def due_date(invoice) -> date:
++    """Date the invoice falls due: issued + PAYMENT_TERMS_DAYS."""
++    return invoice.issued + timedelta(days=PAYMENT_TERMS_DAYS)
++
++
++def _add_months(d: date, months: int) -> date:
++    """d plus whole calendar months, clamping the day to the month's end."""
++    index = d.month - 1 + months
++    year, month = d.year + index // 12, index % 12 + 1
++    day = min(d.day, calendar.monthrange(year, month)[1])
++    return date(year, month, day)
++
++
++def months_overdue(invoice, today: date) -> int:
++    """Months overdue on `today`, counting a started month as a whole month.
++
++    0 on or before the due date; 1 from the first day after it up to and
++    including one calendar month after it; and so on.
++    """
++    due = due_date(invoice)
++    if today <= due:
++        return 0
++    months = (today.year - due.year) * 12 + (today.month - due.month)
++    if _add_months(due, months) > today:
++        months -= 1  # the last month boundary has not been reached yet
++    if _add_months(due, months) < today:
++        months += 1  # a started month counts in full
++    return months
++
++
++def late_fee(invoice, today: date) -> Decimal:
++    """Late fee owed on `today`: 1.5% of the invoice total per month overdue.
++
++    Returns Decimal("0.00") if the invoice is not overdue or its total is not
++    positive. The result is rounded half-up to cents once, at the end.
++    """
++    months = months_overdue(invoice, today)
++    total = invoice.total()
++    if months == 0 or total <= 0:
++        return to_money(0)
++    return to_money(total * LATE_FEE_RATE_PER_MONTH * months)
+diff --git a/tests/test_fees.py b/tests/test_fees.py
+new file mode 100644
+index 0000000..33b108d
+--- /dev/null
++++ b/tests/test_fees.py
+@@ -0,0 +1,89 @@
++import unittest
++from datetime import date
++from decimal import Decimal
++
++from invoicing.fees import due_date, late_fee, months_overdue
++from invoicing.models import Invoice, LineItem
++
++
++def make_invoice(issued=date(2026, 1, 1), unit_price=Decimal("1000.00")):
++    # Due net 30: issued 2026-01-01 -> due 2026-01-31.
++    return Invoice("INV-1", "Acme", issued, [
++        LineItem("A", "Widget", 1, unit_price),
++    ])
++
++
++class DueDateTest(unittest.TestCase):
++    def test_net_30(self):
++        self.assertEqual(due_date(make_invoice()), date(2026, 1, 31))
++
++
++class MonthsOverdueTest(unittest.TestCase):
++    def test_not_overdue_before_or_on_due_date(self):
++        inv = make_invoice()
++        self.assertEqual(months_overdue(inv, date(2026, 1, 1)), 0)
++        self.assertEqual(months_overdue(inv, date(2026, 1, 31)), 0)
++
++    def test_today_before_issue_date(self):
++        self.assertEqual(months_overdue(make_invoice(), date(2025, 12, 1)), 0)
++
++    def test_started_month_counts_in_full(self):
++        inv = make_invoice()
++        self.assertEqual(months_overdue(inv, date(2026, 2, 1)), 1)
++
++    def test_month_end_clamping(self):
++        # Due 2026-01-31; one month later is 2026-02-28 (clamped).
++        inv = make_invoice()
++        self.assertEqual(months_overdue(inv, date(2026, 2, 28)), 1)
++        self.assertEqual(months_overdue(inv, date(2026, 3, 1)), 2)
++
++    def test_exact_month_boundaries(self):
++        inv = make_invoice(issued=date(2026, 3, 2))  # due 2026-04-01
++        self.assertEqual(months_overdue(inv, date(2026, 5, 1)), 1)
++        self.assertEqual(months_overdue(inv, date(2026, 5, 2)), 2)
++        self.assertEqual(months_overdue(inv, date(2027, 4, 1)), 12)
++
++    def test_across_year_end(self):
++        inv = make_invoice(issued=date(2026, 11, 16))  # due 2026-12-16
++        self.assertEqual(months_overdue(inv, date(2027, 1, 16)), 1)
++        self.assertEqual(months_overdue(inv, date(2027, 1, 17)), 2)
++
++
++class LateFeeTest(unittest.TestCase):
++    def test_zero_when_not_overdue(self):
++        fee = late_fee(make_invoice(), date(2026, 1, 31))
++        self.assertEqual(fee, Decimal("0.00"))
++        self.assertIsInstance(fee, Decimal)
++
++    def test_one_month(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 2, 1)), Decimal("15.00"))
++
++    def test_simple_not_compounded(self):
++        # Three months overdue: 3 x 1.5% of 1000.00, not 1000 x (1.015^3 - 1).
++        self.assertEqual(late_fee(make_invoice(), date(2026, 4, 15)), Decimal("45.00"))
++
++    def test_fee_on_total_including_tax(self):
++        inv = Invoice("INV-2", "Acme", date(2026, 1, 1), [
++            LineItem("A", "Widget", 1, Decimal("100.00"), Decimal("0.20")),
++        ])  # total 120.00
++        self.assertEqual(late_fee(inv, date(2026, 2, 1)), Decimal("1.80"))
++
++    def test_rounds_half_up_to_cents(self):
++        # 0.30 x 1.5% = 0.0045 -> 0.00; 0.70 x 1.5% = 0.0105 -> 0.01
++        self.assertEqual(late_fee(make_invoice(unit_price=Decimal("0.30")), date(2026, 2, 1)),
++                         Decimal("0.00"))
++        self.assertEqual(late_fee(make_invoice(unit_price=Decimal("0.70")), date(2026, 2, 1)),
++                         Decimal("0.01"))
++        # 33.33 x 1.5% = 0.49995 -> 0.50
++        self.assertEqual(late_fee(make_invoice(unit_price=Decimal("33.33")), date(2026, 2, 1)),
++                         Decimal("0.50"))
++
++    def test_zero_or_negative_total(self):
++        empty = Invoice("INV-3", "Acme", date(2026, 1, 1), [])
++        self.assertEqual(late_fee(empty, date(2026, 6, 1)), Decimal("0.00"))
++        credit = make_invoice(unit_price=Decimal("-50.00"))
++        self.assertEqual(late_fee(credit, date(2026, 6, 1)), Decimal("0.00"))
++
++
++if __name__ == "__main__":
++    unittest.main()

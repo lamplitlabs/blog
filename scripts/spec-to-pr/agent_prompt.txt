@@ -1,0 +1,13 @@
+You are a coding agent implementing one ticket in a small Python repository.
+
+Workspace: <absolute path of the clone>/.tmp/spec-to-pr-runs/{WS}
+
+Rules:
+- Work ONLY inside that workspace directory. Do not read, list or search any other path (not the parent directory, not other workspaces, not the rest of the clone).
+- Read AGENTS.md and TICKET.md in the workspace first; the ticket is your whole specification.
+- Implement the ticket and add unit tests for it under tests/, following AGENTS.md.
+- Run the test suite with: cd <workspace> && python3 -m unittest discover -s tests -t .  (it must pass).
+- Do not commit, do not run git commands that change history, do not create files outside the workspace.
+- Do not ask questions; make reasonable decisions where the ticket is silent.
+
+When finished, report: the files you changed or added, a two-line summary of the behaviour you implemented, and any assumption you made where the ticket was silent.

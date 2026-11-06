@@ -1,0 +1,121 @@
+diff --git a/invoicing/store.py b/invoicing/store.py
+index 5000aea..a13f65f 100644
+--- a/invoicing/store.py
++++ b/invoicing/store.py
+@@ -1,4 +1,4 @@
+-from typing import Dict, List
++from typing import Dict, List, Optional
+ 
+ from .errors import InvoicingError, NotFound
+ from .models import Invoice
+@@ -23,3 +23,29 @@ class InvoiceStore:
+ 
+     def all(self) -> List[Invoice]:
+         return list(self._items.values())
++
++    def list(
++        self, customer: Optional[str] = None, page: int = 1, page_size: int = 20
++    ) -> List[Invoice]:
++        """Return one page of invoices, optionally only those of ``customer``.
++
++        Invoices keep insertion order (the same order as ``all()``). ``page``
++        is 1-based; a page past the end returns an empty list. ``page`` and
++        ``page_size`` must be integers >= 1, otherwise InvoicingError.
++        """
++        for name, value in (("page", page), ("page_size", page_size)):
++            if isinstance(value, bool) or not isinstance(value, int) or value < 1:
++                raise InvoicingError(f"{name} must be an integer >= 1, got {value!r}")
++        start = (page - 1) * page_size
++        end = start + page_size
++        result: List[Invoice] = []
++        index = 0
++        for invoice in self._items.values():
++            if customer is not None and invoice.customer != customer:
++                continue
++            if index >= end:
++                break
++            if index >= start:
++                result.append(invoice)
++            index += 1
++        return result
+diff --git a/tests/test_store_pagination.py b/tests/test_store_pagination.py
+new file mode 100644
+index 0000000..4572c0b
+--- /dev/null
++++ b/tests/test_store_pagination.py
+@@ -0,0 +1,75 @@
++import unittest
++from datetime import date
++
++from invoicing.errors import InvoicingError
++from invoicing.models import Invoice
++from invoicing.store import InvoiceStore
++
++
++def _store(n_acme=5, n_globex=3):
++    s = InvoiceStore()
++    # Interleave customers so filtering is exercised against insertion order.
++    for i in range(max(n_acme, n_globex)):
++        if i < n_acme:
++            s.add(Invoice(f"A-{i}", "Acme", date(2026, 1, 1)))
++        if i < n_globex:
++            s.add(Invoice(f"G-{i}", "Globex", date(2026, 1, 1)))
++    return s
++
++
++def _ids(invoices):
++    return [inv.id for inv in invoices]
++
++
++class StorePaginationTest(unittest.TestCase):
++    def test_defaults_first_page_of_twenty(self):
++        s = InvoiceStore()
++        for i in range(25):
++            s.add(Invoice(f"INV-{i:02d}", "Acme", date(2026, 1, 1)))
++        page = s.list()
++        self.assertEqual(_ids(page), [f"INV-{i:02d}" for i in range(20)])
++        self.assertEqual(_ids(s.list(page=2)), [f"INV-{i:02d}" for i in range(20, 25)])
++
++    def test_pages_follow_insertion_order_and_cover_all(self):
++        s = _store()
++        pages = [s.list(page=p, page_size=3) for p in (1, 2, 3)]
++        self.assertEqual([len(p) for p in pages], [3, 3, 2])
++        self.assertEqual(sum((_ids(p) for p in pages), []), _ids(s.all()))
++
++    def test_page_past_end_is_empty(self):
++        s = _store()
++        self.assertEqual(s.list(page=4, page_size=3), [])
++        self.assertEqual(InvoiceStore().list(), [])
++
++    def test_customer_filter(self):
++        s = _store()
++        self.assertEqual(_ids(s.list(customer="Acme", page_size=2)), ["A-0", "A-1"])
++        self.assertEqual(_ids(s.list(customer="Acme", page=3, page_size=2)), ["A-4"])
++        self.assertEqual(_ids(s.list(customer="Globex")), ["G-0", "G-1", "G-2"])
++        self.assertEqual(s.list(customer="Nobody"), [])
++
++    def test_invalid_page_and_page_size(self):
++        s = _store()
++        for kwargs in (
++            {"page": 0},
++            {"page": -1},
++            {"page_size": 0},
++            {"page_size": -5},
++            {"page": 1.5},
++            {"page_size": "10"},
++            {"page": True},
++            {"page_size": None},
++        ):
++            with self.subTest(**{k: repr(v) for k, v in kwargs.items()}):
++                with self.assertRaises(InvoicingError):
++                    s.list(**kwargs)
++
++    def test_returns_new_list(self):
++        s = _store()
++        page = s.list()
++        page.clear()
++        self.assertEqual(len(s.list()), 8)
++
++
++if __name__ == "__main__":
++    unittest.main()

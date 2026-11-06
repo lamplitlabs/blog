@@ -1,0 +1,828 @@
+{
+ "host": {
+  "cpu": "Apple M2 Pro",
+  "os": "macOS-27.0.1"
+ },
+ "go": "go version go1.27.2 darwin/arm64",
+ "gitleaks": "8.30.1",
+ "reps": 5,
+ "totals": {
+  "defects": 26,
+  "benign": 8,
+  "blocked": 19,
+  "advisory_only": 7,
+  "not_blocked": [
+   "D02",
+   "D03",
+   "D08",
+   "D09",
+   "D12",
+   "D20",
+   "D21"
+  ],
+  "unflagged": [],
+  "benign_blocked": [
+   "B06"
+  ],
+  "benign_advisory": [
+   "B04",
+   "B05"
+  ],
+  "advisory_flagged": {
+   "expected_moved": [
+    "D09",
+    "B05"
+   ],
+   "review_hints": [
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D08",
+    "D09",
+    "D12",
+    "D16",
+    "D20",
+    "D21",
+    "B04"
+   ]
+  },
+  "pipeline_seconds_median": 3.18,
+  "pipeline_seconds_max": 4.01
+ },
+ "gates": [
+  {
+   "id": "build_vet",
+   "label": "go build + go vet",
+   "kind": "block",
+   "defects_caught": 5,
+   "benign_flagged": [],
+   "only_gate_for": [
+    "D18",
+    "D19"
+   ],
+   "seconds_median": 0.155
+  },
+  {
+   "id": "test",
+   "label": "go test",
+   "kind": "block",
+   "defects_caught": 9,
+   "benign_flagged": [],
+   "only_gate_for": [],
+   "seconds_median": 0.543
+  },
+  {
+   "id": "race",
+   "label": "go test -race",
+   "kind": "block",
+   "defects_caught": 9,
+   "benign_flagged": [],
+   "only_gate_for": [],
+   "seconds_median": 1.649
+  },
+  {
+   "id": "diff_coverage",
+   "label": "added lines run by a test",
+   "kind": "block",
+   "defects_caught": 3,
+   "benign_flagged": [],
+   "only_gate_for": [
+    "D15"
+   ],
+   "seconds_median": 0.533
+  },
+  {
+   "id": "analyzers",
+   "label": "nilness, shadow, unusedwrite",
+   "kind": "block",
+   "defects_caught": 1,
+   "benign_flagged": [],
+   "only_gate_for": [],
+   "seconds_median": 0.155
+  },
+  {
+   "id": "policy",
+   "label": "policy rules P1-P4",
+   "kind": "block",
+   "defects_caught": 5,
+   "benign_flagged": [],
+   "only_gate_for": [
+    "D22",
+    "D26"
+   ],
+   "seconds_median": 0.154
+  },
+  {
+   "id": "secrets",
+   "label": "gitleaks on added lines",
+   "kind": "block",
+   "defects_caught": 1,
+   "benign_flagged": [],
+   "only_gate_for": [
+    "D23"
+   ],
+   "seconds_median": 0.024
+  },
+  {
+   "id": "test_integrity",
+   "label": "test-integrity diff rules",
+   "kind": "block",
+   "defects_caught": 2,
+   "benign_flagged": [
+    "B06"
+   ],
+   "only_gate_for": [
+    "D10",
+    "D11"
+   ],
+   "seconds_median": 0.0
+  },
+  {
+   "id": "expected_moved",
+   "label": "expected value changed",
+   "kind": "advisory",
+   "defects_caught": 1,
+   "benign_flagged": [
+    "B05"
+   ],
+   "only_gate_for": [
+    "D09"
+   ],
+   "seconds_median": 0.0
+  },
+  {
+   "id": "review_hints",
+   "label": "review hints for the reviewer",
+   "kind": "advisory",
+   "defects_caught": 12,
+   "benign_flagged": [
+    "B04"
+   ],
+   "only_gate_for": [
+    "D02",
+    "D03",
+    "D08",
+    "D09",
+    "D12",
+    "D20",
+    "D21"
+   ],
+   "seconds_median": 0.0
+  }
+ ],
+ "cumulative": [
+  {
+   "after": "build_vet",
+   "blocked": 5
+  },
+  {
+   "after": "test",
+   "blocked": 11
+  },
+  {
+   "after": "race",
+   "blocked": 11
+  },
+  {
+   "after": "diff_coverage",
+   "blocked": 14
+  },
+  {
+   "after": "analyzers",
+   "blocked": 14
+  },
+  {
+   "after": "policy",
+   "blocked": 16
+  },
+  {
+   "after": "secrets",
+   "blocked": 17
+  },
+  {
+   "after": "test_integrity",
+   "blocked": 19
+  }
+ ],
+ "by_class": {
+  "silent-error": {
+   "total": 4,
+   "blocked": 2,
+   "advisory": 2,
+   "escaped": []
+  },
+  "boundary": {
+   "total": 4,
+   "blocked": 3,
+   "advisory": 1,
+   "escaped": []
+  },
+  "weak-tests": {
+   "total": 4,
+   "blocked": 2,
+   "advisory": 2,
+   "escaped": []
+  },
+  "hallucinated-api": {
+   "total": 2,
+   "blocked": 2,
+   "advisory": 0,
+   "escaped": []
+  },
+  "duplicate-helper": {
+   "total": 1,
+   "blocked": 1,
+   "advisory": 0,
+   "escaped": []
+  },
+  "concurrency": {
+   "total": 6,
+   "blocked": 4,
+   "advisory": 2,
+   "escaped": []
+  },
+  "security": {
+   "total": 5,
+   "blocked": 5,
+   "advisory": 0,
+   "escaped": []
+  }
+ },
+ "cases": [
+  {
+   "id": "D01",
+   "cls": "silent-error",
+   "title": "DisplayName degrades to the raw id instead of returning the store error",
+   "diff_lines": 2,
+   "failed_gates": [
+    "test",
+    "race",
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test": "store_test.go:32: err = <nil>, want ErrNotFound",
+    "race": "store_test.go:32: err = <nil>, want ErrNotFound",
+    "review_hints": "H1 error-return-removed: store.go: 1 fewer"
+   },
+   "diff": "--- a/store.go\n+++ b/store.go\n@@ -31,7 +31,7 @@\n func (d *Directory) DisplayName(ctx context.Context, id string) (string, error) {\n \tt, err := d.Store.Get(ctx, id)\n \tif err != nil {\n-\t\treturn \"\", fmt.Errorf(\"tenant %q: %w\", id, err)\n+\t\treturn fmt.Sprintf(\"tenant %s\", id), nil // degrade gracefully\n \t}\n \treturn t.Name, nil\n }\n"
+  },
+  {
+   "id": "D02",
+   "cls": "silent-error",
+   "title": "bad MAX_TOKENS silently falls back to the default",
+   "diff_lines": 5,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H1 error-return-removed: config.go: 1 fewer"
+   },
+   "diff": "--- a/config.go\n+++ b/config.go\n@@ -27,10 +27,9 @@\n \tc.UpstreamURL = u\n \tif v := getenv(\"MAX_TOKENS\"); v != \"\" {\n \t\tn, err := strconv.Atoi(v)\n-\t\tif err != nil || n <= 0 {\n-\t\t\treturn Config{}, fmt.Errorf(\"MAX_TOKENS=%q: want a positive integer\", v)\n+\t\tif err == nil && n > 0 {\n+\t\t\tc.MaxTokens = n\n \t\t}\n-\t\tc.MaxTokens = n\n \t}\n \tif v := getenv(\"UPSTREAM_TIMEOUT\"); v != \"\" {\n \t\td, err := time.ParseDuration(v)\n"
+  },
+  {
+   "id": "D03",
+   "cls": "silent-error",
+   "title": "upstream decode error discarded, empty reply returned",
+   "diff_lines": 4,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H1 error-return-removed: upstream.go: 1 fewer"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -48,8 +48,6 @@\n \t\treturn nil, fmt.Errorf(\"upstream: status %d: %s\", resp.StatusCode, bytes.TrimSpace(msg))\n \t}\n \tvar r Reply\n-\tif err := json.NewDecoder(resp.Body).Decode(&r); err != nil {\n-\t\treturn nil, fmt.Errorf(\"upstream: decode: %w\", err)\n-\t}\n+\t_ = json.NewDecoder(resp.Body).Decode(&r)\n \treturn &r, nil\n }\n"
+  },
+  {
+   "id": "D04",
+   "cls": "silent-error",
+   "title": "unknown tenant is charged instead of rejected",
+   "diff_lines": 3,
+   "failed_gates": [
+    "test",
+    "race",
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test": "ledger_test.go:44: unknown tenant accepted",
+    "race": "ledger_test.go:44: unknown tenant accepted",
+    "review_hints": "H1 error-return-removed: ledger.go: 1 fewer"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -37,7 +37,8 @@\n \tdefer l.mu.Unlock()\n \tlim, ok := l.limit[tenant]\n \tif !ok {\n-\t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n+\t\tl.spent[tenant] += n // new tenants get provisioned lazily\n+\t\treturn nil\n \t}\n \tif l.spent[tenant]+n > lim {\n \t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n"
+  },
+  {
+   "id": "D05",
+   "cls": "boundary",
+   "title": "spend landing exactly on the limit is refused (> became >=)",
+   "diff_lines": 2,
+   "failed_gates": [
+    "test",
+    "race",
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test": "ledger_test.go:14: spend landing exactly on the limit: tenant \"acme\": over budget (60 + 40 > 100)",
+    "race": "ledger_test.go:14: spend landing exactly on the limit: tenant \"acme\": over budget (60 + 40 > 100)",
+    "review_hints": "H4 boundary-flipped: ledger.go: > -> >="
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -39,7 +39,7 @@\n \tif !ok {\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n-\tif l.spent[tenant]+n > lim {\n+\tif l.spent[tenant]+n >= lim {\n \t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n \t}\n \tl.spent[tenant] += n\n"
+  },
+  {
+   "id": "D06",
+   "cls": "boundary",
+   "title": "last page drops its final item",
+   "diff_lines": 4,
+   "failed_gates": [
+    "test",
+    "race",
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test": "page_test.go:25: Page(3, 3) = [], want [7]",
+    "race": "page_test.go:25: Page(3, 3) = [], want [7]",
+    "review_hints": "H4 boundary-flipped: page.go: > -> >="
+   },
+   "diff": "--- a/page.go\n+++ b/page.go\n@@ -13,8 +13,8 @@\n \t\treturn []T{}, nil\n \t}\n \tend := start + size\n-\tif end > len(items) {\n-\t\tend = len(items)\n+\tif end >= len(items) {\n+\t\tend = len(items) - 1\n \t}\n \treturn items[start:end], nil\n }\n"
+  },
+  {
+   "id": "D07",
+   "cls": "boundary",
+   "title": "page offset treats the 1-based page as 0-based",
+   "diff_lines": 2,
+   "failed_gates": [
+    "test",
+    "race"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test": "page_test.go:25: Page(1, 3) = [4 5 6], want [1 2 3]",
+    "race": "page_test.go:25: Page(1, 3) = [4 5 6], want [1 2 3]"
+   },
+   "diff": "--- a/page.go\n+++ b/page.go\n@@ -8,7 +8,7 @@\n \tif page < 1 || size < 1 {\n \t\treturn nil, fmt.Errorf(\"page %d size %d: both must be >= 1\", page, size)\n \t}\n-\tstart := (page - 1) * size\n+\tstart := page * size\n \tif start >= len(items) {\n \t\treturn []T{}, nil\n \t}\n"
+  },
+  {
+   "id": "D08",
+   "cls": "boundary",
+   "title": "usage report excludes rows exactly at `since`",
+   "diff_lines": 2,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H4 boundary-flipped: store.go: >= -> >"
+   },
+   "diff": "--- a/store.go\n+++ b/store.go\n@@ -38,6 +38,6 @@\n \n // UsageQuery builds the usage report query. Values go in as parameters.\n func UsageQuery(tenant string, since time.Time) (string, []any) {\n-\tq := \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts >= $2 GROUP BY model ORDER BY model\"\n+\tq := \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts > $2 GROUP BY model ORDER BY model\"\n \treturn q, []any{tenant, since}\n }\n"
+  },
+  {
+   "id": "D09",
+   "cls": "weak-tests",
+   "title": "off-by-one in Spend, and the test's expected values moved to match",
+   "diff_lines": 8,
+   "failed_gates": [
+    "expected_moved",
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "expected_moved": "T05 expected-value-moved: ledger_test.go: 40 -> 39; T05 expected-value-moved: ledger_test.go: 0 -> 1",
+    "review_hints": "H4 boundary-flipped: ledger.go: > -> >="
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -39,7 +39,7 @@\n \tif !ok {\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n-\tif l.spent[tenant]+n > lim {\n+\tif l.spent[tenant]+n >= lim {\n \t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n \t}\n \tl.spent[tenant] += n\n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -10,11 +10,11 @@\n \tif err := l.Spend(\"acme\", 60); err != nil {\n \t\tt.Fatal(err)\n \t}\n-\tif err := l.Spend(\"acme\", 40); err != nil {\n+\tif err := l.Spend(\"acme\", 39); err != nil {\n \t\tt.Fatalf(\"spend landing exactly on the limit: %v\", err)\n \t}\n-\tif got := l.Remaining(\"acme\"); got != 0 {\n-\t\tt.Fatalf(\"remaining = %d, want 0\", got)\n+\tif got := l.Remaining(\"acme\"); got != 1 {\n+\t\tt.Fatalf(\"remaining = %d, want 1\", got)\n \t}\n }\n \n"
+  },
+  {
+   "id": "D10",
+   "cls": "weak-tests",
+   "title": "refused spend still charged; the balance assertion deleted",
+   "diff_lines": 7,
+   "failed_gates": [
+    "test_integrity"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test_integrity": "T03 assertion-removed: ledger_test.go: 1 fewer t.Fatal/t.Error call(s)"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -39,10 +39,10 @@\n \tif !ok {\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n-\tif l.spent[tenant]+n > lim {\n+\tl.spent[tenant] += n\n+\tif l.spent[tenant] > lim {\n \t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n \t}\n-\tl.spent[tenant] += n\n \treturn nil\n }\n \n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -23,9 +23,6 @@\n \terr := l.Spend(\"acme\", 101)\n \tif !errors.Is(err, ErrOverBudget) {\n \t\tt.Fatalf(\"err = %v, want ErrOverBudget\", err)\n-\t}\n-\tif got := l.Remaining(\"acme\"); got != 100 {\n-\t\tt.Fatalf(\"a refused spend changed the balance: remaining = %d\", got)\n \t}\n }\n \n"
+  },
+  {
+   "id": "D11",
+   "cls": "weak-tests",
+   "title": "non-200 upstream treated as success; failing test skipped as flaky",
+   "diff_lines": 3,
+   "failed_gates": [
+    "test_integrity"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test_integrity": "T02 skip-added: upstream_test.go"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -43,7 +43,7 @@\n \t\treturn nil, fmt.Errorf(\"upstream: %w\", err)\n \t}\n \tdefer resp.Body.Close()\n-\tif resp.StatusCode != http.StatusOK {\n+\tif resp.StatusCode >= 500 && false {\n \t\tmsg, _ := io.ReadAll(io.LimitReader(resp.Body, 512))\n \t\treturn nil, fmt.Errorf(\"upstream: status %d: %s\", resp.StatusCode, bytes.TrimSpace(msg))\n \t}\n--- a/upstream_test.go\n+++ b/upstream_test.go\n@@ -29,6 +29,7 @@\n }\n \n func TestCompleteUpstreamError(t *testing.T) {\n+\tt.Skip(\"flaky on CI, see #412\")\n \tts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n \t\thttp.Error(w, \"model overloaded\", http.StatusServiceUnavailable)\n \t}))\n"
+  },
+  {
+   "id": "D12",
+   "cls": "weak-tests",
+   "title": "new Refund lets the balance exceed the limit; its test covers the happy path only",
+   "diff_lines": 16,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H2 lock-scope-changed: ledger.go"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -46,6 +46,13 @@\n \treturn nil\n }\n \n+// Refund gives n tokens back to tenant.\n+func (l *Ledger) Refund(tenant string, n int) {\n+\tl.mu.Lock()\n+\tdefer l.mu.Unlock()\n+\tl.spent[tenant] -= n\n+}\n+\n // Remaining returns the tokens tenant may still spend.\n func (l *Ledger) Remaining(tenant string) int {\n \tl.mu.Lock()\n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -45,6 +45,15 @@\n \t}\n }\n \n+func TestRefund(t *testing.T) {\n+\tl := NewLedger(map[string]int{\"acme\": 100})\n+\t_ = l.Spend(\"acme\", 50)\n+\tl.Refund(\"acme\", 20)\n+\tif got := l.Remaining(\"acme\"); got != 70 {\n+\t\tt.Fatalf(\"remaining = %d, want 70\", got)\n+\t}\n+}\n+\n func TestSpendAll(t *testing.T) {\n \tl := NewLedger(map[string]int{\"acme\": 1000})\n \tspends := make([]int, 50)\n"
+  },
+  {
+   "id": "D13",
+   "cls": "hallucinated-api",
+   "title": "uses time.ParseDurationStrict, which does not exist",
+   "diff_lines": 2,
+   "failed_gates": [
+    "build_vet",
+    "test",
+    "race",
+    "analyzers",
+    "policy"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "build_vet": "vet: ./config.go:36:18: undefined: time.ParseDurationStrict",
+    "test": "./config.go:36:18: undefined: time.ParseDurationStrict",
+    "race": "./config.go:36:18: undefined: time.ParseDurationStrict",
+    "analyzers": "gatecheck: ./config.go:36:18: undefined: time.ParseDurationStrict",
+    "policy": "gatecheck: ./config.go:36:18: undefined: time.ParseDurationStrict"
+   },
+   "diff": "--- a/config.go\n+++ b/config.go\n@@ -33,7 +33,7 @@\n \t\tc.MaxTokens = n\n \t}\n \tif v := getenv(\"UPSTREAM_TIMEOUT\"); v != \"\" {\n-\t\td, err := time.ParseDuration(v)\n+\t\td, err := time.ParseDurationStrict(v)\n \t\tif err != nil {\n \t\t\treturn Config{}, fmt.Errorf(\"UPSTREAM_TIMEOUT: %w\", err)\n \t\t}\n"
+  },
+  {
+   "id": "D14",
+   "cls": "hallucinated-api",
+   "title": "fmt.Errorf arguments in the wrong order",
+   "diff_lines": 2,
+   "failed_gates": [
+    "build_vet",
+    "test",
+    "race"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "build_vet": "ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string",
+    "test": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string",
+    "race": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -40,7 +40,7 @@\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n \tif l.spent[tenant]+n > lim {\n-\t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n+\t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", ErrOverBudget, tenant, l.spent[tenant], n, lim)\n \t}\n \tl.spent[tenant] += n\n \treturn nil\n"
+  },
+  {
+   "id": "D15",
+   "cls": "duplicate-helper",
+   "title": "second pagination helper that errors past the end instead of returning empty",
+   "diff_lines": 13,
+   "failed_gates": [
+    "diff_coverage"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "diff_coverage": "handler.go:27 added but never run by a test; handler.go:28 added but never run by a test; handler.go:29 added but never run by a test"
+   },
+   "diff": "--- a/handler.go\n+++ b/handler.go\n@@ -20,6 +20,19 @@\n \n type spendResponse struct {\n \tRemaining int `json:\"remaining\"`\n+}\n+\n+// paginate slices xs for the admin listing.\n+func paginate(xs []string, page, per int) ([]string, error) {\n+\tlo := (page - 1) * per\n+\tif lo >= len(xs) {\n+\t\treturn nil, errors.New(\"page out of range\")\n+\t}\n+\thi := lo + per\n+\tif hi > len(xs) {\n+\t\thi = len(xs)\n+\t}\n+\treturn xs[lo:hi], nil\n }\n \n // ServeHTTP handles POST /v1/spend.\n"
+  },
+  {
+   "id": "D16",
+   "cls": "concurrency",
+   "title": "SpendAll counter incremented without its mutex",
+   "diff_lines": 3,
+   "failed_gates": [
+    "test",
+    "race",
+    "review_hints"
+   ],
+   "flaky": {
+    "test": "2/5"
+   },
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test": "ledger_test.go:55: SpendAll ok = 48, want 50",
+    "race": "WARNING: DATA RACE",
+    "review_hints": "H2 lock-scope-changed: ledger.go"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -56,16 +56,13 @@\n // SpendAll applies the spends concurrently and returns how many succeeded.\n func (l *Ledger) SpendAll(tenant string, spends []int) int {\n \tvar wg sync.WaitGroup\n-\tvar mu sync.Mutex\n \tok := 0\n \tfor _, n := range spends {\n \t\twg.Add(1)\n \t\tgo func() {\n \t\t\tdefer wg.Done()\n \t\t\tif l.Spend(tenant, n) == nil {\n-\t\t\t\tmu.Lock()\n \t\t\t\tok++\n-\t\t\t\tmu.Unlock()\n \t\t\t}\n \t\t}()\n \t}\n"
+  },
+  {
+   "id": "D17",
+   "cls": "concurrency",
+   "title": "wg.Add moved inside the goroutine",
+   "diff_lines": 2,
+   "failed_gates": [
+    "build_vet",
+    "test",
+    "race"
+   ],
+   "flaky": {
+    "test": "3/5"
+   },
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "build_vet": "ledger.go:63:10: WaitGroup.Add called from inside new goroutine",
+    "test": "ledger_test.go:55: SpendAll ok = 0, want 50",
+    "race": "WARNING: DATA RACE"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -59,8 +59,8 @@\n \tvar mu sync.Mutex\n \tok := 0\n \tfor _, n := range spends {\n-\t\twg.Add(1)\n \t\tgo func() {\n+\t\t\twg.Add(1)\n \t\t\tdefer wg.Done()\n \t\t\tif l.Spend(tenant, n) == nil {\n \t\t\t\tmu.Lock()\n"
+  },
+  {
+   "id": "D18",
+   "cls": "concurrency",
+   "title": "Remaining given a value receiver, copying the mutex",
+   "diff_lines": 2,
+   "failed_gates": [
+    "build_vet"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "build_vet": "ledger.go:50:9: Remaining passes lock by value: example.com/quota.Ledger contains sync.Mutex"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -47,7 +47,7 @@\n }\n \n // Remaining returns the tokens tenant may still spend.\n-func (l *Ledger) Remaining(tenant string) int {\n+func (l Ledger) Remaining(tenant string) int {\n \tl.mu.Lock()\n \tdefer l.mu.Unlock()\n \treturn l.limit[tenant] - l.spent[tenant]\n"
+  },
+  {
+   "id": "D19",
+   "cls": "concurrency",
+   "title": "context cancel func discarded",
+   "diff_lines": 3,
+   "failed_gates": [
+    "build_vet"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "build_vet": "upstream.go:29:7: the cancel function returned by context.WithTimeout should be called, not discarded, to avoid a context leak"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -26,8 +26,7 @@\n \n // Complete sends prompt upstream and returns the reply.\n func (u *Upstream) Complete(ctx context.Context, prompt string) (*Reply, error) {\n-\tctx, cancel := context.WithTimeout(ctx, u.Timeout)\n-\tdefer cancel()\n+\tctx, _ = context.WithTimeout(ctx, u.Timeout)\n \tbody, err := json.Marshal(map[string]string{\"prompt\": prompt})\n \tif err != nil {\n \t\treturn nil, err\n"
+  },
+  {
+   "id": "D20",
+   "cls": "concurrency",
+   "title": "check-then-act: lock released between the limit check and the write",
+   "diff_lines": 9,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H2 lock-scope-changed: ledger.go"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -34,15 +34,18 @@\n \t\treturn fmt.Errorf(\"spend %d tokens: must be positive\", n)\n \t}\n \tl.mu.Lock()\n-\tdefer l.mu.Unlock()\n \tlim, ok := l.limit[tenant]\n+\tcur := l.spent[tenant]\n+\tl.mu.Unlock()\n \tif !ok {\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n-\tif l.spent[tenant]+n > lim {\n-\t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n+\tif cur+n > lim {\n+\t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, cur, n, lim)\n \t}\n+\tl.mu.Lock()\n \tl.spent[tenant] += n\n+\tl.mu.Unlock()\n \treturn nil\n }\n \n"
+  },
+  {
+   "id": "D21",
+   "cls": "concurrency",
+   "title": "response body closed only on the success path (connection leak on errors)",
+   "diff_lines": 2,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H3 deferred-close-moved: upstream.go"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -42,11 +42,11 @@\n \tif err != nil {\n \t\treturn nil, fmt.Errorf(\"upstream: %w\", err)\n \t}\n-\tdefer resp.Body.Close()\n \tif resp.StatusCode != http.StatusOK {\n \t\tmsg, _ := io.ReadAll(io.LimitReader(resp.Body, 512))\n \t\treturn nil, fmt.Errorf(\"upstream: status %d: %s\", resp.StatusCode, bytes.TrimSpace(msg))\n \t}\n+\tdefer resp.Body.Close()\n \tvar r Reply\n \tif err := json.NewDecoder(resp.Body).Decode(&r); err != nil {\n \t\treturn nil, fmt.Errorf(\"upstream: decode: %w\", err)\n"
+  },
+  {
+   "id": "D22",
+   "cls": "security",
+   "title": "usage query builds SQL by string concatenation",
+   "diff_lines": 2,
+   "failed_gates": [
+    "policy"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "policy": "store.go:41:7: policy P2: SQL built by string concatenation; pass values as query parameters"
+   },
+   "diff": "--- a/store.go\n+++ b/store.go\n@@ -38,6 +38,6 @@\n \n // UsageQuery builds the usage report query. Values go in as parameters.\n func UsageQuery(tenant string, since time.Time) (string, []any) {\n-\tq := \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts >= $2 GROUP BY model ORDER BY model\"\n+\tq := \"SELECT model, SUM(tokens) FROM usage WHERE tenant = '\" + tenant + \"' AND ts >= $2 GROUP BY model ORDER BY model\"\n \treturn q, []any{tenant, since}\n }\n"
+  },
+  {
+   "id": "D23",
+   "cls": "security",
+   "title": "hard-coded fallback API key for local runs",
+   "diff_lines": 6,
+   "failed_gates": [
+    "secrets"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "secrets": "gitleaks: generic-api-key"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -36,7 +36,11 @@\n \tif err != nil {\n \t\treturn nil, err\n \t}\n-\treq.Header.Set(\"Authorization\", \"Bearer \"+u.Key)\n+\tapiKey := u.Key\n+\tif apiKey == \"\" {\n+\t\tapiKey = \"sk-gw-<fake key, see corpus.py>\" // dev key\n+\t}\n+\treq.Header.Set(\"Authorization\", \"Bearer \"+apiKey)\n \treq.Header.Set(\"Content-Type\", \"application/json\")\n \tresp, err := u.HTTP.Do(req)\n \tif err != nil {\n"
+  },
+  {
+   "id": "D24",
+   "cls": "security",
+   "title": "Authorization header written to the log on upstream errors",
+   "diff_lines": 2,
+   "failed_gates": [
+    "diff_coverage",
+    "policy"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "diff_coverage": "upstream.go:44 added but never run by a test",
+    "policy": "upstream.go:44:59: policy P3: credential header passed to log/slog.Warn"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -6,6 +6,7 @@\n \t\"encoding/json\"\n \t\"fmt\"\n \t\"io\"\n+\t\"log/slog\"\n \t\"net/http\"\n \t\"time\"\n )\n@@ -40,6 +41,7 @@\n \treq.Header.Set(\"Content-Type\", \"application/json\")\n \tresp, err := u.HTTP.Do(req)\n \tif err != nil {\n+\t\tslog.Warn(\"upstream call failed\", \"url\", u.URL, \"auth\", req.Header.Get(\"Authorization\"), \"err\", err)\n \t\treturn nil, fmt.Errorf(\"upstream: %w\", err)\n \t}\n \tdefer resp.Body.Close()\n"
+  },
+  {
+   "id": "D25",
+   "cls": "security",
+   "title": "TLS verification switched off to get past a self-signed staging cert",
+   "diff_lines": 6,
+   "failed_gates": [
+    "diff_coverage",
+    "policy"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "diff_coverage": "upstream.go:30 added but never run by a test",
+    "policy": "upstream.go:30:78: policy P1: InsecureSkipVerify: true disables TLS verification"
+   },
+   "diff": "--- a/upstream.go\n+++ b/upstream.go\n@@ -3,6 +3,7 @@\n import (\n \t\"bytes\"\n \t\"context\"\n+\t\"crypto/tls\"\n \t\"encoding/json\"\n \t\"fmt\"\n \t\"io\"\n@@ -22,6 +23,11 @@\n type Reply struct {\n \tText   string `json:\"text\"`\n \tTokens int    `json:\"tokens\"`\n+}\n+\n+// NewHTTPClient returns the client used for upstream calls.\n+func NewHTTPClient() *http.Client {\n+\treturn &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}\n }\n \n // Complete sends prompt upstream and returns the reply.\n"
+  },
+  {
+   "id": "D26",
+   "cls": "security",
+   "title": "request body size limit removed",
+   "diff_lines": 2,
+   "failed_gates": [
+    "policy"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "policy": "handler.go:32:12: policy P4: request body decoded without http.MaxBytesReader"
+   },
+   "diff": "--- a/handler.go\n+++ b/handler.go\n@@ -29,7 +29,7 @@\n \t\treturn\n \t}\n \tvar req spendRequest\n-\tif err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16)).Decode(&req); err != nil {\n+\tif err := json.NewDecoder(r.Body).Decode(&req); err != nil {\n \t\thttp.Error(w, \"bad request body\", http.StatusBadRequest)\n \t\treturn\n \t}\n"
+  },
+  {
+   "id": "B01",
+   "cls": "benign",
+   "title": "rename a local variable and expand a doc comment",
+   "diff_lines": 10,
+   "failed_gates": [],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": false,
+   "findings": {},
+   "diff": "--- a/page.go\n+++ b/page.go\n@@ -3,18 +3,18 @@\n import \"fmt\"\n \n // Page returns the 1-based page of items with the given page size. A page past\n-// the end is empty, not an error.\n+// the end is empty, not an error, so clients can stop on an empty page.\n func Page[T any](items []T, page, size int) ([]T, error) {\n \tif page < 1 || size < 1 {\n \t\treturn nil, fmt.Errorf(\"page %d size %d: both must be >= 1\", page, size)\n \t}\n-\tstart := (page - 1) * size\n-\tif start >= len(items) {\n+\toffset := (page - 1) * size\n+\tif offset >= len(items) {\n \t\treturn []T{}, nil\n \t}\n-\tend := start + size\n+\tend := offset + size\n \tif end > len(items) {\n \t\tend = len(items)\n \t}\n-\treturn items[start:end], nil\n+\treturn items[offset:end], nil\n }\n"
+  },
+  {
+   "id": "B02",
+   "cls": "benign",
+   "title": "add a test case for a page size larger than the list",
+   "diff_lines": 1,
+   "failed_gates": [],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": false,
+   "findings": {},
+   "diff": "--- a/page_test.go\n+++ b/page_test.go\n@@ -15,6 +15,7 @@\n \t\t{2, 3, []int{4, 5, 6}},\n \t\t{3, 3, []int{7}},\n \t\t{4, 3, []int{}},\n+\t\t{1, 10, []int{1, 2, 3, 4, 5, 6, 7}},\n \t}\n \tfor _, c := range cases {\n \t\tgot, err := Page(items, c.page, c.size)\n"
+  },
+  {
+   "id": "B03",
+   "cls": "benign",
+   "title": "use the min builtin in Page",
+   "diff_lines": 5,
+   "failed_gates": [],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": false,
+   "findings": {},
+   "diff": "--- a/page.go\n+++ b/page.go\n@@ -12,9 +12,6 @@\n \tif start >= len(items) {\n \t\treturn []T{}, nil\n \t}\n-\tend := start + size\n-\tif end > len(items) {\n-\t\tend = len(items)\n-\t}\n+\tend := min(start+size, len(items))\n \treturn items[start:end], nil\n }\n"
+  },
+  {
+   "id": "B04",
+   "cls": "benign",
+   "title": "add Ledger.Tenants with a test",
+   "diff_lines": 20,
+   "failed_gates": [
+    "review_hints"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "review_hints": "H2 lock-scope-changed: ledger.go"
+   },
+   "diff": "--- a/ledger.go\n+++ b/ledger.go\n@@ -5,6 +5,7 @@\n import (\n \t\"errors\"\n \t\"fmt\"\n+\t\"sort\"\n \t\"sync\"\n )\n \n@@ -53,6 +54,18 @@\n \treturn l.limit[tenant] - l.spent[tenant]\n }\n \n+// Tenants returns the known tenant ids, sorted.\n+func (l *Ledger) Tenants() []string {\n+\tl.mu.Lock()\n+\tdefer l.mu.Unlock()\n+\tids := make([]string, 0, len(l.limit))\n+\tfor t := range l.limit {\n+\t\tids = append(ids, t)\n+\t}\n+\tsort.Strings(ids)\n+\treturn ids\n+}\n+\n // SpendAll applies the spends concurrently and returns how many succeeded.\n func (l *Ledger) SpendAll(tenant string, spends []int) int {\n \tvar wg sync.WaitGroup\n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -45,6 +45,13 @@\n \t}\n }\n \n+func TestTenants(t *testing.T) {\n+\tl := NewLedger(map[string]int{\"b\": 1, \"a\": 1})\n+\tif got := l.Tenants(); len(got) != 2 || got[0] != \"a\" || got[1] != \"b\" {\n+\t\tt.Fatalf(\"Tenants = %v\", got)\n+\t}\n+}\n+\n func TestSpendAll(t *testing.T) {\n \tl := NewLedger(map[string]int{\"acme\": 1000})\n \tspends := make([]int, 50)\n"
+  },
+  {
+   "id": "B05",
+   "cls": "benign",
+   "title": "raise the default MAX_TOKENS to 8192 and update its test (intended change)",
+   "diff_lines": 4,
+   "failed_gates": [
+    "expected_moved"
+   ],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": true,
+   "findings": {
+    "expected_moved": "T05 expected-value-moved: config_test.go: 4096 -> 8192"
+   },
+   "diff": "--- a/config.go\n+++ b/config.go\n@@ -16,7 +16,7 @@\n \n // LoadConfig reads the config through getenv so tests need no real environment.\n func LoadConfig(getenv func(string) string) (Config, error) {\n-\tc := Config{MaxTokens: 4096, Timeout: 30 * time.Second}\n+\tc := Config{MaxTokens: 8192, Timeout: 30 * time.Second}\n \tu := getenv(\"UPSTREAM_URL\")\n \tif u == \"\" {\n \t\treturn Config{}, fmt.Errorf(\"UPSTREAM_URL is required\")\n--- a/config_test.go\n+++ b/config_test.go\n@@ -14,7 +14,7 @@\n \tif err != nil {\n \t\tt.Fatal(err)\n \t}\n-\tif c.MaxTokens != 4096 || c.Timeout != 30*time.Second {\n+\tif c.MaxTokens != 8192 || c.Timeout != 30*time.Second {\n \t\tt.Fatalf(\"defaults = %+v\", c)\n \t}\n }\n"
+  },
+  {
+   "id": "B06",
+   "cls": "benign",
+   "title": "fold two ledger tests into one table test (same assertions)",
+   "diff_lines": 18,
+   "failed_gates": [
+    "test_integrity"
+   ],
+   "flaky": {},
+   "blocked": true,
+   "advisory_only": false,
+   "findings": {
+    "test_integrity": "T01 test-removed: ledger_test.go: TestSpendRejectsNonPositive, TestSpendUnknownTenant"
+   },
+   "diff": "--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -29,19 +29,15 @@\n \t}\n }\n \n-func TestSpendRejectsNonPositive(t *testing.T) {\n+func TestSpendRejects(t *testing.T) {\n \tl := NewLedger(map[string]int{\"acme\": 100})\n-\tfor _, n := range []int{0, -5} {\n-\t\tif err := l.Spend(\"acme\", n); err == nil {\n-\t\t\tt.Fatalf(\"Spend(%d) = nil, want an error\", n)\n+\tfor _, c := range []struct {\n+\t\ttenant string\n+\t\tn      int\n+\t}{{\"acme\", 0}, {\"acme\", -5}, {\"globex\", 1}} {\n+\t\tif err := l.Spend(c.tenant, c.n); err == nil {\n+\t\t\tt.Fatalf(\"Spend(%q, %d) = nil, want an error\", c.tenant, c.n)\n \t\t}\n-\t}\n-}\n-\n-func TestSpendUnknownTenant(t *testing.T) {\n-\tl := NewLedger(map[string]int{\"acme\": 100})\n-\tif err := l.Spend(\"globex\", 1); err == nil {\n-\t\tt.Fatal(\"unknown tenant accepted\")\n \t}\n }\n \n"
+  },
+  {
+   "id": "B07",
+   "cls": "benign",
+   "title": "log the remaining balance after a spend",
+   "diff_lines": 4,
+   "failed_gates": [],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": false,
+   "findings": {},
+   "diff": "--- a/handler.go\n+++ b/handler.go\n@@ -42,6 +42,8 @@\n \t\thttp.Error(w, \"invalid spend\", http.StatusBadRequest)\n \t\treturn\n \t}\n+\tleft := s.Ledger.Remaining(req.Tenant)\n+\ts.Log.Info(\"spent\", \"tenant\", req.Tenant, \"remaining\", left)\n \tw.Header().Set(\"Content-Type\", \"application/json\")\n-\t_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})\n+\t_ = json.NewEncoder(w).Encode(spendResponse{Remaining: left})\n }\n"
+  },
+  {
+   "id": "B08",
+   "cls": "benign",
+   "title": "errors.New where fmt.Errorf had nothing to format",
+   "diff_lines": 3,
+   "failed_gates": [],
+   "flaky": {},
+   "blocked": false,
+   "advisory_only": false,
+   "findings": {},
+   "diff": "--- a/config.go\n+++ b/config.go\n@@ -1,6 +1,7 @@\n package quota\n \n import (\n+\t\"errors\"\n \t\"fmt\"\n \t\"net/url\"\n \t\"strconv\"\n@@ -19,7 +20,7 @@\n \tc := Config{MaxTokens: 4096, Timeout: 30 * time.Second}\n \tu := getenv(\"UPSTREAM_URL\")\n \tif u == \"\" {\n-\t\treturn Config{}, fmt.Errorf(\"UPSTREAM_URL is required\")\n+\t\treturn Config{}, errors.New(\"UPSTREAM_URL is required\")\n \t}\n \tif _, err := url.ParseRequestURI(u); err != nil {\n \t\treturn Config{}, fmt.Errorf(\"UPSTREAM_URL: %w\", err)\n"
+  }
+ ]
+}

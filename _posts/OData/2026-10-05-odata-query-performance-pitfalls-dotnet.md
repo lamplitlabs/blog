@@ -139,5 +139,5 @@ Once the OData query shape is fixed, the remaining time on a read path is usuall
 
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the same `$select`/`$expand` over-fetching lesson on the server side of an ASP.NET Core OData API.
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/) - what deserializing a multi-MB OData payload actually costs, and how to shrink it.
-- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine](/posts/python-vs-rust-hot-loop-performance/) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.

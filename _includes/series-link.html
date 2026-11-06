@@ -14,7 +14,10 @@ Fallbacks when no explicit `post` is passed (e.g. {% include series-link.html %}
      enterprise, openai, benchmark) are skipped because they match half the blog.
 Both fallbacks only ever see posts in site.posts, so they are link-only-when-built
 by construction: an unbuilt target simply yields no output, never a 404.
+Category mode below is exclusive: with category=true this default/tag-fallback
+block renders nothing, or post-nav.html would print a raw markdown link.
 {%- endcomment -%}
+{%- unless include.category -%}
 {%- if include.post -%}
   {%- assign _sl_path = "_posts/" | append: include.post | append: ".md" -%}
   {%- assign _sl_target = site.posts | where: "path", _sl_path | first -%}
@@ -73,6 +76,7 @@ by construction: an unbuilt target simply yields no output, never a 404.
 [{{ _sl_target.title }}]({{ _sl_target.url | relative_url }}){{ _sl_note }}
   {%- endif -%}
 {%- endif -%}
+{%- endunless -%}
 {%- comment -%}
 Category mode (used by _includes/post-nav.html at the end of every post):
 {% include series-link.html category=true %} renders an HTML link to the next

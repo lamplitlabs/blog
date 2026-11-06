@@ -11,7 +11,7 @@ image:
   alt: "Bar chart of mean EF Core query time per request: tracking with Include at 42.3 ms, AsNoTracking at 29.1 ms, AsNoTracking with AsSplitQuery at 17.6 ms, compiled query with projection at 6.8 ms"
 ---
 
-After allocations in hot loops (see [the Span<T> post]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %})), the second most common .NET performance problem I meet in enterprise code is an Entity Framework Core query that looks innocent and costs 40 ms per request. Nobody wrote slow SQL. EF Core did, because of defaults that are safe for correctness but expensive for read-heavy endpoints.
+After allocations in hot loops (see [the Span&lt;T&gt; post]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %})), the second most common .NET performance problem I meet in enterprise code is an Entity Framework Core query that looks innocent and costs 40 ms per request. Nobody wrote slow SQL. EF Core did, because of defaults that are safe for correctness but expensive for read-heavy endpoints.
 
 This post takes one realistic query, an order list page with its lines and customer, and applies four changes one at a time: `AsNoTracking()`, `AsSplitQuery()`, a projection to a DTO, and a compiled query. Every step is measured with [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet) against a local SQL Server 2022 container on .NET 8 and EF Core 8. Absolute numbers depend on your hardware and data; the *ratios* are what travel.
 
@@ -183,7 +183,7 @@ The full benchmark project is about 150 lines; the structure above is enough to 
 
 Once the query shape is fixed, the remaining time on a read endpoint is usually spent allocating in hot loops or serializing the response. The first two posts below apply the same BenchmarkDotNet workflow; the third steps outside .NET:
 
-- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side.
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8](/posts/dotnet-json-serialization-performance/) - the serialization side.
 - [Python vs Rust in a Hot Loop: What 10 Million Iterations Cost, Measured with hyperfine](/posts/python-vs-rust-hot-loop-performance/) - the same question outside .NET, measured with hyperfine instead of BenchmarkDotNet.
 - [OData Query Performance Pitfalls in .NET - $expand, Paging and Payload Size Explained]({% post_url OData/2026-10-05-odata-query-performance-pitfalls-dotnet %}) - the client side of the same over-fetching problem when the query arrives as `$select`/`$expand` over HTTP.

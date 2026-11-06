@@ -11,7 +11,7 @@ image:
   alt: "Bar chart of mean wall time for a 10 million element sum-of-squares loop: Python for loop 1,420 ms, Python generator 905 ms, NumPy 12.4 ms, Rust 3.1 ms, Rust with rayon 0.9 ms"
 ---
 
-The earlier posts in this folder were all .NET: [allocations with Span<T>]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}), [EF Core query shape]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) and [JSON serialization]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}). This one steps outside the CLR. A lot of our data-prep and AI tooling is written in Python, and the question "should this hot loop move to Rust?" comes up every few weeks. Rather than argue, I measured.
+The earlier posts in this folder were all .NET: [allocations with Span&lt;T&gt;]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}), [EF Core query shape]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) and [JSON serialization]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}). This one steps outside the CLR. A lot of our data-prep and AI tooling is written in Python, and the question "should this hot loop move to Rust?" comes up every few weeks. Rather than argue, I measured.
 
 The workload is deliberately boring: compute the sum of squares of 10 million 64-bit integers. It is the shape of a feature-extraction loop, a checksum, a histogram pass, or the inner step of a tokenizer. Five implementations, same machine, same input, timed with [hyperfine](https://github.com/sharkdp/hyperfine).
 
@@ -129,7 +129,7 @@ Numbers above are from Python 3.12.6, Rust 1.81, NumPy 2.1 on an Apple M2 with 8
 
 The .NET side of the same question, measured with BenchmarkDotNet:
 
-- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side in C#.
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;: Before/After BenchmarkDotNet Numbers]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - the in-memory hot loop side in C#.
 - [EF Core Query Tuning: AsNoTracking, Split Queries and Compiled Queries Measured with BenchmarkDotNet]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the database side.
 - [System.Text.Json Source Generators vs Newtonsoft.Json: A BenchmarkDotNet Comparison on .NET 8]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the serialization side.
 

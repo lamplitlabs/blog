@@ -1,0 +1,130 @@
+diff --git a/invoicing/export.py b/invoicing/export.py
+new file mode 100644
+index 0000000..1e083cb
+--- /dev/null
++++ b/invoicing/export.py
+@@ -0,0 +1,39 @@
++"""CSV export of invoices for finance."""
++import csv
++import io
++from typing import Iterable
++
++from .models import Invoice
++from .money import fmt
++
++HEADER = ("id", "customer", "issued", "subtotal", "tax", "total")
++
++# Leading characters a spreadsheet would treat as the start of a formula.
++_FORMULA_PREFIXES = ("=", "+", "-", "@")
++
++
++def _safe_customer(customer: str) -> str:
++    """Neutralise spreadsheet formula injection with a leading apostrophe."""
++    if customer.startswith(_FORMULA_PREFIXES):
++        return "'" + customer
++    return customer
++
++
++def export_csv(invoices: Iterable[Invoice]) -> str:
++    """Return invoices as CSV text, sorted by issued date then id.
++
++    Columns: id,customer,issued,subtotal,tax,total. Lines end with "\\n".
++    """
++    out = io.StringIO()
++    writer = csv.writer(out, lineterminator="\n")
++    writer.writerow(HEADER)
++    for inv in sorted(invoices, key=lambda i: (i.issued, i.id)):
++        writer.writerow((
++            inv.id,
++            _safe_customer(inv.customer),
++            inv.issued.isoformat(),
++            fmt(inv.subtotal()),
++            fmt(inv.tax()),
++            fmt(inv.total()),
++        ))
++    return out.getvalue()
+diff --git a/tests/test_export.py b/tests/test_export.py
+new file mode 100644
+index 0000000..f601f1c
+--- /dev/null
++++ b/tests/test_export.py
+@@ -0,0 +1,79 @@
++import unittest
++from datetime import date
++from decimal import Decimal
++
++from invoicing.export import export_csv
++from invoicing.models import Invoice, LineItem
++
++HEADER = "id,customer,issued,subtotal,tax,total\n"
++
++
++def make_invoice(id="INV-1", customer="Acme", issued=date(2026, 1, 15)):
++    return Invoice(id, customer, issued, [
++        LineItem("A", "Widget", 2, Decimal("10.00"), Decimal("0.20")),
++        LineItem("B", "Gadget", 1, Decimal("5.55"), Decimal("0.20")),
++    ])
++
++
++class ExportCsvTest(unittest.TestCase):
++    def test_empty_gives_header_only(self):
++        self.assertEqual(export_csv([]), HEADER)
++
++    def test_single_row_format(self):
++        self.assertEqual(
++            export_csv([make_invoice()]),
++            HEADER + "INV-1,Acme,2026-01-15,25.55,5.11,30.66\n",
++        )
++
++    def test_money_has_two_decimals(self):
++        inv = Invoice("INV-9", "Acme", date(2026, 3, 1),
++                      [LineItem("A", "Thing", 1, Decimal("7"))])
++        self.assertEqual(export_csv([inv]),
++                         HEADER + "INV-9,Acme,2026-03-01,7.00,0.00,7.00\n")
++
++    def test_sorted_by_issued_then_id(self):
++        invs = [
++            make_invoice("INV-3", issued=date(2026, 2, 1)),
++            make_invoice("INV-2", issued=date(2026, 1, 15)),
++            make_invoice("INV-1", issued=date(2026, 1, 15)),
++            make_invoice("INV-0", issued=date(2026, 3, 1)),
++        ]
++        ids = [line.split(",")[0] for line in export_csv(invs).splitlines()[1:]]
++        self.assertEqual(ids, ["INV-1", "INV-2", "INV-3", "INV-0"])
++
++    def test_accepts_generator(self):
++        out = export_csv(make_invoice(i) for i in ["B", "A"])
++        self.assertEqual([l[0] for l in out.splitlines()[1:]], ["A", "B"])
++
++    def test_quotes_customer_with_comma(self):
++        out = export_csv([make_invoice(customer="Smith, J")])
++        self.assertEqual(
++            out, HEADER + 'INV-1,"Smith, J",2026-01-15,25.55,5.11,30.66\n')
++
++    def test_lf_line_endings_including_last(self):
++        out = export_csv([make_invoice("INV-1"), make_invoice("INV-2")])
++        self.assertNotIn("\r", out)
++        self.assertTrue(out.endswith("\n"))
++        self.assertEqual(out.count("\n"), 3)
++
++    def test_formula_injection_prefixed(self):
++        for prefix in "=+-@":
++            with self.subTest(prefix=prefix):
++                out = export_csv([make_invoice(customer=prefix + "SUM(A1)")])
++                row = out.splitlines()[1]
++                self.assertEqual(
++                    row, "INV-1,'%sSUM(A1),2026-01-15,25.55,5.11,30.66" % prefix)
++
++    def test_formula_injection_with_quoting(self):
++        out = export_csv([make_invoice(customer='=HYPERLINK("http://x","y")')])
++        self.assertEqual(
++            out.splitlines()[1],
++            'INV-1,"\'=HYPERLINK(""http://x"",""y"")",2026-01-15,25.55,5.11,30.66')
++
++    def test_safe_customer_unchanged(self):
++        out = export_csv([make_invoice(customer="O'Brien = Co")])
++        self.assertIn(",O'Brien = Co,", out)
++
++
++if __name__ == "__main__":
++    unittest.main()

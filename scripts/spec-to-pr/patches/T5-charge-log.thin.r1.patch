@@ -1,0 +1,118 @@
+diff --git a/invoicing/logs.py b/invoicing/logs.py
+index dfba159..e967de8 100644
+--- a/invoicing/logs.py
++++ b/invoicing/logs.py
+@@ -1,8 +1,47 @@
+ from datetime import datetime, timezone
+ 
++from .money import fmt
++
+ 
+ def log_line(event: str, **fields) -> str:
+     """Format one structured log line: `<ts> <event> k=v k=v`."""
+     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+     parts = [ts, event] + [f"{k}={v}" for k, v in sorted(fields.items())]
+     return " ".join(parts)
++
++
++def _mask_card(card_number) -> str:
++    """Keep only the last four digits of a card number (PCI DSS: never log the PAN)."""
++    digits = "".join(ch for ch in str(card_number) if ch.isdigit())
++    if len(digits) < 4:
++        return "****"
++    return "****" + digits[-4:]
++
++
++def _mask_email(email) -> str:
++    """Keep the first character of the local part and the domain: j***@example.com."""
++    text = str(email)
++    local, sep, domain = text.rpartition("@")
++    if not sep or not local:
++        return "***"
++    return local[0] + "***@" + _clean(domain)
++
++
++def _clean(value) -> str:
++    """Make a value safe for one `k=v` field: no whitespace or control characters."""
++    return "".join("_" if (ch.isspace() or not ch.isprintable()) else ch for ch in str(value))
++
++
++def log_charge(invoice_id, amount, card_number, email) -> str:
++    """Log line for a card charge.
++
++    The card number is reduced to its last four digits and the email is masked,
++    so the line can be traced by support without leaking card data or PII.
++    """
++    return log_line(
++        "card_charge",
++        invoice=_clean(invoice_id),
++        amount=fmt(amount),
++        card=_mask_card(card_number),
++        email=_mask_email(email),
++    )
+diff --git a/tests/test_log_charge.py b/tests/test_log_charge.py
+new file mode 100644
+index 0000000..a3a8ecf
+--- /dev/null
++++ b/tests/test_log_charge.py
+@@ -0,0 +1,60 @@
++import unittest
++from decimal import Decimal
++
++from invoicing.logs import log_charge
++
++
++class LogChargeTest(unittest.TestCase):
++    def line(self, **kw):
++        args = dict(
++            invoice_id="INV-1",
++            amount=Decimal("9.99"),
++            card_number="4111 1111 1111 1234",
++            email="jane.doe@example.com",
++        )
++        args.update(kw)
++        return log_charge(**args)
++
++    def test_line_format(self):
++        line = self.line()
++        self.assertTrue(
++            line.endswith(
++                " card_charge amount=9.99 card=****1234"
++                " email=j***@example.com invoice=INV-1"
++            ),
++            line,
++        )
++
++    def test_full_card_number_never_logged(self):
++        line = self.line(card_number="4111-1111-1111-1234")
++        self.assertNotIn("4111", line)
++        self.assertNotIn("411111111111", line.replace(" ", ""))
++        self.assertIn("card=****1234", line)
++
++    def test_full_email_never_logged(self):
++        line = self.line(email="jane.doe@example.com")
++        self.assertNotIn("jane.doe", line)
++        self.assertIn("email=j***@example.com", line)
++
++    def test_short_or_bad_card_fully_masked(self):
++        self.assertIn("card=****", self.line(card_number="12"))
++        self.assertNotIn("12", self.line(card_number="12").split("card=")[1].split()[0])
++        self.assertIn("card=**** ", self.line(card_number=""))
++
++    def test_malformed_email_masked(self):
++        self.assertIn("email=*** ", self.line(email="not-an-email"))
++        self.assertIn("email=*** ", self.line(email="@example.com"))
++
++    def test_amount_rounded_to_cents(self):
++        self.assertIn("amount=10.01 ", self.line(amount=Decimal("10.005")))
++        self.assertIn("amount=5.00 ", self.line(amount=5))
++
++    def test_invoice_id_cannot_inject_lines(self):
++        line = self.line(invoice_id="INV-1\n2026-01-01T00:00:00Z fake event")
++        self.assertNotIn("\n", line)
++        self.assertEqual(len(line.splitlines()), 1)
++        self.assertIn("invoice=INV-1_2026-01-01T00:00:00Z_fake_event", line)
++
++
++if __name__ == "__main__":
++    unittest.main()

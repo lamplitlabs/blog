@@ -1,0 +1,37 @@
+# Hand-coded from each thin-spec agent's final report (the "PR description").
+# One row per hidden acceptance test the run failed. named=yes when the report
+# states the decision behind that failure anywhere (assumption list or behaviour
+# summary), even if it chose differently from the full spec.
+run	failed_test	named	what_the_report_said
+T1-late-fee.thin.r1	test_cap_ten_percent	no	(no cap mentioned)
+T1-late-fee.thin.r1	test_thirty_days_overdue_one_period	yes	"Months are calendar months from the due date"
+T1-late-fee.thin.r1	test_today_before_issue_raises	yes	"No errors raised"
+T1-late-fee.thin.r2	test_cap_ten_percent	no	(no cap mentioned)
+T1-late-fee.thin.r2	test_thirty_days_overdue_one_period	yes	"a month that has started counts in full ... due Jan 31 -> Feb 28"
+T1-late-fee.thin.r2	test_today_before_issue_raises	no	(only "if today is not a date, raises")
+T2-charge-retry.thin.r1	test_max_attempts_below_one_raises	yes	"I used a plain ValueError rather than InvoicingError"
+T2-charge-retry.thin.r2	test_max_attempts_below_one_raises	yes	"a plain ValueError is raised before any charge"
+T3-csv-export.thin.r1	test_header_only_when_empty	yes	"The CRLF line endings are the csv module's default"
+T3-csv-export.thin.r1	test_lf_line_endings	yes	"The CRLF line endings are the csv module's default"
+T3-csv-export.thin.r1	test_sorted_by_issued_then_id	yes	"one row per invoice in input order"
+T3-csv-export.thin.r2	test_header_only_when_empty	yes	"CRLF line endings, the RFC 4180 default"
+T3-csv-export.thin.r2	test_lf_line_endings	yes	"CRLF line endings, the RFC 4180 default"
+T3-csv-export.thin.r2	test_sorted_by_issued_then_id	yes	"one row per invoice in the order given"
+T4-discount.thin.r1	test_decimal_percent	yes	"returns a new DiscountedInvoice ... rounding happens on the totals"
+T4-discount.thin.r1	test_example_totals	yes	"10%: discount 2.56, net 22.99, tax 4.60, total 27.59"
+T4-discount.thin.r1	test_returns_new_invoice_same_identity	yes	"returns a new result object; it does not change the invoice"
+T4-discount.thin.r1	test_unit_prices_rounded_per_line	yes	"not line by line"
+T4-discount.thin.r1	test_zero_and_hundred	yes	"returns a new DiscountedInvoice"
+T4-discount.thin.r2	test_float_rejected	yes	"It can be an int, float, str or Decimal"
+T4-discount.thin.r2	test_unit_prices_rounded_per_line	yes	"Discounted unit prices are kept unrounded"
+T5-charge-log.thin.r1	test_email_domain	yes	"The email is masked to its first character plus the domain"
+T5-charge-log.thin.r1	test_event_and_amount	yes	"with the event name card_charge"
+T5-charge-log.thin.r1	test_short_card_raises	yes	"none of the inputs are rejected"
+T5-charge-log.thin.r2	test_email_domain	yes	"the email keeps only its first character plus ***@domain"
+T5-charge-log.thin.r2	test_short_card_raises	yes	"log_charge never raises a domain error on bad input"
+T6-pagination.thin.r1	test_customer_filter_case_insensitive	yes	"customer must match exactly (case-sensitive)"
+T6-pagination.thin.r1	test_invalid_args_raise	yes	"There is no upper limit on page_size"
+T6-pagination.thin.r1	test_newest_first_then_id	yes	"oldest first (the order they were added, same as all())"
+T6-pagination.thin.r2	test_customer_filter_case_insensitive	yes	"Customer match: customer must match exactly (case-sensitive)"
+T6-pagination.thin.r2	test_invalid_args_raise	yes	"There is no upper limit on page_size"
+T6-pagination.thin.r2	test_newest_first_then_id	yes	"Order: invoices come back in the order they were added"

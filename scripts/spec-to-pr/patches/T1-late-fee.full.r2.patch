@@ -1,0 +1,119 @@
+diff --git a/invoicing/fees.py b/invoicing/fees.py
+new file mode 100644
+index 0000000..bbab422
+--- /dev/null
++++ b/invoicing/fees.py
+@@ -0,0 +1,33 @@
++"""Late fees for overdue invoices."""
++from datetime import date, timedelta
++from decimal import Decimal
++
++from .errors import InvoicingError
++from .models import Invoice
++from .money import to_money
++
++PAYMENT_TERM = timedelta(days=30)
++PERIOD_DAYS = 30
++RATE_PER_PERIOD = Decimal("0.015")
++CAP_RATE = Decimal("0.10")
++
++
++def late_fee(invoice: Invoice, today: date) -> Decimal:
++    """Late fee owed on ``invoice`` as of ``today``.
++
++    1.5% of the invoice total per started 30-day period past the due date
++    (issued + 30 days), capped at 10% of the total, rounded once at the end.
++    """
++    if today < invoice.issued:
++        raise InvoicingError(
++            "today (%s) is before the invoice issue date (%s)" % (today, invoice.issued)
++        )
++    if not invoice.lines:
++        return to_money(Decimal("0"))
++    days_overdue = (today - (invoice.issued + PAYMENT_TERM)).days
++    if days_overdue <= 0:
++        return to_money(Decimal("0"))
++    periods = -(-days_overdue // PERIOD_DAYS)  # ceiling division: started periods
++    total = invoice.total()
++    fee = min(total * RATE_PER_PERIOD * periods, total * CAP_RATE)
++    return to_money(fee)
+diff --git a/tests/test_fees.py b/tests/test_fees.py
+new file mode 100644
+index 0000000..0941cd7
+--- /dev/null
++++ b/tests/test_fees.py
+@@ -0,0 +1,74 @@
++import unittest
++from datetime import date
++from decimal import Decimal
++
++from invoicing.errors import InvoicingError
++from invoicing.fees import late_fee
++from invoicing.models import Invoice, LineItem
++
++ISSUED = date(2026, 1, 1)  # due 2026-01-31
++
++
++def make_invoice(unit_price=Decimal("1000.00"), lines=True):
++    items = [LineItem("A", "Widget", 1, unit_price)] if lines else []
++    return Invoice("INV-1", "Acme", ISSUED, items)
++
++
++class LateFeeAcceptanceTest(unittest.TestCase):
++    def test_on_due_date_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 1, 31)), Decimal("0.00"))
++
++    def test_one_day_overdue_is_one_period(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 2, 1)), Decimal("15.00"))
++
++    def test_thirty_days_overdue_is_one_period(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 3, 2)), Decimal("15.00"))
++
++    def test_thirty_one_days_overdue_is_two_periods(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 3, 3)), Decimal("30.00"))
++
++    def test_capped_at_ten_percent(self):
++        self.assertEqual(late_fee(make_invoice(), date(2027, 1, 1)), Decimal("100.00"))
++
++
++class LateFeeEdgeTest(unittest.TestCase):
++    def test_on_issue_date_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(), ISSUED), Decimal("0.00"))
++
++    def test_before_due_date_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 1, 15)), Decimal("0.00"))
++
++    def test_today_before_issued_raises(self):
++        with self.assertRaises(InvoicingError):
++            late_fee(make_invoice(), date(2025, 12, 31))
++
++    def test_today_before_issued_raises_even_without_lines(self):
++        with self.assertRaises(InvoicingError):
++            late_fee(make_invoice(lines=False), date(2025, 12, 31))
++
++    def test_no_lines_is_zero(self):
++        self.assertEqual(late_fee(make_invoice(lines=False), date(2027, 1, 1)), Decimal("0.00"))
++
++    def test_six_periods_below_cap(self):
++        # 151-180 days overdue -> 6 periods -> 9.0%
++        self.assertEqual(late_fee(make_invoice(), date(2026, 7, 30)), Decimal("90.00"))
++
++    def test_seven_periods_hits_cap(self):
++        # 181 days overdue -> 7 periods -> 10.5%, capped at 10%
++        self.assertEqual(late_fee(make_invoice(), date(2026, 7, 31)), Decimal("100.00"))
++
++    def test_rounds_once_at_the_end(self):
++        # 1.5% of 0.33 = 0.00495 per period; two periods = 0.0099 -> 0.01.
++        # Rounding each period first would give 0.00 + 0.00 = 0.00.
++        self.assertEqual(late_fee(make_invoice(Decimal("0.33")), date(2026, 3, 3)), Decimal("0.01"))
++
++    def test_rounds_half_up(self):
++        # 1.5% of 1.00 = 0.015 -> 0.02 (half-up)
++        self.assertEqual(late_fee(make_invoice(Decimal("1.00")), date(2026, 2, 1)), Decimal("0.02"))
++
++    def test_returns_two_decimal_places(self):
++        self.assertEqual(late_fee(make_invoice(), date(2026, 1, 31)).as_tuple().exponent, -2)
++
++
++if __name__ == "__main__":
++    unittest.main()

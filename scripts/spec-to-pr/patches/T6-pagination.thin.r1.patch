@@ -1,0 +1,114 @@
+diff --git a/invoicing/store.py b/invoicing/store.py
+index 5000aea..76945c9 100644
+--- a/invoicing/store.py
++++ b/invoicing/store.py
+@@ -1,4 +1,5 @@
+-from typing import Dict, List
++from itertools import islice
++from typing import Dict, List, Optional
+ 
+ from .errors import InvoicingError, NotFound
+ from .models import Invoice
+@@ -23,3 +24,22 @@ class InvoiceStore:
+ 
+     def all(self) -> List[Invoice]:
+         return list(self._items.values())
++
++    def list(
++        self, customer: Optional[str] = None, page: int = 1, page_size: int = 20
++    ) -> List[Invoice]:
++        """Return one page of invoices, optionally only those of ``customer``.
++
++        Invoices come in insertion order (the same order as ``all()``).
++        ``page`` is 1-based; a page past the end is an empty list.
++        """
++        for name, value in (("page", page), ("page_size", page_size)):
++            if isinstance(value, bool) or not isinstance(value, int) or value < 1:
++                raise InvoicingError(f"{name} must be a positive integer, got {value!r}")
++        start = (page - 1) * page_size
++        matching = (
++            inv
++            for inv in self._items.values()
++            if customer is None or inv.customer == customer
++        )
++        return list(islice(matching, start, start + page_size))
+diff --git a/tests/test_store_list.py b/tests/test_store_list.py
+new file mode 100644
+index 0000000..74695ce
+--- /dev/null
++++ b/tests/test_store_list.py
+@@ -0,0 +1,74 @@
++import unittest
++from datetime import date
++
++from invoicing.errors import InvoicingError
++from invoicing.models import Invoice
++from invoicing.store import InvoiceStore
++
++
++def make_store(n_acme=5, n_other=3):
++    s = InvoiceStore()
++    for i in range(n_acme):
++        s.add(Invoice(f"A-{i}", "Acme", date(2026, 1, 1)))
++    for i in range(n_other):
++        s.add(Invoice(f"B-{i}", "Beta", date(2026, 1, 2)))
++    return s
++
++
++def ids(invoices):
++    return [inv.id for inv in invoices]
++
++
++class StoreListTest(unittest.TestCase):
++    def test_defaults_return_first_twenty(self):
++        s = make_store(n_acme=25, n_other=0)
++        page = s.list()
++        self.assertEqual(len(page), 20)
++        self.assertEqual(ids(page), [f"A-{i}" for i in range(20)])
++
++    def test_second_page_is_remainder(self):
++        s = make_store(n_acme=25, n_other=0)
++        self.assertEqual(ids(s.list(page=2)), [f"A-{i}" for i in range(20, 25)])
++
++    def test_pages_cover_all_without_overlap(self):
++        s = make_store()
++        got = []
++        for p in range(1, 4):
++            got += ids(s.list(page=p, page_size=3))
++        self.assertEqual(got, ids(s.all()))
++
++    def test_page_past_end_is_empty(self):
++        s = make_store()
++        self.assertEqual(s.list(page=5, page_size=3), [])
++
++    def test_empty_store(self):
++        self.assertEqual(InvoiceStore().list(), [])
++
++    def test_customer_filter(self):
++        s = make_store()
++        self.assertEqual(ids(s.list(customer="Beta")), ["B-0", "B-1", "B-2"])
++        self.assertEqual(ids(s.list(customer="Acme", page=2, page_size=2)), ["A-2", "A-3"])
++        self.assertEqual(s.list(customer="Nobody"), [])
++
++    def test_invalid_page_and_page_size(self):
++        s = make_store()
++        for kwargs in (
++            {"page": 0},
++            {"page": -1},
++            {"page_size": 0},
++            {"page_size": -5},
++            {"page": 1.5},
++            {"page_size": "10"},
++            {"page": True},
++        ):
++            with self.subTest(**kwargs):
++                with self.assertRaises(InvoicingError):
++                    s.list(**kwargs)
++
++    def test_all_still_works(self):
++        s = make_store()
++        self.assertEqual(len(s.all()), 8)
++
++
++if __name__ == "__main__":
++    unittest.main()

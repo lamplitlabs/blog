@@ -1,0 +1,111 @@
+diff --git a/invoicing/export.py b/invoicing/export.py
+new file mode 100644
+index 0000000..243e8d8
+--- /dev/null
++++ b/invoicing/export.py
+@@ -0,0 +1,42 @@
++"""CSV export of invoices for finance."""
++import csv
++import io
++from typing import Iterable
++
++from .models import Invoice
++from .money import fmt
++
++HEADER = ["id", "customer", "issued", "subtotal", "tax", "total"]
++
++# Cells starting with these characters are run as formulas by spreadsheet
++# programs (CSV/formula injection), so text fields that start with one get a
++# leading apostrophe.
++_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
++
++
++def _safe_text(value: str) -> str:
++    if value.startswith(_FORMULA_PREFIXES):
++        return "'" + value
++    return value
++
++
++def export_csv(invoices: Iterable[Invoice]) -> str:
++    """Return a CSV document with a header row and one row per invoice.
++
++    Columns: id, customer, issued (ISO date), subtotal, tax, total. Amounts are
++    plain two-decimal strings (half-up to cents). Rows keep the input order.
++    Quoting and line endings follow RFC 4180 (CRLF), as written by `csv`.
++    """
++    buf = io.StringIO()
++    writer = csv.writer(buf)
++    writer.writerow(HEADER)
++    for inv in invoices:
++        writer.writerow([
++            _safe_text(inv.id),
++            _safe_text(inv.customer),
++            inv.issued.isoformat(),
++            fmt(inv.subtotal()),
++            fmt(inv.tax()),
++            fmt(inv.total()),
++        ])
++    return buf.getvalue()
+diff --git a/tests/test_export.py b/tests/test_export.py
+new file mode 100644
+index 0000000..fa29e41
+--- /dev/null
++++ b/tests/test_export.py
+@@ -0,0 +1,57 @@
++import csv
++import io
++import unittest
++from datetime import date
++from decimal import Decimal
++
++from invoicing.export import HEADER, export_csv
++from invoicing.models import Invoice, LineItem
++
++
++def make_invoice(id="INV-1", customer="Acme"):
++    return Invoice(id, customer, date(2026, 1, 15), [
++        LineItem("A", "Widget", 2, Decimal("10.00"), Decimal("0.20")),
++        LineItem("B", "Gadget", 1, Decimal("5.55"), Decimal("0.20")),
++    ])
++
++
++def parse(text):
++    return list(csv.reader(io.StringIO(text, newline="")))
++
++
++class ExportCsvTest(unittest.TestCase):
++    def test_empty_has_header_only(self):
++        self.assertEqual(export_csv([]), "id,customer,issued,subtotal,tax,total\r\n")
++
++    def test_one_row_per_invoice_with_totals(self):
++        rows = parse(export_csv([make_invoice()]))
++        self.assertEqual(rows[0], HEADER)
++        self.assertEqual(rows[1], ["INV-1", "Acme", "2026-01-15", "25.55", "5.11", "30.66"])
++        self.assertEqual(len(rows), 2)
++
++    def test_keeps_input_order(self):
++        rows = parse(export_csv([make_invoice("INV-2"), make_invoice("INV-1")]))
++        self.assertEqual([r[0] for r in rows[1:]], ["INV-2", "INV-1"])
++
++    def test_invoice_without_lines(self):
++        rows = parse(export_csv([Invoice("INV-3", "Empty", date(2026, 2, 1))]))
++        self.assertEqual(rows[1], ["INV-3", "Empty", "2026-02-01", "0.00", "0.00", "0.00"])
++
++    def test_quotes_commas_quotes_and_newlines(self):
++        name = 'Acme, "Ltd"\nLondon'
++        text = export_csv([make_invoice(customer=name)])
++        self.assertIn('"Acme, ""Ltd""\nLondon"', text)
++        self.assertEqual(parse(text)[1][1], name)
++
++    def test_formula_like_text_is_neutralised(self):
++        for name in ["=SUM(A1)", "+1", "-1", "@cmd"]:
++            rows = parse(export_csv([make_invoice(customer=name)]))
++            self.assertEqual(rows[1][1], "'" + name)
++
++    def test_accepts_any_iterable(self):
++        rows = parse(export_csv(inv for inv in [make_invoice()]))
++        self.assertEqual(len(rows), 2)
++
++
++if __name__ == "__main__":
++    unittest.main()

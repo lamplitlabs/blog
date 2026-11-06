@@ -1,0 +1,2222 @@
+{
+ "setup": {
+  "python": "3.9.6",
+  "host": "Apple M2 Pro, macOS",
+  "tickets": 6,
+  "variants": [
+   "thin",
+   "full"
+  ],
+  "reps": 2,
+  "runs": 24,
+  "coverage_min": 90.0,
+  "mutation_min": 80.0,
+  "base_tests": 8
+ },
+ "totals": {
+  "all": {
+   "runs": 24,
+   "own_tests_pass": 24,
+   "scope_pass": 24,
+   "diff_coverage_pass": 24,
+   "mutation_pass": 24,
+   "acceptance_pass": 12,
+   "acceptance_tests_passed": 148,
+   "acceptance_tests_total": 180,
+   "mutation_score_median": 100.0,
+   "diff_coverage_median": 100.0,
+   "own_tests_added_median": 10.0,
+   "diff_lines_median": 115.0,
+   "agent_seconds_median": 29.5,
+   "agent_calls_median": 4.0,
+   "wrong_prs": 12,
+   "wrong_prs_blocked_before_acceptance": 0,
+   "correct_prs_blocked_before_acceptance": 0
+  },
+  "thin": {
+   "runs": 12,
+   "own_tests_pass": 12,
+   "scope_pass": 12,
+   "diff_coverage_pass": 12,
+   "mutation_pass": 12,
+   "acceptance_pass": 0,
+   "acceptance_tests_passed": 58,
+   "acceptance_tests_total": 90,
+   "mutation_score_median": 92.80000000000001,
+   "diff_coverage_median": 100.0,
+   "own_tests_added_median": 8.0,
+   "diff_lines_median": 109.0,
+   "agent_seconds_median": 33.5,
+   "agent_calls_median": 4.0,
+   "wrong_prs": 12,
+   "wrong_prs_blocked_before_acceptance": 0,
+   "correct_prs_blocked_before_acceptance": 0
+  },
+  "full": {
+   "runs": 12,
+   "own_tests_pass": 12,
+   "scope_pass": 12,
+   "diff_coverage_pass": 12,
+   "mutation_pass": 12,
+   "acceptance_pass": 12,
+   "acceptance_tests_passed": 90,
+   "acceptance_tests_total": 90,
+   "mutation_score_median": 100.0,
+   "diff_coverage_median": 100.0,
+   "own_tests_added_median": 10.5,
+   "diff_lines_median": 115.5,
+   "agent_seconds_median": 28.5,
+   "agent_calls_median": 4.0,
+   "wrong_prs": 0,
+   "wrong_prs_blocked_before_acceptance": 0,
+   "correct_prs_blocked_before_acceptance": 0
+  }
+ },
+ "per_ticket": {
+  "T1-late-fee": {
+   "thin": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 0,
+    "acceptance_tests_passed": 10,
+    "acceptance_tests_total": 16,
+    "mutation_score_median": 88.6,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 14.5,
+    "diff_lines_median": 140.0,
+    "agent_seconds_median": 41.0,
+    "agent_calls_median": 5.0,
+    "wrong_prs": 2,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "full": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 2,
+    "acceptance_tests_passed": 16,
+    "acceptance_tests_total": 16,
+    "mutation_score_median": 93.94999999999999,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 15.0,
+    "diff_lines_median": 112.0,
+    "agent_seconds_median": 30.0,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 0,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "spec_words": {
+    "thin": 25,
+    "full": 154
+   }
+  },
+  "T2-charge-retry": {
+   "thin": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 0,
+    "acceptance_tests_passed": 16,
+    "acceptance_tests_total": 18,
+    "mutation_score_median": 91.45,
+    "diff_coverage_median": 98.1,
+    "own_tests_added_median": 10.5,
+    "diff_lines_median": 146.5,
+    "agent_seconds_median": 35.0,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 2,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "full": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 2,
+    "acceptance_tests_passed": 18,
+    "acceptance_tests_total": 18,
+    "mutation_score_median": 100.0,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 12.5,
+    "diff_lines_median": 171.5,
+    "agent_seconds_median": 35.5,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 0,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "spec_words": {
+    "thin": 24,
+    "full": 143
+   }
+  },
+  "T3-csv-export": {
+   "thin": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 0,
+    "acceptance_tests_passed": 6,
+    "acceptance_tests_total": 12,
+    "mutation_score_median": 100.0,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 7.0,
+    "diff_lines_median": 97.5,
+    "agent_seconds_median": 26.0,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 2,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "full": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 2,
+    "acceptance_tests_passed": 12,
+    "acceptance_tests_total": 12,
+    "mutation_score_median": 100.0,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 10.0,
+    "diff_lines_median": 115.5,
+    "agent_seconds_median": 27.5,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 0,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "spec_words": {
+    "thin": 19,
+    "full": 110
+   }
+  },
+  "T4-discount": {
+   "thin": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 0,
+    "acceptance_tests_passed": 9,
+    "acceptance_tests_total": 16,
+    "mutation_score_median": 95.45,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 8.5,
+    "diff_lines_median": 123.0,
+    "agent_seconds_median": 38.5,
+    "agent_calls_median": 4.5,
+    "wrong_prs": 2,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "full": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 2,
+    "acceptance_tests_passed": 16,
+    "acceptance_tests_total": 16,
+    "mutation_score_median": 100.0,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 10.0,
+    "diff_lines_median": 119.0,
+    "agent_seconds_median": 27.5,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 0,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "spec_words": {
+    "thin": 14,
+    "full": 121
+   }
+  },
+  "T5-charge-log": {
+   "thin": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 0,
+    "acceptance_tests_passed": 9,
+    "acceptance_tests_total": 14,
+    "mutation_score_median": 82.55,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 7.0,
+    "diff_lines_median": 95.5,
+    "agent_seconds_median": 31.5,
+    "agent_calls_median": 4.5,
+    "wrong_prs": 2,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "full": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 2,
+    "acceptance_tests_passed": 14,
+    "acceptance_tests_total": 14,
+    "mutation_score_median": 100.0,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 9.5,
+    "diff_lines_median": 90.0,
+    "agent_seconds_median": 28.0,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 0,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "spec_words": {
+    "thin": 28,
+    "full": 95
+   }
+  },
+  "T6-pagination": {
+   "thin": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 0,
+    "acceptance_tests_passed": 8,
+    "acceptance_tests_total": 14,
+    "mutation_score_median": 100.0,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 7.0,
+    "diff_lines_median": 98.5,
+    "agent_seconds_median": 27.0,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 2,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "full": {
+    "runs": 2,
+    "own_tests_pass": 2,
+    "scope_pass": 2,
+    "diff_coverage_pass": 2,
+    "mutation_pass": 2,
+    "acceptance_pass": 2,
+    "acceptance_tests_passed": 14,
+    "acceptance_tests_total": 14,
+    "mutation_score_median": 97.6,
+    "diff_coverage_median": 100.0,
+    "own_tests_added_median": 13.0,
+    "diff_lines_median": 144.0,
+    "agent_seconds_median": 32.5,
+    "agent_calls_median": 4.0,
+    "wrong_prs": 0,
+    "wrong_prs_blocked_before_acceptance": 0,
+    "correct_prs_blocked_before_acceptance": 0
+   },
+   "spec_words": {
+    "thin": 20,
+    "full": 68
+   }
+  }
+ },
+ "gate_seconds_median": {
+  "own_tests": 0.042,
+  "scope": 0.011,
+  "diff_coverage": 0.067,
+  "mutation": 0.593,
+  "acceptance": 0.046
+ },
+ "report_review": {
+  "failed_tests": 32,
+  "named_in_report": 29,
+  "rows": [
+   {
+    "run": "T1-late-fee.thin.r1",
+    "failed_test": "test_cap_ten_percent",
+    "named": "no",
+    "what_the_report_said": "(no cap mentioned)"
+   },
+   {
+    "run": "T1-late-fee.thin.r1",
+    "failed_test": "test_thirty_days_overdue_one_period",
+    "named": "yes",
+    "what_the_report_said": "Months are calendar months from the due date"
+   },
+   {
+    "run": "T1-late-fee.thin.r1",
+    "failed_test": "test_today_before_issue_raises",
+    "named": "yes",
+    "what_the_report_said": "No errors raised"
+   },
+   {
+    "run": "T1-late-fee.thin.r2",
+    "failed_test": "test_cap_ten_percent",
+    "named": "no",
+    "what_the_report_said": "(no cap mentioned)"
+   },
+   {
+    "run": "T1-late-fee.thin.r2",
+    "failed_test": "test_thirty_days_overdue_one_period",
+    "named": "yes",
+    "what_the_report_said": "a month that has started counts in full ... due Jan 31 -> Feb 28"
+   },
+   {
+    "run": "T1-late-fee.thin.r2",
+    "failed_test": "test_today_before_issue_raises",
+    "named": "no",
+    "what_the_report_said": "(only \"if today is not a date, raises\")"
+   },
+   {
+    "run": "T2-charge-retry.thin.r1",
+    "failed_test": "test_max_attempts_below_one_raises",
+    "named": "yes",
+    "what_the_report_said": "I used a plain ValueError rather than InvoicingError"
+   },
+   {
+    "run": "T2-charge-retry.thin.r2",
+    "failed_test": "test_max_attempts_below_one_raises",
+    "named": "yes",
+    "what_the_report_said": "a plain ValueError is raised before any charge"
+   },
+   {
+    "run": "T3-csv-export.thin.r1",
+    "failed_test": "test_header_only_when_empty",
+    "named": "yes",
+    "what_the_report_said": "The CRLF line endings are the csv module's default"
+   },
+   {
+    "run": "T3-csv-export.thin.r1",
+    "failed_test": "test_lf_line_endings",
+    "named": "yes",
+    "what_the_report_said": "The CRLF line endings are the csv module's default"
+   },
+   {
+    "run": "T3-csv-export.thin.r1",
+    "failed_test": "test_sorted_by_issued_then_id",
+    "named": "yes",
+    "what_the_report_said": "one row per invoice in input order"
+   },
+   {
+    "run": "T3-csv-export.thin.r2",
+    "failed_test": "test_header_only_when_empty",
+    "named": "yes",
+    "what_the_report_said": "CRLF line endings, the RFC 4180 default"
+   },
+   {
+    "run": "T3-csv-export.thin.r2",
+    "failed_test": "test_lf_line_endings",
+    "named": "yes",
+    "what_the_report_said": "CRLF line endings, the RFC 4180 default"
+   },
+   {
+    "run": "T3-csv-export.thin.r2",
+    "failed_test": "test_sorted_by_issued_then_id",
+    "named": "yes",
+    "what_the_report_said": "one row per invoice in the order given"
+   },
+   {
+    "run": "T4-discount.thin.r1",
+    "failed_test": "test_decimal_percent",
+    "named": "yes",
+    "what_the_report_said": "returns a new DiscountedInvoice ... rounding happens on the totals"
+   },
+   {
+    "run": "T4-discount.thin.r1",
+    "failed_test": "test_example_totals",
+    "named": "yes",
+    "what_the_report_said": "10%: discount 2.56, net 22.99, tax 4.60, total 27.59"
+   },
+   {
+    "run": "T4-discount.thin.r1",
+    "failed_test": "test_returns_new_invoice_same_identity",
+    "named": "yes",
+    "what_the_report_said": "returns a new result object; it does not change the invoice"
+   },
+   {
+    "run": "T4-discount.thin.r1",
+    "failed_test": "test_unit_prices_rounded_per_line",
+    "named": "yes",
+    "what_the_report_said": "not line by line"
+   },
+   {
+    "run": "T4-discount.thin.r1",
+    "failed_test": "test_zero_and_hundred",
+    "named": "yes",
+    "what_the_report_said": "returns a new DiscountedInvoice"
+   },
+   {
+    "run": "T4-discount.thin.r2",
+    "failed_test": "test_float_rejected",
+    "named": "yes",
+    "what_the_report_said": "It can be an int, float, str or Decimal"
+   },
+   {
+    "run": "T4-discount.thin.r2",
+    "failed_test": "test_unit_prices_rounded_per_line",
+    "named": "yes",
+    "what_the_report_said": "Discounted unit prices are kept unrounded"
+   },
+   {
+    "run": "T5-charge-log.thin.r1",
+    "failed_test": "test_email_domain",
+    "named": "yes",
+    "what_the_report_said": "The email is masked to its first character plus the domain"
+   },
+   {
+    "run": "T5-charge-log.thin.r1",
+    "failed_test": "test_event_and_amount",
+    "named": "yes",
+    "what_the_report_said": "with the event name card_charge"
+   },
+   {
+    "run": "T5-charge-log.thin.r1",
+    "failed_test": "test_short_card_raises",
+    "named": "yes",
+    "what_the_report_said": "none of the inputs are rejected"
+   },
+   {
+    "run": "T5-charge-log.thin.r2",
+    "failed_test": "test_email_domain",
+    "named": "yes",
+    "what_the_report_said": "the email keeps only its first character plus ***@domain"
+   },
+   {
+    "run": "T5-charge-log.thin.r2",
+    "failed_test": "test_short_card_raises",
+    "named": "yes",
+    "what_the_report_said": "log_charge never raises a domain error on bad input"
+   },
+   {
+    "run": "T6-pagination.thin.r1",
+    "failed_test": "test_customer_filter_case_insensitive",
+    "named": "yes",
+    "what_the_report_said": "customer must match exactly (case-sensitive)"
+   },
+   {
+    "run": "T6-pagination.thin.r1",
+    "failed_test": "test_invalid_args_raise",
+    "named": "yes",
+    "what_the_report_said": "There is no upper limit on page_size"
+   },
+   {
+    "run": "T6-pagination.thin.r1",
+    "failed_test": "test_newest_first_then_id",
+    "named": "yes",
+    "what_the_report_said": "oldest first (the order they were added, same as all())"
+   },
+   {
+    "run": "T6-pagination.thin.r2",
+    "failed_test": "test_customer_filter_case_insensitive",
+    "named": "yes",
+    "what_the_report_said": "Customer match: customer must match exactly (case-sensitive)"
+   },
+   {
+    "run": "T6-pagination.thin.r2",
+    "failed_test": "test_invalid_args_raise",
+    "named": "yes",
+    "what_the_report_said": "There is no upper limit on page_size"
+   },
+   {
+    "run": "T6-pagination.thin.r2",
+    "failed_test": "test_newest_first_then_id",
+    "named": "yes",
+    "what_the_report_said": "Order: invoices come back in the order they were added"
+   }
+  ]
+ },
+ "runs": [
+  {
+   "run": "T1-late-fee.full.r1",
+   "ticket": "T1",
+   "ticket_name": "T1-late-fee",
+   "variant": "full",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 23
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/fees.py",
+      "tests/test_fees.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 25,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 16,
+     "killed": 15,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 34,
+       "file": "invoicing/fees.py"
+      }
+     ],
+     "score": 93.8,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 8,
+     "total": 8,
+     "results": {
+      "test_cap_ten_percent": "ok",
+      "test_empty_invoice_zero": "ok",
+      "test_first_day_overdue_one_period": "ok",
+      "test_on_due_date_zero": "ok",
+      "test_rounds_half_up_once": "ok",
+      "test_thirty_days_overdue_one_period": "ok",
+      "test_thirty_one_days_overdue_two_periods": "ok",
+      "test_today_before_issue_raises": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 117,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.065,
+    "mutation": 0.731,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 31,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T1-late-fee.full.r2",
+   "ticket": "T1",
+   "ticket_name": "T1-late-fee",
+   "variant": "full",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 23
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/fees.py",
+      "tests/test_fees.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 22,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 17,
+     "killed": 16,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 28,
+       "file": "invoicing/fees.py"
+      }
+     ],
+     "score": 94.1,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 8,
+     "total": 8,
+     "results": {
+      "test_cap_ten_percent": "ok",
+      "test_empty_invoice_zero": "ok",
+      "test_first_day_overdue_one_period": "ok",
+      "test_on_due_date_zero": "ok",
+      "test_rounds_half_up_once": "ok",
+      "test_thirty_days_overdue_one_period": "ok",
+      "test_thirty_one_days_overdue_two_periods": "ok",
+      "test_today_before_issue_raises": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 107,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.064,
+    "mutation": 0.737,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 29,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T1-late-fee.thin.r1",
+   "ticket": "T1",
+   "ticket_name": "T1-late-fee",
+   "variant": "thin",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 21
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/fees.py",
+      "tests/test_fees.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 29,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 33,
+     "killed": 29,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 36,
+       "file": "invoicing/fees.py"
+      },
+      {
+       "kind": "cmp",
+       "line": 39,
+       "file": "invoicing/fees.py"
+      },
+      {
+       "kind": "cmp",
+       "line": 54,
+       "file": "invoicing/fees.py"
+      },
+      {
+       "kind": "int",
+       "line": 38,
+       "file": "invoicing/fees.py"
+      }
+     ],
+     "score": 87.9,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 5,
+     "total": 8,
+     "results": {
+      "test_cap_ten_percent": "FAIL",
+      "test_empty_invoice_zero": "ok",
+      "test_first_day_overdue_one_period": "ok",
+      "test_on_due_date_zero": "ok",
+      "test_rounds_half_up_once": "ok",
+      "test_thirty_days_overdue_one_period": "FAIL",
+      "test_thirty_one_days_overdue_two_periods": "ok",
+      "test_today_before_issue_raises": "FAIL"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 145,
+   "timings_s": {
+    "own_tests": 0.041,
+    "scope": 0.011,
+    "diff_coverage": 0.067,
+    "mutation": 1.482,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 42,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T1-late-fee.thin.r2",
+   "ticket": "T1",
+   "ticket_name": "T1-late-fee",
+   "variant": "thin",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 24
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/fees.py",
+      "tests/test_fees.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 30,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 28,
+     "killed": 25,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 36,
+       "file": "invoicing/fees.py"
+      },
+      {
+       "kind": "cmp",
+       "line": 39,
+       "file": "invoicing/fees.py"
+      },
+      {
+       "kind": "int",
+       "line": 38,
+       "file": "invoicing/fees.py"
+      }
+     ],
+     "score": 89.3,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 5,
+     "total": 8,
+     "results": {
+      "test_cap_ten_percent": "FAIL",
+      "test_empty_invoice_zero": "ok",
+      "test_first_day_overdue_one_period": "ok",
+      "test_on_due_date_zero": "ok",
+      "test_rounds_half_up_once": "ok",
+      "test_thirty_days_overdue_one_period": "FAIL",
+      "test_thirty_one_days_overdue_two_periods": "ok",
+      "test_today_before_issue_raises": "FAIL"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 135,
+   "timings_s": {
+    "own_tests": 0.041,
+    "scope": 0.011,
+    "diff_coverage": 0.069,
+    "mutation": 1.299,
+    "acceptance": 0.051
+   },
+   "agent": {
+    "model_calls": 6,
+    "tool_steps": 5,
+    "seconds": 40,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T2-charge-retry.full.r1",
+   "ticket": "T2",
+   "ticket_name": "T2-charge-retry",
+   "variant": "full",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 19
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/payments.py",
+      "tests/test_charge_with_retry.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 27,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 12,
+     "killed": 12,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 9,
+     "total": 9,
+     "results": {
+      "test_backoff_schedule": "ok",
+      "test_decline_not_retried": "ok",
+      "test_max_attempts_below_one_raises": "ok",
+      "test_no_sleep_after_last_attempt_and_reraises_last": "ok",
+      "test_other_exception_not_retried": "ok",
+      "test_retries_transient_then_succeeds": "ok",
+      "test_retry_after_honoured_and_capped": "ok",
+      "test_same_idempotency_key_every_attempt": "ok",
+      "test_success_first_try_no_sleep": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 159,
+   "timings_s": {
+    "own_tests": 0.041,
+    "scope": 0.011,
+    "diff_coverage": 0.064,
+    "mutation": 0.546,
+    "acceptance": 0.043
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 35,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T2-charge-retry.full.r2",
+   "ticket": "T2",
+   "ticket_name": "T2-charge-retry",
+   "variant": "full",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 22
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/payments.py",
+      "tests/test_charge_retry.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 27,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 13,
+     "killed": 13,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 9,
+     "total": 9,
+     "results": {
+      "test_backoff_schedule": "ok",
+      "test_decline_not_retried": "ok",
+      "test_max_attempts_below_one_raises": "ok",
+      "test_no_sleep_after_last_attempt_and_reraises_last": "ok",
+      "test_other_exception_not_retried": "ok",
+      "test_retries_transient_then_succeeds": "ok",
+      "test_retry_after_honoured_and_capped": "ok",
+      "test_same_idempotency_key_every_attempt": "ok",
+      "test_success_first_try_no_sleep": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 184,
+   "timings_s": {
+    "own_tests": 0.044,
+    "scope": 0.013,
+    "diff_coverage": 0.071,
+    "mutation": 0.612,
+    "acceptance": 0.055
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 36,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T2-charge-retry.thin.r1",
+   "ticket": "T2",
+   "ticket_name": "T2-charge-retry",
+   "variant": "thin",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 19
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/payments.py",
+      "tests/test_charge_with_retry.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 26,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 17,
+     "killed": 15,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 35,
+       "file": "invoicing/payments.py"
+      },
+      {
+       "kind": "int",
+       "line": 35,
+       "file": "invoicing/payments.py"
+      }
+     ],
+     "score": 88.2,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 8,
+     "total": 9,
+     "results": {
+      "test_backoff_schedule": "ok",
+      "test_decline_not_retried": "ok",
+      "test_max_attempts_below_one_raises": "FAIL",
+      "test_no_sleep_after_last_attempt_and_reraises_last": "ok",
+      "test_other_exception_not_retried": "ok",
+      "test_retries_transient_then_succeeds": "ok",
+      "test_retry_after_honoured_and_capped": "ok",
+      "test_same_idempotency_key_every_attempt": "ok",
+      "test_success_first_try_no_sleep": "ok"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 150,
+   "timings_s": {
+    "own_tests": 0.05,
+    "scope": 0.013,
+    "diff_coverage": 0.076,
+    "mutation": 0.837,
+    "acceptance": 0.045
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 34,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T2-charge-retry.thin.r2",
+   "ticket": "T2",
+   "ticket_name": "T2-charge-retry",
+   "variant": "thin",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 18
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/payments.py",
+      "tests/test_charge_with_retry.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 96.2,
+     "lines": 26,
+     "missed": [
+      "invoicing/payments.py:64"
+     ]
+    },
+    "mutation": {
+     "mutants": 19,
+     "killed": 18,
+     "survivors": [
+      {
+       "kind": "int",
+       "line": 57,
+       "file": "invoicing/payments.py"
+      }
+     ],
+     "score": 94.7,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 8,
+     "total": 9,
+     "results": {
+      "test_backoff_schedule": "ok",
+      "test_decline_not_retried": "ok",
+      "test_max_attempts_below_one_raises": "FAIL",
+      "test_no_sleep_after_last_attempt_and_reraises_last": "ok",
+      "test_other_exception_not_retried": "ok",
+      "test_retries_transient_then_succeeds": "ok",
+      "test_retry_after_honoured_and_capped": "ok",
+      "test_same_idempotency_key_every_attempt": "ok",
+      "test_success_first_try_no_sleep": "ok"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 143,
+   "timings_s": {
+    "own_tests": 0.047,
+    "scope": 0.011,
+    "diff_coverage": 0.075,
+    "mutation": 0.929,
+    "acceptance": 0.041
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 36,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T3-csv-export.full.r1",
+   "ticket": "T3",
+   "ticket_name": "T3-csv-export",
+   "variant": "full",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 18
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/export.py",
+      "tests/test_export.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 24,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 1,
+     "killed": 1,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 6,
+     "total": 6,
+     "results": {
+      "test_formula_injection_neutralised": "ok",
+      "test_header_only_when_empty": "ok",
+      "test_lf_line_endings": "ok",
+      "test_quotes_commas": "ok",
+      "test_row_format": "ok",
+      "test_sorted_by_issued_then_id": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 113,
+   "timings_s": {
+    "own_tests": 0.042,
+    "scope": 0.011,
+    "diff_coverage": 0.066,
+    "mutation": 0.048,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 27,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T3-csv-export.full.r2",
+   "ticket": "T3",
+   "ticket_name": "T3-csv-export",
+   "variant": "full",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 18
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/export.py",
+      "tests/test_export.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 24,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 1,
+     "killed": 1,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 6,
+     "total": 6,
+     "results": {
+      "test_formula_injection_neutralised": "ok",
+      "test_header_only_when_empty": "ok",
+      "test_lf_line_endings": "ok",
+      "test_quotes_commas": "ok",
+      "test_row_format": "ok",
+      "test_sorted_by_issued_then_id": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 118,
+   "timings_s": {
+    "own_tests": 0.041,
+    "scope": 0.011,
+    "diff_coverage": 0.068,
+    "mutation": 0.048,
+    "acceptance": 0.049
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 28,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T3-csv-export.thin.r1",
+   "ticket": "T3",
+   "ticket_name": "T3-csv-export",
+   "variant": "thin",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 15
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/export.py",
+      "tests/test_export.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 24,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 1,
+     "killed": 1,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 3,
+     "total": 6,
+     "results": {
+      "test_formula_injection_neutralised": "ok",
+      "test_header_only_when_empty": "FAIL",
+      "test_lf_line_endings": "FAIL",
+      "test_quotes_commas": "ok",
+      "test_row_format": "ok",
+      "test_sorted_by_issued_then_id": "FAIL"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 99,
+   "timings_s": {
+    "own_tests": 0.046,
+    "scope": 0.014,
+    "diff_coverage": 0.072,
+    "mutation": 0.048,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 26,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T3-csv-export.thin.r2",
+   "ticket": "T3",
+   "ticket_name": "T3-csv-export",
+   "variant": "thin",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 15
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/export.py",
+      "tests/test_export.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 24,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 2,
+     "killed": 2,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 3,
+     "total": 6,
+     "results": {
+      "test_formula_injection_neutralised": "ok",
+      "test_header_only_when_empty": "FAIL",
+      "test_lf_line_endings": "FAIL",
+      "test_quotes_commas": "ok",
+      "test_row_format": "ok",
+      "test_sorted_by_issued_then_id": "FAIL"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 96,
+   "timings_s": {
+    "own_tests": 0.041,
+    "scope": 0.011,
+    "diff_coverage": 0.065,
+    "mutation": 0.094,
+    "acceptance": 0.051
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 26,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T4-discount.full.r1",
+   "ticket": "T4",
+   "ticket_name": "T4-discount",
+   "variant": "full",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 17
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/discounts.py",
+      "tests/test_discounts.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 19,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 15,
+     "killed": 15,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 8,
+     "total": 8,
+     "results": {
+      "test_decimal_percent": "ok",
+      "test_example_totals": "ok",
+      "test_float_rejected": "ok",
+      "test_input_unchanged": "ok",
+      "test_out_of_range_raises": "ok",
+      "test_returns_new_invoice_same_identity": "ok",
+      "test_unit_prices_rounded_per_line": "ok",
+      "test_zero_and_hundred": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 114,
+   "timings_s": {
+    "own_tests": 0.044,
+    "scope": 0.012,
+    "diff_coverage": 0.066,
+    "mutation": 0.653,
+    "acceptance": 0.049
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 27,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T4-discount.full.r2",
+   "ticket": "T4",
+   "ticket_name": "T4-discount",
+   "variant": "full",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 19
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/discounts.py",
+      "tests/test_discounts.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 20,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 11,
+     "killed": 11,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 8,
+     "total": 8,
+     "results": {
+      "test_decimal_percent": "ok",
+      "test_example_totals": "ok",
+      "test_float_rejected": "ok",
+      "test_input_unchanged": "ok",
+      "test_out_of_range_raises": "ok",
+      "test_returns_new_invoice_same_identity": "ok",
+      "test_unit_prices_rounded_per_line": "ok",
+      "test_zero_and_hundred": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 124,
+   "timings_s": {
+    "own_tests": 0.045,
+    "scope": 0.012,
+    "diff_coverage": 0.066,
+    "mutation": 0.483,
+    "acceptance": 0.049
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 28,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T4-discount.thin.r1",
+   "ticket": "T4",
+   "ticket_name": "T4-discount",
+   "variant": "thin",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 16
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/discounts.py",
+      "tests/test_discounts.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 36,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 16,
+     "killed": 16,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 3,
+     "total": 8,
+     "results": {
+      "test_decimal_percent": "ERROR",
+      "test_example_totals": "ERROR",
+      "test_float_rejected": "ok",
+      "test_input_unchanged": "ok",
+      "test_out_of_range_raises": "ok",
+      "test_returns_new_invoice_same_identity": "ERROR",
+      "test_unit_prices_rounded_per_line": "ERROR",
+      "test_zero_and_hundred": "ERROR"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 130,
+   "timings_s": {
+    "own_tests": 0.045,
+    "scope": 0.013,
+    "diff_coverage": 0.073,
+    "mutation": 0.719,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 5,
+    "tool_steps": 4,
+    "seconds": 43,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T4-discount.thin.r2",
+   "ticket": "T4",
+   "ticket_name": "T4-discount",
+   "variant": "thin",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 17
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/discounts.py",
+      "tests/test_discounts.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 22,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 11,
+     "killed": 10,
+     "survivors": [
+      {
+       "kind": "bool",
+       "line": 16,
+       "file": "invoicing/discounts.py"
+      }
+     ],
+     "score": 90.9,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 6,
+     "total": 8,
+     "results": {
+      "test_decimal_percent": "ok",
+      "test_example_totals": "ok",
+      "test_float_rejected": "FAIL",
+      "test_input_unchanged": "ok",
+      "test_out_of_range_raises": "ok",
+      "test_returns_new_invoice_same_identity": "ok",
+      "test_unit_prices_rounded_per_line": "FAIL",
+      "test_zero_and_hundred": "ok"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 116,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.067,
+    "mutation": 0.488,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 34,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T5-charge-log.full.r1",
+   "ticket": "T5",
+   "ticket_name": "T5-charge-log",
+   "variant": "full",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 17
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/logs.py",
+      "tests/test_log_charge.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 22,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 10,
+     "killed": 10,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 7,
+     "total": 7,
+     "results": {
+      "test_dashes_stripped": "ok",
+      "test_email_domain": "ok",
+      "test_event_and_amount": "ok",
+      "test_masked_last4": "ok",
+      "test_no_email_address": "ok",
+      "test_no_full_card_number": "ok",
+      "test_short_card_raises": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 86,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.064,
+    "mutation": 0.469,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 28,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T5-charge-log.full.r2",
+   "ticket": "T5",
+   "ticket_name": "T5-charge-log",
+   "variant": "full",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 18
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/logs.py",
+      "tests/test_charge_log.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 23,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 11,
+     "killed": 11,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 7,
+     "total": 7,
+     "results": {
+      "test_dashes_stripped": "ok",
+      "test_email_domain": "ok",
+      "test_event_and_amount": "ok",
+      "test_masked_last4": "ok",
+      "test_no_email_address": "ok",
+      "test_no_full_card_number": "ok",
+      "test_short_card_raises": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 94,
+   "timings_s": {
+    "own_tests": 0.045,
+    "scope": 0.013,
+    "diff_coverage": 0.072,
+    "mutation": 0.528,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 28,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T5-charge-log.thin.r1",
+   "ticket": "T5",
+   "ticket_name": "T5-charge-log",
+   "variant": "thin",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 15
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/logs.py",
+      "tests/test_log_charge.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 21,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 12,
+     "killed": 10,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 16,
+       "file": "invoicing/logs.py"
+      },
+      {
+       "kind": "int",
+       "line": 16,
+       "file": "invoicing/logs.py"
+      }
+     ],
+     "score": 83.3,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 4,
+     "total": 7,
+     "results": {
+      "test_dashes_stripped": "ok",
+      "test_email_domain": "FAIL",
+      "test_event_and_amount": "FAIL",
+      "test_masked_last4": "ok",
+      "test_no_email_address": "ok",
+      "test_no_full_card_number": "ok",
+      "test_short_card_raises": "FAIL"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 99,
+   "timings_s": {
+    "own_tests": 0.048,
+    "scope": 0.014,
+    "diff_coverage": 0.071,
+    "mutation": 0.575,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 30,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T5-charge-log.thin.r2",
+   "ticket": "T5",
+   "ticket_name": "T5-charge-log",
+   "variant": "thin",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 15
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/logs.py",
+      "tests/test_log_charge.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 21,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 11,
+     "killed": 9,
+     "survivors": [
+      {
+       "kind": "cmp",
+       "line": 16,
+       "file": "invoicing/logs.py"
+      },
+      {
+       "kind": "int",
+       "line": 16,
+       "file": "invoicing/logs.py"
+      }
+     ],
+     "score": 81.8,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 5,
+     "total": 7,
+     "results": {
+      "test_dashes_stripped": "ok",
+      "test_email_domain": "FAIL",
+      "test_event_and_amount": "ok",
+      "test_masked_last4": "ok",
+      "test_no_email_address": "ok",
+      "test_no_full_card_number": "ok",
+      "test_short_card_raises": "FAIL"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 92,
+   "timings_s": {
+    "own_tests": 0.045,
+    "scope": 0.013,
+    "diff_coverage": 0.073,
+    "mutation": 0.533,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 5,
+    "tool_steps": 4,
+    "seconds": 33,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T6-pagination.full.r1",
+   "ticket": "T6",
+   "ticket_name": "T6-pagination",
+   "variant": "full",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 25
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/store.py",
+      "tests/test_store_list.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 22,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 21,
+     "killed": 20,
+     "survivors": [
+      {
+       "kind": "bool",
+       "line": 11,
+       "file": "invoicing/store.py"
+      }
+     ],
+     "score": 95.2,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 7,
+     "total": 7,
+     "results": {
+      "test_all_unchanged": "ok",
+      "test_customer_filter_case_insensitive": "ok",
+      "test_default_page_size_20": "ok",
+      "test_invalid_args_raise": "ok",
+      "test_newest_first_then_id": "ok",
+      "test_page_past_end_empty": "ok",
+      "test_pages_cover_all_without_overlap": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 174,
+   "timings_s": {
+    "own_tests": 0.044,
+    "scope": 0.012,
+    "diff_coverage": 0.074,
+    "mutation": 0.964,
+    "acceptance": 0.047
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 36,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T6-pagination.full.r2",
+   "ticket": "T6",
+   "ticket_name": "T6-pagination",
+   "variant": "full",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 17
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/store.py",
+      "tests/test_store_list.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 20,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 19,
+     "killed": 19,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 7,
+     "total": 7,
+     "results": {
+      "test_all_unchanged": "ok",
+      "test_customer_filter_case_insensitive": "ok",
+      "test_default_page_size_20": "ok",
+      "test_invalid_args_raise": "ok",
+      "test_newest_first_then_id": "ok",
+      "test_page_past_end_empty": "ok",
+      "test_pages_cover_all_without_overlap": "ok"
+     },
+     "pass": true
+    }
+   },
+   "diff_lines_added": 114,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.064,
+    "mutation": 0.829,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 29,
+    "self_reported_green": true
+   },
+   "blocked_by": []
+  },
+  {
+   "run": "T6-pagination.thin.r1",
+   "ticket": "T6",
+   "ticket_name": "T6-pagination",
+   "variant": "thin",
+   "rep": "r1",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 16
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/store.py",
+      "tests/test_store_list.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 14,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 13,
+     "killed": 13,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 4,
+     "total": 7,
+     "results": {
+      "test_all_unchanged": "ok",
+      "test_customer_filter_case_insensitive": "FAIL",
+      "test_default_page_size_20": "ok",
+      "test_invalid_args_raise": "FAIL",
+      "test_newest_first_then_id": "FAIL",
+      "test_page_past_end_empty": "ok",
+      "test_pages_cover_all_without_overlap": "ok"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 95,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.064,
+    "mutation": 0.565,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 26,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  },
+  {
+   "run": "T6-pagination.thin.r2",
+   "ticket": "T6",
+   "ticket_name": "T6-pagination",
+   "variant": "thin",
+   "rep": "r2",
+   "gates": {
+    "own_tests": {
+     "pass": true,
+     "tests": 14
+    },
+    "scope": {
+     "pass": true,
+     "changed": [
+      "invoicing/store.py",
+      "tests/test_store_pagination.py"
+     ],
+     "outside": [],
+     "edited_existing_tests": []
+    },
+    "diff_coverage": {
+     "pass": true,
+     "pct": 100.0,
+     "lines": 20,
+     "missed": []
+    },
+    "mutation": {
+     "mutants": 17,
+     "killed": 17,
+     "survivors": [],
+     "score": 100.0,
+     "pass": true
+    },
+    "acceptance": {
+     "passed": 4,
+     "total": 7,
+     "results": {
+      "test_all_unchanged": "ok",
+      "test_customer_filter_case_insensitive": "FAIL",
+      "test_default_page_size_20": "ok",
+      "test_invalid_args_raise": "FAIL",
+      "test_newest_first_then_id": "FAIL",
+      "test_page_past_end_empty": "ok",
+      "test_pages_cover_all_without_overlap": "ok"
+     },
+     "pass": false
+    }
+   },
+   "diff_lines_added": 102,
+   "timings_s": {
+    "own_tests": 0.04,
+    "scope": 0.011,
+    "diff_coverage": 0.064,
+    "mutation": 0.739,
+    "acceptance": 0.046
+   },
+   "agent": {
+    "model_calls": 4,
+    "tool_steps": 3,
+    "seconds": 28,
+    "self_reported_green": true
+   },
+   "blocked_by": [
+    "acceptance"
+   ]
+  }
+ ]
+}

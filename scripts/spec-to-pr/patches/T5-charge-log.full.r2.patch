@@ -1,0 +1,113 @@
+diff --git a/invoicing/logs.py b/invoicing/logs.py
+index dfba159..1f17900 100644
+--- a/invoicing/logs.py
++++ b/invoicing/logs.py
+@@ -1,8 +1,44 @@
+ from datetime import datetime, timezone
+ 
++from invoicing.errors import InvoicingError
++from invoicing.money import fmt
++
++MIN_CARD_DIGITS = 12
++
+ 
+ def log_line(event: str, **fields) -> str:
+     """Format one structured log line: `<ts> <event> k=v k=v`."""
+     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+     parts = [ts, event] + [f"{k}={v}" for k, v in sorted(fields.items())]
+     return " ".join(parts)
++
++
++def _mask_card(card_number: str) -> str:
++    """Return `****` plus the last 4 digits; never the full number."""
++    digits = str(card_number).replace(" ", "").replace("-", "")
++    if not digits.isascii() or not digits.isdigit():
++        raise InvoicingError("card number must contain only digits, spaces or dashes")
++    if len(digits) < MIN_CARD_DIGITS:
++        raise InvoicingError(
++            f"card number must have at least {MIN_CARD_DIGITS} digits"
++        )
++    return "****" + digits[-4:]
++
++
++def _email_domain(email: str) -> str:
++    """Return the part after the last `@`; never the full address."""
++    local, sep, domain = str(email).rpartition("@")
++    if not sep or not local or not domain:
++        raise InvoicingError("email address must have the form local@domain")
++    return domain
++
++
++def log_charge(invoice_id, amount, card_number, email) -> str:
++    """Log a card charge without the full card number or email address."""
++    return log_line(
++        "charge",
++        invoice=invoice_id,
++        amount=fmt(amount),
++        card=_mask_card(card_number),
++        email_domain=_email_domain(email),
++    )
+diff --git a/tests/test_charge_log.py b/tests/test_charge_log.py
+new file mode 100644
+index 0000000..e7ee731
+--- /dev/null
++++ b/tests/test_charge_log.py
+@@ -0,0 +1,58 @@
++import unittest
++from decimal import Decimal
++
++from invoicing.errors import InvoicingError
++from invoicing.logs import log_charge
++
++
++class LogChargeTest(unittest.TestCase):
++    def test_fields(self):
++        line = log_charge("INV-1", Decimal("9.9"), "4242424242424242", "ann@example.com")
++        self.assertTrue(line.endswith(
++            " charge amount=9.90 card=****4242 email_domain=example.com invoice=INV-1"
++        ))
++
++    def test_amount_rounded_half_up(self):
++        line = log_charge("INV-2", Decimal("1.005"), "4242424242424242", "a@b.io")
++        self.assertIn(" amount=1.01 ", line)
++
++    def test_never_logs_full_card_or_email(self):
++        line = log_charge("INV-3", Decimal("5"), "4000 0566 5566 5556", "bob.smith@example.org")
++        self.assertNotIn("4000056655665556", line)
++        self.assertNotIn("4000 0566", line)
++        self.assertNotIn("bob.smith", line)
++        self.assertNotIn("@", line)
++        self.assertIn("card=****5556", line)
++        self.assertIn("email_domain=example.org", line)
++
++    def test_strips_spaces_and_dashes(self):
++        line = log_charge("INV-4", Decimal("1"), "5555-5555 5555-4444", "x@example.com")
++        self.assertIn("card=****4444", line)
++
++    def test_twelve_digits_is_enough(self):
++        line = log_charge("INV-5", Decimal("1"), "1234-5678-9012", "x@example.com")
++        self.assertIn("card=****9012", line)
++
++    def test_fewer_than_twelve_digits_raises(self):
++        with self.assertRaises(InvoicingError):
++            log_charge("INV-6", Decimal("1"), "1234 5678 901", "x@example.com")
++
++    def test_dashes_and_spaces_do_not_count_as_digits(self):
++        with self.assertRaises(InvoicingError):
++            log_charge("INV-7", Decimal("1"), "12-34 56-78 90-1-", "x@example.com")
++
++    def test_non_digit_card_raises(self):
++        with self.assertRaises(InvoicingError):
++            log_charge("INV-8", Decimal("1"), "4242.4242.4242.4242", "x@example.com")
++
++    def test_email_without_at_raises(self):
++        with self.assertRaises(InvoicingError):
++            log_charge("INV-9", Decimal("1"), "4242424242424242", "not-an-email")
++
++    def test_invoicing_error_is_value_error(self):
++        with self.assertRaises(ValueError):
++            log_charge("INV-10", Decimal("1"), "42", "x@example.com")
++
++
++if __name__ == "__main__":
++    unittest.main()

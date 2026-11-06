@@ -1,0 +1,12 @@
+[package]
+name = "tokiobench"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+tokio = { version = "=1.53.1", features = ["rt-multi-thread", "macros", "time", "sync", "fs"] }
+parking_lot = "=0.12.5"
+
+[profile.release]
+debug = "line-tables-only"

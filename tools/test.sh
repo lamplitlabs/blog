@@ -1333,6 +1333,43 @@ check_glightbox_before_bundle() {
   echo "glightbox-load-coverage: $missing/$total built pages ($posts posts) load post.min.js/page.min.js without GLightbox before it (rule: a <script src> containing 'glightbox' precedes the bundle's <script> tag; any >0 fails)"
 }
 
+# A markdown link that reaches the built HTML as text, e.g. "[Title](/posts/slug/)",
+# means kramdown never parsed it: an include emitted markdown into a layout
+# (post-nav.html's category footer printed "- another post tagged X" on 182
+# posts) or link text holds a bare <T> that kramdown read as an HTML tag.
+# Text inside <pre> blocks and <code> spans is skipped: posts may show markdown.
+check_raw_markdown_links() {
+  local root="$SITE_DIR$_baseurl/posts" rows count pages
+  pages="$(find "$root" -name index.html | wc -l | tr -d ' ')"
+  rows="$(find "$root" -name index.html -print0 | xargs -0 awk '
+    FNR == 1 { pre = 0 }
+    {
+      s = $0; out = ""
+      while (s != "") {
+        if (pre) {
+          if (match(s, /<\/pre>/)) { s = substr(s, RSTART + RLENGTH); pre = 0 } else s = ""
+          continue
+        }
+        if (match(s, /<pre[ >]/)) { out = out substr(s, 1, RSTART - 1); s = substr(s, RSTART + RLENGTH); pre = 1; continue }
+        out = out s; s = ""
+      }
+      gsub(/<code[^>]*>[^<]*<\/code>/, "", out)
+      if (index(out, "](/posts/")) {
+        m = out; sub(/^[ \t]+/, "", m)
+        print FILENAME "\t" FNR "\t" substr(m, 1, 140)
+      }
+    }
+  ')"
+  count="$(printf '%s\n' "$rows" | grep -c . || true)"
+  if ((count > 0)); then
+    echo "error: $count line(s) in built post pages show a raw markdown link '](/posts/' outside <pre>/<code>:" >&2
+    printf '%s\n' "$rows" | awk -F '\t' '{ print "       " $1 ":" $2 ": " $3 }' | head -20 >&2
+    echo "       Readers see the brackets instead of a link. Emit HTML from includes used in layouts, and write a generic like Span<T> in link text as Span&lt;T&gt;." >&2
+    exit 1
+  fi
+  echo "raw-markdown-link-coverage: $count lines across $pages built post pages show '](/posts/' outside <pre>/<code> (rule: any >0 fails)"
+}
+
 main() {
   preflight
   collect_posts
@@ -1403,6 +1440,7 @@ main() {
   rm -f "$_build_log"
 
   check_glightbox_before_bundle
+  check_raw_markdown_links
 
   # test
   bundle exec htmlproofer "$SITE_DIR" \

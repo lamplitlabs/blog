@@ -139,4 +139,4 @@ Numbers above are from .NET SDK 8.0.401 (runtime 8.0.8), `Microsoft.Extensions.C
 
 - [EF Core Query Performance]({% post_url Performance/2026-10-05-ef-core-query-performance-dotnet %}) - the queries these caches are standing in front of.
 - [System.Text.Json Source Generators vs Newtonsoft.Json]({% post_url Performance/2026-10-06-dotnet-json-serialization-performance %}) - the deserialize step that is a third of each Redis read.
-- [Cutting .NET Allocations with Span<T> and Memory<T>]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - where the 2 KB per Redis read goes and how to shrink it.
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;]({% post_url Performance/2026-10-03-span-memory-allocation-reduction-dotnet %}) - where the 2 KB per Redis read goes and how to shrink it.

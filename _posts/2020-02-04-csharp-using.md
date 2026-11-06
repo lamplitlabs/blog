@@ -126,4 +126,4 @@ I think I’ll switch to the new using-declaration with all my code and hope you
 
 - [AutoMapper ForAllOtherMembers](/posts/AutoMapper_ForAllOtherMembers/)
 - [The Stirring Debate Surrounding Moq's Latest Version: Unveiling Privacy Concerns and Trust Dilemmas](/posts/Moq_Issue/)
-- [Cutting .NET Allocations with Span<T> and Memory<T>: Before/After BenchmarkDotNet Numbers](/posts/span-memory-allocation-reduction-dotnet/)
+- [Cutting .NET Allocations with Span&lt;T&gt; and Memory&lt;T&gt;: Before/After BenchmarkDotNet Numbers](/posts/span-memory-allocation-reduction-dotnet/)

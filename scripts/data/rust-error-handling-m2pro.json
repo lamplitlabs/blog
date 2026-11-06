@@ -1,0 +1,595 @@
+{
+ "what": "errbench: one log-record parser, error handling written four ways (thiserror, anyhow, anyhow with eager .context(format!()), thiserror inside + anyhow at the caller)",
+ "lines_per_pass": 200000,
+ "passes_per_run": 5,
+ "host": {
+  "cpu": "Apple M2 Pro",
+  "os": "macOS 27.0.1",
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+  "crates": {
+   "anyhow": "1.0.104",
+   "thiserror": "2.0.21"
+  }
+ },
+ "timing": [
+  {
+   "variant": "anyhow",
+   "fault_permille": 0,
+   "backtrace": false,
+   "ns_per_line_median": 342.8,
+   "ns_per_line_min": 342.1,
+   "ns_per_line_max": 344.1,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 0,
+   "backtrace": false,
+   "ns_per_line_median": 385.9,
+   "ns_per_line_min": 385.3,
+   "ns_per_line_max": 386.6,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 0,
+   "backtrace": false,
+   "ns_per_line_median": 346.1,
+   "ns_per_line_min": 344.4,
+   "ns_per_line_max": 359.2,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 0,
+   "backtrace": false,
+   "ns_per_line_median": 346.9,
+   "ns_per_line_min": 346.1,
+   "ns_per_line_max": 361.5,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 0,
+   "backtrace": true,
+   "ns_per_line_median": 343.0,
+   "ns_per_line_min": 342.1,
+   "ns_per_line_max": 359.9,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 0,
+   "backtrace": true,
+   "ns_per_line_median": 385.7,
+   "ns_per_line_min": 384.2,
+   "ns_per_line_max": 400.1,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 0,
+   "backtrace": true,
+   "ns_per_line_median": 347.5,
+   "ns_per_line_min": 346.1,
+   "ns_per_line_max": 365.0,
+   "runs": 5,
+   "errors_per_pass": 0
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 10,
+   "backtrace": false,
+   "ns_per_line_median": 358.6,
+   "ns_per_line_min": 343.8,
+   "ns_per_line_max": 378.2,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 10,
+   "backtrace": false,
+   "ns_per_line_median": 387.2,
+   "ns_per_line_min": 386.6,
+   "ns_per_line_max": 414.1,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 10,
+   "backtrace": false,
+   "ns_per_line_median": 348.1,
+   "ns_per_line_min": 346.2,
+   "ns_per_line_max": 360.0,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 10,
+   "backtrace": false,
+   "ns_per_line_median": 347.1,
+   "ns_per_line_min": 347.0,
+   "ns_per_line_max": 366.6,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 10,
+   "backtrace": true,
+   "ns_per_line_median": 451.8,
+   "ns_per_line_min": 450.9,
+   "ns_per_line_max": 493.8,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 10,
+   "backtrace": true,
+   "ns_per_line_median": 495.9,
+   "ns_per_line_min": 490.9,
+   "ns_per_line_max": 517.6,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 10,
+   "backtrace": true,
+   "ns_per_line_median": 440.8,
+   "ns_per_line_min": 440.3,
+   "ns_per_line_max": 457.8,
+   "runs": 5,
+   "errors_per_pass": 1925
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 50,
+   "backtrace": false,
+   "ns_per_line_median": 347.3,
+   "ns_per_line_min": 346.6,
+   "ns_per_line_max": 348.1,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 50,
+   "backtrace": false,
+   "ns_per_line_median": 389.3,
+   "ns_per_line_min": 388.6,
+   "ns_per_line_max": 389.6,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 50,
+   "backtrace": false,
+   "ns_per_line_median": 350.8,
+   "ns_per_line_min": 349.9,
+   "ns_per_line_max": 353.7,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 50,
+   "backtrace": false,
+   "ns_per_line_median": 346.5,
+   "ns_per_line_min": 346.0,
+   "ns_per_line_max": 370.2,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 50,
+   "backtrace": true,
+   "ns_per_line_median": 895.1,
+   "ns_per_line_min": 891.8,
+   "ns_per_line_max": 919.5,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 50,
+   "backtrace": true,
+   "ns_per_line_median": 938.6,
+   "ns_per_line_min": 937.0,
+   "ns_per_line_max": 961.9,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 50,
+   "backtrace": true,
+   "ns_per_line_median": 824.9,
+   "ns_per_line_min": 817.6,
+   "ns_per_line_max": 876.8,
+   "runs": 5,
+   "errors_per_pass": 9998
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 250,
+   "backtrace": false,
+   "ns_per_line_median": 363.3,
+   "ns_per_line_min": 363.1,
+   "ns_per_line_max": 380.4,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 250,
+   "backtrace": false,
+   "ns_per_line_median": 396.5,
+   "ns_per_line_min": 395.6,
+   "ns_per_line_max": 410.6,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 250,
+   "backtrace": false,
+   "ns_per_line_median": 359.3,
+   "ns_per_line_min": 358.6,
+   "ns_per_line_max": 360.4,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 250,
+   "backtrace": false,
+   "ns_per_line_median": 341.9,
+   "ns_per_line_min": 339.7,
+   "ns_per_line_max": 354.2,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 250,
+   "backtrace": true,
+   "ns_per_line_median": 3139.7,
+   "ns_per_line_min": 3111.0,
+   "ns_per_line_max": 3183.5,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 250,
+   "backtrace": true,
+   "ns_per_line_median": 3174.4,
+   "ns_per_line_min": 3105.2,
+   "ns_per_line_max": 3187.6,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 250,
+   "backtrace": true,
+   "ns_per_line_median": 2777.8,
+   "ns_per_line_min": 2708.9,
+   "ns_per_line_max": 2781.0,
+   "runs": 5,
+   "errors_per_pass": 49851
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "ns_per_line_median": 413.1,
+   "ns_per_line_min": 412.2,
+   "ns_per_line_max": 432.7,
+   "runs": 5,
+   "errors_per_pass": 200000
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "ns_per_line_median": 415.6,
+   "ns_per_line_min": 412.9,
+   "ns_per_line_max": 434.7,
+   "runs": 5,
+   "errors_per_pass": 200000
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "ns_per_line_median": 385.4,
+   "ns_per_line_min": 384.3,
+   "ns_per_line_max": 402.9,
+   "runs": 5,
+   "errors_per_pass": 200000
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "ns_per_line_median": 312.9,
+   "ns_per_line_min": 312.2,
+   "ns_per_line_max": 327.7,
+   "runs": 5,
+   "errors_per_pass": 200000
+  }
+ ],
+ "allocs": [
+  {
+   "variant": "typed",
+   "fault_permille": 0,
+   "backtrace": false,
+   "allocs_per_line": 0.0001,
+   "alloc_bytes_per_line": 0.01,
+   "errors": 0
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 0,
+   "backtrace": false,
+   "allocs_per_line": 0.0001,
+   "alloc_bytes_per_line": 0.01,
+   "errors": 0
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 0,
+   "backtrace": true,
+   "allocs_per_line": 0.0001,
+   "alloc_bytes_per_line": 0.01,
+   "errors": 0
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 0,
+   "backtrace": false,
+   "allocs_per_line": 1.0001,
+   "alloc_bytes_per_line": 10.01,
+   "errors": 0
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 0,
+   "backtrace": true,
+   "allocs_per_line": 1.0001,
+   "alloc_bytes_per_line": 10.01,
+   "errors": 0
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 0,
+   "backtrace": false,
+   "allocs_per_line": 0.0001,
+   "alloc_bytes_per_line": 0.01,
+   "errors": 0
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 0,
+   "backtrace": true,
+   "allocs_per_line": 0.0001,
+   "alloc_bytes_per_line": 0.01,
+   "errors": 0
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 50,
+   "backtrace": false,
+   "allocs_per_line": 0.024,
+   "alloc_bytes_per_line": 0.19,
+   "errors": 982
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 50,
+   "backtrace": false,
+   "allocs_per_line": 0.1965,
+   "alloc_bytes_per_line": 10.89,
+   "errors": 982
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 50,
+   "backtrace": true,
+   "allocs_per_line": 0.3438,
+   "alloc_bytes_per_line": 87.88,
+   "errors": 982
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 50,
+   "backtrace": false,
+   "allocs_per_line": 1.1474,
+   "alloc_bytes_per_line": 20.4,
+   "errors": 982
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 50,
+   "backtrace": true,
+   "allocs_per_line": 1.2947,
+   "alloc_bytes_per_line": 97.39,
+   "errors": 982
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 50,
+   "backtrace": false,
+   "allocs_per_line": 0.1222,
+   "alloc_bytes_per_line": 6.97,
+   "errors": 982
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 50,
+   "backtrace": true,
+   "allocs_per_line": 0.2696,
+   "alloc_bytes_per_line": 83.95,
+   "errors": 982
+  },
+  {
+   "variant": "typed",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "allocs_per_line": 0.5048,
+   "alloc_bytes_per_line": 3.55,
+   "errors": 20000,
+   "allocs_per_error": 0.5,
+   "bytes_per_error": 3.5
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "allocs_per_line": 4.0,
+   "alloc_bytes_per_line": 222.9,
+   "errors": 20000,
+   "allocs_per_error": 4.0,
+   "bytes_per_error": 222.9
+  },
+  {
+   "variant": "anyhow",
+   "fault_permille": 1000,
+   "backtrace": true,
+   "allocs_per_line": 7.0,
+   "alloc_bytes_per_line": 1790.9,
+   "errors": 20000,
+   "allocs_per_error": 7.0,
+   "bytes_per_error": 1790.9
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "allocs_per_line": 4.0,
+   "alloc_bytes_per_line": 222.9,
+   "errors": 20000,
+   "allocs_per_error": 3.0,
+   "bytes_per_error": 212.9
+  },
+  {
+   "variant": "eager",
+   "fault_permille": 1000,
+   "backtrace": true,
+   "allocs_per_line": 7.0,
+   "alloc_bytes_per_line": 1790.9,
+   "errors": 20000,
+   "allocs_per_error": 6.0,
+   "bytes_per_error": 1780.9
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 1000,
+   "backtrace": false,
+   "allocs_per_line": 2.5048,
+   "alloc_bytes_per_line": 141.55,
+   "errors": 20000,
+   "allocs_per_error": 2.5,
+   "bytes_per_error": 141.5
+  },
+  {
+   "variant": "hybrid",
+   "fault_permille": 1000,
+   "backtrace": true,
+   "allocs_per_line": 5.5047,
+   "alloc_bytes_per_line": 1709.55,
+   "errors": 20000,
+   "allocs_per_error": 5.5,
+   "bytes_per_error": 1709.5
+  }
+ ],
+ "env_sweep_anyhow_5pct": [
+  {
+   "env": "unset",
+   "ns_per_line_median": 348.3,
+   "runs": 5
+  },
+  {
+   "env": "RUST_BACKTRACE=1",
+   "ns_per_line_median": 895.5,
+   "runs": 5
+  },
+  {
+   "env": "RUST_LIB_BACKTRACE=1",
+   "ns_per_line_median": 895.4,
+   "runs": 5
+  },
+  {
+   "env": "RUST_BACKTRACE=1 RUST_LIB_BACKTRACE=0",
+   "ns_per_line_median": 347.7,
+   "runs": 5
+  }
+ ],
+ "debug_format_anyhow": [
+  {
+   "backtrace": false,
+   "runs": 5,
+   "first_print_us_median": 2.1,
+   "later_print_us_median": 0.3,
+   "output_bytes": 101
+  },
+  {
+   "backtrace": true,
+   "runs": 5,
+   "first_print_us_median": 2779.3,
+   "later_print_us_median": 30.2,
+   "output_bytes": 3705
+  }
+ ],
+ "build": [
+  {
+   "crate": "none",
+   "clean_release_build_s_median": 0.2,
+   "runs": 3,
+   "stripped_binary_bytes": 342000
+  },
+  {
+   "crate": "anyhow",
+   "clean_release_build_s_median": 0.7,
+   "runs": 3,
+   "stripped_binary_bytes": 376688
+  },
+  {
+   "crate": "thiserror",
+   "clean_release_build_s_median": 2.01,
+   "runs": 3,
+   "stripped_binary_bytes": 342400
+  },
+  {
+   "crate": "both",
+   "clean_release_build_s_median": 1.91,
+   "runs": 3,
+   "stripped_binary_bytes": 376720
+  }
+ ],
+ "size_of": {
+  "Record": 12,
+  "ParseError": 48,
+  "AtLine": 56,
+  "anyhow::Error": 8,
+  "Result<Record,ParseError>": 48,
+  "Result<Record,AtLine>": 56,
+  "anyhow::Result<Record>": 16,
+  "Result<Record,Box<dyn Error+Send+Sync>>": 24
+ }
+}

@@ -1,0 +1,15 @@
+[package]
+name = "errbench"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+anyhow = "=1.0.104"
+thiserror = "=2.0.21"
+
+[profile.release]
+debug = "line-tables-only"
+
+[features]
+count-alloc = []

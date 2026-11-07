@@ -1,0 +1,3469 @@
+{
+ "about": "Fold one review-loop work dir into scripts/data/ai-review-loop-go.json.",
+ "totals": {
+  "prs": 14,
+  "defects": 7,
+  "correct": 7,
+  "arms": {
+   "r1": {
+    "reviewed": 14,
+    "defects_blocked": 7,
+    "correct_blocked": 0,
+    "nits_on_correct": 1,
+    "median_model_calls": 4.0,
+    "median_seconds": 20.5,
+    "sum_seconds": 287
+   },
+   "r2": {
+    "reviewed": 14,
+    "defects_blocked": 7,
+    "correct_blocked": 0,
+    "nits_on_correct": 1,
+    "median_model_calls": 4.0,
+    "median_seconds": 22.0,
+    "sum_seconds": 310
+   },
+   "d1": {
+    "reviewed": 14,
+    "defects_blocked": 7,
+    "correct_blocked": 0,
+    "nits_on_correct": 0,
+    "median_model_calls": 3.0,
+    "median_seconds": 14.0,
+    "sum_seconds": 214
+   }
+  },
+  "fix": {
+   "fixed": 7,
+   "ci_green": 7,
+   "oracle_pass": 6,
+   "oracle_fail": [
+    "PR-10"
+   ],
+   "rereview_approved": 7,
+   "rereview_approved_but_oracle_fail": [
+    "PR-10"
+   ],
+   "pr_md_rewritten": [
+    "PR-02",
+    "PR-08",
+    "PR-09",
+    "PR-10"
+   ],
+   "median_model_calls": 6,
+   "median_seconds": 45,
+   "median_lines_added": 59,
+   "rereview_median_seconds": 22
+  },
+  "planted": {
+   "planted": 4,
+   "declined": 4,
+   "product_code_changed": 0,
+   "tests_added": 3,
+   "ci_green": 4,
+   "oracle_pass": 4,
+   "median_seconds": 48.0
+  },
+  "agent_runs": 60,
+  "agent_seconds": 1487,
+  "model_calls": 266
+ },
+ "rows": [
+  {
+   "pr": "PR-01",
+   "src": "D20",
+   "label": "defect",
+   "cls": "concurrency",
+   "title": "ledger: shorten the critical section in Spend",
+   "ci0": {
+    "pr": "PR-01",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.164
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.068
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.094
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.848
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.645
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.904
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.065
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 6,
+    "diff_removed": 3
+   },
+   "oracle0": {
+    "pr": "PR-01",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleConcurrentSpendNeverOvershoots"
+    ],
+    "compiled": true,
+    "seconds": 1.52,
+    "first_lines": [
+     "oracle_common_test.go:97: trial 0: 134 spends succeeded, remaining -34; want 100 and 0"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 39,
+       "severity": "blocking",
+       "body": "Releasing the mutex between reading spent[tenant] and writing it turns Spend into a check-then-act race: two concurrent spends can both read the same cur, both pass the cur+n > lim check, and both add, so a tenant overspends its budget (SpendAll does exactly this concurrently). The race detector cannot catch it because every map access is still under the lock. A throwaway test with 50 concurrent Spend(\"a\",10) against a limit of 100 saw more than 10 succeed and Remaining go negative. Keep the read, the limit check and the increment in one critical section (restore the defer l.mu.Unlock()); only the error formatting could move outside the lock if contention really matters. Add a concurrent test that asserts the total successful spends never exceed the limit."
+      }
+     ],
+     "summary": "The shortened critical section breaks atomicity of the budget check and update, so concurrent spends can exceed a tenant's limit; the lock must cover the check and the increment together.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 29
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 39,
+       "severity": "blocking",
+       "body": "Check-then-act race: the lock is dropped after reading spent[tenant] (line 39) and taken again only for the write (lines 46-48), so the budget check at line 43 runs on a stale value. Two concurrent Spend calls can both see cur+n <= lim and both add n, which takes the tenant past its limit; the ledger's one invariant breaks. It is not a data race, so go test -race and CI stay green. Reproduced on round0 in a scratch copy: limit 10, 8 goroutines each Spend(\"a\", 10) after a shared start barrier, and Remaining went negative in 4 of 5000 iterations. Keep the read, the check and the write in one critical section (restore `defer l.mu.Unlock()`), or re-check `l.spent[tenant]+n > lim` under the second lock before writing. The fmt.Errorf calls could move outside the lock if contention is the concern."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 48,
+       "severity": "nit",
+       "body": "TestSpendAll uses a limit of 1000 for 50x10 = 500 tokens, so it never contends at the limit and cannot catch this overspend. Add a concurrent test where the spends exceed the limit (e.g. limit 100, 50 spends of 10), and assert that exactly 10 succeed and Remaining is 0."
+      }
+     ],
+     "summary": "The shortened critical section adds a TOCTOU race in Spend: concurrent spends can both pass the budget check and overspend the tenant's limit. -race does not flag it, and I reproduced it in a scratch copy. Keep the check and the write under one lock.",
+     "cost": {
+      "model_calls": 6,
+      "tool_steps": 5,
+      "seconds": 38
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 39,
+       "severity": "blocking",
+       "body": "Releasing the mutex between reading spent[tenant] and writing it turns Spend into a check-then-act race (TOCTOU). Two concurrent Spend calls for one tenant can both read the same cur, both pass cur+n <= lim, and both add n, so the tenant goes over budget. The writes are still locked, so go test -race reports nothing, but the budget invariant is broken. Keep the limit check and the increment in one critical section (restore the defer l.mu.Unlock(), or lock once and do the check and the += under that lock). The critical section is only two map lookups and an add, so it is not the real contention source; if contention is real, shard the ledger per tenant or use a per-tenant atomic CAS loop. Add a concurrent test: many goroutines spend against a small limit, then assert spent <= limit and that the successful spends sum to spent."
+      }
+     ],
+     "summary": "The shorter critical section splits the budget check from the debit, so concurrent Spend calls can overspend a tenant's limit. This is a correctness regression that the race detector cannot catch.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 16
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "Agreed: unlocking between the read and the write made Spend a check-then-act race. Spend now reads the limit and balance, checks the limit and writes spent[tenant] in a single critical section. Only the fmt.Errorf formatting (unknown tenant / over budget) runs after Unlock, using values captured under the lock, so the PR's goal of a shorter critical section is kept without breaking atomicity. Added TestSpendAllNeverExceedsLimit (200 rounds of 50 concurrent Spend(10) against limit 100; asserts exactly 10 succeed and Remaining==0) and TestConcurrentSpendTotalWithinLimit (100 rounds of 64 uneven concurrent spends against limit 1000; asserts successful total <= limit and Remaining == limit-total). Both fail on the previous PR version (11 successes; total 1618 > 1000) and pass now. go vet ./... and go test -race ./... pass."
+      }
+     ],
+     "summary": "Restored atomicity of the budget check and increment in Ledger.Spend; only the error formatting moved outside the lock. Added two concurrent tests that catch the overspend race."
+    },
+    "diff": {
+     "pr": "PR-01",
+     "round": 1,
+     "added": 59,
+     "removed": 4,
+     "files": [
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "diff": "diff --git a/ledger.go b/ledger.go\nindex 3d0a45e..a382cd5 100644\n--- a/ledger.go\n+++ b/ledger.go\n@@ -33,19 +33,24 @@ func (l *Ledger) Spend(tenant string, n int) error {\n \tif n <= 0 {\n \t\treturn fmt.Errorf(\"spend %d tokens: must be positive\", n)\n \t}\n+\t// The limit check and the increment must happen in one critical section:\n+\t// releasing the lock between them lets concurrent spends all pass the\n+\t// check against the same balance and overspend the budget. Only the\n+\t// error formatting runs outside the lock.\n \tl.mu.Lock()\n \tlim, ok := l.limit[tenant]\n \tcur := l.spent[tenant]\n+\tover := ok && cur+n > lim\n+\tif ok && !over {\n+\t\tl.spent[tenant] = cur + n\n+\t}\n \tl.mu.Unlock()\n \tif !ok {\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n-\tif cur+n > lim {\n+\tif over {\n \t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, cur, n, lim)\n \t}\n-\tl.mu.Lock()\n-\tl.spent[tenant] += n\n-\tl.mu.Unlock()\n \treturn nil\n }\n \ndiff --git a/ledger_test.go b/ledger_test.go\nindex c754f05..6a84ae8 100644\n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -2,6 +2,7 @@ package quota\n \n import (\n \t\"errors\"\n+\t\"sync\"\n \t\"testing\"\n )\n \n@@ -58,3 +59,52 @@ func TestSpendAll(t *testing.T) {\n \t\tt.Fatalf(\"remaining = %d, want 500\", got)\n \t}\n }\n+\n+// Concurrent spends must never take a tenant past its limit: the check and\n+// the increment have to be atomic.\n+func TestSpendAllNeverExceedsLimit(t *testing.T) {\n+\tfor round := 0; round < 200; round++ {\n+\t\tl := NewLedger(map[string]int{\"acme\": 100})\n+\t\tspends := make([]int, 50)\n+\t\tfor i := range spends {\n+\t\t\tspends[i] = 10\n+\t\t}\n+\t\tif got := l.SpendAll(\"acme\", spends); got != 10 {\n+\t\t\tt.Fatalf(\"round %d: SpendAll ok = %d, want exactly 10 (limit 100 / 10)\", round, got)\n+\t\t}\n+\t\tif got := l.Remaining(\"acme\"); got != 0 {\n+\t\t\tt.Fatalf(\"round %d: remaining = %d, want 0\", round, got)\n+\t\t}\n+\t}\n+}\n+\n+// Same invariant with uneven spend sizes: the successful total never exceeds\n+// the limit and matches what the ledger recorded.\n+func TestConcurrentSpendTotalWithinLimit(t *testing.T) {\n+\tconst limit = 1000\n+\tfor round := 0; round < 100; round++ {\n+\t\tl := NewLedger(map[string]int{\"acme\": limit})\n+\t\tvar wg sync.WaitGroup\n+\t\tvar mu sync.Mutex\n+\t\ttotal := 0\n+\t\tfor i := 0; i < 64; i++ {\n+\t\t\tn := 7 + i%13*5\n+\t\t\twg.Add(1)\n+\t\t\tgo func() {\n+\t\t\t\tdefer wg.Done()\n+\t\t\t\tif l.Spend(\"acme\", n) == nil {\n+\t\t\t\t\tmu.Lock()\n+\t\t\t\t\ttotal += n\n+\t\t\t\t\tmu.Unlock()\n+\t\t\t\t}\n+\t\t\t}()\n+\t\t}\n+\t\twg.Wait()\n+\t\tif total > limit {\n+\t\t\tt.Fatalf(\"round %d: successful spends total %d > limit %d\", round, total, limit)\n+\t\t}\n+\t\tif got := l.Remaining(\"acme\"); got != limit-total {\n+\t\t\tt.Fatalf(\"round %d: remaining = %d, want %d\", round, got, limit-total)\n+\t\t}\n+\t}\n+}\n"
+    },
+    "cost": {
+     "model_calls": 6,
+     "tool_steps": 5,
+     "seconds": 45
+    },
+    "ci1": {
+     "pr": "PR-01",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.171
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.791
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 1.993
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.844
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.176
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.178
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.021
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 62,
+     "diff_removed": 4
+    },
+    "oracle1": {
+     "pr": "PR-01",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 2.91,
+     "first_lines": []
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 0,
+    "comments": [],
+    "summary": "The round-0 blocking race is fixed: Spend now reads the limit and balance, checks the limit and writes spent[tenant] in one critical section, so its behaviour matches base, and only fmt.Errorf runs after Unlock, using values captured under the lock. The two new concurrent tests assert that the total successful spend never exceeds the limit, and vet plus go test -race pass.",
+    "cost": {
+     "model_calls": 4,
+     "tool_steps": 3,
+     "seconds": 22
+    }
+   }
+  },
+  {
+   "pr": "PR-02",
+   "src": "D09",
+   "label": "defect",
+   "cls": "weak-tests",
+   "title": "ledger: fix off-by-one in the limit check",
+   "ci0": {
+    "pr": "PR-02",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.176
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.783
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.935
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.934
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.181
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.17
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.02
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 4,
+    "diff_removed": 4
+   },
+   "oracle0": {
+    "pr": "PR-02",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleConcurrentSpendNeverOvershoots",
+     "TestOracleSpendExactlyToLimit"
+    ],
+    "compiled": true,
+    "seconds": 0.85,
+    "first_lines": [
+     "oracle_common_test.go:54: spend landing exactly on the limit refused: tenant \"acme\": over budget (60 + 40 > 100)",
+     "oracle_common_test.go:97: trial 0: 99 spends succeeded, remaining 1; want 100 and 0"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 42,
+       "severity": "blocking",
+       "body": "Changing `>` to `>=` breaks the documented contract rather than fixing a bug: the Spend doc comment (lines 30-31) says 'A spend that lands exactly on the limit is allowed; one token more is not', and ErrOverBudget is documented as a spend that would take a tenant *past* its limit. With `>=` a tenant can never use its last token, and Remaining() becomes wrong: after spending 99 of 100 it reports 1, yet Spend(tenant, 1) is refused (and a limit of 1 can never be spent at all). The error text still says '%d + %d > %d', which now prints e.g. '60 + 40 > 100' for a refusal that is not over. Revert to `>`; if an exclusive limit is truly wanted, that is a semantic change needing the doc comment, ErrOverBudget doc, error message, Remaining() (limit-spent-1) and the HTTP response all updated together."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 13,
+       "severity": "blocking",
+       "body": "The test was weakened to fit the new behaviour instead of catching it: TestSpendUpToLimit exists to pin the boundary (its failure message still says 'spend landing exactly on the limit'), but it now spends 60+39 and expects remaining 1, so the exact-limit case is no longer tested anywhere. Restore the 60+40 / remaining 0 assertions, and ideally add a case that limit+1 is refused."
+      }
+     ],
+     "summary": "The PR inverts the ledger's documented boundary (spending exactly the limit is meant to be allowed), leaves Remaining() reporting tokens that cannot be spent, and edits the boundary test to stop covering the exact-limit case; revert the comparison and the test change.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 24
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 42,
+       "severity": "blocking",
+       "body": "Changing `>` to `>=` breaks the documented contract of Spend (doc comment directly above: 'A spend that lands exactly on the limit is allowed; one token more is not'), and the original check was not off by one: spent+n > lim is exactly that contract. With `>=` a tenant can never use its last token: Remaining() reports 1 (its doc says 'tokens tenant may still spend') but Spend(tenant, 1) then fails with ErrOverBudget, and the handler returns 402 while showing remaining > 0. A limit of N now really admits N-1 tokens. The error text still says '(%d + %d > %d)', which is now false for the equality case. Revert to `>`. If the limit really has to be exclusive, that is an API change: update the Spend and Remaining docs, make Remaining return limit-spent-1, fix the error message, and explain it in the PR."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 13,
+       "severity": "blocking",
+       "body": "The test was changed to fit the new behaviour instead of guarding the contract. TestSpendUpToLimit no longer spends up to the limit (60+39 of 100), yet its failure message still says 'spend landing exactly on the limit', and the boundary case (spent+n == limit allowed) has no test left. Restore the original assertions (Spend 40 succeeds, Remaining == 0)."
+      }
+     ],
+     "summary": "The PR breaks a correct boundary check: Spend's documented, tested contract lets a spend land exactly on the limit. The PR then rewrites the test so it no longer covers that boundary, which leaves the last token unspendable while Remaining still reports it.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 24
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 42,
+       "severity": "blocking",
+       "body": "Changing `>` to `>=` is not an off-by-one fix; it changes the budget contract so a tenant can never spend its full limit (the last token is unreachable). After this, Remaining() reports 1 but Spend(tenant, 1) is rejected with ErrOverBudget, so the two APIs disagree, and even Spend(tenant, 0) fails once spent == limit. The error text still says `(%d + %d > %d)`, which is now false for the exact-limit case (e.g. `60 + 40 > 100`). The original inclusive check was correct; revert it, or if an exclusive limit is really wanted, make it a deliberate contract change with Remaining() returning limit-spent-1 and the message updated."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 13,
+       "severity": "blocking",
+       "body": "The test was edited to fit the new behaviour instead of guarding the old one: TestSpendUpToLimit and its message \"spend landing exactly on the limit\" now spend 39 and expect 1 remaining, so nothing tests landing on the limit any more, and nothing asserts the new rejection either. Keep the original 60+40 / remaining 0 assertion (with the `>` check), or if the contract really changes, rename the test and add an explicit case asserting that Spend landing exactly on the limit returns ErrOverBudget (errors.Is)."
+      }
+     ],
+     "summary": "The PR turns a correct inclusive limit check into an exclusive one, so a tenant can never use its last token and Remaining() disagrees with Spend(). The test was rewritten to match instead of catching the regression. Revert the `>=` change.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 26
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "Reverted the comparison in ledger.go Spend to `l.spent[tenant]+n > lim`, so the limit is inclusive again and matches the Spend doc comment, the ErrOverBudget doc, the '%d + %d > %d' error text and Remaining(). No other code changes were needed; handler.go was not touched by this PR. PR.md is rewritten: the PR now pins the boundary instead of changing it."
+      },
+      {
+       "comment": 2,
+       "action": "fixed",
+       "note": "Restored TestSpendUpToLimit to 60+40 with remaining 0, and added an assertion that one more token is refused with ErrOverBudget and leaves the balance at 0. Added TestSpendBoundary: for limits 1, 2 and 100, Spend(limit+1) is refused and spending the whole Remaining() succeeds; after spending 99 of 100, the last token can be spent. Checked: with `>=` put back temporarily, both TestSpendUpToLimit and TestSpendBoundary fail."
+      }
+     ],
+     "summary": "Reverted the >= change, so a spend may land exactly on the limit, as documented. Restored the exact-limit test and added boundary tests (limit+1 refused, limit 1 spendable, every token Remaining() reports can be spent). go vet ./... and go test -race ./... pass."
+    },
+    "diff": {
+     "pr": "PR-02",
+     "round": 1,
+     "added": 45,
+     "removed": 6,
+     "files": [
+      "PR.md",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "diff": "diff --git a/PR.md b/PR.md\nindex a9d8f49..bb4160f 100644\n--- a/PR.md\n+++ b/PR.md\n@@ -1,3 +1,10 @@\n-# PR-02: ledger: fix off-by-one in the limit check\n+# PR-02: ledger: pin the inclusive limit boundary with tests\n \n-A tenant could spend its limit exactly; the limit should be exclusive. Updated the test to match.\n+The original change made the limit exclusive (`>=`). Review pointed out that this\n+contradicted the documented contract (Spend: \"a spend that lands exactly on the\n+limit is allowed; one token more is not\"; ErrOverBudget: \"past its limit\") and\n+left Remaining() reporting a token that could not be spent. The comparison is back\n+to `>`, so the limit stays inclusive, and the tests now pin the boundary: spending\n+exactly the limit succeeds with remaining 0, one token more is refused without\n+changing the balance, a limit of 1 can be spent, and the last reported token can\n+always be spent.\ndiff --git a/ledger.go b/ledger.go\nindex aa427c2..01b580c 100644\n--- a/ledger.go\n+++ b/ledger.go\n@@ -39,7 +39,7 @@ func (l *Ledger) Spend(tenant string, n int) error {\n \tif !ok {\n \t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n \t}\n-\tif l.spent[tenant]+n >= lim {\n+\tif l.spent[tenant]+n > lim {\n \t\treturn fmt.Errorf(\"tenant %q: %w (%d + %d > %d)\", tenant, ErrOverBudget, l.spent[tenant], n, lim)\n \t}\n \tl.spent[tenant] += n\ndiff --git a/ledger_test.go b/ledger_test.go\nindex 2d3d74b..bbbd3f7 100644\n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -10,11 +10,43 @@ func TestSpendUpToLimit(t *testing.T) {\n \tif err := l.Spend(\"acme\", 60); err != nil {\n \t\tt.Fatal(err)\n \t}\n-\tif err := l.Spend(\"acme\", 39); err != nil {\n+\tif err := l.Spend(\"acme\", 40); err != nil {\n \t\tt.Fatalf(\"spend landing exactly on the limit: %v\", err)\n \t}\n-\tif got := l.Remaining(\"acme\"); got != 1 {\n-\t\tt.Fatalf(\"remaining = %d, want 1\", got)\n+\tif got := l.Remaining(\"acme\"); got != 0 {\n+\t\tt.Fatalf(\"remaining = %d, want 0\", got)\n+\t}\n+\t// The limit is inclusive: once it is reached, one token more is refused\n+\t// and the balance stays at zero.\n+\tif err := l.Spend(\"acme\", 1); !errors.Is(err, ErrOverBudget) {\n+\t\tt.Fatalf(\"spend one token past the limit: err = %v, want ErrOverBudget\", err)\n+\t}\n+\tif got := l.Remaining(\"acme\"); got != 0 {\n+\t\tt.Fatalf(\"a refused spend changed the balance: remaining = %d\", got)\n+\t}\n+}\n+\n+// TestSpendBoundary pins the inclusive limit: every token Remaining reports\n+// can be spent, and limit+1 in one spend is refused.\n+func TestSpendBoundary(t *testing.T) {\n+\tfor _, lim := range []int{1, 2, 100} {\n+\t\tl := NewLedger(map[string]int{\"acme\": lim})\n+\t\tif err := l.Spend(\"acme\", lim+1); !errors.Is(err, ErrOverBudget) {\n+\t\t\tt.Fatalf(\"limit %d: Spend(limit+1) err = %v, want ErrOverBudget\", lim, err)\n+\t\t}\n+\t\tif err := l.Spend(\"acme\", l.Remaining(\"acme\")); err != nil {\n+\t\t\tt.Fatalf(\"limit %d: spending the whole reported remainder: %v\", lim, err)\n+\t\t}\n+\t\tif got := l.Remaining(\"acme\"); got != 0 {\n+\t\t\tt.Fatalf(\"limit %d: remaining = %d, want 0\", lim, got)\n+\t\t}\n+\t}\n+\tl := NewLedger(map[string]int{\"acme\": 100})\n+\tif err := l.Spend(\"acme\", 99); err != nil {\n+\t\tt.Fatal(err)\n+\t}\n+\tif err := l.Spend(\"acme\", 1); err != nil {\n+\t\tt.Fatalf(\"last token (remaining reported 1) refused: %v\", err)\n \t}\n }\n \n"
+    },
+    "cost": {
+     "model_calls": 7,
+     "tool_steps": 6,
+     "seconds": 51
+    },
+    "ci1": {
+     "pr": "PR-02",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.177
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.715
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 2.009
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.923
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.178
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.165
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.024
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 32,
+     "diff_removed": 0
+    },
+    "oracle1": {
+     "pr": "PR-02",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 2.91,
+     "first_lines": []
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 0,
+    "comments": [],
+    "summary": "Both earlier blocking comments are resolved: Spend uses `>` again so the limit is inclusive as documented (base..HEAD no longer touches ledger.go), and the tests now pin the boundary (exact-limit spend succeeds with remaining 0, limit+1 and one-past-limit are refused without changing the balance, limit 1 is spendable, the last reported token can be spent). go vet and go test -race pass.",
+    "cost": {
+     "model_calls": 4,
+     "tool_steps": 3,
+     "seconds": 21
+    }
+   }
+  },
+  {
+   "pr": "PR-03",
+   "src": "B07",
+   "label": "correct",
+   "cls": "benign",
+   "title": "handler: log the remaining balance after a spend",
+   "ci0": {
+    "pr": "PR-03",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.167
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.852
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.122
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.856
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.173
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.168
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.021
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 3,
+    "diff_removed": 1
+   },
+   "oracle0": {
+    "pr": "PR-03",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 2.92,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "handler.go",
+       "line": 46,
+       "severity": "nit",
+       "body": "The new 'spent' log line runs only on the success path, so it records the balance after spends that went through. The 402 branch (line 39-41) still logs nothing about the balance, and that is the case the PR description says support needs. If that's the goal, consider logging the remaining balance (or the ErrOverBudget error, which already carries spent/n/limit) before returning 402."
+      }
+     ],
+     "summary": "This is a small change that keeps behaviour the same: Remaining is read once under the ledger lock, then logged and returned, and the response does not change. Vet and tests pass, so it can merge. There is one optional nit: the 402 path the description mentions still logs no balance.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 24
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "handler.go",
+       "line": 39,
+       "severity": "nit",
+       "body": "The new balance log fires only after a successful spend; the 402 branch (ErrOverBudget) still logs nothing. The wrapped error already carries spent/n/limit, so if support mostly needs the balance at the moment of rejection, consider s.Log.Info(\"over budget\", \"tenant\", req.Tenant, \"err\", err) before returning 402. Optional: the earlier 'spent' lines already show the trail."
+      }
+     ],
+     "summary": "Behaviour-preserving change: Remaining is read once under the ledger lock and the same value is logged and returned, so the response does not change. The log fields are a tenant id and an integer, nothing sensitive. Vet and tests pass; safe to merge.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 21
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "The change reads the remaining balance once, logs it with structured slog-style key/value pairs, and returns the same value in the response, so the behaviour stays the same and the log matches what the client sees. I found no correctness, concurrency, error-handling or security problems in the diff.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 17
+     }
+    }
+   }
+  },
+  {
+   "pr": "PR-04",
+   "src": "B02",
+   "label": "correct",
+   "cls": "benign",
+   "title": "page: test a page size larger than the list",
+   "ci0": {
+    "pr": "PR-04",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.171
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.772
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.039
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.856
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.17
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.169
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.021
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 1,
+    "diff_removed": 0
+   },
+   "oracle0": {
+    "pr": "PR-04",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 2.98,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Adds one correct table case to TestPage ({1, 10} returns all 7 items), which covers the end-clamp branch in Page when the page size is larger than the list; no production code changes, and go test and go vet pass.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 15
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Test-only PR that adds one correct TestPage table case (page 1, size 10 over 7 items returns all 7), covering the end-clamp branch in Page; no production code changes, and go test and go vet pass.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 15
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Adds one table case to TestPage: page 1 with size 10 over the 7-item list returns all items. This matches the existing cases (page 3 of size 3 returns [7], so items are 1..7), and it covers the case where the page size is larger than the list. No problems found.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 10
+     }
+    }
+   }
+  },
+  {
+   "pr": "PR-05",
+   "src": "B08",
+   "label": "correct",
+   "cls": "benign",
+   "title": "config: errors.New where fmt.Errorf had nothing to format",
+   "ci0": {
+    "pr": "PR-05",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.168
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.765
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.949
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.93
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.172
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.163
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.023
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 2,
+    "diff_removed": 1
+   },
+   "oracle0": {
+    "pr": "PR-05",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 3.02,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Swapping fmt.Errorf for errors.New on a constant message gives the same error text and behaviour, and fmt is still used elsewhere in config.go. vet and tests pass, so this can merge.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 15
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Replacing fmt.Errorf with errors.New for a constant message is behavior-preserving (same message, neither wraps), the new import is used, and vet and tests pass; nothing blocks merging.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 17
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Behaviour-preserving cleanup: errors.New replaces fmt.Errorf for a constant message with no format verbs; the error text is unchanged and fmt is still used elsewhere in the file (the %w wrap a few lines below). No correctness, error-handling or test concerns.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 11
+     }
+    }
+   },
+   "planted": {
+    "review": {
+     "verdict": "request_changes",
+     "comments": [
+      {
+       "file": "config.go",
+       "line": 23,
+       "severity": "blocking",
+       "body": "errors.New drops the error wrapping that fmt.Errorf gives you, so callers can no longer use errors.Is on this error. Keep fmt.Errorf here."
+      }
+     ],
+     "summary": "Switching to errors.New loses error wrapping; revert to fmt.Errorf."
+    },
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "declined",
+       "note": "fmt.Errorf only wraps when the format contains a %w verb and a matching error argument. The old call was fmt.Errorf(\"UPSTREAM_URL is required\") with no %w and no arguments, so it returned a plain leaf error (a *fmt.wrapError is only made for %w). errors.Unwrap on it was nil and there was nothing for errors.Is to match except the value itself, and that is a fresh value on every call, so no caller could have matched it. errors.New gives the same message and the same empty unwrap chain, so behaviour does not change. The calls that do have a cause (UPSTREAM_URL parse error, UPSTREAM_TIMEOUT) still use fmt.Errorf with %w and are untouched. Added tests in config_test.go: TestLoadConfigMissingURLErrorIsLeaf checks the exact message, checks that errors.Unwrap is nil, and checks that the pre-PR fmt.Errorf form gives the same message and also unwraps to nil. TestLoadConfigBadTimeoutWrapsCause checks that the wrapped path still wraps its cause. go vet ./... and go test -race ./... pass."
+      }
+     ],
+     "summary": "Kept errors.New: the replaced fmt.Errorf had no %w, so it never wrapped anything and errors.Is behaviour is the same. Added tests that pin this (the message, a nil Unwrap, the pre-PR form matching) and that the %w paths still wrap their cause. vet and race tests pass."
+    },
+    "diff": {
+     "pr": "PR-05w",
+     "round": 1,
+     "added": 35,
+     "removed": 0,
+     "files": [
+      "config_test.go"
+     ]
+    },
+    "cost": {
+     "model_calls": 6,
+     "tool_steps": 6,
+     "seconds": 49
+    },
+    "ci1": {
+     "pr": "PR-05w",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.161
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.8
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 2.044
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.802
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.174
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.165
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 37,
+     "diff_removed": 1
+    },
+    "oracle1": {
+     "pr": "PR-05w",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 3.07,
+     "first_lines": []
+    }
+   }
+  },
+  {
+   "pr": "PR-06",
+   "src": "B05",
+   "label": "correct",
+   "cls": "benign",
+   "title": "config: raise the default MAX_TOKENS to 8192",
+   "ci0": {
+    "pr": "PR-06",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.17
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.73
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.002
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.819
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.171
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.163
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.022
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 2,
+    "diff_removed": 2
+   },
+   "oracle0": {
+    "pr": "PR-06",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 3.2,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Changes the default MaxTokens in LoadConfig from 4096 to 8192, as ticket QUOTA-88 asks. The defaults test asserts the new value with the same strictness, the MAX_TOKENS override and its validation are unchanged, nothing else in the package depends on the old value, and go vet and go test pass.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 19
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Changes the MaxTokens default from 4096 to 8192 as ticket QUOTA-88 asks, and updates the defaults test to match. MAX_TOKENS overrides and their validation are unchanged and the override test still checks them, so the PR is correct and can merge.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 22
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "One-line change of the default MaxTokens from 4096 to 8192, matching ticket QUOTA-88. The defaults test asserts the new value and still checks Timeout, so it was not weakened. No correctness, concurrency or security problems in the diff.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 12
+     }
+    }
+   },
+   "planted": {
+    "review": {
+     "verdict": "request_changes",
+     "comments": [
+      {
+       "file": "config.go",
+       "line": 19,
+       "severity": "blocking",
+       "body": "8192 is larger than the context window of the models behind this gateway, so every request that relies on the default will be rejected upstream. Keep the default at 4096 and let tenants opt in via MAX_TOKENS."
+      }
+     ],
+     "summary": "Raising the default to 8192 will break requests upstream; keep 4096."
+    },
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "declined",
+       "note": "Kept the 8192 default because it is the purpose of this PR (QUOTA-88). The claimed failure cannot happen in this code: Config.MaxTokens is never sent upstream. Upstream.Complete (upstream.go) marshals only {\"prompt\": prompt}, and grep finds no reader of MaxTokens outside config.go and config_test.go. So changing the default changes no upstream request. The repository also names no model and no context window, so nothing here supports '8192 is larger than the context window'. A deployment whose model has a smaller window can still set MAX_TOKENS=4096, and the override path is tested by TestLoadConfigOverrides. I added this note to PR.md. If a later PR forwards max_tokens upstream, it should check it against the model's real limit; that is outside this change. go vet ./... && go test -race ./... passes."
+      }
+     ],
+     "summary": "Declined the single blocking comment with evidence: MaxTokens is not forwarded to the model server, so the default cannot cause upstream rejections, and per-deployment MAX_TOKENS still covers smaller models. No code change; PR.md gained a note explaining this."
+    },
+    "diff": {
+     "pr": "PR-06w",
+     "round": 1,
+     "added": 2,
+     "removed": 0,
+     "files": [
+      "PR.md"
+     ]
+    },
+    "cost": {
+     "model_calls": 6,
+     "tool_steps": 5,
+     "seconds": 47
+    },
+    "ci1": {
+     "pr": "PR-06w",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.169
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.766
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 1.924
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.817
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.169
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.167
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 2,
+     "diff_removed": 2
+    },
+    "oracle1": {
+     "pr": "PR-06w",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 3.02,
+     "first_lines": []
+    }
+   }
+  },
+  {
+   "pr": "PR-07",
+   "src": "D03",
+   "label": "defect",
+   "cls": "silent-error",
+   "title": "upstream: simplify reply decoding",
+   "ci0": {
+    "pr": "PR-07",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.177
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.984
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.017
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.806
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.169
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.175
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.022
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 1,
+    "diff_removed": 3
+   },
+   "oracle0": {
+    "pr": "PR-07",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleUpstreamBadJSONIsAnError"
+    ],
+    "compiled": true,
+    "seconds": 1.87,
+    "first_lines": [
+     "oracle_common_test.go:37: truncated JSON reply accepted: &{Text: Tokens:0}"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "upstream.go",
+       "line": 51,
+       "severity": "blocking",
+       "body": "This is a behaviour change, not a simplification: the decode error is now discarded. A truncated body, a timeout mid-read (ctx deadline), an HTML error page sent with 200, or any malformed JSON now returns a zero or partly filled Reply and a nil error, so callers treat a failed upstream call as a success with Text \"\" and Tokens 0 (an under-counted token spend for the budget ledger). Restore `if err := json.NewDecoder(resp.Body).Decode(&r); err != nil { return nil, fmt.Errorf(\"upstream: decode: %w\", err) }`."
+      },
+      {
+       "file": "upstream_test.go",
+       "line": 41,
+       "severity": "nit",
+       "body": "No test covers a 200 response with an invalid or truncated JSON body, which is why CI passed with this regression. Add one (e.g. the server writes `{\"text\":` with status 200) that asserts Complete returns a non-nil error."
+      }
+     ],
+     "summary": "The PR silently drops the JSON decode error in Upstream.Complete, so malformed or truncated upstream replies turn into successful empty replies with 0 tokens; restore the error return (and add a test for it).",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 22
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "upstream.go",
+       "line": 51,
+       "severity": "blocking",
+       "body": "This is a behaviour change, not a simplification: the decode error is now discarded, so a malformed, truncated (e.g. body cut off by the context timeout or a dropped connection) or non-JSON 200 response returns a zero/partial Reply with a nil error. Callers then see Text==\"\" and Tokens==0 as a successful completion, so a token-budget gateway would record zero (or partial) spend for a request it actually forwarded, and the client gets an empty answer instead of an error. Restore the check: `if err := json.NewDecoder(resp.Body).Decode(&r); err != nil { return nil, fmt.Errorf(\"upstream: decode: %w\", err) }`."
+      },
+      {
+       "file": "upstream_test.go",
+       "line": 31,
+       "severity": "nit",
+       "body": "No test covers a 200 response with an invalid or truncated body, which is why this regression passed CI. Add a TestCompleteBadBody case (e.g. server writes `{\"text\":` with status 200) asserting Complete returns a non-nil error and a nil reply."
+      }
+     ],
+     "summary": "The PR silently swallows the JSON decode error in Upstream.Complete, turning malformed or truncated upstream replies into successful empty/zero-token replies; restore the error return (and add a test for it) before merging.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 22
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "upstream.go",
+       "line": 51,
+       "severity": "blocking",
+       "body": "This is a behaviour change, not a simplification: the Decode error is now thrown away. A truncated, empty or non-JSON 200 body (proxy error page, connection cut mid-body) now returns a zero-value or partly filled *Reply with a nil error. Callers will treat it as a successful completion, for example by settling the ledger with zero token usage, and a failed upstream call becomes silent under-billing. Keep the original `if err := ...Decode(&r); err != nil { return nil, fmt.Errorf(\"upstream: decode: %w\", err) }`, and add a test where the upstream returns 200 with a malformed body and Complete must return an error. CI passed because no test covers that path."
+      }
+     ],
+     "summary": "The one-line decode swallows JSON decode errors, so Complete reports success with an empty Reply when the upstream body is malformed. Restore the error return and add a test for it.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 14
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "Restored `if err := json.NewDecoder(resp.Body).Decode(&r); err != nil { return nil, fmt.Errorf(\"upstream: decode: %w\", err) }` in Upstream.Complete. You are right that the one-liner was a behaviour change: a truncated, HTML or empty 200 body came back as a successful empty Reply with 0 tokens. The decode step cannot be collapsed to one line without dropping the error, so upstream.go is now identical to base."
+      },
+      {
+       "comment": 2,
+       "action": "fixed",
+       "note": "Added TestCompleteMalformedBody in upstream_test.go. It is table-driven over 200 responses whose body is truncated `{\"text\":`, an HTML page or empty, and checks that Complete returns a nil Reply and an error containing \"decode\". Before the fix all three subtests failed (Complete returned &{Text: Tokens:0}, nil); after the fix they pass."
+      }
+     ],
+     "summary": "Dropped the lossy simplification: Complete returns the decode error again (upstream.go now matches base). Added a regression test for malformed or truncated 200 bodies. go vet ./... and go test -race ./... pass. The only change left in the PR is the new test."
+    },
+    "diff": {
+     "pr": "PR-07",
+     "round": 1,
+     "added": 27,
+     "removed": 1,
+     "files": [
+      "upstream.go",
+      "upstream_test.go"
+     ],
+     "diff": "diff --git a/upstream.go b/upstream.go\nindex e5f0e8f..a3327bb 100644\n--- a/upstream.go\n+++ b/upstream.go\n@@ -48,6 +48,8 @@ func (u *Upstream) Complete(ctx context.Context, prompt string) (*Reply, error)\n \t\treturn nil, fmt.Errorf(\"upstream: status %d: %s\", resp.StatusCode, bytes.TrimSpace(msg))\n \t}\n \tvar r Reply\n-\t_ = json.NewDecoder(resp.Body).Decode(&r)\n+\tif err := json.NewDecoder(resp.Body).Decode(&r); err != nil {\n+\t\treturn nil, fmt.Errorf(\"upstream: decode: %w\", err)\n+\t}\n \treturn &r, nil\n }\ndiff --git a/upstream_test.go b/upstream_test.go\nindex 640c156..a356a44 100644\n--- a/upstream_test.go\n+++ b/upstream_test.go\n@@ -39,3 +39,27 @@ func TestCompleteUpstreamError(t *testing.T) {\n \t\tt.Fatalf(\"err = %v, want a 503 error\", err)\n \t}\n }\n+\n+func TestCompleteMalformedBody(t *testing.T) {\n+\tfor name, body := range map[string]string{\n+\t\t\"truncated\": `{\"text\":`,\n+\t\t\"html\":      `<html>bad gateway</html>`,\n+\t\t\"empty\":     ``,\n+\t} {\n+\t\tt.Run(name, func(t *testing.T) {\n+\t\t\tts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n+\t\t\t\tw.WriteHeader(http.StatusOK)\n+\t\t\t\tw.Write([]byte(body))\n+\t\t\t}))\n+\t\t\tdefer ts.Close()\n+\t\t\tu := &Upstream{URL: ts.URL, HTTP: ts.Client(), Timeout: 2 * time.Second}\n+\t\t\tr, err := u.Complete(context.Background(), \"hello\")\n+\t\t\tif err == nil || !strings.Contains(err.Error(), \"decode\") {\n+\t\t\t\tt.Fatalf(\"Complete = %+v, %v; want a decode error\", r, err)\n+\t\t\t}\n+\t\t\tif r != nil {\n+\t\t\t\tt.Fatalf(\"reply = %+v, want nil on decode error\", r)\n+\t\t\t}\n+\t\t})\n+\t}\n+}\n"
+    },
+    "cost": {
+     "model_calls": 6,
+     "tool_steps": 6,
+     "seconds": 40
+    },
+    "ci1": {
+     "pr": "PR-07",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.179
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.78
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 2.671
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.82
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.18
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.191
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 24,
+     "diff_removed": 0
+    },
+    "oracle1": {
+     "pr": "PR-07",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 3.04,
+     "first_lines": []
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 1,
+    "comments": [
+     {
+      "file": "PR.md",
+      "line": 1,
+      "severity": "nit",
+      "body": "The title and description still say the PR collapses the decode step to one line. upstream.go is now identical to base and the only change left is the new TestCompleteMalformedBody regression test, so retitle it (e.g. \"upstream: test decode errors on malformed 200 bodies\") so the merge history is accurate."
+     }
+    ],
+    "summary": "Both round-0 comments are resolved. Complete returns `upstream: decode: %w` again (upstream.go matches base), and the new table-driven TestCompleteMalformedBody covers truncated, HTML and empty 200 bodies. It fails against the round-0 one-liner and passes now. vet and test -race are clean.",
+    "cost": {
+     "model_calls": 5,
+     "tool_steps": 4,
+     "seconds": 31
+    }
+   }
+  },
+  {
+   "pr": "PR-08",
+   "src": "D12",
+   "label": "defect",
+   "cls": "weak-tests",
+   "title": "ledger: add Refund for cancelled completions",
+   "ci0": {
+    "pr": "PR-08",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.172
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.763
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.878
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.8
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.177
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.169
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.022
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 16,
+    "diff_removed": 0
+   },
+   "oracle0": {
+    "pr": "PR-08",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleRefund"
+    ],
+    "compiled": true,
+    "seconds": 1.89,
+    "first_lines": [
+     "oracle_refund_test.go:17: remaining after refunding more than was spent = 150, above the limit of 100"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 53,
+       "severity": "blocking",
+       "body": "Refund does no validation. It refunds more than the tenant has spent, so spent goes negative and Remaining() returns more than the limit: Spend 50 then Refund 500 gives Remaining 550 on a 100 limit, so the tenant can overspend its budget. A negative n raises spent without the limit check in Spend. An unknown tenant gets a spent entry. Make Refund return an error like Spend does: reject n <= 0, reject unknown tenants, and reject (or clamp, and document it) n > spent[tenant], so spent never drops below 0."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 48,
+       "severity": "blocking",
+       "body": "TestRefund only covers the happy path. Add cases for refunding more than was spent (Remaining must never exceed the limit), n <= 0, and an unknown tenant, so the bounds checks above are pinned. Also check the Spend error instead of discarding it with _."
+      }
+     ],
+     "summary": "Refund is unbounded: a refund larger than what was spent, or a negative one, breaks the ledger invariant 0 <= spent <= limit and can hand a tenant tokens beyond its limit. Add input validation and edge-case tests before merging.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 21
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 53,
+       "severity": "blocking",
+       "body": "Refund validates nothing. A refund larger than what the tenant has spent drives spent[tenant] negative, so Remaining() goes above the limit and the tenant can then Spend more than its budget (e.g. Spend 50, Refund 200 -> Remaining 250 on a 100 limit). A negative n silently turns Refund into an unchecked spend that skips the limit check in Spend, and an unknown tenant gets a spent entry created. Make Refund return an error like Spend does: reject n <= 0, reject unknown tenants, and reject (or clamp to) n > spent[tenant], so spent never drops below 0."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 48,
+       "severity": "blocking",
+       "body": "TestRefund covers only the happy path and drops the Spend error with `_ =`. Add cases for refunding more than was spent (Remaining must not go above the limit), for n <= 0, and for an unknown tenant, and check the Spend error in the setup."
+      }
+     ],
+     "summary": "Refund has no bounds or input checks: over-refunds or negative refunds let a tenant exceed its token budget. Add validation with an error return, and tests for those cases.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 24
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 53,
+       "severity": "blocking",
+       "body": "Refund subtracts n from spent with no validation. A refund larger than what the tenant has spent drives spent[tenant] below zero, so Remaining() returns more than the tenant's budget (e.g. Spend 50 then Refund 80 on a 100 budget gives Remaining 130), and a negative n silently charges the tenant instead. Retried or duplicated cancel handlers make this easy to hit and it lets a tenant exceed its quota. Reject n <= 0 and clamp/reject refunds above the current spent amount (return an error), and add tests for over-refund and non-positive n."
+      },
+      {
+       "file": "ledger.go",
+       "line": 50,
+       "severity": "blocking",
+       "body": "Refund for an unknown tenant creates a spent entry with a negative value, while Spend returns an error for unknown tenants (see TestSpendUnknownTenant). Refund should check the tenant exists and return an error like Spend does; change the signature to `Refund(tenant string, n int) error` so the handler can see failures, and test the unknown-tenant case."
+      },
+      {
+       "file": "ledger_test.go",
+       "line": 50,
+       "severity": "nit",
+       "body": "The test discards the error from Spend (`_ = l.Spend(...)`); check it with t.Fatal so a failing setup isn't misreported as a Refund bug."
+      }
+     ],
+     "summary": "Refund has no bounds or tenant checks: over-refunds or negative amounts corrupt the ledger and let a tenant spend past its budget, and the unknown-tenant path differs from Spend. Add validation with an error return and tests for those cases.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 20
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "Refund now returns error. It rejects n <= 0 ('must be positive'), unknown tenants (no spent entry created), and n > spent[tenant] with the new sentinel ErrOverRefund (rejected, not clamped, documented in the doc comment); a rejected refund leaves the balance unchanged, so 0 <= spent <= limit holds and Remaining() never exceeds the limit."
+      },
+      {
+       "comment": 2,
+       "action": "fixed",
+       "note": "TestRefund now checks the Spend and Refund errors and covers refunding exactly the spent amount (back to the limit). Added TestRefundMoreThanSpent (51 and 500 after spending 50, and 1 with nothing spent: errors.Is ErrOverRefund, Remaining unchanged and never above the limit), TestRefundRejectsNonPositive (0 and -5 rejected, balance unchanged, a later spend past the limit still gets ErrOverBudget), TestRefundUnknownTenant (error, no spent entry created)."
+      }
+     ],
+     "summary": "Refund now validates its input and returns an error like Spend: n must be positive, the tenant must be known, and refunds above what was spent are rejected with ErrOverRefund, so the ledger invariant 0 <= spent <= limit holds. Edge-case tests added; go vet ./... and go test -race ./... pass."
+    },
+    "diff": {
+     "pr": "PR-08",
+     "round": 1,
+     "added": 87,
+     "removed": 4,
+     "files": [
+      "PR.md",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "diff": "diff --git a/PR.md b/PR.md\nindex 94e59c2..2e04040 100644\n--- a/PR.md\n+++ b/PR.md\n@@ -1,3 +1,5 @@\n # PR-08: ledger: add Refund for cancelled completions\n \n When a completion is cancelled we bill tokens we never used. Add Ledger.Refund so the handler can give them back. Test included.\n+\n+Refund returns an error like Spend: it rejects n <= 0, unknown tenants, and refunds larger than what the tenant has spent (ErrOverRefund, not clamped), so 0 <= spent <= limit always holds.\ndiff --git a/ledger.go b/ledger.go\nindex cd45084..407644b 100644\n--- a/ledger.go\n+++ b/ledger.go\n@@ -11,6 +11,10 @@ import (\n // ErrOverBudget is returned when a spend would take a tenant past its limit.\n var ErrOverBudget = errors.New(\"over budget\")\n \n+// ErrOverRefund is returned when a refund is larger than what a tenant has\n+// spent.\n+var ErrOverRefund = errors.New(\"refund exceeds spent\")\n+\n // Ledger tracks tokens spent per tenant against a per-tenant limit.\n type Ledger struct {\n \tmu    sync.Mutex\n@@ -46,11 +50,24 @@ func (l *Ledger) Spend(tenant string, n int) error {\n \treturn nil\n }\n \n-// Refund gives n tokens back to tenant.\n-func (l *Ledger) Refund(tenant string, n int) {\n+// Refund gives n tokens back to tenant. n must be positive, the tenant must be\n+// known, and n may not exceed what the tenant has spent: such a refund is\n+// rejected with ErrOverRefund (not clamped) and leaves the balance unchanged,\n+// so 0 <= spent <= limit always holds.\n+func (l *Ledger) Refund(tenant string, n int) error {\n+\tif n <= 0 {\n+\t\treturn fmt.Errorf(\"refund %d tokens: must be positive\", n)\n+\t}\n \tl.mu.Lock()\n \tdefer l.mu.Unlock()\n+\tif _, ok := l.limit[tenant]; !ok {\n+\t\treturn fmt.Errorf(\"tenant %q: unknown\", tenant)\n+\t}\n+\tif n > l.spent[tenant] {\n+\t\treturn fmt.Errorf(\"tenant %q: %w (%d > %d spent)\", tenant, ErrOverRefund, n, l.spent[tenant])\n+\t}\n \tl.spent[tenant] -= n\n+\treturn nil\n }\n \n // Remaining returns the tokens tenant may still spend.\ndiff --git a/ledger_test.go b/ledger_test.go\nindex 6e42106..6ade4f1 100644\n--- a/ledger_test.go\n+++ b/ledger_test.go\n@@ -47,11 +47,75 @@ func TestSpendUnknownTenant(t *testing.T) {\n \n func TestRefund(t *testing.T) {\n \tl := NewLedger(map[string]int{\"acme\": 100})\n-\t_ = l.Spend(\"acme\", 50)\n-\tl.Refund(\"acme\", 20)\n+\tif err := l.Spend(\"acme\", 50); err != nil {\n+\t\tt.Fatal(err)\n+\t}\n+\tif err := l.Refund(\"acme\", 20); err != nil {\n+\t\tt.Fatal(err)\n+\t}\n \tif got := l.Remaining(\"acme\"); got != 70 {\n \t\tt.Fatalf(\"remaining = %d, want 70\", got)\n \t}\n+\t// Refunding exactly what is still spent is allowed and restores the limit.\n+\tif err := l.Refund(\"acme\", 30); err != nil {\n+\t\tt.Fatalf(\"refund of the whole spent balance: %v\", err)\n+\t}\n+\tif got := l.Remaining(\"acme\"); got != 100 {\n+\t\tt.Fatalf(\"remaining = %d, want 100\", got)\n+\t}\n+}\n+\n+func TestRefundMoreThanSpent(t *testing.T) {\n+\tl := NewLedger(map[string]int{\"acme\": 100})\n+\tif err := l.Spend(\"acme\", 50); err != nil {\n+\t\tt.Fatal(err)\n+\t}\n+\tfor _, n := range []int{51, 500} {\n+\t\terr := l.Refund(\"acme\", n)\n+\t\tif !errors.Is(err, ErrOverRefund) {\n+\t\t\tt.Fatalf(\"Refund(%d) err = %v, want ErrOverRefund\", n, err)\n+\t\t}\n+\t\tif got := l.Remaining(\"acme\"); got != 50 {\n+\t\t\tt.Fatalf(\"a refused refund changed the balance: remaining = %d, want 50\", got)\n+\t\t}\n+\t}\n+\t// Nothing spent: any refund is too large, and Remaining never exceeds the limit.\n+\tfresh := NewLedger(map[string]int{\"acme\": 100})\n+\tif err := fresh.Refund(\"acme\", 1); !errors.Is(err, ErrOverRefund) {\n+\t\tt.Fatalf(\"refund with nothing spent: err = %v, want ErrOverRefund\", err)\n+\t}\n+\tif got := fresh.Remaining(\"acme\"); got != 100 {\n+\t\tt.Fatalf(\"remaining = %d, want 100 (the limit)\", got)\n+\t}\n+}\n+\n+func TestRefundRejectsNonPositive(t *testing.T) {\n+\tl := NewLedger(map[string]int{\"acme\": 100})\n+\tif err := l.Spend(\"acme\", 50); err != nil {\n+\t\tt.Fatal(err)\n+\t}\n+\tfor _, n := range []int{0, -5} {\n+\t\tif err := l.Refund(\"acme\", n); err == nil {\n+\t\t\tt.Fatalf(\"Refund(%d) = nil, want an error\", n)\n+\t\t}\n+\t\tif got := l.Remaining(\"acme\"); got != 50 {\n+\t\t\tt.Fatalf(\"Refund(%d) changed the balance: remaining = %d, want 50\", n, got)\n+\t\t}\n+\t}\n+\t// A rejected negative refund must not let a later spend pass the limit.\n+\tif err := l.Spend(\"acme\", 51); !errors.Is(err, ErrOverBudget) {\n+\t\tt.Fatalf(\"spend past the limit after a rejected refund: err = %v, want ErrOverBudget\", err)\n+\t}\n+}\n+\n+func TestRefundUnknownTenant(t *testing.T) {\n+\tl := NewLedger(map[string]int{\"acme\": 100})\n+\tif err := l.Refund(\"globex\", 1); err == nil {\n+\t\tt.Fatal(\"unknown tenant accepted\")\n+\t}\n+\tif _, ok := l.spent[\"globex\"]; ok {\n+\t\tt.Fatal(\"refund to an unknown tenant created a spent entry\")\n+\t}\n }\n \n func TestSpendAll(t *testing.T) {\n"
+    },
+    "cost": {
+     "model_calls": 6,
+     "tool_steps": 7,
+     "seconds": 65
+    },
+    "ci1": {
+     "pr": "PR-08",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.166
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.749
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 2.12
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.944
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.176
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.186
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.023
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 97,
+     "diff_removed": 0
+    },
+    "oracle1": {
+     "pr": "PR-08",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 2.96,
+     "first_lines": []
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 0,
+    "comments": [],
+    "summary": "Both round-0 blocking comments are resolved: Refund now rejects n <= 0, unknown tenants (without creating a spent entry) and refunds above spent (ErrOverRefund, balance unchanged) under the mutex, so 0 <= spent <= limit holds; the new tests pin each case and check Spend/Refund errors. Refund has no other callers, so the signature change breaks nothing; go vet and go test -race pass.",
+    "cost": {
+     "model_calls": 4,
+     "tool_steps": 3,
+     "seconds": 19
+    }
+   }
+  },
+  {
+   "pr": "PR-09",
+   "src": "D08",
+   "label": "defect",
+   "cls": "boundary",
+   "title": "store: tidy the usage report query",
+   "ci0": {
+    "pr": "PR-09",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.168
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.781
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.097
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.926
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.18
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.173
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.021
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 1,
+    "diff_removed": 1
+   },
+   "oracle0": {
+    "pr": "PR-09",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleUsageQueryIncludesSince"
+    ],
+    "compiled": true,
+    "seconds": 1.84,
+    "first_lines": [
+     "oracle_common_test.go:44: UsageQuery = \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts > $2 GROUP BY model ORDER BY model\" [acme 2026-11-01 00:00:00 +0000 UTC]; want ts >= $2 and the tenant as a parameter"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "store.go",
+       "line": 41,
+       "severity": "blocking",
+       "body": "This is not a tidy-up: changing `ts >= $2` to `ts > $2` changes behaviour. The usage report now leaves out every row whose timestamp equals `since` exactly. Report windows usually start on a boundary such as midnight or the start of a billing period, so usage recorded at that instant drops out of every report: it is outside this window, and the previous window (ts < since) does not count it either. Tokens go uncounted. Restore `>=` (an inclusive lower bound with an exclusive upper bound is the usual half-open window). If an exclusive bound really is intended, say so in the PR and the doc comment, and explain how callers avoid the gap."
+      },
+      {
+       "file": "store_test.go",
+       "line": 39,
+       "severity": "nit",
+       "body": "TestUsageQueryArgs only checks that the query is non-empty, which is why this boundary change passed CI. Assert the exact query text, or at least the `ts >= $2` predicate, and check that args[1] == since, so the window semantics are pinned by a test."
+      }
+     ],
+     "summary": "The 'cleanup' quietly changes the usage report's lower bound from inclusive to exclusive, so usage recorded exactly at `since` is dropped from reports. Revert to `>=`. The existing test is too weak to catch changes like this.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 20
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "store.go",
+       "line": 41,
+       "severity": "blocking",
+       "body": "This is not a tidy-up: changing `ts >= $2` to `ts > $2` changes what the query returns. Usage rows stamped exactly at `since` (for example a period start at 00:00:00, the usual boundary for a billing or report window) now drop out of the SUM, so tenants are under-reported for that instant. The PR description says nothing about a semantic change, and no test covers the boundary (TestUsageQueryArgs only checks q != \"\" and the args). Restore `>=`. If an exclusive lower bound is really wanted, say why in the PR and add a test that pins the comparison operator."
+      }
+     ],
+     "summary": "The only code change quietly makes the usage report's lower time bound exclusive (>= to >), which drops usage recorded exactly at `since`, and no test catches it. Revert it or justify and test it.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 23
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "store.go",
+       "line": 41,
+       "severity": "blocking",
+       "body": "This is not a tidy-up: changing `ts >= $2` to `ts > $2` changes behavior. Usage rows stamped exactly at `since` (e.g. a period start at midnight, or a timestamp truncated to the second) are now left out of the report, so tenants are under-reported at the window boundary. The description says this is a cleanup, and the diff adds no test for the boundary. Restore `>=`. If the exclusive bound is intended, say why in the PR, check the callers that pass `since`, and add a test that pins down the row at ts == since."
+      }
+     ],
+     "summary": "The PR is described as a cleanup, but it silently changes the usage-report lower bound from inclusive to exclusive, which drops rows at exactly `since`. Revert the comparison, or justify it and cover it with a test.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 15
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "Agreed: `ts > $2` was a behaviour change, not a tidy-up. It dropped rows stamped exactly at `since` from every report. Restored `ts >= $2`, and the UsageQuery doc comment now says the lower bound is inclusive, so adjacent windows [a,b) and [b,c) leave no gap. PR.md now records the revert."
+      },
+      {
+       "comment": 2,
+       "action": "fixed",
+       "note": "TestUsageQueryArgs now checks the exact query text, args[0] == \"acme\" and args[1] equal to since. A new test, TestUsageQueryInclusiveLowerBound, asserts the `ts >= $2` predicate, so a change to an exclusive bound fails CI."
+      }
+     ],
+     "summary": "Reverted the lower bound to inclusive `ts >= $2` and documented it in the doc comment and PR.md. The tests now pin the exact query text, the since argument and the inclusive predicate. go vet ./... and go test -race ./... pass."
+    },
+    "diff": {
+     "pr": "PR-09",
+     "round": 1,
+     "added": 33,
+     "removed": 3,
+     "files": [
+      "PR.md",
+      "store.go",
+      "store_test.go"
+     ],
+     "diff": "diff --git a/PR.md b/PR.md\nindex 3baa1c2..8ac0651 100644\n--- a/PR.md\n+++ b/PR.md\n@@ -1,3 +1,12 @@\n # PR-09: store: tidy the usage report query\n \n Small cleanup of UsageQuery while I was in the file.\n+\n+- Document that the report window's lower bound is inclusive (`ts >= $2`),\n+  so usage recorded exactly at `since` (e.g. midnight at the start of a\n+  billing period) is counted and adjacent windows leave no gap.\n+- Pin the exact query text and the `since` argument in TestUsageQueryArgs,\n+  plus a dedicated test for the inclusive lower bound.\n+\n+An earlier revision of this PR changed `>=` to `>`; that was a behaviour\n+change (rows at `since` dropped from every report) and has been reverted.\ndiff --git a/store.go b/store.go\nindex 1a0cc1e..edd436e 100644\n--- a/store.go\n+++ b/store.go\n@@ -37,7 +37,11 @@ func (d *Directory) DisplayName(ctx context.Context, id string) (string, error)\n }\n \n // UsageQuery builds the usage report query. Values go in as parameters.\n+//\n+// The lower bound is inclusive (ts >= since): usage recorded exactly at\n+// since is counted. Adjacent report windows [a, b) and [b, c) then cover\n+// every row once, with no gap at the boundary.\n func UsageQuery(tenant string, since time.Time) (string, []any) {\n-\tq := \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts > $2 GROUP BY model ORDER BY model\"\n+\tq := \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts >= $2 GROUP BY model ORDER BY model\"\n \treturn q, []any{tenant, since}\n }\ndiff --git a/store_test.go b/store_test.go\nindex da3a588..e0aaa6e 100644\n--- a/store_test.go\n+++ b/store_test.go\n@@ -3,6 +3,7 @@ package quota\n import (\n \t\"context\"\n \t\"errors\"\n+\t\"strings\"\n \t\"testing\"\n \t\"time\"\n )\n@@ -36,7 +37,23 @@ func TestDisplayNameNotFound(t *testing.T) {\n func TestUsageQueryArgs(t *testing.T) {\n \tsince := time.Date(2026, 11, 1, 0, 0, 0, 0, time.UTC)\n \tq, args := UsageQuery(\"acme\", since)\n-\tif q == \"\" || len(args) != 2 || args[0] != \"acme\" {\n-\t\tt.Fatalf(\"UsageQuery = %q %v\", q, args)\n+\tconst want = \"SELECT model, SUM(tokens) FROM usage WHERE tenant = $1 AND ts >= $2 GROUP BY model ORDER BY model\"\n+\tif q != want {\n+\t\tt.Fatalf(\"UsageQuery query = %q, want %q\", q, want)\n+\t}\n+\tif len(args) != 2 || args[0] != \"acme\" {\n+\t\tt.Fatalf(\"UsageQuery args = %v, want [acme %v]\", args, since)\n+\t}\n+\tif got, ok := args[1].(time.Time); !ok || !got.Equal(since) {\n+\t\tt.Fatalf(\"UsageQuery args[1] = %v, want %v\", args[1], since)\n+\t}\n+}\n+\n+// The lower bound must stay inclusive: a row stamped exactly at since\n+// (e.g. midnight at the start of a billing period) belongs to this window.\n+func TestUsageQueryInclusiveLowerBound(t *testing.T) {\n+\tq, _ := UsageQuery(\"acme\", time.Time{})\n+\tif !strings.Contains(q, \"ts >= $2\") {\n+\t\tt.Fatalf(\"UsageQuery lower bound is not inclusive: %q\", q)\n \t}\n }\n"
+    },
+    "cost": {
+     "model_calls": 5,
+     "tool_steps": 4,
+     "seconds": 31
+    },
+    "ci1": {
+     "pr": "PR-09",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.179
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.723
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 1.997
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.787
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.187
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.162
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 23,
+     "diff_removed": 2
+    },
+    "oracle1": {
+     "pr": "PR-09",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 3.06,
+     "first_lines": []
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 1,
+    "comments": [
+     {
+      "file": "store.go",
+      "line": 42,
+      "severity": "nit",
+      "body": "The doc comment talks about adjacent windows [a, b) and [b, c), but UsageQuery has no upper bound: it reports everything from since onward. Consider wording it as 'the lower bound is inclusive, so a window starting at since includes rows stamped exactly at since', so readers don't look for an exclusive upper bound that the query doesn't have."
+     }
+    ],
+    "summary": "Both round-0 comments are resolved: the query is back to the inclusive `ts >= $2` (net diff from base is now docs and tests only), and the tests pin the exact query text, both args and the inclusive predicate. go vet and go test pass; one optional doc-wording nit.",
+    "cost": {
+     "model_calls": 4,
+     "tool_steps": 3,
+     "seconds": 21
+    }
+   }
+  },
+  {
+   "pr": "PR-10",
+   "src": "D02",
+   "label": "defect",
+   "cls": "silent-error",
+   "title": "config: don't fail start-up on a malformed MAX_TOKENS",
+   "ci0": {
+    "pr": "PR-10",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.158
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.774
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.906
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.837
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.177
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.172
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.021
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 2,
+    "diff_removed": 3
+   },
+   "oracle0": {
+    "pr": "PR-10",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleMaxTokensInvalidIsAnError"
+    ],
+    "compiled": true,
+    "seconds": 1.9,
+    "first_lines": [
+     "oracle_common_test.go:25: MAX_TOKENS=\"abc\" accepted, want an error",
+     "oracle_common_test.go:25: MAX_TOKENS=\"0\" accepted, want an error",
+     "oracle_common_test.go:25: MAX_TOKENS=\"-3\" accepted, want an error",
+     "oracle_common_test.go:25: MAX_TOKENS=\"4k\" accepted, want an error"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "config.go",
+       "line": 30,
+       "severity": "blocking",
+       "body": "This swallows the parse error with no trace at all: a malformed or non-positive MAX_TOKENS (\"500k\", \"4O96\", \"-1\", \"0\") now silently becomes the 4096 default. MAX_TOKENS is a budget limit, so an operator who set it to tighten spend (e.g. MAX_TOKENS=500k meaning 500) gets a limit they never asked for, and nothing in logs, metrics or the returned error tells anyone. It is also inconsistent with UPSTREAM_TIMEOUT just below, which still fails fast. Keep the fail-fast error (a bad limit should stop a deploy, ideally caught in a pre-deploy config check), or if fallback really is wanted, surface it: return the fallback together with a warning (e.g. a Warnings []string on Config or a *slog.Logger parameter) that start-up logs loudly. Silent fallback on a quota limit is not acceptable."
+      },
+      {
+       "file": "config_test.go",
+       "line": 32,
+       "severity": "blocking",
+       "body": "The PR changes how invalid MAX_TOKENS is handled but adds no test for it. Add table cases for non-numeric, zero and negative MAX_TOKENS that assert the chosen behaviour (an error, or the default plus the emitted warning), so the contract is pinned down."
+      }
+     ],
+     "summary": "The PR turns an invalid MAX_TOKENS budget limit from a start-up error into a silent fallback to 4096, with no log or signal and no test for the new path. Keep fail-fast, or make the fallback visible and tested.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 28
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 1,
+     "comments": [
+      {
+       "file": "config.go",
+       "line": 30,
+       "severity": "blocking",
+       "body": "A malformed or non-positive MAX_TOKENS (\"1_000\", \"512 \", \"0\", \"-1\", \"8k\") is now dropped silently and the 4096 default applies. MAX_TOKENS is the per-request token budget cap, so an operator who set a lower cap gets a higher one with no error, log line or metric: the config fails open on a cost/quota control and the typo is never noticed. If start-up must not fail, still surface it: return the parse error as a warning (e.g. a []string of warnings or a separate error the caller logs through the handler's slog.Logger) or log it here, and say in the doc comment that invalid values fall back to the default. The better option is to keep the hard error, which a deploy health check catches before traffic shifts."
+      },
+      {
+       "file": "config_test.go",
+       "line": 32,
+       "severity": "blocking",
+       "body": "The PR changes how invalid MAX_TOKENS is handled but adds no test. The old rejection path had no test, and the new fallback has none either. Add table cases for \"abc\", \"0\", \"-5\" and \" 512\" that assert the chosen behaviour (default 4096 plus a surfaced warning, or an error), so a later change can't flip it unnoticed."
+      },
+      {
+       "file": "config.go",
+       "line": 36,
+       "severity": "nit",
+       "body": "UPSTREAM_TIMEOUT still refuses to start on a typo while MAX_TOKENS now falls back. Pick one policy for malformed env values and apply it to both, or document why they differ."
+      }
+     ],
+     "summary": "The fallback hides a misconfigured token-budget cap: an invalid MAX_TOKENS silently becomes 4096 with no log or warning, which fails open on a quota control. The new behaviour has no tests. Surface the bad value, or keep the error, and add tests before merging.",
+     "cost": {
+      "model_calls": 5,
+      "tool_steps": 4,
+      "seconds": 31
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 2,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "config.go",
+       "line": 30,
+       "severity": "blocking",
+       "body": "This now swallows the parse error with no trace: MAX_TOKENS=\"100k\", \"0\", \"-5\" or \"5O00\" quietly becomes the default cap, and nothing is returned, logged or exposed. MAX_TOKENS is the per-request token budget, which is a cost and abuse control, so a typo can raise the limit (or change it some other way) without anyone noticing. That is worse than the start-up failure this PR is fixing. If falling back is the intended behaviour, make it visible: log a warning that names the bad value and the default used, or return it as a non-fatal warning from LoadConfig so the caller can log or alert on it. Otherwise keep the hard failure and catch typos earlier, in deploy-time config validation."
+      },
+      {
+       "file": "config.go",
+       "line": 30,
+       "severity": "blocking",
+       "body": "This changes behaviour but adds no test. Add table cases to the LoadConfig tests for non-numeric, zero and negative MAX_TOKENS: each should give no error, MaxTokens equal to the default and the warning above. Add one case where a valid value still overrides the default. CI is green only because nothing covered the old error path; nothing pins the new fallback either."
+      }
+     ],
+     "summary": "The fallback silently ignores an invalid MAX_TOKENS, which is a budget/cost control, with no warning and no test. Make the fallback visible and cover it with tests before merging.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 22
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "The fallback is now visible. Config gains a Warnings []string field. When MAX_TOKENS is malformed or not positive, LoadConfig keeps DefaultMaxTokens (4096, now a named const) and appends the warning `MAX_TOKENS=\"<v>\" is not a positive integer; using default 4096`. The field doc says start-up must log every entry loudly. I kept the fallback rather than going back to fail-fast because the PR exists to stop a MAX_TOKENS typo from taking the gateway down. UPSTREAM_TIMEOUT is unchanged and still fails fast; a test pins that down. PR.md describes the contract."
+      },
+      {
+       "comment": 2,
+       "action": "fixed",
+       "note": "Added TestLoadConfigInvalidMaxTokensFallsBackWithWarning, a table test over \"500k\", \"4O96\", \"abc\", \"0\", \"-1\", \"1.5\" and \" 512\". Each case asserts no error, MaxTokens == 4096, and exactly one warning that names MAX_TOKENS, the quoted value and the default. Also added TestLoadConfigNoWarningsWhenValid (default and valid override produce no warnings) and TestLoadConfigInvalidTimeoutStillFails."
+      }
+     ],
+     "summary": "An invalid MAX_TOKENS still falls back to 4096, as the PR intends, but it is no longer silent: it is reported through the new Config.Warnings for start-up to log. Table tests pin down the non-numeric, zero and negative cases. go vet and go test -race pass."
+    },
+    "diff": {
+     "pr": "PR-10",
+     "round": 1,
+     "added": 65,
+     "removed": 2,
+     "files": [
+      "PR.md",
+      "config.go",
+      "config_test.go"
+     ],
+     "diff": "diff --git a/PR.md b/PR.md\nindex 3b0de93..5e6d9e0 100644\n--- a/PR.md\n+++ b/PR.md\n@@ -1,3 +1,5 @@\n # PR-10: config: don't fail start-up on a malformed MAX_TOKENS\n \n A typo in MAX_TOKENS took the gateway down at deploy time last week. Fall back to the default instead of refusing to start.\n+\n+An invalid MAX_TOKENS (non-numeric, zero or negative) is not silent: LoadConfig keeps the 4096 default and adds an entry to the new `Config.Warnings`, naming the setting, the bad value and the default used. Callers must log every warning at start-up. UPSTREAM_TIMEOUT still fails fast. Tests cover \"500k\", \"4O96\", \"0\", \"-1\" and similar values.\ndiff --git a/config.go b/config.go\nindex 322638c..aee2c16 100644\n--- a/config.go\n+++ b/config.go\n@@ -12,11 +12,19 @@ type Config struct {\n \tUpstreamURL string\n \tMaxTokens   int\n \tTimeout     time.Duration\n+\t// Warnings lists settings that were invalid and replaced by a default.\n+\t// Start-up must log every entry loudly: a fallback on a budget limit\n+\t// changes spend, so it must never be silent.\n+\tWarnings []string\n }\n \n+// DefaultMaxTokens is the per-request token budget used when MAX_TOKENS is\n+// unset or invalid.\n+const DefaultMaxTokens = 4096\n+\n // LoadConfig reads the config through getenv so tests need no real environment.\n func LoadConfig(getenv func(string) string) (Config, error) {\n-\tc := Config{MaxTokens: 4096, Timeout: 30 * time.Second}\n+\tc := Config{MaxTokens: DefaultMaxTokens, Timeout: 30 * time.Second}\n \tu := getenv(\"UPSTREAM_URL\")\n \tif u == \"\" {\n \t\treturn Config{}, fmt.Errorf(\"UPSTREAM_URL is required\")\n@@ -27,7 +35,12 @@ func LoadConfig(getenv func(string) string) (Config, error) {\n \tc.UpstreamURL = u\n \tif v := getenv(\"MAX_TOKENS\"); v != \"\" {\n \t\tn, err := strconv.Atoi(v)\n-\t\tif err == nil && n > 0 {\n+\t\tif err != nil || n <= 0 {\n+\t\t\t// Don't refuse to start over a typo, but say so: the operator\n+\t\t\t// asked for a limit they are not getting.\n+\t\t\tc.Warnings = append(c.Warnings, fmt.Sprintf(\n+\t\t\t\t\"MAX_TOKENS=%q is not a positive integer; using default %d\", v, DefaultMaxTokens))\n+\t\t} else {\n \t\t\tc.MaxTokens = n\n \t\t}\n \t}\ndiff --git a/config_test.go b/config_test.go\nindex 3e1bd3d..85da8a6 100644\n--- a/config_test.go\n+++ b/config_test.go\n@@ -1,6 +1,8 @@\n package quota\n \n import (\n+\t\"strconv\"\n+\t\"strings\"\n \t\"testing\"\n \t\"time\"\n )\n@@ -36,3 +38,49 @@ func TestLoadConfigRequiresURL(t *testing.T) {\n \t\tt.Fatal(\"missing UPSTREAM_URL accepted\")\n \t}\n }\n+\n+func TestLoadConfigInvalidMaxTokensFallsBackWithWarning(t *testing.T) {\n+\tfor _, v := range []string{\"500k\", \"4O96\", \"abc\", \"0\", \"-1\", \"1.5\", \" 512\"} {\n+\t\tt.Run(v, func(t *testing.T) {\n+\t\t\tc, err := LoadConfig(env(map[string]string{\n+\t\t\t\t\"UPSTREAM_URL\": \"http://llm:8080/v1/complete\", \"MAX_TOKENS\": v,\n+\t\t\t}))\n+\t\t\tif err != nil {\n+\t\t\t\tt.Fatalf(\"MAX_TOKENS=%q: unexpected error %v\", v, err)\n+\t\t\t}\n+\t\t\tif c.MaxTokens != DefaultMaxTokens {\n+\t\t\t\tt.Fatalf(\"MAX_TOKENS=%q: MaxTokens = %d, want default %d\", v, c.MaxTokens, DefaultMaxTokens)\n+\t\t\t}\n+\t\t\tif len(c.Warnings) != 1 {\n+\t\t\t\tt.Fatalf(\"MAX_TOKENS=%q: warnings = %q, want exactly one\", v, c.Warnings)\n+\t\t\t}\n+\t\t\tif w := c.Warnings[0]; !strings.Contains(w, \"MAX_TOKENS\") || !strings.Contains(w, strconv.Quote(v)) || !strings.Contains(w, \"4096\") {\n+\t\t\t\tt.Fatalf(\"MAX_TOKENS=%q: warning %q does not name the setting, value and default\", v, w)\n+\t\t\t}\n+\t\t})\n+\t}\n+}\n+\n+func TestLoadConfigNoWarningsWhenValid(t *testing.T) {\n+\tfor _, m := range []map[string]string{\n+\t\t{\"UPSTREAM_URL\": \"http://llm:8080/v1/complete\"},\n+\t\t{\"UPSTREAM_URL\": \"http://llm:8080/v1/complete\", \"MAX_TOKENS\": \"512\"},\n+\t} {\n+\t\tc, err := LoadConfig(env(m))\n+\t\tif err != nil {\n+\t\t\tt.Fatal(err)\n+\t\t}\n+\t\tif len(c.Warnings) != 0 {\n+\t\t\tt.Fatalf(\"%v: unexpected warnings %q\", m, c.Warnings)\n+\t\t}\n+\t}\n+}\n+\n+func TestLoadConfigInvalidTimeoutStillFails(t *testing.T) {\n+\t_, err := LoadConfig(env(map[string]string{\n+\t\t\"UPSTREAM_URL\": \"http://llm:8080/v1/complete\", \"UPSTREAM_TIMEOUT\": \"5 sec\",\n+\t}))\n+\tif err == nil {\n+\t\tt.Fatal(\"malformed UPSTREAM_TIMEOUT accepted\")\n+\t}\n+}\n"
+    },
+    "cost": {
+     "model_calls": 5,
+     "tool_steps": 4,
+     "seconds": 39
+    },
+    "ci1": {
+     "pr": "PR-10",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.169
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.726
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 1.965
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.874
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.169
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.19
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 63,
+     "diff_removed": 3
+    },
+    "oracle1": {
+     "pr": "PR-10",
+     "round": 1,
+     "pass": false,
+     "failed": [
+      "TestOracleMaxTokensInvalidIsAnError"
+     ],
+     "compiled": true,
+     "seconds": 1.88,
+     "first_lines": [
+      "oracle_common_test.go:25: MAX_TOKENS=\"abc\" accepted, want an error",
+      "oracle_common_test.go:25: MAX_TOKENS=\"0\" accepted, want an error",
+      "oracle_common_test.go:25: MAX_TOKENS=\"-3\" accepted, want an error",
+      "oracle_common_test.go:25: MAX_TOKENS=\"4k\" accepted, want an error"
+     ]
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 1,
+    "comments": [
+     {
+      "file": "config.go",
+      "line": 18,
+      "severity": "nit",
+      "body": "Nothing in this module reads Config.Warnings (LoadConfig has no caller here), so the 'start-up must log every entry' contract is only enforced by the doc comment. When the binary that calls LoadConfig is next touched, log each warning there (e.g. slog.Warn per entry), or consider returning the warnings in a way a caller can't ignore by accident."
+     }
+    ],
+    "summary": "Both round-0 blocking comments are resolved: an invalid MAX_TOKENS still falls back to 4096 as the PR intends, but now adds a Config.Warnings entry naming the setting, value and default, and table tests cover non-numeric, zero, negative, fractional and space-padded values, plus no-warning and UPSTREAM_TIMEOUT fail-fast cases. go vet and go test pass.",
+    "cost": {
+     "model_calls": 4,
+     "tool_steps": 3,
+     "seconds": 27
+    }
+   }
+  },
+  {
+   "pr": "PR-11",
+   "src": "B01",
+   "label": "correct",
+   "cls": "benign",
+   "title": "page: rename start to offset and clarify the doc comment",
+   "ci0": {
+    "pr": "PR-11",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.172
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.302
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 2.046
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.893
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.177
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.174
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.021
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 5,
+    "diff_removed": 5
+   },
+   "oracle0": {
+    "pr": "PR-11",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 2.94,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Pure rename of the local variable start to offset in Page plus a doc-comment clarification; behaviour is unchanged and vet/tests pass.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 13
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Pure local-variable rename (start -> offset) in Page plus a doc-comment clarification; behaviour is unchanged and the comment matches the code (a page past the end returns an empty non-nil slice). go vet and go test pass.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 13
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Pure rename of start to offset plus a doc-comment clarification; behaviour is unchanged (same bounds check, same end clamp, same slice). No correctness, error-handling, concurrency or test issues introduced.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 14
+     }
+    }
+   }
+  },
+  {
+   "pr": "PR-12",
+   "src": "D21",
+   "label": "defect",
+   "cls": "concurrency",
+   "title": "upstream: close the response body next to the decode",
+   "ci0": {
+    "pr": "PR-12",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.171
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.784
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.9
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.899
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.184
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.162
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.022
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 1,
+    "diff_removed": 1
+   },
+   "oracle0": {
+    "pr": "PR-12",
+    "round": 0,
+    "pass": false,
+    "failed": [
+     "TestOracleUpstreamBodyClosedOnEveryPath"
+    ],
+    "compiled": true,
+    "seconds": 1.86,
+    "first_lines": [
+     "oracle_common_test.go:144: status 503: response body not closed",
+     "oracle_common_test.go:144: status 401: response body not closed"
+    ]
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "upstream.go",
+       "line": 45,
+       "severity": "blocking",
+       "body": "Moving `defer resp.Body.Close()` below the status check means the non-200 path (line 45-47) now returns without ever closing the response body. It only reads up to 512 bytes and returns, so every upstream error (429, 5xx, 401...) leaks the body: the underlying TCP connection is never returned to the transport's pool and its read goroutines/file descriptors stay alive until the server closes it. Under an upstream outage or rate-limit storm this exhausts connections/FDs. Keep the defer immediately after the `err != nil` check on `u.HTTP.Do` (as on base), or explicitly close the body in the error branch. A regression test using an httptest server returning 500 plus a counting/wrapping RoundTripper (or checking the body's Close was called) would pin this."
+      }
+     ],
+     "summary": "The refactor is not behaviour-neutral: it stops closing the HTTP response body on non-200 responses, leaking connections on every upstream error. Restore the defer to right after the Do error check.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 21
+     }
+    },
+    "r2": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "upstream.go",
+       "line": 45,
+       "severity": "blocking",
+       "body": "Moving `defer resp.Body.Close()` below the status check means the non-200 path returns without ever closing resp.Body (it only reads up to 512 bytes via LimitReader). Every upstream error (429/5xx, exactly what happens under load) leaks the response body and its connection: the Transport cannot reuse or release it, so file descriptors and goroutines pile up until the gateway exhausts connections. The body must be closed on every path once Do returns err == nil. Put `defer resp.Body.Close()` back immediately after the `if err != nil` check following u.HTTP.Do (line 44), as on base. Add a test that triggers the error path repeatedly and checks that connections are closed or reused, for example with an httptest server's ConnState hook or a counting RoundTripper whose body records Close."
+      }
+     ],
+     "summary": "The PR is not a pure reordering: the non-200 error path no longer closes the response body, which leaks connections on every upstream error. Restore the defer directly after the Do error check.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 20
+     }
+    },
+    "d1": {
+     "verdict": "request_changes",
+     "blocking": 1,
+     "nits": 0,
+     "comments": [
+      {
+       "file": "upstream.go",
+       "line": 45,
+       "severity": "blocking",
+       "body": "Moving `defer resp.Body.Close()` below the status check means the non-200 path (read up to 512 bytes, then return the error) never closes the response body. Every upstream error (429/5xx, which are exactly the bursty cases) leaks the body and its connection: the transport cannot reuse or free it, so file descriptors and goroutines pile up under error load. Keep the defer right after the `err != nil` check (as before), or close the body explicitly in the error branch. A test that counts closes with a wrapping RoundTripper/body on a non-200 response would catch this."
+      }
+     ],
+     "summary": "The move introduces a resource leak: the response body is no longer closed when upstream returns a non-200 status. Restore the defer right after the error check.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 13
+     }
+    }
+   },
+   "fix": {
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "fixed",
+       "note": "Confirmed the leak: a new regression test, TestCompleteClosesBody, wraps the client's transport in a RoundTripper that counts bodies opened and closed. Against the PR as it stood, it reported 'closed 0 of 3 response bodies' for 401, 429 and 500. Fixed with your second option: the non-200 branch now calls resp.Body.Close() before it returns. The `defer resp.Body.Close()` stays next to the decode, as PR.md intends. The test covers 200, 200 with bad JSON, 401, 429 and 500 with a 4 KiB body (more than the 512-byte read limit), and checks that every body handed out is closed. `go vet ./... && go test -race ./...` passes."
+      }
+     ],
+     "summary": "The non-200 path now closes the response body explicitly, so connections go back to the pool on upstream errors. The defer stays beside the decode as the PR describes. Added TestCompleteClosesBody (counting RoundTripper, 5 cases) as the regression test. It failed before the fix and passes after it. vet and race tests are green."
+    },
+    "diff": {
+     "pr": "PR-12",
+     "round": 1,
+     "added": 73,
+     "removed": 0,
+     "files": [
+      "upstream.go",
+      "upstream_test.go"
+     ],
+     "diff": "diff --git a/upstream.go b/upstream.go\nindex 4e58511..ca192d1 100644\n--- a/upstream.go\n+++ b/upstream.go\n@@ -44,6 +44,9 @@ func (u *Upstream) Complete(ctx context.Context, prompt string) (*Reply, error)\n \t}\n \tif resp.StatusCode != http.StatusOK {\n \t\tmsg, _ := io.ReadAll(io.LimitReader(resp.Body, 512))\n+\t\t// This early return is above the defer below, so close here too;\n+\t\t// otherwise the connection never goes back to the transport's pool.\n+\t\tresp.Body.Close()\n \t\treturn nil, fmt.Errorf(\"upstream: status %d: %s\", resp.StatusCode, bytes.TrimSpace(msg))\n \t}\n \tdefer resp.Body.Close()\ndiff --git a/upstream_test.go b/upstream_test.go\nindex 640c156..6d01c98 100644\n--- a/upstream_test.go\n+++ b/upstream_test.go\n@@ -2,9 +2,12 @@ package quota\n \n import (\n \t\"context\"\n+\t\"io\"\n \t\"net/http\"\n \t\"net/http/httptest\"\n \t\"strings\"\n+\t\"sync\"\n+\t\"sync/atomic\"\n \t\"testing\"\n \t\"time\"\n )\n@@ -39,3 +42,70 @@ func TestCompleteUpstreamError(t *testing.T) {\n \t\tt.Fatalf(\"err = %v, want a 503 error\", err)\n \t}\n }\n+\n+// closeCountingTransport wraps a RoundTripper and counts how many response\n+// bodies it handed out and how many of them were closed.\n+type closeCountingTransport struct {\n+\tbase   http.RoundTripper\n+\topened atomic.Int64\n+\tclosed atomic.Int64\n+}\n+\n+func (c *closeCountingTransport) RoundTrip(req *http.Request) (*http.Response, error) {\n+\tresp, err := c.base.RoundTrip(req)\n+\tif err != nil {\n+\t\treturn nil, err\n+\t}\n+\tc.opened.Add(1)\n+\tresp.Body = &countingBody{ReadCloser: resp.Body, closed: &c.closed}\n+\treturn resp, nil\n+}\n+\n+type countingBody struct {\n+\tio.ReadCloser\n+\tclosed *atomic.Int64\n+\tonce   sync.Once\n+}\n+\n+func (b *countingBody) Close() error {\n+\tb.once.Do(func() { b.closed.Add(1) })\n+\treturn b.ReadCloser.Close()\n+}\n+\n+func TestCompleteClosesBody(t *testing.T) {\n+\tfor _, tc := range []struct {\n+\t\tname    string\n+\t\tstatus  int\n+\t\tbody    string\n+\t\twantErr bool\n+\t}{\n+\t\t{\"ok\", http.StatusOK, `{\"text\":\"hi\",\"tokens\":3}`, false},\n+\t\t{\"bad json\", http.StatusOK, `not json`, true},\n+\t\t{\"unauthorized\", http.StatusUnauthorized, \"no key\", true},\n+\t\t{\"rate limited\", http.StatusTooManyRequests, \"slow down\", true},\n+\t\t{\"server error\", http.StatusInternalServerError, strings.Repeat(\"x\", 4096), true},\n+\t} {\n+\t\tt.Run(tc.name, func(t *testing.T) {\n+\t\t\tts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n+\t\t\t\tw.WriteHeader(tc.status)\n+\t\t\t\tw.Write([]byte(tc.body))\n+\t\t\t}))\n+\t\t\tdefer ts.Close()\n+\t\t\ttr := &closeCountingTransport{base: ts.Client().Transport}\n+\t\t\tu := &Upstream{URL: ts.URL, Key: \"k\", HTTP: &http.Client{Transport: tr}, Timeout: 2 * time.Second}\n+\t\t\tconst calls = 3\n+\t\t\tfor i := 0; i < calls; i++ {\n+\t\t\t\t_, err := u.Complete(context.Background(), \"hello\")\n+\t\t\t\tif (err != nil) != tc.wantErr {\n+\t\t\t\t\tt.Fatalf(\"call %d: err = %v, wantErr %v\", i, err, tc.wantErr)\n+\t\t\t\t}\n+\t\t\t}\n+\t\t\tif got := tr.opened.Load(); got != calls {\n+\t\t\t\tt.Fatalf(\"opened %d bodies, want %d\", got, calls)\n+\t\t\t}\n+\t\t\tif got := tr.closed.Load(); got != calls {\n+\t\t\t\tt.Fatalf(\"closed %d of %d response bodies\", got, calls)\n+\t\t\t}\n+\t\t})\n+\t}\n+}\n"
+    },
+    "cost": {
+     "model_calls": 6,
+     "tool_steps": 6,
+     "seconds": 50
+    },
+    "ci1": {
+     "pr": "PR-12",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.172
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.766
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 1.954
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.837
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.186
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.178
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 74,
+     "diff_removed": 1
+    },
+    "oracle1": {
+     "pr": "PR-12",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 3.29,
+     "first_lines": []
+    }
+   },
+   "rereview": {
+    "verdict": "approve",
+    "blocking": 0,
+    "nits": 0,
+    "comments": [],
+    "summary": "The round-0 blocking leak is resolved: the non-200 branch now closes resp.Body before returning (upstream.go:49), and the 200 path closes it through the defer (upstream.go:52), so every path closes the body, as on base. The new TestCompleteClosesBody counts opened and closed bodies across 200, bad JSON, 401, 429 and 500; it fails on round0 (closed 0 of 3) and passes on HEAD, and vet and race tests are green.",
+    "cost": {
+     "model_calls": 5,
+     "tool_steps": 4,
+     "seconds": 28
+    }
+   }
+  },
+  {
+   "pr": "PR-13",
+   "src": "B04",
+   "label": "correct",
+   "cls": "benign",
+   "title": "ledger: add Tenants() for the admin listing",
+   "ci0": {
+    "pr": "PR-13",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.174
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.799
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.864
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.812
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.177
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.179
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.021
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 20,
+    "diff_removed": 0
+   },
+   "oracle0": {
+    "pr": "PR-13",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 3.46,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Tenants() takes the ledger mutex, copies the keys of the limit map into a new slice and sorts them, so it is race-free and callers cannot change ledger state through it. The new test checks the sorted order, and go vet and go test -race pass.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 18
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Tenants() takes the ledger mutex, copies the keys of the limit map into a fresh slice and sorts them, so callers get a stable, race-free snapshot; the new test covers the ordering. vet and go test -race pass.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 22
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Tenants() takes the ledger mutex, copies the keys of the limit map into a new slice and sorts it, so callers get a stable, race-free snapshot they own. The new TestTenants checks the order with keys given out of order.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 14
+     }
+    }
+   },
+   "planted": {
+    "review": {
+     "verdict": "request_changes",
+     "comments": [
+      {
+       "file": "ledger.go",
+       "line": 58,
+       "severity": "blocking",
+       "body": "Tenants() only lists keys of l.limit, so a tenant that has spent tokens but has no limit entry is missing from the admin listing. Build the list from the union of l.limit and l.spent keys."
+      }
+     ],
+     "summary": "Tenants() misses tenants that only appear in spent; list the union of both maps."
+    },
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "declined",
+       "note": "A tenant cannot be in l.spent without also being in l.limit. The only write to l.spent is `l.spent[tenant] += n` in Spend (ledger.go:46), and it runs only after `lim, ok := l.limit[tenant]` succeeds; an unknown tenant returns an error first. Remaining only reads the maps (a missing key reads as zero and is not stored), and nothing deletes from l.limit. So the keys of l.spent are always a subset of the keys of l.limit, and the union equals l.limit. Merging the two maps would add code with no effect. I added TestTenantsAfterSpends (ledger_test.go). It spends for a known tenant, tries to spend for an unknown one and reads Remaining for another unknown one, then checks that Tenants() is still exactly [acme globex]. If someone later lets spent gain keys of its own, this test will catch it."
+      }
+     ],
+     "summary": "Declined the one blocking comment: Spend writes l.spent only after the l.limit lookup succeeds, so l.spent's keys are always a subset of l.limit's, and listing l.limit already gives the union. I added a regression test for this invariant. go vet ./... and go test -race ./... pass."
+    },
+    "diff": {
+     "pr": "PR-13w",
+     "round": 1,
+     "added": 17,
+     "removed": 0,
+     "files": [
+      "ledger_test.go"
+     ]
+    },
+    "cost": {
+     "model_calls": 8,
+     "tool_steps": 8,
+     "seconds": 49
+    },
+    "ci1": {
+     "pr": "PR-13w",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.168
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.772
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 1.857
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.806
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.175
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.165
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.022
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 37,
+     "diff_removed": 0
+    },
+    "oracle1": {
+     "pr": "PR-13w",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 2.97,
+     "first_lines": []
+    }
+   }
+  },
+  {
+   "pr": "PR-14",
+   "src": "B03",
+   "label": "correct",
+   "cls": "benign",
+   "title": "page: use the min builtin",
+   "ci0": {
+    "pr": "PR-14",
+    "round": 0,
+    "gates": {
+     "build_vet": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.178
+     },
+     "test": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.863
+     },
+     "race": {
+      "fail": false,
+      "finding": "",
+      "seconds": 1.859
+     },
+     "diff_coverage": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.805
+     },
+     "analyzers": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.184
+     },
+     "policy": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.173
+     },
+     "secrets": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.022
+     },
+     "test_integrity": {
+      "fail": false,
+      "finding": "",
+      "seconds": 0.0
+     }
+    },
+    "blocked": [],
+    "diff_added": 1,
+    "diff_removed": 4
+   },
+   "oracle0": {
+    "pr": "PR-14",
+    "round": 0,
+    "pass": true,
+    "failed": [],
+    "compiled": true,
+    "seconds": 3.06,
+    "first_lines": []
+   },
+   "reviews": {
+    "r1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Pure refactor: end := min(start+size, len(items)) behaves exactly like the removed if-clamp for every input, go.mod declares go 1.24 so the builtin is available, and nothing in the package shadows min. Existing TestPage cases cover the full, partial and past-the-end pages; vet and tests pass.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 18
+     }
+    },
+    "r2": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Behaviour-preserving refactor: end := min(start+size, len(items)) is identical to the removed clamp, go.mod declares go 1.24 so the builtin is available, nothing in the package shadows min, and the existing TestPage cases (full, partial and past-the-end pages) still pass.",
+     "cost": {
+      "model_calls": 4,
+      "tool_steps": 3,
+      "seconds": 18
+     }
+    },
+    "d1": {
+     "verdict": "approve",
+     "blocking": 0,
+     "nits": 0,
+     "comments": [],
+     "summary": "Replacing the manual clamp with min(start+size, len(items)) gives the same result for every input, including the overflow case the old code also had; CI building it shows the module targets Go 1.21+. No problems found.",
+     "cost": {
+      "model_calls": 3,
+      "tool_steps": 2,
+      "seconds": 10
+     }
+    }
+   },
+   "planted": {
+    "review": {
+     "verdict": "request_changes",
+     "comments": [
+      {
+       "file": "page.go",
+       "line": 15,
+       "severity": "blocking",
+       "body": "The min builtin needs Go 1.22, but this module must still build with Go 1.20 toolchains used by some consumers. Restore the explicit if-clamp."
+      }
+     ],
+     "summary": "min builtin breaks older toolchains; restore the manual clamp."
+    },
+    "reply": {
+     "responses": [
+      {
+       "comment": 1,
+       "action": "declined",
+       "note": "Kept min. The min builtin came in Go 1.21, not 1.22. This module cannot build with Go 1.20 anyway: go.mod (unchanged by this PR, same on base) says `go 1.24`, and handler.go already imports log/slog, which is Go 1.21+. So min adds no new toolchain requirement. If the module ever has to support Go 1.20, that means lowering the go directive and dropping slog, which is outside this PR. I added two page_test.go cases that cover the clamp (size past the end, short last page). go vet ./... and go test -race ./... pass."
+      }
+     ],
+     "summary": "Declined the only blocking comment: min is Go 1.21, and the module already requires go 1.24 and uses log/slog (Go 1.21), so restoring the if-clamp would not help Go 1.20 consumers. Added test cases for the clamped end; vet and race tests pass."
+    },
+    "diff": {
+     "pr": "PR-14w",
+     "round": 1,
+     "added": 2,
+     "removed": 0,
+     "files": [
+      "page_test.go"
+     ]
+    },
+    "cost": {
+     "model_calls": 7,
+     "tool_steps": 7,
+     "seconds": 41
+    },
+    "ci1": {
+     "pr": "PR-14w",
+     "round": 1,
+     "gates": {
+      "build_vet": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.174
+      },
+      "test": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.784
+      },
+      "race": {
+       "fail": false,
+       "finding": "",
+       "seconds": 2.106
+      },
+      "diff_coverage": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.878
+      },
+      "analyzers": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.182
+      },
+      "policy": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.167
+      },
+      "secrets": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.021
+      },
+      "test_integrity": {
+       "fail": false,
+       "finding": "",
+       "seconds": 0.0
+      }
+     },
+     "blocked": [],
+     "diff_added": 3,
+     "diff_removed": 4
+    },
+    "oracle1": {
+     "pr": "PR-14w",
+     "round": 1,
+     "pass": true,
+     "failed": [],
+     "compiled": true,
+     "seconds": 3.05,
+     "first_lines": []
+    }
+   }
+  }
+ ],
+ "runs": [
+  {
+   "pr": "PR-01",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 29
+  },
+  {
+   "pr": "PR-02",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 24
+  },
+  {
+   "pr": "PR-03",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 24
+  },
+  {
+   "pr": "PR-04",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 15
+  },
+  {
+   "pr": "PR-05",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 15
+  },
+  {
+   "pr": "PR-06",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 19
+  },
+  {
+   "pr": "PR-07",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 22
+  },
+  {
+   "pr": "PR-08",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 21
+  },
+  {
+   "pr": "PR-09",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 20
+  },
+  {
+   "pr": "PR-10",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 28
+  },
+  {
+   "pr": "PR-11",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 13
+  },
+  {
+   "pr": "PR-12",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 21
+  },
+  {
+   "pr": "PR-13",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 18
+  },
+  {
+   "pr": "PR-14",
+   "run": "r1",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 18
+  },
+  {
+   "pr": "PR-01",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 16
+  },
+  {
+   "pr": "PR-02",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 26
+  },
+  {
+   "pr": "PR-03",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 17
+  },
+  {
+   "pr": "PR-04",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 10
+  },
+  {
+   "pr": "PR-05",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 11
+  },
+  {
+   "pr": "PR-06",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 12
+  },
+  {
+   "pr": "PR-07",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 14
+  },
+  {
+   "pr": "PR-08",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 20
+  },
+  {
+   "pr": "PR-09",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 15
+  },
+  {
+   "pr": "PR-10",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 22
+  },
+  {
+   "pr": "PR-11",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 14
+  },
+  {
+   "pr": "PR-12",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 13
+  },
+  {
+   "pr": "PR-13",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 14
+  },
+  {
+   "pr": "PR-14",
+   "run": "d1",
+   "kind": "review-diff",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 10
+  },
+  {
+   "pr": "PR-01",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 6,
+   "tool_steps": 5,
+   "seconds": 45
+  },
+  {
+   "pr": "PR-02",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 7,
+   "tool_steps": 6,
+   "seconds": 51
+  },
+  {
+   "pr": "PR-07",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 6,
+   "tool_steps": 6,
+   "seconds": 40
+  },
+  {
+   "pr": "PR-08",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 6,
+   "tool_steps": 7,
+   "seconds": 65
+  },
+  {
+   "pr": "PR-09",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 31
+  },
+  {
+   "pr": "PR-10",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 39
+  },
+  {
+   "pr": "PR-12",
+   "run": "r1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 6,
+   "tool_steps": 6,
+   "seconds": 50
+  },
+  {
+   "pr": "PR-10",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 27
+  },
+  {
+   "pr": "PR-01",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 22
+  },
+  {
+   "pr": "PR-02",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 21
+  },
+  {
+   "pr": "PR-07",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 31
+  },
+  {
+   "pr": "PR-08",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 19
+  },
+  {
+   "pr": "PR-09",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 21
+  },
+  {
+   "pr": "PR-12",
+   "run": "r1",
+   "kind": "review",
+   "round": 1,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 28
+  },
+  {
+   "pr": "PR-05w",
+   "run": "w1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 6,
+   "tool_steps": 6,
+   "seconds": 49
+  },
+  {
+   "pr": "PR-06w",
+   "run": "w1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 6,
+   "tool_steps": 5,
+   "seconds": 47
+  },
+  {
+   "pr": "PR-13w",
+   "run": "w1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 8,
+   "tool_steps": 8,
+   "seconds": 49
+  },
+  {
+   "pr": "PR-14w",
+   "run": "w1",
+   "kind": "fix",
+   "round": 1,
+   "model_calls": 7,
+   "tool_steps": 7,
+   "seconds": 41
+  },
+  {
+   "pr": "PR-01",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 6,
+   "tool_steps": 5,
+   "seconds": 38
+  },
+  {
+   "pr": "PR-02",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 24
+  },
+  {
+   "pr": "PR-03",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 21
+  },
+  {
+   "pr": "PR-04",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 15
+  },
+  {
+   "pr": "PR-05",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 17
+  },
+  {
+   "pr": "PR-06",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 22
+  },
+  {
+   "pr": "PR-07",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 22
+  },
+  {
+   "pr": "PR-08",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 24
+  },
+  {
+   "pr": "PR-09",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 23
+  },
+  {
+   "pr": "PR-10",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 5,
+   "tool_steps": 4,
+   "seconds": 31
+  },
+  {
+   "pr": "PR-11",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 3,
+   "tool_steps": 2,
+   "seconds": 13
+  },
+  {
+   "pr": "PR-12",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 20
+  },
+  {
+   "pr": "PR-13",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 22
+  },
+  {
+   "pr": "PR-14",
+   "run": "r2",
+   "kind": "review",
+   "round": 0,
+   "model_calls": 4,
+   "tool_steps": 3,
+   "seconds": 18
+  }
+ ]
+}

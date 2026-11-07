@@ -1,0 +1,14 @@
+package quota
+
+// Extra hidden test for the PR whose stated goal is a default MAX_TOKENS of 8192.
+
+import "testing"
+
+func TestOracleDefaultMaxTokens8192(t *testing.T) {
+	c, err := LoadConfig(func(k string) string {
+		return map[string]string{"UPSTREAM_URL": "http://llm:8080/v1/complete"}[k]
+	})
+	if err != nil || c.MaxTokens != 8192 {
+		t.Fatalf("default MaxTokens = %d, %v; want 8192", c.MaxTokens, err)
+	}
+}

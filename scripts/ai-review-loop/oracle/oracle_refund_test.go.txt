@@ -1,0 +1,23 @@
+package quota
+
+// Extra hidden test for the PR that adds Ledger.Refund: a refund gives tokens
+// back but can never leave a tenant with more than its limit.
+
+import "testing"
+
+func TestOracleRefund(t *testing.T) {
+	l := NewLedger(map[string]int{"acme": 100})
+	_ = l.Spend("acme", 50)
+	l.Refund("acme", 20)
+	if got := l.Remaining("acme"); got != 70 {
+		t.Fatalf("remaining after refund of 20 = %d, want 70", got)
+	}
+	l.Refund("acme", 80)
+	if got := l.Remaining("acme"); got > 100 {
+		t.Fatalf("remaining after refunding more than was spent = %d, above the limit of 100", got)
+	}
+	l.Refund("globex", 5)
+	if got := l.Remaining("globex"); got > 0 {
+		t.Fatalf("refund to an unknown tenant created a budget of %d", got)
+	}
+}

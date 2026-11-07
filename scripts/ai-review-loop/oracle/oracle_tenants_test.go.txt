@@ -1,0 +1,15 @@
+package quota
+
+// Extra hidden test for the PR that adds Ledger.Tenants.
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestOracleTenants(t *testing.T) {
+	l := NewLedger(map[string]int{"zeta": 1, "acme": 2, "mid": 3})
+	if got := l.Tenants(); !reflect.DeepEqual(got, []string{"acme", "mid", "zeta"}) {
+		t.Fatalf("Tenants = %v", got)
+	}
+}

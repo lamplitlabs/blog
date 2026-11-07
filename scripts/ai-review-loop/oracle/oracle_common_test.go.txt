@@ -1,0 +1,189 @@
+package quota
+
+// Hidden acceptance tests for the review-loop experiment. They are never in a
+// workspace while an agent works; loop.py copies them into a scratch copy of the
+// workspace after each round. Every one passes on the unmodified base tree.
+
+import (
+	"context"
+	"errors"
+	"io"
+	"net/http"
+	"net/http/httptest"
+	"strings"
+	"sync"
+	"testing"
+	"time"
+)
+
+func TestOracleMaxTokensInvalidIsAnError(t *testing.T) {
+	for _, v := range []string{"abc", "0", "-3", "4k"} {
+		_, err := LoadConfig(func(k string) string {
+			return map[string]string{"UPSTREAM_URL": "http://llm:8080/v1/complete", "MAX_TOKENS": v}[k]
+		})
+		if err == nil {
+			t.Errorf("MAX_TOKENS=%q accepted, want an error", v)
+		}
+	}
+}
+
+func TestOracleUpstreamBadJSONIsAnError(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(`{"text": "trunc`))
+	}))
+	defer ts.Close()
+	u := &Upstream{URL: ts.URL, Key: "k", HTTP: ts.Client(), Timeout: 2 * time.Second}
+	if r, err := u.Complete(context.Background(), "hello"); err == nil {
+		t.Fatalf("truncated JSON reply accepted: %+v", r)
+	}
+}
+
+func TestOracleUsageQueryIncludesSince(t *testing.T) {
+	q, args := UsageQuery("acme", time.Date(2026, 11, 1, 0, 0, 0, 0, time.UTC))
+	if !strings.Contains(q, ">= $2") || strings.Contains(q, "acme") || len(args) != 2 {
+		t.Fatalf("UsageQuery = %q %v; want ts >= $2 and the tenant as a parameter", q, args)
+	}
+}
+
+func TestOracleSpendExactlyToLimit(t *testing.T) {
+	l := NewLedger(map[string]int{"acme": 100})
+	if err := l.Spend("acme", 60); err != nil {
+		t.Fatal(err)
+	}
+	if err := l.Spend("acme", 40); err != nil {
+		t.Fatalf("spend landing exactly on the limit refused: %v", err)
+	}
+	if err := l.Spend("acme", 1); !errors.Is(err, ErrOverBudget) {
+		t.Fatalf("spend past the limit: err = %v, want ErrOverBudget", err)
+	}
+	if got := l.Remaining("acme"); got != 0 {
+		t.Fatalf("remaining = %d, want 0", got)
+	}
+}
+
+func TestOracleRefusedSpendNotCharged(t *testing.T) {
+	l := NewLedger(map[string]int{"acme": 100})
+	_ = l.Spend("acme", 101)
+	_ = l.Spend("globex", 5)
+	if got := l.Remaining("acme"); got != 100 {
+		t.Fatalf("remaining = %d after a refused spend, want 100", got)
+	}
+}
+
+// A budget must hold under concurrent spends: many goroutines each spending 1
+// against a limit of 100 must succeed exactly 100 times in total.
+func TestOracleConcurrentSpendNeverOvershoots(t *testing.T) {
+	for trial := 0; trial < 300; trial++ {
+		l := NewLedger(map[string]int{"acme": 100})
+		var wg sync.WaitGroup
+		var mu sync.Mutex
+		ok := 0
+		start := make(chan struct{})
+		for i := 0; i < 400; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				<-start
+				if l.Spend("acme", 1) == nil {
+					mu.Lock()
+					ok++
+					mu.Unlock()
+				}
+			}()
+		}
+		close(start)
+		wg.Wait()
+		if ok != 100 || l.Remaining("acme") != 0 {
+			t.Fatalf("trial %d: %d spends succeeded, remaining %d; want 100 and 0", trial, ok, l.Remaining("acme"))
+		}
+	}
+}
+
+type oracleCloseTracker struct {
+	io.ReadCloser
+	closed *bool
+}
+
+func (c oracleCloseTracker) Close() error { *c.closed = true; return c.ReadCloser.Close() }
+
+type oracleTrackingTransport struct {
+	base   http.RoundTripper
+	mu     sync.Mutex
+	closed []*bool
+}
+
+func (t *oracleTrackingTransport) RoundTrip(r *http.Request) (*http.Response, error) {
+	resp, err := t.base.RoundTrip(r)
+	if err != nil {
+		return nil, err
+	}
+	b := new(bool)
+	t.mu.Lock()
+	t.closed = append(t.closed, b)
+	t.mu.Unlock()
+	resp.Body = oracleCloseTracker{resp.Body, b}
+	return resp, nil
+}
+
+func TestOracleUpstreamBodyClosedOnEveryPath(t *testing.T) {
+	for _, status := range []int{http.StatusOK, http.StatusServiceUnavailable, http.StatusUnauthorized} {
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if status != http.StatusOK {
+				http.Error(w, "no", status)
+				return
+			}
+			w.Write([]byte(`{"text":"hi","tokens":3}`))
+		}))
+		tr := &oracleTrackingTransport{base: ts.Client().Transport}
+		u := &Upstream{URL: ts.URL, Key: "k", HTTP: &http.Client{Transport: tr}, Timeout: 2 * time.Second}
+		_, err := u.Complete(context.Background(), "hello")
+		if (err == nil) != (status == http.StatusOK) {
+			t.Errorf("status %d: err = %v", status, err)
+		}
+		if len(tr.closed) != 1 || !*tr.closed[0] {
+			t.Errorf("status %d: response body not closed", status)
+		}
+		ts.Close()
+	}
+}
+
+func TestOracleUpstreamErrorKeepsStatus(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "model overloaded", http.StatusServiceUnavailable)
+	}))
+	defer ts.Close()
+	u := &Upstream{URL: ts.URL, HTTP: ts.Client(), Timeout: 2 * time.Second}
+	if _, err := u.Complete(context.Background(), "x"); err == nil || !strings.Contains(err.Error(), "503") {
+		t.Fatalf("err = %v, want a 503 error", err)
+	}
+}
+
+func TestOraclePage(t *testing.T) {
+	items := []int{1, 2, 3, 4, 5, 6, 7}
+	for _, c := range []struct{ page, size, n, first int }{{1, 3, 3, 1}, {3, 3, 1, 7}, {4, 3, 0, 0}, {1, 10, 7, 1}, {2, 7, 0, 0}} {
+		got, err := Page(items, c.page, c.size)
+		if err != nil || got == nil || len(got) != c.n || (c.n > 0 && got[0] != c.first) {
+			t.Errorf("Page(%d, %d) = %v, %v", c.page, c.size, got, err)
+		}
+	}
+	if _, err := Page(items, 1, 0); err == nil {
+		t.Error("size 0 accepted")
+	}
+}
+
+func TestOracleDisplayNameNotFound(t *testing.T) {
+	d := &Directory{Store: oracleStore{}}
+	if _, err := d.DisplayName(context.Background(), "nope"); !errors.Is(err, ErrNotFound) {
+		t.Fatalf("err = %v, want ErrNotFound", err)
+	}
+}
+
+type oracleStore struct{}
+
+func (oracleStore) Get(context.Context, string) (Tenant, error) { return Tenant{}, ErrNotFound }
+
+func TestOracleConfigRequiresURL(t *testing.T) {
+	if _, err := LoadConfig(func(string) string { return "" }); err == nil {
+		t.Fatal("missing UPSTREAM_URL accepted")
+	}
+}

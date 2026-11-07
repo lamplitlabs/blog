@@ -1,0 +1,983 @@
+{
+ "setup": {
+  "model": "SmolLM2-135M-Instruct (F32 GGUF) on llama-server b11669, Metal, M2 Pro",
+  "server": "llama-server -np 20 -c 81920",
+  "batch_requests": 60,
+  "batch_prompt_tokens_approx": 370,
+  "batch_max_tokens": 1024,
+  "support_requests": 24,
+  "support_max_tokens_asked": 4096,
+  "budgets": {
+   "batch-summariser": 40000,
+   "support-bot": 60000,
+   "finance-ops": 20000
+  },
+  "caps": {
+   "batch-summariser": 1024,
+   "support-bot": 512,
+   "finance-ops": 512
+  },
+  "reps": 3,
+  "concurrency": [
+   4,
+   16
+  ],
+  "modes": [
+   "none",
+   "post",
+   "estimate",
+   "reserve"
+  ],
+  "runs": 24
+ },
+ "results": [
+  {
+   "mode": "none",
+   "conc": 4,
+   "n": 3,
+   "batch_spent": 82424,
+   "batch_spent_max": 82453,
+   "batch_overshoot_pct": 106.1,
+   "batch_overshoot_pct_max": 106.1,
+   "batch_served": 60,
+   "batch_429": 0,
+   "batch_peak_in_flight": 4,
+   "batch_exhausted_at_s": null,
+   "batch_completion_mean": 997.2,
+   "batch_completion_hit_cap_pct": 95.6,
+   "batch_utilisation_pct": 206.06,
+   "support_spent": 3718,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 972.7,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 0.01,
+   "admission_ms_p95": 0.02,
+   "budget_429_ms_p50": null,
+   "wall_s": 337.9
+  },
+  {
+   "mode": "post",
+   "conc": 4,
+   "n": 3,
+   "batch_spent": 45014,
+   "batch_spent_max": 45148,
+   "batch_overshoot_pct": 12.5,
+   "batch_overshoot_pct_max": 12.9,
+   "batch_served": 33,
+   "batch_429": 27,
+   "batch_peak_in_flight": 4,
+   "batch_exhausted_at_s": 160.17,
+   "batch_completion_mean": 993.4,
+   "batch_completion_hit_cap_pct": 94.9,
+   "batch_utilisation_pct": 112.53,
+   "support_spent": 3690,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 1194.9,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 0.01,
+   "admission_ms_p95": 0.02,
+   "budget_429_ms_p50": 1.7,
+   "wall_s": 161.1
+  },
+  {
+   "mode": "estimate",
+   "conc": 4,
+   "n": 3,
+   "batch_spent": 43825,
+   "batch_spent_max": 43962,
+   "batch_overshoot_pct": 9.6,
+   "batch_overshoot_pct_max": 9.9,
+   "batch_served": 32,
+   "batch_429": 28,
+   "batch_peak_in_flight": 4,
+   "batch_exhausted_at_s": 142.46,
+   "batch_completion_mean": 1000.6,
+   "batch_completion_hit_cap_pct": 96.9,
+   "batch_utilisation_pct": 109.56,
+   "support_spent": 3668,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 987.7,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 2.64,
+   "admission_ms_p95": 11.35,
+   "budget_429_ms_p50": 2.6,
+   "wall_s": 154.8
+  },
+  {
+   "mode": "reserve",
+   "conc": 4,
+   "n": 3,
+   "batch_spent": 39601,
+   "batch_spent_max": 39862,
+   "batch_overshoot_pct": 0.0,
+   "batch_overshoot_pct_max": 0.0,
+   "batch_served": 29,
+   "batch_429": 31,
+   "batch_peak_in_flight": 4,
+   "batch_exhausted_at_s": 140.37,
+   "batch_completion_mean": 983.4,
+   "batch_completion_hit_cap_pct": 94.3,
+   "batch_utilisation_pct": 99.0,
+   "support_spent": 3693,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 1293.4,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 2.39,
+   "admission_ms_p95": 5.75,
+   "budget_429_ms_p50": 3.7,
+   "wall_s": 146.1
+  },
+  {
+   "mode": "none",
+   "conc": 16,
+   "n": 3,
+   "batch_spent": 82591,
+   "batch_spent_max": 83084,
+   "batch_overshoot_pct": 106.5,
+   "batch_overshoot_pct_max": 107.7,
+   "batch_served": 60,
+   "batch_429": 0,
+   "batch_peak_in_flight": 16,
+   "batch_exhausted_at_s": null,
+   "batch_completion_mean": 1001.6,
+   "batch_completion_hit_cap_pct": 96.7,
+   "batch_utilisation_pct": 206.48,
+   "support_spent": 3634,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 1294.8,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 0.0,
+   "admission_ms_p95": 0.01,
+   "budget_429_ms_p50": null,
+   "wall_s": 89.5
+  },
+  {
+   "mode": "post",
+   "conc": 16,
+   "n": 3,
+   "batch_spent": 45148,
+   "batch_spent_max": 45367,
+   "batch_overshoot_pct": 12.9,
+   "batch_overshoot_pct_max": 13.4,
+   "batch_served": 33,
+   "batch_429": 27,
+   "batch_peak_in_flight": 16,
+   "batch_exhausted_at_s": 45.62,
+   "batch_completion_mean": 999.4,
+   "batch_completion_hit_cap_pct": 96.0,
+   "batch_utilisation_pct": 112.87,
+   "support_spent": 3634,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 1186.3,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 0.0,
+   "admission_ms_p95": 0.01,
+   "budget_429_ms_p50": 7.6,
+   "wall_s": 46.7
+  },
+  {
+   "mode": "estimate",
+   "conc": 16,
+   "n": 3,
+   "batch_spent": 45148,
+   "batch_spent_max": 45367,
+   "batch_overshoot_pct": 12.9,
+   "batch_overshoot_pct_max": 13.4,
+   "batch_served": 33,
+   "batch_429": 27,
+   "batch_peak_in_flight": 16,
+   "batch_exhausted_at_s": 40.16,
+   "batch_completion_mean": 999.4,
+   "batch_completion_hit_cap_pct": 96.0,
+   "batch_utilisation_pct": 112.87,
+   "support_spent": 3634,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 1154.0,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 3.56,
+   "admission_ms_p95": 8.81,
+   "budget_429_ms_p50": 13.7,
+   "wall_s": 40.4
+  },
+  {
+   "mode": "reserve",
+   "conc": 16,
+   "n": 3,
+   "batch_spent": 38176,
+   "batch_spent_max": 39601,
+   "batch_overshoot_pct": 0.0,
+   "batch_overshoot_pct_max": 0.0,
+   "batch_served": 28,
+   "batch_429": 32,
+   "batch_peak_in_flight": 16,
+   "batch_exhausted_at_s": 24.73,
+   "batch_completion_mean": 989.0,
+   "batch_completion_hit_cap_pct": 95.3,
+   "batch_utilisation_pct": 95.44,
+   "support_spent": 3634,
+   "support_served": 24,
+   "support_clamped": 24,
+   "support_ms_p50": 1205.0,
+   "shadow_403": 12,
+   "shadow_total": 12,
+   "admission_ms_p50": 3.5,
+   "admission_ms_p95": 8.83,
+   "budget_429_ms_p50": 5.9,
+   "wall_s": 54.9
+  }
+ ],
+ "spend_curves": {
+  "none": [
+   [
+    0.0,
+    0
+   ],
+   [
+    18.07,
+    1385
+   ],
+   [
+    18.07,
+    2747
+   ],
+   [
+    18.07,
+    4168
+   ],
+   [
+    18.07,
+    5555
+   ],
+   [
+    18.07,
+    6943
+   ],
+   [
+    18.07,
+    8343
+   ],
+   [
+    18.07,
+    9761
+   ],
+   [
+    18.07,
+    11189
+   ],
+   [
+    18.07,
+    12570
+   ],
+   [
+    18.07,
+    13985
+   ],
+   [
+    18.07,
+    15389
+   ],
+   [
+    18.07,
+    16801
+   ],
+   [
+    18.07,
+    18176
+   ],
+   [
+    18.07,
+    19545
+   ],
+   [
+    18.07,
+    20963
+   ],
+   [
+    18.07,
+    22388
+   ],
+   [
+    21.75,
+    22910
+   ],
+   [
+    39.6,
+    24321
+   ],
+   [
+    39.6,
+    25689
+   ],
+   [
+    39.6,
+    27078
+   ],
+   [
+    39.6,
+    28453
+   ],
+   [
+    39.6,
+    29806
+   ],
+   [
+    39.6,
+    31208
+   ],
+   [
+    39.6,
+    32588
+   ],
+   [
+    39.6,
+    33975
+   ],
+   [
+    39.6,
+    35388
+   ],
+   [
+    39.6,
+    36818
+   ],
+   [
+    39.6,
+    38217
+   ],
+   [
+    39.6,
+    39599
+   ],
+   [
+    39.6,
+    41020
+   ],
+   [
+    39.6,
+    42387
+   ],
+   [
+    39.6,
+    43789
+   ],
+   [
+    44.26,
+    45148
+   ],
+   [
+    46.96,
+    45772
+   ],
+   [
+    50.28,
+    46540
+   ],
+   [
+    67.2,
+    47961
+   ],
+   [
+    67.2,
+    49328
+   ],
+   [
+    67.2,
+    50764
+   ],
+   [
+    67.2,
+    52150
+   ],
+   [
+    67.2,
+    53517
+   ],
+   [
+    67.21,
+    54877
+   ],
+   [
+    67.21,
+    56261
+   ],
+   [
+    67.21,
+    57660
+   ],
+   [
+    67.21,
+    59071
+   ],
+   [
+    67.21,
+    60488
+   ],
+   [
+    67.21,
+    61933
+   ],
+   [
+    67.21,
+    63326
+   ],
+   [
+    67.21,
+    64701
+   ],
+   [
+    72.21,
+    66089
+   ],
+   [
+    75.24,
+    67454
+   ],
+   [
+    78.42,
+    68857
+   ],
+   [
+    89.51,
+    70246
+   ],
+   [
+    89.51,
+    71612
+   ],
+   [
+    89.51,
+    73002
+   ],
+   [
+    89.51,
+    74397
+   ],
+   [
+    89.51,
+    75768
+   ],
+   [
+    89.51,
+    77197
+   ],
+   [
+    89.51,
+    78622
+   ],
+   [
+    89.51,
+    80018
+   ],
+   [
+    89.51,
+    81391
+   ]
+  ],
+  "post": [
+   [
+    0.0,
+    0
+   ],
+   [
+    23.84,
+    1362
+   ],
+   [
+    23.84,
+    2787
+   ],
+   [
+    23.84,
+    4187
+   ],
+   [
+    23.84,
+    5602
+   ],
+   [
+    23.84,
+    6977
+   ],
+   [
+    23.84,
+    8395
+   ],
+   [
+    23.84,
+    9783
+   ],
+   [
+    23.84,
+    11201
+   ],
+   [
+    23.84,
+    12588
+   ],
+   [
+    23.84,
+    13969
+   ],
+   [
+    23.85,
+    15373
+   ],
+   [
+    23.85,
+    16758
+   ],
+   [
+    23.85,
+    18127
+   ],
+   [
+    23.85,
+    19548
+   ],
+   [
+    23.85,
+    20976
+   ],
+   [
+    23.85,
+    22388
+   ],
+   [
+    28.16,
+    22910
+   ],
+   [
+    45.6,
+    24309
+   ],
+   [
+    45.6,
+    25677
+   ],
+   [
+    45.6,
+    27090
+   ],
+   [
+    45.6,
+    28492
+   ],
+   [
+    45.6,
+    29874
+   ],
+   [
+    45.6,
+    31285
+   ],
+   [
+    45.6,
+    32715
+   ],
+   [
+    45.6,
+    34068
+   ],
+   [
+    45.6,
+    35455
+   ],
+   [
+    45.6,
+    36830
+   ],
+   [
+    45.6,
+    38232
+   ],
+   [
+    45.6,
+    39599
+   ],
+   [
+    45.6,
+    41020
+   ],
+   [
+    45.6,
+    42400
+   ],
+   [
+    45.6,
+    43789
+   ],
+   [
+    46.65,
+    45148
+   ]
+  ],
+  "estimate": [
+   [
+    0.0,
+    0
+   ],
+   [
+    24.17,
+    1388
+   ],
+   [
+    24.17,
+    2806
+   ],
+   [
+    24.17,
+    4221
+   ],
+   [
+    24.17,
+    5649
+   ],
+   [
+    24.17,
+    7067
+   ],
+   [
+    24.17,
+    8471
+   ],
+   [
+    24.17,
+    9833
+   ],
+   [
+    24.17,
+    11233
+   ],
+   [
+    24.17,
+    12654
+   ],
+   [
+    24.17,
+    14023
+   ],
+   [
+    24.17,
+    15448
+   ],
+   [
+    24.17,
+    16829
+   ],
+   [
+    24.17,
+    18204
+   ],
+   [
+    24.17,
+    19616
+   ],
+   [
+    24.17,
+    21003
+   ],
+   [
+    24.17,
+    22388
+   ],
+   [
+    26.15,
+    22910
+   ],
+   [
+    35.38,
+    24290
+   ],
+   [
+    35.38,
+    25643
+   ],
+   [
+    35.38,
+    27073
+   ],
+   [
+    35.38,
+    28462
+   ],
+   [
+    35.38,
+    29830
+   ],
+   [
+    35.38,
+    31229
+   ],
+   [
+    35.38,
+    32596
+   ],
+   [
+    35.38,
+    34009
+   ],
+   [
+    35.38,
+    35396
+   ],
+   [
+    35.38,
+    36817
+   ],
+   [
+    35.38,
+    38219
+   ],
+   [
+    35.38,
+    39621
+   ],
+   [
+    35.38,
+    41003
+   ],
+   [
+    35.38,
+    42378
+   ],
+   [
+    35.38,
+    43789
+   ],
+   [
+    36.31,
+    45148
+   ]
+  ],
+  "reserve": [
+   [
+    0.0,
+    0
+   ],
+   [
+    45.42,
+    1400
+   ],
+   [
+    45.42,
+    2812
+   ],
+   [
+    45.42,
+    4199
+   ],
+   [
+    45.42,
+    5614
+   ],
+   [
+    45.42,
+    7039
+   ],
+   [
+    45.42,
+    8401
+   ],
+   [
+    45.42,
+    9819
+   ],
+   [
+    45.42,
+    11200
+   ],
+   [
+    45.42,
+    12618
+   ],
+   [
+    45.42,
+    14022
+   ],
+   [
+    45.42,
+    15410
+   ],
+   [
+    45.42,
+    16779
+   ],
+   [
+    45.42,
+    18164
+   ],
+   [
+    45.42,
+    19585
+   ],
+   [
+    45.42,
+    21013
+   ],
+   [
+    45.42,
+    22388
+   ],
+   [
+    50.03,
+    22910
+   ],
+   [
+    68.45,
+    24323
+   ],
+   [
+    68.45,
+    25725
+   ],
+   [
+    68.45,
+    27124
+   ],
+   [
+    68.45,
+    28492
+   ],
+   [
+    68.45,
+    29881
+   ],
+   [
+    68.45,
+    31261
+   ],
+   [
+    68.45,
+    32628
+   ],
+   [
+    68.45,
+    34010
+   ],
+   [
+    68.46,
+    35363
+   ],
+   [
+    68.46,
+    36774
+   ],
+   [
+    68.46,
+    38176
+   ]
+  ]
+ },
+ "budget_sweep": [
+  {
+   "mode": "post",
+   "budget": 20000,
+   "spent": 22388,
+   "overshoot_pct": 11.9,
+   "served": 16,
+   "rejected": 44
+  },
+  {
+   "mode": "reserve",
+   "budget": 20000,
+   "spent": 19644,
+   "overshoot_pct": 0.0,
+   "served": 14,
+   "rejected": 46
+  },
+  {
+   "mode": "post",
+   "budget": 26000,
+   "spent": 45148,
+   "overshoot_pct": 73.6,
+   "served": 33,
+   "rejected": 27
+  },
+  {
+   "mode": "reserve",
+   "budget": 26000,
+   "spent": 24312,
+   "overshoot_pct": 0.0,
+   "served": 18,
+   "rejected": 42
+  },
+  {
+   "mode": "post",
+   "budget": 32000,
+   "spent": 45148,
+   "overshoot_pct": 41.1,
+   "served": 33,
+   "rejected": 27
+  },
+  {
+   "mode": "reserve",
+   "budget": 32000,
+   "spent": 29860,
+   "overshoot_pct": 0.0,
+   "served": 22,
+   "rejected": 38
+  },
+  {
+   "mode": "post",
+   "budget": 36000,
+   "spent": 45148,
+   "overshoot_pct": 25.4,
+   "served": 33,
+   "rejected": 27
+  },
+  {
+   "mode": "reserve",
+   "budget": 36000,
+   "spent": 33995,
+   "overshoot_pct": 0.0,
+   "served": 25,
+   "rejected": 35
+  },
+  {
+   "mode": "post",
+   "budget": 44000,
+   "spent": 65317,
+   "overshoot_pct": 48.4,
+   "served": 48,
+   "rejected": 12
+  },
+  {
+   "mode": "reserve",
+   "budget": 44000,
+   "spent": 43261,
+   "overshoot_pct": 0.0,
+   "served": 32,
+   "rejected": 28
+  },
+  {
+   "mode": "post",
+   "budget": 50000,
+   "spent": 68070,
+   "overshoot_pct": 36.1,
+   "served": 50,
+   "rejected": 10
+  },
+  {
+   "mode": "reserve",
+   "budget": 50000,
+   "spent": 48694,
+   "overshoot_pct": 0.0,
+   "served": 36,
+   "rejected": 24
+  }
+ ]
+}

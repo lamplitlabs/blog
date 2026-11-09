@@ -27,7 +27,12 @@ Binary code is represented by sequences of 0s and 1s, each representing a specif
 
 For more information, You can watch the video from CS50 and also try [this](https://cdn.cs50.net/2016/x/psets/0/pset0/bulbs.html)
 
-<iframe width="560" height="315" src="/assets/videos/binary.mp4" title="CS50 - Lecture 0 - Binary" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
+<video width="560" height="315" controls preload="none" playsinline title="CS50 - Lecture 0 - Binary" style="max-width:100%;height:auto;">
+  <source src="/assets/videos/binary.mp4" type="video/mp4">
+  <p>Your browser cannot play this video here. <a href="/assets/videos/binary.mp4" download>Download the CS50 Binary clip (MP4, 70 MB)</a>.</p>
+</video>
+
+<a href="/assets/videos/binary.mp4" download>Download the Binary clip (MP4, 70 MB)</a> if it does not play in your browser.
 
 ## ASCII: A Universal Alphabet for Computers
 
@@ -35,7 +40,12 @@ To represent the vast array of text and symbols we use, computers use a standard
 
 These characters include letters, numbers, punctuation marks, and control symbols. ASCII is a universal encoding system, meaning that it is understood by all computers, regardless of their operating system or hardware.
 
-<iframe width="560" height="315" src="/assets/videos/ascii.mp4" title="CS50 - Lecture 0 - Ascii" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
+<video width="560" height="315" controls preload="none" playsinline title="CS50 - Lecture 0 - Ascii" style="max-width:100%;height:auto;">
+  <source src="/assets/videos/ascii.mp4" type="video/mp4">
+  <p>Your browser cannot play this video here. <a href="/assets/videos/ascii.mp4" download>Download the CS50 ASCII clip (MP4, 57 MB)</a>.</p>
+</video>
+
+<a href="/assets/videos/ascii.mp4" download>Download the ASCII clip (MP4, 57 MB)</a> if it does not play in your browser.
 
 ## Unicode: Embracing Global Language Diversity
 
@@ -43,7 +53,12 @@ While ASCII is great for representing English text, it falls short when dealing 
 
 Unicode is a complex and evolving system, but it has become the standard for representing text in modern computing environments. It allows computers to handle a vast array of languages with ease, making communication more inclusive and accessible.
 
-<iframe width="560" height="315" src="/assets/videos/unicode.mp4" title="CS50 - Lecture 0 - Unicode" sandbox frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"  allowfullscreen></iframe>
+<video width="560" height="315" controls preload="none" playsinline title="CS50 - Lecture 0 - Unicode" style="max-width:100%;height:auto;">
+  <source src="/assets/videos/unicode.mp4" type="video/mp4">
+  <p>Your browser cannot play this video here. <a href="/assets/videos/unicode.mp4" download>Download the CS50 Unicode clip (MP4, 42 MB)</a>.</p>
+</video>
+
+<a href="/assets/videos/unicode.mp4" download>Download the Unicode clip (MP4, 42 MB)</a> if it does not play in your browser.
 
 ## Other Encodings for Specialized Data
 

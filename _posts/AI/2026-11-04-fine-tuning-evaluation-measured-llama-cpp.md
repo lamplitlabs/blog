@@ -38,7 +38,7 @@ Everything ran on one Apple M2 Pro (16 GB) with llama.cpp build 11669. llama.cpp
 
 One epoch took 15 to 40 minutes. The machine was running other jobs, so wall time is not a benchmark here. Scoring one checkpoint with every check below took about half a minute. Evaluation is cheap compared with training, so a run that trains for an hour and skips evaluation saves almost nothing.
 
-`llama-finetune` holds back the last 5% of the training file as its own validation split. With `-s 1` and `-s 2` it wrote byte-identical models: the seed did not change the data order or the result. The error bars below therefore measure the evaluation text, not run-to-run training noise.
+`llama-finetune` holds back the last 5% of the training file as its own validation split. With `-s 1` and `-s 2` it wrote byte-identical models: the seed did not change the data order or the result. The error bars below therefore measure the evaluation text, not run-to-run training noise. A later experiment measured that noise; see the order-noise note under Check 1.
 
 ## Check 1: three perplexities, not one
 
@@ -47,6 +47,16 @@ Perplexity is the exponential of the average loss per token. Lower means the mod
 ![Three bar charts of perplexity for the base model and six fine-tuned checkpoints (learning rates 1e-6, 3e-6 and 1e-5, epochs 1 and 2). Text it trained on: base 28.1, and every checkpoint lower, down to 6.9 at lr 3e-6 epoch 2 and 8.0 at lr 1e-5 epoch 2. Held-out posts: base 22.9; lr 1e-6 epoch 2 is lowest at 16.5, lr 3e-6 is 18.1 and 17.5, and lr 1e-5 is worse than base at 31.4 and 29.8. General English: base 16.5; lr 1e-6 18.7 and 18.2, lr 3e-6 21.7 and 20.9, lr 1e-5 45.0 and 53.9.](/assets/img/posts/ai/fine-tuning-eval-three-perplexities.webp){: width="1400" height="760" }
 
 Every checkpoint looks like progress on the left chart. The middle chart is the one that matters for a model meant to write like this blog. There, the lr 1e-5 runs are worse than doing nothing: 31.4 and 29.8 against the base model's 22.9. The two 1e-5 checkpoints have 15.1 and 8.0 perplexity on their training text. That is almost the same as the 1e-6 runs (15.6 and 10.1), which are the best on held-out posts. **The training-side number cannot separate the best run from the worst.**
+
+**How far apart is "apart"?** The ± error bars on these held-out numbers are about 0.3 to 0.6 points, but they only cover the choice of evaluation text. Training order adds more. `llama-finetune` does not shuffle the data, so each run sees one fixed block order and gives one draw from the spread of results. A [follow-up experiment]({% post_url AI/2026-11-08-fine-tuning-replay-data-forgetting-measured %}) trained the same 400 KB file at lr 1e-5 twice, with the same blocks in two orders. After epoch 2, held-out perplexity was 32.4 for one order and 26.9 for the other: **an order-noise range of up to 5.5 points**, about ten times the evaluation error bar. Read the per-learning-rate held-out numbers with that range in mind:
+
+| Held-out PPL (base 22.9) | 1e-6 | 3e-6 | 1e-5 |
+|---|---|---|---|
+| epoch 1 | 17.7 ± 0.3 | 18.1 ± 0.3 | 31.4 ± 0.6 |
+| epoch 2 | 16.5 ± 0.3 | 17.5 ± 0.3 | 29.8 ± 0.5 |
+| order-noise range (one run per setting) | up to 5.5 | up to 5.5 | up to 5.5 |
+
+The 5.5-point range was measured at lr 1e-5 with a 25% replay mix; we did not retrain lr 1e-6 or 3e-6 in a second order, so their spread may be smaller. The gap between lr 1e-5 and the gentler rates (12 to 14 points) is more than twice the range, so that result holds. The 1-point gap between lr 1e-6 and 3e-6 at epoch 2 is well inside it. With one run per setting, the held-out score cannot tell those two apart. The drift check below separates them by a wider margin: their KL divergence differs by about 0.16, while the same reshuffle moved KL by only 0.05.
 
 The held-out set only works because it is split by post. Our [data curation guide]({% post_url AI/2026-10-27-fine-tuning-data-curation-eval-set-construction %}) makes the same point for near-duplicates. A post repeats its own terms, code and phrasing. Put half its paragraphs in training and half in evaluation, and the evaluation set rewards memorising that post.
 
@@ -105,7 +115,7 @@ Our [regression gates post]({% post_url AI/2026-10-25-fine-tuning-pipeline-regre
 
 The thresholds are choices, not laws. Set them from what your product can tolerate. Set them *before* the run, and write them into the pipeline, not into a review comment. Then the lr 1e-5 run, which is the `llama-finetune` default, never reaches anyone's laptop.
 
-What this experiment does not show: one model family at one small size, one domain, full fine-tuning rather than LoRA, a 109k-token training slice, and one training run per setting (the trainer is deterministic). A 7B model with LoRA forgets less per step. But it still needs the same three measurements to prove that.
+What this experiment does not show: one model family at one small size, one domain, full fine-tuning rather than LoRA, a 109k-token training slice, and one training run per setting. The trainer is deterministic, so a second seed does not help: only a reshuffled training file gives a second draw, and one reshuffle moved held-out perplexity by 5.5 points. The 1e-6 and 3e-6 checkpoints clear the 10% held-out bar (20.6) by 2.5 to 4.1 points, which is less than that range. Before you promote on that row alone, train at least two orders. A 7B model with LoRA forgets less per step. But it still needs the same three measurements to prove that.
 
 ## Reproduce it
 

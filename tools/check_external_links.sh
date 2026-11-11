@@ -35,6 +35,12 @@
 #     clients (Heroku router) and answers 404 to this watcher's UA while the
 #     page is fine. crates.io publishes a JSON API for exactly this kind of
 #     existence check; the crate is treated as live when the API returns 200.
+#   * Links to reserved placeholder hosts (RFC 2606 / RFC 6761): localhost
+#     and *.localhost, example.com/.net/.org and their subdomains, and the
+#     .example, .test and .invalid TLDs. Posts on attacks (prompt injection,
+#     exfiltration, SSRF) show URLs like https://attacker.example.com/c?d=...
+#     as illustrations; they can never resolve, so probing them only produced
+#     UNREACHABLE noise. They are dropped before any probe is made.
 #
 # Usage: tools/check_external_links.sh
 # Exit status: 0 always (it is a watcher, not a gate); problems go to stdout.
@@ -46,6 +52,7 @@ RECHECK_DELAY="${LINKWATCH_RECHECK_DELAY:-60}"
 
 urls="$(grep -rhoE '\]\(https?://[^) ]+\)' _posts --include='*.md' 2>/dev/null \
   | sed -E 's/^\]\(//; s/\)$//' \
+  | grep -viE '^https?://([^/?#]*@)?([a-z0-9.-]*\.)?(localhost|example|test|invalid|example\.(com|net|org))\.?(:[0-9]+)?([/?#]|$)' \
   | sort -u)"
 
 [ -z "$urls" ] && exit 0

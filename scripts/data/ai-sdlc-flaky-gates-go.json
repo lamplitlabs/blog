@@ -1,0 +1,1707 @@
+{
+ "host": {
+  "cpu": "Apple M2 Pro",
+  "os": "macOS-27.0.1-arm64-arm-64bit",
+  "ncpu": 12,
+  "load1_median": 6.6,
+  "load1_max": 9.04
+ },
+ "go": "go version go1.27.2 darwin/arm64",
+ "modes": {
+  "plain": {
+   "bin": "plain",
+   "flags": [],
+   "reps": 400
+  },
+  "shuffle": {
+   "bin": "plain",
+   "flags": [
+    "shuffle"
+   ],
+   "reps": 400
+  },
+  "race": {
+   "bin": "race",
+   "flags": [],
+   "reps": 150
+  },
+  "race_shuffle": {
+   "bin": "race",
+   "flags": [
+    "shuffle"
+   ],
+   "reps": 150
+  },
+  "stress10": {
+   "bin": "race",
+   "flags": [
+    "shuffle",
+    "count10"
+   ],
+   "reps": 37
+  }
+ },
+ "total_runs": 10233,
+ "cases": [
+  {
+   "id": "BASE",
+   "kind": "control",
+   "title": "unpatched base tree",
+   "src": null,
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.0105,
+     "failing_tests": {}
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.009,
+     "failing_tests": {}
+    },
+    "race": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.1013,
+     "failing_tests": {}
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.0773,
+     "failing_tests": {}
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0941
+     ],
+     "race_reports": 0,
+     "median_s": 1.0981,
+     "failing_tests": {}
+    }
+   }
+  },
+  {
+   "id": "C1",
+   "kind": "correct",
+   "title": "add Ledger.Tenants (sorted) with a test",
+   "src": null,
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.0104,
+     "failing_tests": {}
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.0095,
+     "failing_tests": {}
+    },
+    "race": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.1011,
+     "failing_tests": {}
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.0774,
+     "failing_tests": {}
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0941
+     ],
+     "race_reports": 0,
+     "median_s": 1.0838,
+     "failing_tests": {}
+    }
+   }
+  },
+  {
+   "id": "C2",
+   "kind": "correct",
+   "title": "add the over-admission stress test the issue asked for",
+   "src": null,
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.0106,
+     "failing_tests": {}
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.0099,
+     "failing_tests": {}
+    },
+    "race": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.1036,
+     "failing_tests": {}
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.0798,
+     "failing_tests": {}
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0941
+     ],
+     "race_reports": 0,
+     "median_s": 1.1208,
+     "failing_tests": {}
+    }
+   }
+  },
+  {
+   "id": "T1",
+   "kind": "test-flake",
+   "title": "handler tests share one Server to save setup; a new test needs the old ones to run first",
+   "src": null,
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.0095
+     ],
+     "race_reports": 0,
+     "median_s": 0.0106,
+     "failing_tests": {}
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 196,
+     "rate": 0.49,
+     "ci95": [
+      0.4413,
+      0.5389
+     ],
+     "race_reports": 0,
+     "median_s": 0.0096,
+     "failing_tests": {
+      "TestHandlerSpend": 196,
+      "TestHandlerSpendRest": 196
+     }
+    },
+    "race": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.1214,
+     "failing_tests": {}
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 78,
+     "rate": 0.52,
+     "ci95": [
+      0.4406,
+      0.5985
+     ],
+     "race_reports": 0,
+     "median_s": 0.0447,
+     "failing_tests": {
+      "TestHandlerSpend": 78,
+      "TestHandlerSpendRest": 78
+     }
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 37,
+     "rate": 1.0,
+     "ci95": [
+      0.9059,
+      1.0
+     ],
+     "race_reports": 0,
+     "median_s": 0.0449,
+     "failing_tests": {
+      "TestHandlerSpend": 37,
+      "TestHandlerSpendRest": 37
+     }
+    }
+   }
+  },
+  {
+   "id": "T2",
+   "kind": "test-flake",
+   "title": "timeout test with a 10 ms margin between server sleep and client deadline",
+   "src": null,
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 1,
+     "rate": 0.0025,
+     "ci95": [
+      0.0004,
+      0.014
+     ],
+     "race_reports": 0,
+     "median_s": 0.0544,
+     "failing_tests": {
+      "TestCompleteSlowUpstream": 1
+     }
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 4,
+     "rate": 0.01,
+     "ci95": [
+      0.0039,
+      0.0254
+     ],
+     "race_reports": 0,
+     "median_s": 0.0537,
+     "failing_tests": {
+      "TestCompleteSlowUpstream": 4
+     }
+    },
+    "race": {
+     "n": 150,
+     "fail": 2,
+     "rate": 0.0133,
+     "ci95": [
+      0.0037,
+      0.0473
+     ],
+     "race_reports": 0,
+     "median_s": 1.164,
+     "failing_tests": {
+      "TestCompleteSlowUpstream": 2
+     }
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 0,
+     "rate": 0.0,
+     "ci95": [
+      0.0,
+      0.025
+     ],
+     "race_reports": 0,
+     "median_s": 1.1313,
+     "failing_tests": {}
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 2,
+     "rate": 0.0541,
+     "ci95": [
+      0.015,
+      0.177
+     ],
+     "race_reports": 0,
+     "median_s": 1.5455,
+     "failing_tests": {
+      "TestCompleteSlowUpstream": 2
+     }
+    }
+   }
+  },
+  {
+   "id": "F1",
+   "kind": "defect",
+   "title": "Ledger.Tenants returns map order; the test expects sorted ids",
+   "src": null,
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 321,
+     "rate": 0.8025,
+     "ci95": [
+      0.7607,
+      0.8386
+     ],
+     "race_reports": 0,
+     "median_s": 0.0126,
+     "failing_tests": {
+      "TestTenants": 321
+     }
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 320,
+     "rate": 0.8,
+     "ci95": [
+      0.758,
+      0.8363
+     ],
+     "race_reports": 0,
+     "median_s": 0.0107,
+     "failing_tests": {
+      "TestTenants": 320
+     }
+    },
+    "race": {
+     "n": 150,
+     "fail": 121,
+     "rate": 0.8067,
+     "ci95": [
+      0.7361,
+      0.8619
+     ],
+     "race_reports": 0,
+     "median_s": 0.0763,
+     "failing_tests": {
+      "TestTenants": 121
+     }
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 114,
+     "rate": 0.76,
+     "ci95": [
+      0.6857,
+      0.8213
+     ],
+     "race_reports": 0,
+     "median_s": 0.0207,
+     "failing_tests": {
+      "TestTenants": 114
+     }
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 37,
+     "rate": 1.0,
+     "ci95": [
+      0.9059,
+      1.0
+     ],
+     "race_reports": 0,
+     "median_s": 0.0406,
+     "failing_tests": {
+      "TestTenants": 37
+     }
+    }
+   }
+  },
+  {
+   "id": "F2",
+   "kind": "defect",
+   "title": "SpendAll counter incremented without its mutex",
+   "src": "D16",
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 81,
+     "rate": 0.2025,
+     "ci95": [
+      0.166,
+      0.2446
+     ],
+     "race_reports": 0,
+     "median_s": 0.0114,
+     "failing_tests": {
+      "TestSpendAll": 81
+     }
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 66,
+     "rate": 0.165,
+     "ci95": [
+      0.1318,
+      0.2045
+     ],
+     "race_reports": 0,
+     "median_s": 0.0097,
+     "failing_tests": {
+      "TestSpendAll": 66
+     }
+    },
+    "race": {
+     "n": 150,
+     "fail": 150,
+     "rate": 1.0,
+     "ci95": [
+      0.975,
+      1.0
+     ],
+     "race_reports": 150,
+     "median_s": 0.0657,
+     "failing_tests": {
+      "TestSpendAll": 150
+     }
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 150,
+     "rate": 1.0,
+     "ci95": [
+      0.975,
+      1.0
+     ],
+     "race_reports": 150,
+     "median_s": 0.0157,
+     "failing_tests": {
+      "TestSpendAll": 150
+     }
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 37,
+     "rate": 1.0,
+     "ci95": [
+      0.9059,
+      1.0
+     ],
+     "race_reports": 37,
+     "median_s": 0.0393,
+     "failing_tests": {
+      "TestSpendAll": 37
+     }
+    }
+   }
+  },
+  {
+   "id": "F3",
+   "kind": "defect",
+   "title": "wg.Add moved inside the goroutine",
+   "src": "D17",
+   "vet": {
+    "rc": 1,
+    "first": "ledger.go:63:10: WaitGroup.Add called from inside new goroutine"
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 355,
+     "rate": 0.8875,
+     "ci95": [
+      0.8528,
+      0.9149
+     ],
+     "race_reports": 0,
+     "median_s": 0.0116,
+     "failing_tests": {
+      "TestSpendAll": 353
+     }
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 373,
+     "rate": 0.9325,
+     "ci95": [
+      0.9036,
+      0.9532
+     ],
+     "race_reports": 0,
+     "median_s": 0.0092,
+     "failing_tests": {
+      "TestSpendAll": 372
+     }
+    },
+    "race": {
+     "n": 150,
+     "fail": 150,
+     "rate": 1.0,
+     "ci95": [
+      0.975,
+      1.0
+     ],
+     "race_reports": 148,
+     "median_s": 0.0659,
+     "failing_tests": {
+      "TestSpendAll": 148,
+      "TestPage": 6,
+      "TestComplete": 2,
+      "TestPageRejectsZero": 1
+     }
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 150,
+     "rate": 1.0,
+     "ci95": [
+      0.975,
+      1.0
+     ],
+     "race_reports": 149,
+     "median_s": 0.015,
+     "failing_tests": {
+      "TestSpendAll": 148
+     }
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 37,
+     "rate": 1.0,
+     "ci95": [
+      0.9059,
+      1.0
+     ],
+     "race_reports": 37,
+     "median_s": 0.0371,
+     "failing_tests": {
+      "TestSpendAll": 36
+     }
+    }
+   }
+  },
+  {
+   "id": "F4",
+   "kind": "defect",
+   "title": "lock released between the limit check and the write (\"shorter critical section\"), with the stress test",
+   "src": "D20",
+   "vet": {
+    "rc": 0,
+    "first": ""
+   },
+   "modes": {
+    "plain": {
+     "n": 400,
+     "fail": 62,
+     "rate": 0.155,
+     "ci95": [
+      0.1228,
+      0.1937
+     ],
+     "race_reports": 0,
+     "median_s": 0.0109,
+     "failing_tests": {
+      "TestSpendAllNeverOverAdmits": 62
+     }
+    },
+    "shuffle": {
+     "n": 400,
+     "fail": 46,
+     "rate": 0.115,
+     "ci95": [
+      0.0873,
+      0.15
+     ],
+     "race_reports": 0,
+     "median_s": 0.0088,
+     "failing_tests": {
+      "TestSpendAllNeverOverAdmits": 46
+     }
+    },
+    "race": {
+     "n": 150,
+     "fail": 107,
+     "rate": 0.7133,
+     "ci95": [
+      0.6363,
+      0.7797
+     ],
+     "race_reports": 0,
+     "median_s": 0.0713,
+     "failing_tests": {
+      "TestSpendAllNeverOverAdmits": 107
+     }
+    },
+    "race_shuffle": {
+     "n": 150,
+     "fail": 84,
+     "rate": 0.56,
+     "ci95": [
+      0.48,
+      0.637
+     ],
+     "race_reports": 0,
+     "median_s": 0.0303,
+     "failing_tests": {
+      "TestSpendAllNeverOverAdmits": 84
+     }
+    },
+    "stress10": {
+     "n": 37,
+     "fail": 37,
+     "rate": 1.0,
+     "ci95": [
+      0.9059,
+      1.0
+     ],
+     "race_reports": 0,
+     "median_s": 0.0446,
+     "failing_tests": {
+      "TestSpendAllNeverOverAdmits": 37
+     }
+    }
+   }
+  }
+ ],
+ "policies": [
+  {
+   "id": "plain1",
+   "label": "go test, one run",
+   "mode": "plain",
+   "attempts": 1,
+   "cases": {
+    "BASE": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0105,
+     "mean_s": 0.0245
+    },
+    "C1": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0104,
+     "mean_s": 0.0295
+    },
+    "C2": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0106,
+     "mean_s": 0.0318
+    },
+    "T1": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0106,
+     "mean_s": 0.0368
+    },
+    "T2": {
+     "groups": 400,
+     "merged": 399,
+     "merge_rate": 0.9975,
+     "green_after_red": 0,
+     "median_s": 0.0544,
+     "mean_s": 0.069
+    },
+    "F1": {
+     "groups": 400,
+     "merged": 79,
+     "merge_rate": 0.1975,
+     "green_after_red": 0,
+     "median_s": 0.0126,
+     "mean_s": 0.032
+    },
+    "F2": {
+     "groups": 400,
+     "merged": 319,
+     "merge_rate": 0.7975,
+     "green_after_red": 0,
+     "median_s": 0.0114,
+     "mean_s": 0.0249
+    },
+    "F3": {
+     "groups": 400,
+     "merged": 45,
+     "merge_rate": 0.1125,
+     "green_after_red": 0,
+     "median_s": 0.0116,
+     "mean_s": 0.0232
+    },
+    "F4": {
+     "groups": 400,
+     "merged": 338,
+     "merge_rate": 0.845,
+     "green_after_red": 0,
+     "median_s": 0.0109,
+     "mean_s": 0.0216
+    }
+   },
+   "defect_merge_mean": 0.4881,
+   "test_flake_merge_mean": 0.9988,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 0.0105
+  },
+  {
+   "id": "plain3",
+   "label": "go test, re-run failed job (up to 3 tries)",
+   "mode": "plain",
+   "attempts": 3,
+   "cases": {
+    "BASE": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0103,
+     "mean_s": 0.03
+    },
+    "C1": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0104,
+     "mean_s": 0.0316
+    },
+    "C2": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0105,
+     "mean_s": 0.0354
+    },
+    "T1": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0107,
+     "mean_s": 0.0416
+    },
+    "T2": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0545,
+     "mean_s": 0.0716
+    },
+    "F1": {
+     "groups": 133,
+     "merged": 67,
+     "merge_rate": 0.5038,
+     "green_after_red": 48,
+     "median_s": 0.0353,
+     "mean_s": 0.0822
+    },
+    "F2": {
+     "groups": 133,
+     "merged": 132,
+     "merge_rate": 0.9925,
+     "green_after_red": 23,
+     "median_s": 0.0204,
+     "mean_s": 0.0319
+    },
+    "F3": {
+     "groups": 133,
+     "merged": 39,
+     "merge_rate": 0.2932,
+     "green_after_red": 24,
+     "median_s": 0.0361,
+     "mean_s": 0.0659
+    },
+    "F4": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 21,
+     "median_s": 0.0155,
+     "mean_s": 0.028
+    }
+   },
+   "defect_merge_mean": 0.6974,
+   "test_flake_merge_mean": 1.0,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 0.0104
+  },
+  {
+   "id": "plain_all3",
+   "label": "go test 3 times, every run must pass",
+   "mode": "plain",
+   "attempts": 3,
+   "all": true,
+   "cases": {
+    "BASE": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0313,
+     "mean_s": 0.0735
+    },
+    "C1": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0312,
+     "mean_s": 0.0885
+    },
+    "C2": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0316,
+     "mean_s": 0.0955
+    },
+    "T1": {
+     "groups": 133,
+     "merged": 133,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0315,
+     "mean_s": 0.1105
+    },
+    "T2": {
+     "groups": 133,
+     "merged": 132,
+     "merge_rate": 0.9925,
+     "green_after_red": 0,
+     "median_s": 0.1627,
+     "mean_s": 0.207
+    },
+    "F1": {
+     "groups": 133,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0378,
+     "mean_s": 0.096
+    },
+    "F2": {
+     "groups": 133,
+     "merged": 71,
+     "merge_rate": 0.5338,
+     "green_after_red": 0,
+     "median_s": 0.0339,
+     "mean_s": 0.0749
+    },
+    "F3": {
+     "groups": 133,
+     "merged": 1,
+     "merge_rate": 0.0075,
+     "green_after_red": 0,
+     "median_s": 0.0396,
+     "mean_s": 0.0698
+    },
+    "F4": {
+     "groups": 133,
+     "merged": 83,
+     "merge_rate": 0.6241,
+     "green_after_red": 0,
+     "median_s": 0.0322,
+     "mean_s": 0.0648
+    }
+   },
+   "defect_merge_mean": 0.2913,
+   "test_flake_merge_mean": 0.9963,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 0.0313
+  },
+  {
+   "id": "shuffle1",
+   "label": "go test -shuffle=on, one run",
+   "mode": "shuffle",
+   "attempts": 1,
+   "cases": {
+    "BASE": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.009,
+     "mean_s": 0.0099
+    },
+    "C1": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0095,
+     "mean_s": 0.0108
+    },
+    "C2": {
+     "groups": 400,
+     "merged": 400,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 0.0099,
+     "mean_s": 0.0106
+    },
+    "T1": {
+     "groups": 400,
+     "merged": 204,
+     "merge_rate": 0.51,
+     "green_after_red": 0,
+     "median_s": 0.0096,
+     "mean_s": 0.0108
+    },
+    "T2": {
+     "groups": 400,
+     "merged": 396,
+     "merge_rate": 0.99,
+     "green_after_red": 0,
+     "median_s": 0.0537,
+     "mean_s": 0.0557
+    },
+    "F1": {
+     "groups": 400,
+     "merged": 80,
+     "merge_rate": 0.2,
+     "green_after_red": 0,
+     "median_s": 0.0107,
+     "mean_s": 0.0117
+    },
+    "F2": {
+     "groups": 400,
+     "merged": 334,
+     "merge_rate": 0.835,
+     "green_after_red": 0,
+     "median_s": 0.0097,
+     "mean_s": 0.0104
+    },
+    "F3": {
+     "groups": 400,
+     "merged": 27,
+     "merge_rate": 0.0675,
+     "green_after_red": 0,
+     "median_s": 0.0092,
+     "mean_s": 0.01
+    },
+    "F4": {
+     "groups": 400,
+     "merged": 354,
+     "merge_rate": 0.885,
+     "green_after_red": 0,
+     "median_s": 0.0088,
+     "mean_s": 0.0092
+    }
+   },
+   "defect_merge_mean": 0.4969,
+   "test_flake_merge_mean": 0.75,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 0.0095
+  },
+  {
+   "id": "race1",
+   "label": "go test -race, one run",
+   "mode": "race",
+   "attempts": 1,
+   "cases": {
+    "BASE": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1013,
+     "mean_s": 1.1131
+    },
+    "C1": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1011,
+     "mean_s": 1.1209
+    },
+    "C2": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1036,
+     "mean_s": 1.1157
+    },
+    "T1": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1214,
+     "mean_s": 1.1326
+    },
+    "T2": {
+     "groups": 150,
+     "merged": 148,
+     "merge_rate": 0.9867,
+     "green_after_red": 0,
+     "median_s": 1.164,
+     "mean_s": 1.1597
+    },
+    "F1": {
+     "groups": 150,
+     "merged": 29,
+     "merge_rate": 0.1933,
+     "green_after_red": 0,
+     "median_s": 0.0763,
+     "mean_s": 0.2838
+    },
+    "F2": {
+     "groups": 150,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0657,
+     "mean_s": 0.0731
+    },
+    "F3": {
+     "groups": 150,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0659,
+     "mean_s": 0.0717
+    },
+    "F4": {
+     "groups": 150,
+     "merged": 43,
+     "merge_rate": 0.2867,
+     "green_after_red": 0,
+     "median_s": 0.0713,
+     "mean_s": 0.3695
+    }
+   },
+   "defect_merge_mean": 0.12,
+   "test_flake_merge_mean": 0.9933,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 1.1013
+  },
+  {
+   "id": "rs1",
+   "label": "go test -race -shuffle=on, one run",
+   "mode": "race_shuffle",
+   "attempts": 1,
+   "cases": {
+    "BASE": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0773,
+     "mean_s": 1.0877
+    },
+    "C1": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0774,
+     "mean_s": 1.0857
+    },
+    "C2": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0798,
+     "mean_s": 1.0845
+    },
+    "T1": {
+     "groups": 150,
+     "merged": 72,
+     "merge_rate": 0.48,
+     "green_after_red": 0,
+     "median_s": 0.0447,
+     "mean_s": 0.542
+    },
+    "T2": {
+     "groups": 150,
+     "merged": 150,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1313,
+     "mean_s": 1.134
+    },
+    "F1": {
+     "groups": 150,
+     "merged": 36,
+     "merge_rate": 0.24,
+     "green_after_red": 0,
+     "median_s": 0.0207,
+     "mean_s": 0.2739
+    },
+    "F2": {
+     "groups": 150,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0157,
+     "mean_s": 0.0171
+    },
+    "F3": {
+     "groups": 150,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.015,
+     "mean_s": 0.0162
+    },
+    "F4": {
+     "groups": 150,
+     "merged": 66,
+     "merge_rate": 0.44,
+     "green_after_red": 0,
+     "median_s": 0.0303,
+     "mean_s": 0.4842
+    }
+   },
+   "defect_merge_mean": 0.17,
+   "test_flake_merge_mean": 0.74,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 1.0774
+  },
+  {
+   "id": "rs3",
+   "label": "go test -race -shuffle=on, re-run (up to 3 tries)",
+   "mode": "race_shuffle",
+   "attempts": 3,
+   "cases": {
+    "BASE": {
+     "groups": 50,
+     "merged": 50,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0799,
+     "mean_s": 1.0885
+    },
+    "C1": {
+     "groups": 50,
+     "merged": 50,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0946,
+     "mean_s": 1.0971
+    },
+    "C2": {
+     "groups": 50,
+     "merged": 50,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0606,
+     "mean_s": 1.0677
+    },
+    "T1": {
+     "groups": 50,
+     "merged": 43,
+     "merge_rate": 0.86,
+     "green_after_red": 13,
+     "median_s": 1.1011,
+     "mean_s": 0.9628
+    },
+    "T2": {
+     "groups": 50,
+     "merged": 50,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1257,
+     "mean_s": 1.1282
+    },
+    "F1": {
+     "groups": 50,
+     "merged": 28,
+     "merge_rate": 0.56,
+     "green_after_red": 17,
+     "median_s": 1.0371,
+     "mean_s": 0.64
+    },
+    "F2": {
+     "groups": 50,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0484,
+     "mean_s": 0.0512
+    },
+    "F3": {
+     "groups": 50,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0461,
+     "mean_s": 0.0486
+    },
+    "F4": {
+     "groups": 50,
+     "merged": 42,
+     "merge_rate": 0.84,
+     "green_after_red": 23,
+     "median_s": 1.0655,
+     "mean_s": 0.923
+    }
+   },
+   "defect_merge_mean": 0.35,
+   "test_flake_merge_mean": 0.93,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 1.0799
+  },
+  {
+   "id": "stress",
+   "label": "go test -race -shuffle=on -count=10, one run",
+   "mode": "stress10",
+   "attempts": 1,
+   "cases": {
+    "BASE": {
+     "groups": 37,
+     "merged": 37,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0981,
+     "mean_s": 1.0987
+    },
+    "C1": {
+     "groups": 37,
+     "merged": 37,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.0838,
+     "mean_s": 1.0938
+    },
+    "C2": {
+     "groups": 37,
+     "merged": 37,
+     "merge_rate": 1.0,
+     "green_after_red": 0,
+     "median_s": 1.1208,
+     "mean_s": 1.1136
+    },
+    "T1": {
+     "groups": 37,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0449,
+     "mean_s": 0.0498
+    },
+    "T2": {
+     "groups": 37,
+     "merged": 35,
+     "merge_rate": 0.9459,
+     "green_after_red": 0,
+     "median_s": 1.5455,
+     "mean_s": 1.4984
+    },
+    "F1": {
+     "groups": 37,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0406,
+     "mean_s": 0.047
+    },
+    "F2": {
+     "groups": 37,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0393,
+     "mean_s": 0.0442
+    },
+    "F3": {
+     "groups": 37,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0371,
+     "mean_s": 0.0378
+    },
+    "F4": {
+     "groups": 37,
+     "merged": 0,
+     "merge_rate": 0.0,
+     "green_after_red": 0,
+     "median_s": 0.0446,
+     "mean_s": 0.0568
+    }
+   },
+   "defect_merge_mean": 0.0,
+   "test_flake_merge_mean": 0.4729,
+   "correct_block_mean": 0.0,
+   "median_s_correct": 1.0981
+  }
+ ],
+ "retry_curve_plain": {
+  "T1": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "T2": [
+   0.9975,
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "F1": [
+   0.1995,
+   0.3636,
+   0.4949,
+   0.601,
+   0.6869
+  ],
+  "F2": [
+   0.8005,
+   0.952,
+   0.9899,
+   1.0,
+   1.0
+  ],
+  "F3": [
+   0.1136,
+   0.202,
+   0.2879,
+   0.3611,
+   0.4268
+  ],
+  "F4": [
+   0.846,
+   0.9646,
+   0.9949,
+   0.9975,
+   1.0
+  ]
+ },
+ "contention": {
+  "parallel": 12,
+  "rounds": 60,
+  "load1_median": 5.29,
+  "cases": {
+   "BASE": {
+    "n": 80,
+    "fail": 0,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.0458
+    ],
+    "median_s": 1.171,
+    "failing_tests": {}
+   },
+   "C1": {
+    "n": 80,
+    "fail": 0,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.0458
+    ],
+    "median_s": 1.177,
+    "failing_tests": {}
+   },
+   "C2": {
+    "n": 80,
+    "fail": 0,
+    "rate": 0.0,
+    "ci95": [
+     0.0,
+     0.0458
+    ],
+    "median_s": 1.177,
+    "failing_tests": {}
+   },
+   "T1": {
+    "n": 80,
+    "fail": 40,
+    "rate": 0.5,
+    "ci95": [
+     0.393,
+     0.607
+    ],
+    "median_s": 1.169,
+    "failing_tests": {
+     "TestHandlerSpend": 40,
+     "TestHandlerSpendRest": 40
+    }
+   },
+   "T2": {
+    "n": 80,
+    "fail": 8,
+    "rate": 0.1,
+    "ci95": [
+     0.0515,
+     0.1851
+    ],
+    "median_s": 1.182,
+    "failing_tests": {
+     "TestCompleteSlowUpstream": 8
+    }
+   },
+   "F1": {
+    "n": 80,
+    "fail": 65,
+    "rate": 0.8125,
+    "ci95": [
+     0.7134,
+     0.8829
+    ],
+    "median_s": 1.177,
+    "failing_tests": {
+     "TestTenants": 65
+    }
+   },
+   "F2": {
+    "n": 80,
+    "fail": 80,
+    "rate": 1.0,
+    "ci95": [
+     0.9542,
+     1.0
+    ],
+    "median_s": 1.161,
+    "failing_tests": {
+     "TestSpendAll": 80
+    }
+   },
+   "F3": {
+    "n": 80,
+    "fail": 80,
+    "rate": 1.0,
+    "ci95": [
+     0.9542,
+     1.0
+    ],
+    "median_s": 1.156,
+    "failing_tests": {
+     "TestSpendAll": 80,
+     "TestHandlerSpend": 1,
+     "TestCompleteUpstreamError": 1,
+     "TestLoadConfigRequiresURL": 1,
+     "TestSpendUnknownTenant": 1,
+     "TestHandlerOverBudget": 1
+    }
+   },
+   "F4": {
+    "n": 80,
+    "fail": 27,
+    "rate": 0.3375,
+    "ci95": [
+     0.2435,
+     0.4464
+    ],
+    "median_s": 1.162,
+    "failing_tests": {
+     "TestSpendAllNeverOverAdmits": 27
+    }
+   }
+  }
+ },
+ "timing": {
+  "plain": {
+   "runs": 360,
+   "green_runs": 256,
+   "green_median_s": 0.0097
+  },
+  "race": {
+   "runs": 360,
+   "green_runs": 197,
+   "green_median_s": 1.0766
+  },
+  "race_nosleep": {
+   "runs": 360,
+   "green_runs": 198,
+   "green_median_s": 0.0277
+  },
+  "stress10_nosleep": {
+   "runs": 360,
+   "green_runs": 156,
+   "green_median_s": 0.0538
+  },
+  "fails_by_case": {
+   "BASE": {
+    "plain": 0,
+    "race": 0,
+    "race_nosleep": 0,
+    "stress10_nosleep": 0
+   },
+   "C1": {
+    "plain": 0,
+    "race": 0,
+    "race_nosleep": 0,
+    "stress10_nosleep": 0
+   },
+   "C2": {
+    "plain": 0,
+    "race": 0,
+    "race_nosleep": 0,
+    "stress10_nosleep": 0
+   },
+   "T1": {
+    "plain": 24,
+    "race": 24,
+    "race_nosleep": 24,
+    "stress10_nosleep": 40
+   },
+   "T2": {
+    "plain": 0,
+    "race": 1,
+    "race_nosleep": 1,
+    "stress10_nosleep": 4
+   },
+   "F1": {
+    "plain": 30,
+    "race": 34,
+    "race_nosleep": 33,
+    "stress10_nosleep": 40
+   },
+   "F2": {
+    "plain": 6,
+    "race": 40,
+    "race_nosleep": 40,
+    "stress10_nosleep": 40
+   },
+   "F3": {
+    "plain": 38,
+    "race": 40,
+    "race_nosleep": 40,
+    "stress10_nosleep": 40
+   },
+   "F4": {
+    "plain": 6,
+    "race": 24,
+    "race_nosleep": 24,
+    "stress10_nosleep": 40
+   }
+  },
+  "reps": 40
+ },
+ "samples": {
+  "F1.plain": "F1.plain.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "F1.race": "F1.race.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "F1.race_shuffle": "F1.race.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\nFAIL\n",
+  "F1.shuffle": "F1.plain.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\nFAIL\n",
+  "F1.stress10": "F1.race.test -test.count=10 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n--- PASS: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestTenants\n    ledger_test.go:51: Tenants = [b a]\n--- FAIL: TestTenants (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RU",
+  "F2.plain": "F2.plain.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 49, want 50\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "F2.race": "F2.race.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 42, want 50\n    testing.go:1867: race detected during execution of test\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n==================\nWARNING: DATA RACE\nRead at 0x00c0000ac838 by goroutine 26:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0x9c\n\nPrevious write at 0x00c0000ac838 by goroutine 18:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0xac\n\nGoroutine 26 (running) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nGoroutine 18 (finished) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n==================\n==================\nWARNING: DATA RACE\nWrite at 0x00c0000ac838 by goroutine 24:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0xac\n\nPrevious write at 0x00c0000ac838 by goroutine 26:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0xac\n\nGoroutine 24 (running) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nGoroutine 26 (finished) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n==================\n",
+  "F2.race_shuffle": "F2.race.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 38, want 50\n    testing.go:1867: race detected during execution of test\n--- FAIL: TestSpendAll (0.00s)\nFAIL\n==================\nWARNING: DATA RACE\nRead at 0x00c000310178 by goroutine 47:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0x9c\n\nPrevious write at 0x00c000310178 by goroutine 37:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0xac\n\nGoroutine 47 (running) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nGoroutine 37 (running) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n==================\n==================\nWARNING: DATA RACE\nWrite at 0x00c000310178 by goroutine 38:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0xac\n\nPrevious write at 0x00c000310178 by goroutine 48:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:65 +0xac\n\nGoroutine 38 (running) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nGoroutine 48 (finished) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x80\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n==================\n",
+  "F2.shuffle": "F2.plain.test -test.count=1 -test.v -test.shuffle=3\n-test.shuffle 3\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 48, want 50\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\nFAIL\n",
+  "F2.stress10": "F2.race.test -test.count=10 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 14, want 50\n    testing.go:1867: race detected during execution of test\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 47, want 50\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 26, want 50\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRe",
+  "F3.plain": "F3.plain.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 8, want 50\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "F3.race": "F3.race.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAll\n    testing.go:1867: race detected during execution of test\n--- FAIL: TestSpendAll (0.00s)\n==================\nWARNING: DATA RACE\nWrite at 0x00c0000128f8 by goroutine 17:\n  runtime.racewrite()\n      <autogenerated>:1 +0x10\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nPrevious read at 0x00c0000128f8 by goroutine 34:\n  runtime.raceread()\n      <autogenerated>:1 +0x10\n\nGoroutine 17 (running) created at:\n  testing.(*T).Run()\n      $GOROOT/src/testing/testing.go:2260 +0x7bc\n  testing.runTests.func1()\n      $GOROOT/src/testing/testing.go:2744 +0x74\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.runTests()\n      $GOROOT/src/testing/testing.go:2742 +0x7a0\n  testing.(*M).Run()\n      $GOROOT/src/testing/testing.go:2602 +0xb38\n  main.main()\n      _testmain.go:80 +0x100\n\nGoroutine 34 (finished) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x9c\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n==================\npanic: sync: WaitGroup is reused before previous Wait has returned [recovered, repanicked]\n\ngoroutine 17 [running]:\ntesting.tRunner.func1.2({0x105458520, 0x1053e4950})\n\t$GOROOT/src/testing/testing.go:2125 +0x2b8\ntesting.tRunner.func1()\n\t$GOROOT/src/testing/testing.go:2128 +0x438\npanic({0x105458520?, 0x1053e4950?})\n\t$GOROOT/src/runtime/panic.go:859 +0x120\nsync.(*WaitGroup).Wait(0xc0000128f0)\n\t$GOROOT/src/sync/waitgroup.go:213 +0x14c\nexample.com/quota.(*Ledger).SpendAll(0xc000010720, {0x10505d25f, 0x4}, {0xc00008cb90, 0x32, 0x7f10008cb78?})\n\tledger.go:72 +0x234\nexample.com/quota.TestSpendAll(0xc000141b08)\n\tledger_test.go:54 +0x2e4\ntesting.tRunner(0xc000141b08, 0x1054b4fe8)\n\t$GOROOT/src/testing/testing.go:2195 +0x168\ncreated by testing.(*T).Run in goroutine 1\n\t$GOROOT/src/testing/testing.go:2260 +0x7c0\n",
+  "F3.race_shuffle": "F3.race.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 37, want 50\n    testing.go:1867: race detected during execution of test\n--- FAIL: TestSpendAll (0.00s)\nFAIL\n==================\nWARNING: DATA RACE\nWrite at 0x00c00029c0e8 by goroutine 36:\n  runtime.racewrite()\n      <autogenerated>:1 +0x10\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nPrevious read at 0x00c00029c0e8 by goroutine 42:\n  runtime.raceread()\n      <autogenerated>:1 +0x10\n\nGoroutine 36 (running) created at:\n  testing.(*T).Run()\n      $GOROOT/src/testing/testing.go:2260 +0x7bc\n  testing.runTests.func1()\n      $GOROOT/src/testing/testing.go:2744 +0x74\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.runTests()\n      $GOROOT/src/testing/testing.go:2742 +0x7a0\n  testing.(*M).Run()\n      $GOROOT/src/testing/testing.go:2602 +0xb38\n  main.main()\n      _testmain.go:80 +0x100\n\nGoroutine 42 (finished) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x9c\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n==================\n==================\nWARNING: DATA RACE\nWrite at 0x00c00029c0f0 by goroutine 83:\n  example.com/quota.(*Ledger).SpendAll.func1()\n      ledger.go:67 +0xc8\n\nPrevious read at 0x00c00029c0f0 by goroutine 36:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:73 +0x238\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nGoroutine 83 (running) created at:\n  example.com/quota.(*Ledger).SpendAll()\n      ledger.go:62 +0x9c\n  example.com/quota.TestSpendAll()\n      ledger_test.go:54 +0x2e0\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.(*T).Run.gowrap1()\n      $GOROOT/src/testing/testing.go:2260 +0x34\n\nGoroutine 36 (running) created at:\n  testing.(*T).Run()\n      $GOROOT/src/testing/testing.go:2260 +0x7bc\n  testing.runTests.func1()\n      $GOROOT/src/testing/testing.go:2744 +0x74\n  testing.tRunner()\n      $GOROOT/src/testing/testing.go:2195 +0x164\n  testing.runTests()\n      $GOROOT/src/testing/testing.go:2742 +0x7a0\n  testing.(*M).Run()\n      $GOROOT/src/testing/testing.go:2602 +0xb38\n  main.main()\n      _testmain.go:80 +0x100\n==================\n",
+  "F3.shuffle": "F3.plain.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 29, want 50\n--- FAIL: TestSpendAll (0.00s)\nFAIL\n",
+  "F3.stress10": "F3.race.test -test.count=10 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n    ledger_test.go:55: SpendAll ok = 41, want 50\n    testing.go:1867: race detected during execution of test\n--- FAIL: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PA",
+  "F4.plain": "F4.plain.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 26 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "F4.race": "F4.race.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.01s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 26 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.01s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "F4.race_shuffle": "F4.race.test -test.count=1 -test.v -test.shuffle=3\n-test.shuffle 3\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 26 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\nFAIL\n",
+  "F4.shuffle": "F4.plain.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 26 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\nFAIL\n",
+  "F4.stress10": "F4.race.test -test.count=10 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n--- PASS: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 32 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 33 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 30 spends, want 25\n--- FAIL: TestSpendAllNeverOverAdmits (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendAllNeverOverAdmits\n    ledger_test.go:55: SpendAll admitted 32 spends, want 25\n--",
+  "T1.race_shuffle": "T1.race.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 200 {\"remaining\":30}\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n    handler_test.go:31: got 200 {\"remaining\":0}\n--- FAIL: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\nFAIL\n",
+  "T1.shuffle": "T1.plain.test -test.count=1 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 200 {\"remaining\":30}\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n    handler_test.go:31: got 200 {\"remaining\":0}\n--- FAIL: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\nFAIL\n",
+  "T1.stress10": "T1.race.test -test.count=10 -test.v -test.shuffle=1\n-test.shuffle 1\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 200 {\"remaining\":30}\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n    handler_test.go:31: got 200 {\"remaining\":0}\n--- FAIL: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 402 token budget exhausted\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n    handler_test.go:31: got 402 token budget exhausted\n--- FAIL: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 402 token budget exhausted\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n    handler_test.go:31: got 402 token budget exhausted\n--- FAIL: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 402 token budget exhausted\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n    handler_test.go:31: got 402 token budget exhausted\n--- FAIL: TestHandlerSpend (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestHandlerSpendRest\n    handler_test.go:45: got 402 token budget exhausted\n--- FAIL: TestHandlerSpendRest (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestDisplayNam",
+  "T2.loaded": "T2.race.test -test.count=1 -test.v -test.shuffle=22  # 12 binaries at once\n-test.shuffle 22\n=== RUN   TestCompleteSlowUpstream\n    upstream_test.go:39: upstream: Post \"http://127.0.0.1:53698\": context deadline exceeded\n--- FAIL: TestCompleteSlowUpstream (0.06s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\nFAIL\n",
+  "T2.plain": "T2.plain.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteSlowUpstream\n    upstream_test.go:39: upstream: Post \"http://127.0.0.1:58517\": context deadline exceeded\n--- FAIL: TestCompleteSlowUpstream (0.06s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.01s)\nFAIL\n",
+  "T2.race": "T2.race.test -test.count=1 -test.v\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestCompleteSlowUpstream\n    upstream_test.go:39: upstream: Post \"http://127.0.0.1:52479\": context deadline exceeded\n--- FAIL: TestCompleteSlowUpstream (0.05s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\nFAIL\n",
+  "T2.shuffle": "T2.plain.test -test.count=1 -test.v -test.shuffle=169\n-test.shuffle 169\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestCompleteSlowUpstream\n    upstream_test.go:39: upstream: Post \"http://127.0.0.1:52541\": context deadline exceeded\n--- FAIL: TestCompleteSlowUpstream (0.07s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\nFAIL\n",
+  "T2.stress10": "T2.race.test -test.count=10 -test.v -test.shuffle=21\n-test.shuffle 21\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestCompleteSlowUpstream\n--- PASS: TestCompleteSlowUpstream (0.04s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestCompleteSlowUpstream\n--- PASS: TestCompleteSlowUpstream (0.04s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestCompleteSlowUpstream\n--- PASS: TestCompleteSlowUpstream (0.05s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: TestPageRejectsZero (0.00s)\n=== RUN   TestComplete\n--- PASS: TestComplete (0.00s)\n=== RUN   TestLoadConfigDefaults\n--- PASS: TestLoadConfigDefaults (0.00s)\n=== RUN   TestSpendUnknownTenant\n--- PASS: TestSpendUnknownTenant (0.00s)\n=== RUN   TestSpendOverLimit\n--- PASS: TestSpendOverLimit (0.00s)\n=== RUN   TestSpendUpToLimit\n--- PASS: TestSpendUpToLimit (0.00s)\n=== RUN   TestPage\n--- PASS: TestPage (0.00s)\n=== RUN   TestHandlerSpend\n--- PASS: TestHandlerSpend (0.00s)\n=== RUN   TestCompleteSlowUpstream\n    upstream_test.go:39: upstream: Post \"http://127.0.0.1:55584\": context deadline exceeded\n--- FAIL: TestCompleteSlowUpstream (0.05s)\n=== RUN   TestUsageQueryArgs\n--- PASS: TestUsageQueryArgs (0.00s)\n=== RUN   TestDisplayName\n--- PASS: TestDisplayName (0.00s)\n=== RUN   TestSpendRejectsNonPositive\n--- PASS: TestSpendRejectsNonPositive (0.00s)\n=== RUN   TestHandlerOverBudget\n--- PASS: TestHandlerOverBudget (0.00s)\n=== RUN   TestSpendAll\n--- PASS: TestSpendAll (0.00s)\n=== RUN   TestLoadConfigRequiresURL\n--- PASS: TestLoadConfigRequiresURL (0.00s)\n=== RUN   TestLoadConfigOverrides\n--- PASS: TestLoadConfigOverrides (0.00s)\n=== RUN   TestHandlerBadBody\n--- PASS: TestHandlerBadBody (0.00s)\n=== RUN   TestCompleteUpstreamError\n--- PASS: TestCompleteUpstreamError (0.00s)\n=== RUN   TestDisplayNameNotFound\n--- PASS: TestDisplayNameNotFound (0.00s)\n=== RUN   TestPageRejectsZero\n--- PASS: Te"
+ }
+}

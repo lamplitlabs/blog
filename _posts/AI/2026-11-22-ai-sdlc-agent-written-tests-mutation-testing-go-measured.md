@@ -67,7 +67,7 @@ Four things stand out.
 - **D22** builds the usage SQL by concatenating the tenant id.
 - **D08** turns `ts >= $2` into `ts > $2`.
 
-Both are edits to a string literal, and gomut, like most mutation tools, has no string-literal operators: it makes no mutant in `UsageQuery` at all, so the mutation score has nothing to say about it. The hand suite's `UsageQuery` test only checked that the query was non-empty and caught neither. Every plain and 90%-coverage agent wrote a test like this one, without being asked:
+Both are edits to a string literal, and gomut, like most mutation tools, has no string-literal operators: it makes no mutant in `UsageQuery` at all, so the mutation score has nothing to say about it. The hand suite's `UsageQuery` test checked the arguments and that the query was non-empty, never the SQL text, and caught neither. Every plain and 90%-coverage agent wrote a test like this one, without being asked:
 
 ```go
 func TestUsageQueryParameterised(t *testing.T) {
@@ -88,7 +88,7 @@ The same goes for D20, a check-then-act race in `Spend`: the lock is released be
 
 **4. Order matters more than the tool.** Give the survivor list to an agent after it has written its own suite and it adds one test: all three mutants/plain runs added a fake `RoundTripper` whose body records `Close()`. That kills #77 and catches D21, which no suite written from the source alone had caught. It took 40-54 s and 6-7 model calls. That arm caught the most defects, 18-19 of 26.
 
-![gomut report for the hand-written suite of the Go quota service: 89.1% statement coverage, 73.3% mutation score, 55 killed, 11 lived, 9 not covered, 6 not viable; the source lines of config.go, handler.go, ledger.go, page.go and upstream.go are listed with red rows for lived mutants and yellow rows for not-covered ones, such as the removed c.UpstreamURL = u assignment, the || to && swap in the MAX_TOKENS check, the removed Content-Type header, the removed defer resp.Body.Close() and the error returns in upstream.go replaced by nil](/assets/img/posts/ai/ai-sdlc-agent-written-tests-mutation-testing-report.webp)
+![gomut report for the hand-written suite of the Go quota service: 89.1% statement coverage, 73.3% mutation score, 55 killed, 11 lived, 9 not covered, 6 not viable; the source lines of config.go, handler.go, ledger.go, page.go and upstream.go are listed with red rows for lived mutants and yellow rows for not-covered ones, such as the removed c.UpstreamURL = u assignment, the logical OR changed to AND in the MAX_TOKENS check, the removed Content-Type header, the removed defer resp.Body.Close() and the error returns in upstream.go replaced by nil](/assets/img/posts/ai/ai-sdlc-agent-written-tests-mutation-testing-report.webp)
 
 The screenshot above is gomut's HTML report for the hand-written suite, the list the mutants/hand agents worked from. Each red row is a mutant the suite let through. It is a good list of missing tests, and the agents treated it as the whole job.
 

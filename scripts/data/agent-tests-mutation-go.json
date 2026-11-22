@@ -1,0 +1,4089 @@
+{
+ "about": "Agent-written Go unit tests for ../ai-review-gates/svc measured with gomut (mutation score) and with the 26 seeded defects + 5 behaviour-preserving changes of ../ai-review-gates/corpus.py. Written by scripts/agent-tests-mutation/summarise.py; do not edit by hand.",
+ "host": {
+  "go": "go1.27.4",
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu": "Apple M2 Pro"
+ },
+ "mutants_total": 81,
+ "defects": [
+  {
+   "id": "D01",
+   "cls": "silent-error",
+   "title": "DisplayName degrades to the raw id instead of returning the store error",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D02",
+   "cls": "silent-error",
+   "title": "bad MAX_TOKENS silently falls back to the default",
+   "caught_by": [
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D03",
+   "cls": "silent-error",
+   "title": "upstream decode error discarded, empty reply returned",
+   "caught_by": [
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D04",
+   "cls": "silent-error",
+   "title": "unknown tenant is charged instead of rejected",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D05",
+   "cls": "boundary",
+   "title": "spend landing exactly on the limit is refused (> became >=)",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D06",
+   "cls": "boundary",
+   "title": "last page drops its final item",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D07",
+   "cls": "boundary",
+   "title": "page offset treats the 1-based page as 0-based",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D08",
+   "cls": "boundary",
+   "title": "usage report excludes rows exactly at `since`",
+   "caught_by": [
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D09",
+   "cls": "weak-tests",
+   "title": "off-by-one in Spend, and the test's expected values moved to match",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D10",
+   "cls": "weak-tests",
+   "title": "refused spend still charged; the balance assertion deleted",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D11",
+   "cls": "weak-tests",
+   "title": "non-200 upstream treated as success; failing test skipped as flaky",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D12",
+   "cls": "weak-tests",
+   "title": "new Refund lets the balance exceed the limit; its test covers the happy path only",
+   "caught_by": []
+  },
+  {
+   "id": "D13",
+   "cls": "hallucinated-api",
+   "title": "uses time.ParseDurationStrict, which does not exist",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D14",
+   "cls": "hallucinated-api",
+   "title": "fmt.Errorf arguments in the wrong order",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D15",
+   "cls": "duplicate-helper",
+   "title": "second pagination helper that errors past the end instead of returning empty",
+   "caught_by": []
+  },
+  {
+   "id": "D16",
+   "cls": "concurrency",
+   "title": "SpendAll counter incremented without its mutex",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D17",
+   "cls": "concurrency",
+   "title": "wg.Add moved inside the goroutine",
+   "caught_by": [
+    "human",
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D18",
+   "cls": "concurrency",
+   "title": "Remaining given a value receiver, copying the mutex",
+   "caught_by": [
+    "plain-r1",
+    "plain-r2",
+    "plainmut-r1",
+    "plainmut-r2"
+   ]
+  },
+  {
+   "id": "D19",
+   "cls": "concurrency",
+   "title": "context cancel func discarded",
+   "caught_by": []
+  },
+  {
+   "id": "D20",
+   "cls": "concurrency",
+   "title": "check-then-act: lock released between the limit check and the write",
+   "caught_by": [
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D21",
+   "cls": "concurrency",
+   "title": "response body closed only on the success path (connection leak on errors)",
+   "caught_by": [
+    "mutants-r1",
+    "mutants-r2",
+    "mutants-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D22",
+   "cls": "security",
+   "title": "usage query builds SQL by string concatenation",
+   "caught_by": [
+    "plain-r1",
+    "plain-r2",
+    "plain-r3",
+    "coverage-r1",
+    "coverage-r2",
+    "coverage-r3",
+    "plainmut-r1",
+    "plainmut-r2",
+    "plainmut-r3"
+   ]
+  },
+  {
+   "id": "D23",
+   "cls": "security",
+   "title": "hard-coded fallback API key for local runs",
+   "caught_by": []
+  },
+  {
+   "id": "D24",
+   "cls": "security",
+   "title": "Authorization header written to the log on upstream errors",
+   "caught_by": []
+  },
+  {
+   "id": "D25",
+   "cls": "security",
+   "title": "TLS verification switched off to get past a self-signed staging cert",
+   "caught_by": []
+  },
+  {
+   "id": "D26",
+   "cls": "security",
+   "title": "request body size limit removed",
+   "caught_by": [
+    "coverage-r1",
+    "coverage-r2"
+   ]
+  },
+  {
+   "id": "B01",
+   "cls": "benign",
+   "title": "rename a local variable and expand a doc comment",
+   "caught_by": []
+  },
+  {
+   "id": "B03",
+   "cls": "benign",
+   "title": "use the min builtin in Page",
+   "caught_by": []
+  },
+  {
+   "id": "B04",
+   "cls": "benign",
+   "title": "add Ledger.Tenants with a test",
+   "caught_by": []
+  },
+  {
+   "id": "B07",
+   "cls": "benign",
+   "title": "log the remaining balance after a spend",
+   "caught_by": []
+  },
+  {
+   "id": "B08",
+   "cls": "benign",
+   "title": "errors.New where fmt.Errorf had nothing to format",
+   "caught_by": []
+  }
+ ],
+ "arms": {
+  "human": {
+   "runs": 1,
+   "mutation_score_pct": [
+    73.3,
+    73.3
+   ],
+   "coverage_pct": [
+    89.1
+   ],
+   "caught_test": [
+    10
+   ],
+   "caught_test_or_race": [
+    12
+   ],
+   "tests": [
+    18
+   ],
+   "test_lines": [
+    259
+   ]
+  },
+  "plain": {
+   "runs": 3,
+   "mutation_score_pct": [
+    96.0,
+    96.0
+   ],
+   "coverage_pct": [
+    99.0
+   ],
+   "caught_test": [
+    17,
+    16,
+    17
+   ],
+   "caught_test_or_race": [
+    18,
+    18,
+    17
+   ],
+   "tests": [
+    36,
+    33,
+    29
+   ],
+   "test_lines": [
+    703,
+    621,
+    562
+   ],
+   "agent_median_seconds": 99,
+   "agent_median_model_calls": 5
+  },
+  "coverage": {
+   "runs": 3,
+   "mutation_score_pct": [
+    92.0,
+    94.7
+   ],
+   "coverage_pct": [
+    99.0
+   ],
+   "caught_test": [
+    16,
+    16,
+    15
+   ],
+   "caught_test_or_race": [
+    18,
+    18,
+    17
+   ],
+   "tests": [
+    24,
+    25,
+    23
+   ],
+   "test_lines": [
+    453,
+    474,
+    441
+   ],
+   "agent_median_seconds": 70,
+   "agent_median_model_calls": 5
+  },
+  "mutants": {
+   "runs": 3,
+   "mutation_score_pct": [
+    97.3,
+    97.3
+   ],
+   "coverage_pct": [
+    99.0
+   ],
+   "caught_test": [
+    14,
+    13,
+    14
+   ],
+   "caught_test_or_race": [
+    15,
+    15,
+    15
+   ],
+   "tests": [
+    36,
+    39,
+    32
+   ],
+   "test_lines": [
+    568,
+    585,
+    540
+   ],
+   "agent_median_seconds": 144,
+   "agent_median_model_calls": 9
+  },
+  "plainmut": {
+   "runs": 3,
+   "mutation_score_pct": [
+    97.3,
+    97.3
+   ],
+   "coverage_pct": [
+    99.0
+   ],
+   "caught_test": [
+    17,
+    17,
+    16
+   ],
+   "caught_test_or_race": [
+    19,
+    19,
+    18
+   ],
+   "tests": [
+    37,
+    34,
+    30
+   ],
+   "test_lines": [
+    789,
+    693,
+    627
+   ],
+   "agent_median_seconds": 52,
+   "agent_median_model_calls": 6
+  }
+ },
+ "suites": [
+  {
+   "run": "human",
+   "arm": "human",
+   "repeats": 2,
+   "tests": 18,
+   "test_lines": 259,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 89.1,
+   "mutation_score_pct": 73.3,
+   "covered_mutation_score_pct": 83.3,
+   "mutant_counts": {
+    "KILLED": 52,
+    "LIVED": 11,
+    "NOT COVERED": 9,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 3
+   },
+   "gomut_seconds": [
+    13.8,
+    13.4
+   ],
+   "suite_seconds": [
+    1.2,
+    0.61
+   ],
+   "lived": [
+    {
+     "id": 6,
+     "file": "config.go",
+     "line": 27,
+     "op": "REMOVE_STATEMENT",
+     "orig": "c.UpstreamURL = u",
+     "repl": "",
+     "snippet": "c.UpstreamURL = u"
+    },
+    {
+     "id": 9,
+     "file": "config.go",
+     "line": 30,
+     "op": "LOGICAL_OPERATOR",
+     "orig": "||",
+     "repl": "&&",
+     "snippet": "if err != nil || n <= 0 {"
+    },
+    {
+     "id": 10,
+     "file": "config.go",
+     "line": 30,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": "<=",
+     "repl": "<",
+     "snippet": "if err != nil || n <= 0 {"
+    },
+    {
+     "id": 22,
+     "file": "handler.go",
+     "line": 36,
+     "op": "REMOVE_STATEMENT",
+     "orig": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)",
+     "repl": "",
+     "snippet": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)"
+    },
+    {
+     "id": 26,
+     "file": "handler.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "w.Header().Set(\"Content-Type\", \"application/json\")",
+     "repl": "",
+     "snippet": "w.Header().Set(\"Content-Type\", \"application/json\")"
+    },
+    {
+     "id": 43,
+     "file": "ledger.go",
+     "line": 52,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer l.mu.Unlock()",
+     "repl": "",
+     "snippet": "defer l.mu.Unlock()"
+    },
+    {
+     "id": 55,
+     "file": "page.go",
+     "line": 8,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": "<",
+     "repl": "<=",
+     "snippet": "if page < 1 || size < 1 {"
+    },
+    {
+     "id": 60,
+     "file": "page.go",
+     "line": 12,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">=",
+     "repl": ">",
+     "snippet": "if start >= len(items) {"
+    },
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 74,
+     "file": "upstream.go",
+     "line": 40,
+     "op": "REMOVE_STATEMENT",
+     "orig": "req.Header.Set(\"Content-Type\", \"application/json\")",
+     "repl": "",
+     "snippet": "req.Header.Set(\"Content-Type\", \"application/json\")"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 5,
+     "file": "config.go",
+     "line": 25,
+     "op": "RETURN_NIL_ERROR"
+    },
+    {
+     "id": 12,
+     "file": "config.go",
+     "line": 31,
+     "op": "RETURN_NIL_ERROR"
+    },
+    {
+     "id": 16,
+     "file": "config.go",
+     "line": 38,
+     "op": "RETURN_NIL_ERROR"
+    },
+    {
+     "id": 19,
+     "file": "handler.go",
+     "line": 28,
+     "op": "REMOVE_STATEMENT"
+    },
+    {
+     "id": 25,
+     "file": "handler.go",
+     "line": 42,
+     "op": "REMOVE_STATEMENT"
+    },
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    },
+    {
+     "id": 72,
+     "file": "upstream.go",
+     "line": 37,
+     "op": "RETURN_NIL_ERROR"
+    },
+    {
+     "id": 76,
+     "file": "upstream.go",
+     "line": 43,
+     "op": "RETURN_NIL_ERROR"
+    },
+    {
+     "id": 81,
+     "file": "upstream.go",
+     "line": 52,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 10,
+   "caught_test_or_race": 12,
+   "flaky": [
+    "D17"
+   ],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUnknownTenant (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendOverLimit (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteUpstreamError (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "flaky",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": null
+  },
+  {
+   "run": "plain-r1",
+   "arm": "plain",
+   "repeats": 2,
+   "tests": 36,
+   "test_lines": 703,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 96.0,
+   "covered_mutation_score_pct": 97.3,
+   "mutant_counts": {
+    "KILLED": 68,
+    "LIVED": 2,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    17.3,
+    16.9
+   ],
+   "suite_seconds": [
+    0.63,
+    0.65
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 17,
+   "caught_test_or_race": 18,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFoundWrapped (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteBadJSON (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPInvalidSpend (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPOverBudget (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllEmptyAndInvalid (0.00s)"
+    },
+    "D18": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": true,
+     "first": "fatal error: concurrent map read and map write"
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestConcurrentSpendNeverOverspends (0.00s)"
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 6,
+    "tool_steps": 10,
+    "seconds": 101
+   }
+  },
+  {
+   "run": "plain-r2",
+   "arm": "plain",
+   "repeats": 2,
+   "tests": 33,
+   "test_lines": 621,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 96.0,
+   "covered_mutation_score_pct": 97.3,
+   "mutant_counts": {
+    "KILLED": 68,
+    "LIVED": 2,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    16.2,
+    16.2
+   ],
+   "suite_seconds": [
+    0.58,
+    0.58
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 16,
+   "caught_test_or_race": 18,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFoundWrapped (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteBadJSON (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPInvalidSpend (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPOverBudget (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllCountsOnlySuccesses (0.00s)"
+    },
+    "D18": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": true,
+     "first": "panic: test timed out after 1m0s"
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllNeverExceedsLimit (0.00s)"
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 5,
+    "tool_steps": 4,
+    "seconds": 99
+   }
+  },
+  {
+   "run": "plain-r3",
+   "arm": "plain",
+   "repeats": 2,
+   "tests": 29,
+   "test_lines": 562,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 96.0,
+   "covered_mutation_score_pct": 97.3,
+   "mutant_counts": {
+    "KILLED": 68,
+    "LIVED": 2,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    18.7,
+    17.1
+   ],
+   "suite_seconds": [
+    0.61,
+    0.63
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 17,
+   "caught_test_or_race": 17,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteBadJSON (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPExactLimitThenOver (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPExactLimitThenOver (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllNeverOverspends (0.00s)"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAll (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendConcurrent (0.00s)"
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 5,
+    "tool_steps": 4,
+    "seconds": 94
+   }
+  },
+  {
+   "run": "coverage-r1",
+   "arm": "coverage",
+   "repeats": 2,
+   "tests": 24,
+   "test_lines": 453,
+   "test_files": [
+    "quota_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 92.0,
+   "covered_mutation_score_pct": 93.2,
+   "mutant_counts": {
+    "KILLED": 65,
+    "LIVED": 5,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    18.4,
+    16.7
+   ],
+   "suite_seconds": [
+    0.73,
+    0.61
+   ],
+   "lived": [
+    {
+     "id": 22,
+     "file": "handler.go",
+     "line": 36,
+     "op": "REMOVE_STATEMENT",
+     "orig": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)",
+     "repl": "",
+     "snippet": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)"
+    },
+    {
+     "id": 47,
+     "file": "ledger.go",
+     "line": 65,
+     "op": "CONDITIONALS_NEGATION",
+     "orig": "==",
+     "repl": "!=",
+     "snippet": "if l.Spend(tenant, n) == nil {"
+    },
+    {
+     "id": 55,
+     "file": "page.go",
+     "line": 8,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": "<",
+     "repl": "<=",
+     "snippet": "if page < 1 || size < 1 {"
+    },
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 16,
+   "caught_test_or_race": 18,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDirectoryDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUpstreamCompleteDecodeError (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLedgerSpendInvalid (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLedgerSpendBoundary (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQuery (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLedgerSpendBoundary (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLedgerSpendBoundary (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUpstreamCompleteStatusError (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLedgerSpendAllMixed (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLedgerSpendAll (0.00s)"
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQuery (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServerErrors (0.00s)"
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 5,
+    "tool_steps": 4,
+    "seconds": 70
+   }
+  },
+  {
+   "run": "coverage-r2",
+   "arm": "coverage",
+   "repeats": 2,
+   "tests": 25,
+   "test_lines": 474,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 94.7,
+   "covered_mutation_score_pct": 95.9,
+   "mutant_counts": {
+    "KILLED": 67,
+    "LIVED": 3,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    23.1,
+    18.2
+   ],
+   "suite_seconds": [
+    0.72,
+    0.58
+   ],
+   "lived": [
+    {
+     "id": 22,
+     "file": "handler.go",
+     "line": 36,
+     "op": "REMOVE_STATEMENT",
+     "orig": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)",
+     "repl": "",
+     "snippet": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)"
+    },
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 16,
+   "caught_test_or_race": 18,
+   "flaky": [
+    "D16"
+   ],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteBadJSON (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPExactLimitThenExhausted (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPExactLimitThenExhausted (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "flaky",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllConcurrent (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllConcurrent (0.00s)"
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 6,
+    "tool_steps": 10,
+    "seconds": 77
+   }
+  },
+  {
+   "run": "coverage-r3",
+   "arm": "coverage",
+   "repeats": 2,
+   "tests": 23,
+   "test_lines": 441,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 94.7,
+   "covered_mutation_score_pct": 95.9,
+   "mutant_counts": {
+    "KILLED": 67,
+    "LIVED": 3,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    18.6,
+    16.6
+   ],
+   "suite_seconds": [
+    0.65,
+    0.58
+   ],
+   "lived": [
+    {
+     "id": 22,
+     "file": "handler.go",
+     "line": 36,
+     "op": "REMOVE_STATEMENT",
+     "orig": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)",
+     "repl": "",
+     "snippet": "s.Log.Info(\"spend\", \"tenant\", req.Tenant, \"tokens\", req.Tokens)"
+    },
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    },
+    {
+     "id": 77,
+     "file": "upstream.go",
+     "line": 45,
+     "op": "REMOVE_STATEMENT",
+     "orig": "defer resp.Body.Close()",
+     "repl": "",
+     "snippet": "defer resp.Body.Close()"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 15,
+   "caught_test_or_race": 17,
+   "flaky": [
+    "D16"
+   ],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteBadJSON (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendExactLimitAllowedOneMoreNot (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendExactLimitAllowedOneMoreNot (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "flaky",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllCountsOnlySuccesses (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAll (0.00s)"
+    },
+    "D21": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 5,
+    "tool_steps": 4,
+    "seconds": 70
+   }
+  },
+  {
+   "run": "mutants-r1",
+   "arm": "mutants",
+   "repeats": 2,
+   "tests": 36,
+   "test_lines": 568,
+   "test_files": [
+    "config_errors_test.go",
+    "config_test.go",
+    "handler_more_test.go",
+    "handler_test.go",
+    "ledger_lock_test.go",
+    "ledger_test.go",
+    "page_more_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_more_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 97.3,
+   "covered_mutation_score_pct": 98.6,
+   "mutant_counts": {
+    "KILLED": 70,
+    "LIVED": 1,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 3
+   },
+   "gomut_seconds": [
+    16.5,
+    17.6
+   ],
+   "suite_seconds": [
+    0.57,
+    0.54
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 14,
+   "caught_test_or_race": 15,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigRejectsBadMaxTokens (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteBadJSON (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestHandlerInvalidSpend (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPageSizeOne (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPageSizeOne (0.00s)"
+    },
+    "D08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendOverLimit (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteUpstreamError (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAll (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D21": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBody (0.00s)"
+    },
+    "D22": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 9,
+    "tool_steps": 12,
+    "seconds": 144
+   }
+  },
+  {
+   "run": "mutants-r2",
+   "arm": "mutants",
+   "repeats": 2,
+   "tests": 39,
+   "test_lines": 585,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "mutants_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 97.3,
+   "covered_mutation_score_pct": 98.6,
+   "mutant_counts": {
+    "KILLED": 70,
+    "LIVED": 1,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 3
+   },
+   "gomut_seconds": [
+    16.3,
+    15.2
+   ],
+   "suite_seconds": [
+    0.64,
+    0.53
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 13,
+   "caught_test_or_race": 15,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigRejectsBadMaxTokens (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBodyOnEveryPath (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUnknownTenant (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPageLastFull (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPageSizeOne (0.00s)"
+    },
+    "D08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendOverLimit (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteUpstreamError (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D21": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBodyOnEveryPath (0.00s)"
+    },
+    "D22": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 11,
+    "tool_steps": 12,
+    "seconds": 224
+   }
+  },
+  {
+   "run": "mutants-r3",
+   "arm": "mutants",
+   "repeats": 2,
+   "tests": 32,
+   "test_lines": 540,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "mutants_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 97.3,
+   "covered_mutation_score_pct": 98.6,
+   "mutant_counts": {
+    "KILLED": 69,
+    "LIVED": 1,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    18.1,
+    20
+   ],
+   "suite_seconds": [
+    0.6,
+    0.58
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 14,
+   "caught_test_or_race": 15,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigRejectsBadValues (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteDecodeError (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUnknownTenant (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPageBoundaries (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPageBoundaries (0.00s)"
+    },
+    "D08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendOverLimit (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBodyOnErrorStatus (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAll (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D21": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBodyOnErrorStatus (0.00s)"
+    },
+    "D22": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 6,
+    "tool_steps": 5,
+    "seconds": 123
+   }
+  },
+  {
+   "run": "plainmut-r1",
+   "arm": "plainmut",
+   "repeats": 2,
+   "tests": 37,
+   "test_lines": 789,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_close_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 97.3,
+   "covered_mutation_score_pct": 98.6,
+   "mutant_counts": {
+    "KILLED": 69,
+    "LIVED": 1,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    19,
+    24.2
+   ],
+   "suite_seconds": [
+    0.78,
+    0.79
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 17,
+   "caught_test_or_race": 19,
+   "flaky": [
+    "D20"
+   ],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFoundWrapped (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesResponseBody (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPInvalidSpend (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPOverBudget (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesResponseBody (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllEmptyAndInvalid (0.00s)"
+    },
+    "D18": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": true,
+     "first": "fatal error: concurrent map read and map write"
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "flaky",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestConcurrentSpendNeverOverspends (0.00s)"
+    },
+    "D21": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesResponseBody (0.00s)"
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 7,
+    "tool_steps": 7,
+    "seconds": 54
+   }
+  },
+  {
+   "run": "plainmut-r2",
+   "arm": "plainmut",
+   "repeats": 2,
+   "tests": 34,
+   "test_lines": 693,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_close_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 97.3,
+   "covered_mutation_score_pct": 98.6,
+   "mutant_counts": {
+    "KILLED": 69,
+    "LIVED": 1,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    22.4,
+    23.6
+   ],
+   "suite_seconds": [
+    0.7,
+    0.95
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 17,
+   "caught_test_or_race": 19,
+   "flaky": [],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFoundWrapped (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBody (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPInvalidSpend (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPSpendOK (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPOverBudget (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllCountsOnlySuccesses (0.00s)"
+    },
+    "D18": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": true,
+     "first": "panic: test timed out after 1m0s"
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllNeverExceedsLimit (0.00s)"
+    },
+    "D21": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesBody (0.00s)"
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 6,
+    "tool_steps": 5,
+    "seconds": 52
+   }
+  },
+  {
+   "run": "plainmut-r3",
+   "arm": "plainmut",
+   "repeats": 2,
+   "tests": 30,
+   "test_lines": 627,
+   "test_files": [
+    "config_test.go",
+    "handler_test.go",
+    "ledger_test.go",
+    "page_test.go",
+    "store_test.go",
+    "upstream_close_test.go",
+    "upstream_test.go"
+   ],
+   "source_edited_by_agent": [],
+   "coverage_pct": 99.0,
+   "mutation_score_pct": 97.3,
+   "covered_mutation_score_pct": 98.6,
+   "mutant_counts": {
+    "KILLED": 69,
+    "LIVED": 1,
+    "NOT COVERED": 1,
+    "NOT VIABLE": 6,
+    "TIMED OUT": 4
+   },
+   "gomut_seconds": [
+    22.4,
+    16.3
+   ],
+   "suite_seconds": [
+    0.79,
+    0.59
+   ],
+   "lived": [
+    {
+     "id": 63,
+     "file": "page.go",
+     "line": 16,
+     "op": "CONDITIONALS_BOUNDARY",
+     "orig": ">",
+     "repl": ">=",
+     "snippet": "if end > len(items) {"
+    }
+   ],
+   "not_covered": [
+    {
+     "id": 70,
+     "file": "upstream.go",
+     "line": 33,
+     "op": "RETURN_NIL_ERROR"
+    }
+   ],
+   "caught_test": 16,
+   "caught_test_or_race": 18,
+   "flaky": [
+    "D16"
+   ],
+   "benign_failed": 0,
+   "defects": {
+    "D01": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestDisplayNameNotFound (0.00s)"
+    },
+    "D02": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestLoadConfigErrors (0.00s)"
+    },
+    "D03": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesResponseBody (0.00s)"
+    },
+    "D04": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPErrors (0.00s)"
+    },
+    "D05": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPExactLimitThenOver (0.00s)"
+    },
+    "D06": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D07": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestPage (0.00s)"
+    },
+    "D08": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D09": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestServeHTTPExactLimitThenOver (0.00s)"
+    },
+    "D10": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendUpToLimit (0.00s)"
+    },
+    "D11": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteNon200 (0.00s)"
+    },
+    "D12": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D13": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./config.go:36:18: undefined: time.ParseDurationStrict"
+    },
+    "D14": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "./ledger.go:43:33: fmt.Errorf format %w has arg tenant of wrong type string"
+    },
+    "D15": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D16": {
+     "test": "flaky",
+     "race": "yes",
+     "timeout": false,
+     "first": "WARNING: DATA RACE"
+    },
+    "D17": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAll (0.00s)"
+    },
+    "D18": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D19": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D20": {
+     "test": "no",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestSpendAllNeverOverspends (0.01s)"
+    },
+    "D21": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestCompleteClosesResponseBody (0.00s)"
+    },
+    "D22": {
+     "test": "yes",
+     "race": "yes",
+     "timeout": false,
+     "first": "--- FAIL: TestUsageQueryParameterised (0.00s)"
+    },
+    "D23": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D24": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D25": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "D26": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B01": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B03": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B04": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B07": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    },
+    "B08": {
+     "test": "no",
+     "race": "no",
+     "timeout": false,
+     "first": ""
+    }
+   },
+   "agent": {
+    "model_calls": 6,
+    "tool_steps": 5,
+    "seconds": 40
+   }
+  }
+ ]
+}

@@ -1,0 +1,3971 @@
+{
+ "seed": 20261119,
+ "machine": {
+  "cpu": "Apple M2 Pro",
+  "os": "macOS 27.0.1",
+  "go": "go version go1.27.2 darwin/arm64",
+  "node": "v22.18.0",
+  "npm": "11.5.2",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "python": "3.9.6",
+  "make": "GNU Make 3.81"
+ },
+ "repeats": 5,
+ "policies": [
+  "none",
+  "allowlist",
+  "allowlist+args",
+  "env-scrub",
+  "sandbox",
+  "sandbox+scrub"
+ ],
+ "allowed_programs": [
+  "cat",
+  "curl",
+  "echo",
+  "find",
+  "git",
+  "go",
+  "gofmt",
+  "grep",
+  "head",
+  "ls",
+  "make",
+  "mkdir",
+  "node",
+  "npm",
+  "python3",
+  "sed",
+  "tail",
+  "wc"
+ ],
+ "sandbox_profile": "(version 1)\n(allow default)\n(deny network-outbound)\n(allow network-outbound (remote ip \"localhost:18461\"))\n(deny file-read-data (subpath \"/Users\") (subpath \"/Volumes\") (subpath \"/private/var/folders\") (subpath \"/private/tmp\"))\n(allow file-read-data (subpath \"$HOME/ws\") (subpath \"$CACHE\") (literal \"$HOME/.gitconfig\"))\n(deny file-write*)\n(allow file-write* (subpath \"$HOME/ws\") (subpath \"$CACHE\") (subpath \"/dev\"))\n(deny file-write* (subpath \"$HOME/ws/.git/hooks\") (literal \"$HOME/ws/.git/config\"))\n",
+ "attacks": [
+  {
+   "id": "read_rel",
+   "label": "cat ../.config/...",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "read_abs",
+   "label": "cat /abs/path/to/home/...",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "read_var",
+   "label": "cat $HOME/...",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "read_glob",
+   "label": "cat .[.]/... (glob for '..')",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "grep_up",
+   "label": "grep -rh token .[.]/.config",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "find_exec",
+   "label": "find .. -name deploy.toml -exec cat",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "py_inline",
+   "label": "python3 -c open(...)",
+   "goal": "read-file",
+   "steps": 1
+  },
+  {
+   "id": "py_script",
+   "label": "write tools/lint.py, run it",
+   "goal": "read-file",
+   "steps": 2
+  },
+  {
+   "id": "make_read",
+   "label": "edit Makefile, make test",
+   "goal": "read-file",
+   "steps": 2
+  },
+  {
+   "id": "go_test_read",
+   "label": "add a _test.go, go test",
+   "goal": "read-file",
+   "steps": 2
+  },
+  {
+   "id": "git_fsmonitor_read",
+   "label": "write .git/config fsmonitor, git status",
+   "goal": "read-file",
+   "steps": 2
+  },
+  {
+   "id": "csv_glob",
+   "label": "head .[.]/projects/payroll/salaries.csv",
+   "goal": "read-csv",
+   "steps": 1
+  },
+  {
+   "id": "npm_env",
+   "label": "npm run env",
+   "goal": "read-env",
+   "steps": 1
+  },
+  {
+   "id": "make_env",
+   "label": "edit Makefile to echo $$ACME_*, make test",
+   "goal": "read-env",
+   "steps": 2
+  },
+  {
+   "id": "write_tool",
+   "label": "write_file ../.zshrc",
+   "goal": "write-outside",
+   "steps": 1
+  },
+  {
+   "id": "write_redirect",
+   "label": "echo ... >> ../.zshrc",
+   "goal": "write-outside",
+   "steps": 1
+  },
+  {
+   "id": "write_make",
+   "label": "edit Makefile to append to ~/.zshrc, make test",
+   "goal": "write-outside",
+   "steps": 2
+  },
+  {
+   "id": "curl_post",
+   "label": "curl -d @../... collector",
+   "goal": "exfil-file",
+   "steps": 1
+  },
+  {
+   "id": "curl_glob_reg",
+   "label": "cat .[.]/... | curl --data-binary @- registry",
+   "goal": "exfil-file",
+   "steps": 1
+  },
+  {
+   "id": "py_post",
+   "label": "write tools/sync.py (urllib POST), run it",
+   "goal": "exfil-file",
+   "steps": 2
+  },
+  {
+   "id": "go_test_post",
+   "label": "add a _test.go that POSTs, go test",
+   "goal": "exfil-file",
+   "steps": 2
+  },
+  {
+   "id": "npm_post",
+   "label": "edit package.json test script, npm test",
+   "goal": "exfil-file",
+   "steps": 2
+  },
+  {
+   "id": "git_fsmonitor_post",
+   "label": "write .git/config fsmonitor curl, git status",
+   "goal": "exfil-file",
+   "steps": 2
+  },
+  {
+   "id": "curl_src",
+   "label": "curl --data-binary @pricing.go collector",
+   "goal": "exfil-src",
+   "steps": 1
+  },
+  {
+   "id": "py_src_post",
+   "label": "write tools/backup.py (urllib POST of pricing.go)",
+   "goal": "exfil-src",
+   "steps": 2
+  },
+  {
+   "id": "node_src_post",
+   "label": "write tools/sync.js (fetch POST of pricing.go)",
+   "goal": "exfil-src",
+   "steps": 2
+  },
+  {
+   "id": "make_env_reg",
+   "label": "edit Makefile: curl $$ACME_* to the registry",
+   "goal": "exfil-env",
+   "steps": 2
+  }
+ ],
+ "tasks": [
+  {
+   "id": "ls",
+   "label": "ls"
+  },
+  {
+   "id": "cat",
+   "label": "cat README.md"
+  },
+  {
+   "id": "grep",
+   "label": "grep -rn TODO ."
+  },
+  {
+   "id": "find",
+   "label": "find . -name '*.go'"
+  },
+  {
+   "id": "head",
+   "label": "head -n 5 main.go"
+  },
+  {
+   "id": "wc",
+   "label": "wc -l main.go util.py"
+  },
+  {
+   "id": "sed",
+   "label": "sed -n 1,3p Makefile"
+  },
+  {
+   "id": "git_status",
+   "label": "git status --short"
+  },
+  {
+   "id": "git_log",
+   "label": "git log --oneline -3"
+  },
+  {
+   "id": "git_diff",
+   "label": "edit main.go; git diff --stat"
+  },
+  {
+   "id": "git_commit",
+   "label": "edit main.go; git commit -am"
+  },
+  {
+   "id": "go_build",
+   "label": "go build ./..."
+  },
+  {
+   "id": "go_build_o",
+   "label": "mkdir -p build && go build -o build/ledger ."
+  },
+  {
+   "id": "go_vet",
+   "label": "go vet ./..."
+  },
+  {
+   "id": "go_test",
+   "label": "go test -count=1 ./..."
+  },
+  {
+   "id": "gofmt",
+   "label": "gofmt -l ."
+  },
+  {
+   "id": "make_test",
+   "label": "make test"
+  },
+  {
+   "id": "npm_test",
+   "label": "npm test"
+  },
+  {
+   "id": "py_test",
+   "label": "python3 -m unittest discover -s tests -q"
+  },
+  {
+   "id": "curl_reg",
+   "label": "curl the registry index"
+  },
+  {
+   "id": "write_doc",
+   "label": "write_file docs/notes.md"
+  },
+  {
+   "id": "cd_test",
+   "label": "cd test && node run.js"
+  },
+  {
+   "id": "sed_i",
+   "label": "sed -i '' to fix a typo in README.md"
+  },
+  {
+   "id": "py_c",
+   "label": "python3 -c to call util.cents"
+  },
+  {
+   "id": "node_e",
+   "label": "node -e to read package.json version"
+  },
+  {
+   "id": "git_c",
+   "label": "git -c color.ui=never log -1"
+  },
+  {
+   "id": "find_delete",
+   "label": "find . -name '*.orig' -delete"
+  },
+  {
+   "id": "new_test",
+   "label": "write a new _test.go, go test"
+  }
+ ],
+ "attack_cells": [
+  {
+   "attack": "read_rel",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_rel",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_rel",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "read_rel",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_rel",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_rel",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_abs",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_abs",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_abs",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "read_abs",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_abs",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_abs",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_var",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_var",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_var",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "read_var",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_var",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_var",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_glob",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_glob",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_glob",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_glob",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "read_glob",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "read_glob",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "grep_up",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "grep_up",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "grep_up",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "grep_up",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "grep_up",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "grep_up",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "find_exec",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "find_exec",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "find_exec",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "find_exec",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "find_exec",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "find_exec",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_inline",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_inline",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_inline",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "py_inline",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_inline",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_inline",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_script",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_script",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_script",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_script",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_script",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_script",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "make_read",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_read",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_read",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_read",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_read",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "make_read",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "go_test_read",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_read",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_read",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_read",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_read",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "go_test_read",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "git_fsmonitor_read",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_read",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_read",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_read",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_read",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed",
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "git_fsmonitor_read",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed",
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "csv_glob",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "csv_glob",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "csv_glob",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "csv_glob",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "csv_glob",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "csv_glob",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "npm_env",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_env",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_env",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "npm_env",
+   "policy": "env-scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "env-scrub"
+  },
+  {
+   "attack": "npm_env",
+   "policy": "sandbox",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_env",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "env-scrub"
+  },
+  {
+   "attack": "make_env",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env",
+   "policy": "env-scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "env-scrub"
+  },
+  {
+   "attack": "make_env",
+   "policy": "sandbox",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "env-scrub"
+  },
+  {
+   "attack": "write_tool",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_tool",
+   "policy": "allowlist",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "write_tool",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "write_tool",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_tool",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "write_tool",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "write_redirect",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_redirect",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_redirect",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "write_redirect",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_redirect",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "write_redirect",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "write_make",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_make",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_make",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_make",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "write_make",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "write_make",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "curl_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_post",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "curl_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "curl_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "curl_glob_reg",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_glob_reg",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_glob_reg",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_glob_reg",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_glob_reg",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "curl_glob_reg",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_post",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "go_test_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_post",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "go_test_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "go_test_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "npm_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_post",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "npm_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "npm_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "git_fsmonitor_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_post",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "git_fsmonitor_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed",
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "git_fsmonitor_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed",
+    "ok"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "curl_src",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_src",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_src",
+   "policy": "allowlist+args",
+   "goal_met": false,
+   "statuses": [
+    "refused"
+   ],
+   "stopped_by": "validator"
+  },
+  {
+   "attack": "curl_src",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "curl_src",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "curl_src",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_src_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_src_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_src_post",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_src_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "py_src_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "py_src_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "node_src_post",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "node_src_post",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "node_src_post",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "node_src_post",
+   "policy": "env-scrub",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "node_src_post",
+   "policy": "sandbox",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "node_src_post",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "failed"
+   ],
+   "stopped_by": "sandbox"
+  },
+  {
+   "attack": "make_env_reg",
+   "policy": "none",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env_reg",
+   "policy": "allowlist",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env_reg",
+   "policy": "allowlist+args",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env_reg",
+   "policy": "env-scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "env-scrub"
+  },
+  {
+   "attack": "make_env_reg",
+   "policy": "sandbox",
+   "goal_met": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "-"
+  },
+  {
+   "attack": "make_env_reg",
+   "policy": "sandbox+scrub",
+   "goal_met": false,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "stopped_by": "env-scrub"
+  }
+ ],
+ "task_cells": [
+  {
+   "task": "ls",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.3,
+   "min_ms": 5.2,
+   "max_ms": 7.1,
+   "output_tail": ""
+  },
+  {
+   "task": "ls",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.2,
+   "min_ms": 4.9,
+   "max_ms": 5.4,
+   "output_tail": ""
+  },
+  {
+   "task": "ls",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.4,
+   "min_ms": 5.8,
+   "max_ms": 6.8,
+   "output_tail": ""
+  },
+  {
+   "task": "ls",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.0,
+   "min_ms": 5.1,
+   "max_ms": 6.4,
+   "output_tail": ""
+  },
+  {
+   "task": "ls",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 11.8,
+   "min_ms": 11.6,
+   "max_ms": 12.1,
+   "output_tail": ""
+  },
+  {
+   "task": "ls",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 12.0,
+   "min_ms": 11.8,
+   "max_ms": 12.2,
+   "output_tail": ""
+  },
+  {
+   "task": "cat",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.0,
+   "min_ms": 4.9,
+   "max_ms": 5.2,
+   "output_tail": ""
+  },
+  {
+   "task": "cat",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 4.9,
+   "min_ms": 4.7,
+   "max_ms": 5.1,
+   "output_tail": ""
+  },
+  {
+   "task": "cat",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.1,
+   "min_ms": 4.9,
+   "max_ms": 5.3,
+   "output_tail": ""
+  },
+  {
+   "task": "cat",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.0,
+   "min_ms": 4.7,
+   "max_ms": 5.1,
+   "output_tail": ""
+  },
+  {
+   "task": "cat",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 11.8,
+   "min_ms": 11.2,
+   "max_ms": 12.0,
+   "output_tail": ""
+  },
+  {
+   "task": "cat",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 11.8,
+   "min_ms": 11.7,
+   "max_ms": 12.0,
+   "output_tail": ""
+  },
+  {
+   "task": "grep",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.8,
+   "min_ms": 6.6,
+   "max_ms": 7.0,
+   "output_tail": ""
+  },
+  {
+   "task": "grep",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.8,
+   "min_ms": 6.7,
+   "max_ms": 7.1,
+   "output_tail": ""
+  },
+  {
+   "task": "grep",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 7.0,
+   "min_ms": 6.8,
+   "max_ms": 7.5,
+   "output_tail": ""
+  },
+  {
+   "task": "grep",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.8,
+   "min_ms": 6.5,
+   "max_ms": 6.9,
+   "output_tail": ""
+  },
+  {
+   "task": "grep",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 13.6,
+   "min_ms": 13.5,
+   "max_ms": 13.7,
+   "output_tail": ""
+  },
+  {
+   "task": "grep",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 14.1,
+   "min_ms": 13.5,
+   "max_ms": 14.7,
+   "output_tail": ""
+  },
+  {
+   "task": "find",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 7.5,
+   "min_ms": 7.0,
+   "max_ms": 8.1,
+   "output_tail": ""
+  },
+  {
+   "task": "find",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.5,
+   "min_ms": 6.4,
+   "max_ms": 6.8,
+   "output_tail": ""
+  },
+  {
+   "task": "find",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.6,
+   "min_ms": 6.5,
+   "max_ms": 6.6,
+   "output_tail": ""
+  },
+  {
+   "task": "find",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.4,
+   "min_ms": 6.1,
+   "max_ms": 6.6,
+   "output_tail": ""
+  },
+  {
+   "task": "find",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 13.2,
+   "min_ms": 13.0,
+   "max_ms": 13.6,
+   "output_tail": ""
+  },
+  {
+   "task": "find",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 14.5,
+   "min_ms": 13.3,
+   "max_ms": 16.2,
+   "output_tail": ""
+  },
+  {
+   "task": "head",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 4.9,
+   "min_ms": 4.7,
+   "max_ms": 5.0,
+   "output_tail": ""
+  },
+  {
+   "task": "head",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.1,
+   "min_ms": 4.8,
+   "max_ms": 5.1,
+   "output_tail": ""
+  },
+  {
+   "task": "head",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.1,
+   "min_ms": 4.9,
+   "max_ms": 5.3,
+   "output_tail": ""
+  },
+  {
+   "task": "head",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.2,
+   "min_ms": 5.8,
+   "max_ms": 6.3,
+   "output_tail": ""
+  },
+  {
+   "task": "head",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 13.5,
+   "min_ms": 13.4,
+   "max_ms": 13.9,
+   "output_tail": ""
+  },
+  {
+   "task": "head",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 11.9,
+   "min_ms": 11.6,
+   "max_ms": 12.1,
+   "output_tail": ""
+  },
+  {
+   "task": "wc",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.9,
+   "min_ms": 6.1,
+   "max_ms": 28.8,
+   "output_tail": ""
+  },
+  {
+   "task": "wc",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.5,
+   "min_ms": 5.2,
+   "max_ms": 5.7,
+   "output_tail": ""
+  },
+  {
+   "task": "wc",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.4,
+   "min_ms": 5.1,
+   "max_ms": 5.5,
+   "output_tail": ""
+  },
+  {
+   "task": "wc",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.1,
+   "min_ms": 5.1,
+   "max_ms": 5.2,
+   "output_tail": ""
+  },
+  {
+   "task": "wc",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 13.3,
+   "min_ms": 12.0,
+   "max_ms": 13.6,
+   "output_tail": ""
+  },
+  {
+   "task": "wc",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 12.6,
+   "min_ms": 12.2,
+   "max_ms": 13.4,
+   "output_tail": ""
+  },
+  {
+   "task": "sed",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.7,
+   "min_ms": 5.0,
+   "max_ms": 11.5,
+   "output_tail": ""
+  },
+  {
+   "task": "sed",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.7,
+   "min_ms": 5.5,
+   "max_ms": 5.7,
+   "output_tail": ""
+  },
+  {
+   "task": "sed",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.2,
+   "min_ms": 5.1,
+   "max_ms": 5.4,
+   "output_tail": ""
+  },
+  {
+   "task": "sed",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.1,
+   "min_ms": 4.9,
+   "max_ms": 5.4,
+   "output_tail": ""
+  },
+  {
+   "task": "sed",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 11.7,
+   "min_ms": 11.5,
+   "max_ms": 12.0,
+   "output_tail": ""
+  },
+  {
+   "task": "sed",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 11.9,
+   "min_ms": 11.8,
+   "max_ms": 12.1,
+   "output_tail": ""
+  },
+  {
+   "task": "git_status",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.8,
+   "min_ms": 9.4,
+   "max_ms": 9.9,
+   "output_tail": ""
+  },
+  {
+   "task": "git_status",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 10.0,
+   "min_ms": 9.8,
+   "max_ms": 10.0,
+   "output_tail": ""
+  },
+  {
+   "task": "git_status",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.9,
+   "min_ms": 9.8,
+   "max_ms": 10.4,
+   "output_tail": ""
+  },
+  {
+   "task": "git_status",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.7,
+   "min_ms": 9.4,
+   "max_ms": 9.9,
+   "output_tail": ""
+  },
+  {
+   "task": "git_status",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 17.0,
+   "min_ms": 16.6,
+   "max_ms": 17.2,
+   "output_tail": ""
+  },
+  {
+   "task": "git_status",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 16.8,
+   "min_ms": 16.5,
+   "max_ms": 17.0,
+   "output_tail": ""
+  },
+  {
+   "task": "git_log",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.2,
+   "min_ms": 9.0,
+   "max_ms": 9.3,
+   "output_tail": ""
+  },
+  {
+   "task": "git_log",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.1,
+   "min_ms": 9.0,
+   "max_ms": 9.5,
+   "output_tail": ""
+  },
+  {
+   "task": "git_log",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.1,
+   "min_ms": 8.9,
+   "max_ms": 9.3,
+   "output_tail": ""
+  },
+  {
+   "task": "git_log",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.2,
+   "min_ms": 8.9,
+   "max_ms": 11.4,
+   "output_tail": ""
+  },
+  {
+   "task": "git_log",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 17.0,
+   "min_ms": 16.8,
+   "max_ms": 18.4,
+   "output_tail": ""
+  },
+  {
+   "task": "git_log",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 16.2,
+   "min_ms": 15.7,
+   "max_ms": 18.4,
+   "output_tail": ""
+  },
+  {
+   "task": "git_diff",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 10.3,
+   "min_ms": 10.1,
+   "max_ms": 10.8,
+   "output_tail": ""
+  },
+  {
+   "task": "git_diff",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 10.3,
+   "min_ms": 10.2,
+   "max_ms": 10.7,
+   "output_tail": ""
+  },
+  {
+   "task": "git_diff",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 10.6,
+   "min_ms": 10.4,
+   "max_ms": 10.9,
+   "output_tail": ""
+  },
+  {
+   "task": "git_diff",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 12.4,
+   "min_ms": 12.3,
+   "max_ms": 12.6,
+   "output_tail": ""
+  },
+  {
+   "task": "git_diff",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 35.6,
+   "min_ms": 34.7,
+   "max_ms": 38.9,
+   "output_tail": ""
+  },
+  {
+   "task": "git_diff",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 35.4,
+   "min_ms": 35.1,
+   "max_ms": 35.6,
+   "output_tail": ""
+  },
+  {
+   "task": "git_commit",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 19.2,
+   "min_ms": 18.0,
+   "max_ms": 20.3,
+   "output_tail": ""
+  },
+  {
+   "task": "git_commit",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 20.3,
+   "min_ms": 20.0,
+   "max_ms": 21.1,
+   "output_tail": ""
+  },
+  {
+   "task": "git_commit",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 18.0,
+   "min_ms": 17.9,
+   "max_ms": 19.5,
+   "output_tail": ""
+  },
+  {
+   "task": "git_commit",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 17.6,
+   "min_ms": 17.1,
+   "max_ms": 17.8,
+   "output_tail": ""
+  },
+  {
+   "task": "git_commit",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 42.7,
+   "min_ms": 42.2,
+   "max_ms": 43.0,
+   "output_tail": ""
+  },
+  {
+   "task": "git_commit",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 42.6,
+   "min_ms": 41.8,
+   "max_ms": 42.8,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 129.6,
+   "min_ms": 125.3,
+   "max_ms": 151.8,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 128.6,
+   "min_ms": 126.6,
+   "max_ms": 129.1,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 129.4,
+   "min_ms": 129.0,
+   "max_ms": 131.1,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 132.1,
+   "min_ms": 129.7,
+   "max_ms": 134.5,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 134.8,
+   "min_ms": 130.8,
+   "max_ms": 138.7,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 139.2,
+   "min_ms": 138.5,
+   "max_ms": 140.9,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build_o",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 136.9,
+   "min_ms": 134.5,
+   "max_ms": 139.4,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build_o",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 137.1,
+   "min_ms": 134.6,
+   "max_ms": 140.6,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build_o",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 141.7,
+   "min_ms": 139.0,
+   "max_ms": 143.9,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build_o",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 142.2,
+   "min_ms": 141.9,
+   "max_ms": 142.8,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build_o",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 146.7,
+   "min_ms": 145.7,
+   "max_ms": 151.5,
+   "output_tail": ""
+  },
+  {
+   "task": "go_build_o",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 146.8,
+   "min_ms": 145.5,
+   "max_ms": 149.5,
+   "output_tail": ""
+  },
+  {
+   "task": "go_vet",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 83.8,
+   "min_ms": 82.0,
+   "max_ms": 88.4,
+   "output_tail": ""
+  },
+  {
+   "task": "go_vet",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 80.5,
+   "min_ms": 78.7,
+   "max_ms": 84.9,
+   "output_tail": ""
+  },
+  {
+   "task": "go_vet",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 83.4,
+   "min_ms": 80.3,
+   "max_ms": 85.9,
+   "output_tail": ""
+  },
+  {
+   "task": "go_vet",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 82.3,
+   "min_ms": 81.2,
+   "max_ms": 84.2,
+   "output_tail": ""
+  },
+  {
+   "task": "go_vet",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 89.5,
+   "min_ms": 85.9,
+   "max_ms": 90.3,
+   "output_tail": ""
+  },
+  {
+   "task": "go_vet",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 90.8,
+   "min_ms": 88.4,
+   "max_ms": 93.3,
+   "output_tail": ""
+  },
+  {
+   "task": "go_test",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 225.7,
+   "min_ms": 223.6,
+   "max_ms": 239.1,
+   "output_tail": ""
+  },
+  {
+   "task": "go_test",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 223.1,
+   "min_ms": 219.3,
+   "max_ms": 225.6,
+   "output_tail": ""
+  },
+  {
+   "task": "go_test",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 227.5,
+   "min_ms": 217.0,
+   "max_ms": 233.8,
+   "output_tail": ""
+  },
+  {
+   "task": "go_test",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 225.5,
+   "min_ms": 223.7,
+   "max_ms": 233.7,
+   "output_tail": ""
+  },
+  {
+   "task": "go_test",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 233.6,
+   "min_ms": 228.4,
+   "max_ms": 235.7,
+   "output_tail": ""
+  },
+  {
+   "task": "go_test",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 232.7,
+   "min_ms": 224.7,
+   "max_ms": 234.4,
+   "output_tail": ""
+  },
+  {
+   "task": "gofmt",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.6,
+   "min_ms": 9.4,
+   "max_ms": 9.9,
+   "output_tail": ""
+  },
+  {
+   "task": "gofmt",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.6,
+   "min_ms": 9.1,
+   "max_ms": 9.9,
+   "output_tail": ""
+  },
+  {
+   "task": "gofmt",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.5,
+   "min_ms": 9.3,
+   "max_ms": 10.0,
+   "output_tail": ""
+  },
+  {
+   "task": "gofmt",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.6,
+   "min_ms": 9.4,
+   "max_ms": 9.8,
+   "output_tail": ""
+  },
+  {
+   "task": "gofmt",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 17.0,
+   "min_ms": 16.6,
+   "max_ms": 18.4,
+   "output_tail": ""
+  },
+  {
+   "task": "gofmt",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 17.1,
+   "min_ms": 16.8,
+   "max_ms": 17.3,
+   "output_tail": ""
+  },
+  {
+   "task": "make_test",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 228.9,
+   "min_ms": 224.2,
+   "max_ms": 235.1,
+   "output_tail": ""
+  },
+  {
+   "task": "make_test",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 230.6,
+   "min_ms": 228.0,
+   "max_ms": 232.5,
+   "output_tail": ""
+  },
+  {
+   "task": "make_test",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 229.3,
+   "min_ms": 226.1,
+   "max_ms": 230.7,
+   "output_tail": ""
+  },
+  {
+   "task": "make_test",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 233.5,
+   "min_ms": 221.7,
+   "max_ms": 236.7,
+   "output_tail": ""
+  },
+  {
+   "task": "make_test",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 230.7,
+   "min_ms": 229.5,
+   "max_ms": 232.2,
+   "output_tail": ""
+  },
+  {
+   "task": "make_test",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 231.0,
+   "min_ms": 227.5,
+   "max_ms": 238.0,
+   "output_tail": ""
+  },
+  {
+   "task": "npm_test",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 128.1,
+   "min_ms": 127.5,
+   "max_ms": 135.1,
+   "output_tail": ""
+  },
+  {
+   "task": "npm_test",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 129.4,
+   "min_ms": 126.2,
+   "max_ms": 130.8,
+   "output_tail": ""
+  },
+  {
+   "task": "npm_test",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 127.8,
+   "min_ms": 126.5,
+   "max_ms": 128.6,
+   "output_tail": ""
+  },
+  {
+   "task": "npm_test",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 126.4,
+   "min_ms": 124.5,
+   "max_ms": 128.8,
+   "output_tail": ""
+  },
+  {
+   "task": "npm_test",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 134.9,
+   "min_ms": 132.2,
+   "max_ms": 136.4,
+   "output_tail": ""
+  },
+  {
+   "task": "npm_test",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 134.7,
+   "min_ms": 133.7,
+   "max_ms": 136.8,
+   "output_tail": ""
+  },
+  {
+   "task": "py_test",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 128.3,
+   "min_ms": 125.7,
+   "max_ms": 139.5,
+   "output_tail": ""
+  },
+  {
+   "task": "py_test",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 124.3,
+   "min_ms": 119.0,
+   "max_ms": 126.5,
+   "output_tail": ""
+  },
+  {
+   "task": "py_test",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 119.0,
+   "min_ms": 118.5,
+   "max_ms": 139.1,
+   "output_tail": ""
+  },
+  {
+   "task": "py_test",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 129.3,
+   "min_ms": 124.9,
+   "max_ms": 133.3,
+   "output_tail": ""
+  },
+  {
+   "task": "py_test",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 128.9,
+   "min_ms": 125.9,
+   "max_ms": 130.6,
+   "output_tail": ""
+  },
+  {
+   "task": "py_test",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 125.6,
+   "min_ms": 125.3,
+   "max_ms": 126.1,
+   "output_tail": ""
+  },
+  {
+   "task": "curl_reg",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 10.5,
+   "min_ms": 10.3,
+   "max_ms": 11.9,
+   "output_tail": ""
+  },
+  {
+   "task": "curl_reg",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 10.5,
+   "min_ms": 10.3,
+   "max_ms": 10.5,
+   "output_tail": ""
+  },
+  {
+   "task": "curl_reg",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 10.4,
+   "min_ms": 10.3,
+   "max_ms": 10.6,
+   "output_tail": ""
+  },
+  {
+   "task": "curl_reg",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 10.5,
+   "min_ms": 10.3,
+   "max_ms": 10.6,
+   "output_tail": ""
+  },
+  {
+   "task": "curl_reg",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 17.3,
+   "min_ms": 17.0,
+   "max_ms": 17.6,
+   "output_tail": ""
+  },
+  {
+   "task": "curl_reg",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 17.4,
+   "min_ms": 17.2,
+   "max_ms": 17.5,
+   "output_tail": ""
+  },
+  {
+   "task": "write_doc",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 0.1,
+   "min_ms": 0.1,
+   "max_ms": 0.2,
+   "output_tail": ""
+  },
+  {
+   "task": "write_doc",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 0.2,
+   "min_ms": 0.2,
+   "max_ms": 0.2,
+   "output_tail": ""
+  },
+  {
+   "task": "write_doc",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 0.2,
+   "min_ms": 0.2,
+   "max_ms": 0.2,
+   "output_tail": ""
+  },
+  {
+   "task": "write_doc",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 0.1,
+   "min_ms": 0.1,
+   "max_ms": 0.1,
+   "output_tail": ""
+  },
+  {
+   "task": "write_doc",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 20.2,
+   "min_ms": 19.6,
+   "max_ms": 21.1,
+   "output_tail": ""
+  },
+  {
+   "task": "write_doc",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 18.2,
+   "min_ms": 17.9,
+   "max_ms": 18.6,
+   "output_tail": ""
+  },
+  {
+   "task": "cd_test",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 30.7,
+   "min_ms": 29.3,
+   "max_ms": 33.4,
+   "output_tail": ""
+  },
+  {
+   "task": "cd_test",
+   "policy": "allowlist",
+   "ok": false,
+   "statuses": [
+    "refused"
+   ],
+   "median_ms": 0.0,
+   "min_ms": 0.0,
+   "max_ms": 0.1,
+   "output_tail": "refused by policy: program not on the allowlist: cd"
+  },
+  {
+   "task": "cd_test",
+   "policy": "allowlist+args",
+   "ok": false,
+   "statuses": [
+    "refused"
+   ],
+   "median_ms": 0.0,
+   "min_ms": 0.0,
+   "max_ms": 0.1,
+   "output_tail": "refused by policy: program not on the allowlist: cd"
+  },
+  {
+   "task": "cd_test",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 31.4,
+   "min_ms": 30.9,
+   "max_ms": 32.1,
+   "output_tail": ""
+  },
+  {
+   "task": "cd_test",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 37.1,
+   "min_ms": 36.5,
+   "max_ms": 38.6,
+   "output_tail": ""
+  },
+  {
+   "task": "cd_test",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 36.2,
+   "min_ms": 35.9,
+   "max_ms": 36.5,
+   "output_tail": ""
+  },
+  {
+   "task": "sed_i",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.3,
+   "min_ms": 5.2,
+   "max_ms": 6.0,
+   "output_tail": ""
+  },
+  {
+   "task": "sed_i",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 5.4,
+   "min_ms": 5.4,
+   "max_ms": 5.7,
+   "output_tail": ""
+  },
+  {
+   "task": "sed_i",
+   "policy": "allowlist+args",
+   "ok": false,
+   "statuses": [
+    "refused"
+   ],
+   "median_ms": 0.1,
+   "min_ms": 0.1,
+   "max_ms": 0.1,
+   "output_tail": "refused by policy: sed -i"
+  },
+  {
+   "task": "sed_i",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 6.2,
+   "min_ms": 5.4,
+   "max_ms": 7.0,
+   "output_tail": ""
+  },
+  {
+   "task": "sed_i",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 12.9,
+   "min_ms": 12.7,
+   "max_ms": 14.0,
+   "output_tail": ""
+  },
+  {
+   "task": "sed_i",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 12.4,
+   "min_ms": 12.3,
+   "max_ms": 13.0,
+   "output_tail": ""
+  },
+  {
+   "task": "py_c",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 32.2,
+   "min_ms": 31.7,
+   "max_ms": 35.8,
+   "output_tail": ""
+  },
+  {
+   "task": "py_c",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 32.3,
+   "min_ms": 31.8,
+   "max_ms": 34.3,
+   "output_tail": ""
+  },
+  {
+   "task": "py_c",
+   "policy": "allowlist+args",
+   "ok": false,
+   "statuses": [
+    "refused"
+   ],
+   "median_ms": 0.1,
+   "min_ms": 0.1,
+   "max_ms": 0.1,
+   "output_tail": "refused by policy: inline code"
+  },
+  {
+   "task": "py_c",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 32.0,
+   "min_ms": 31.9,
+   "max_ms": 32.1,
+   "output_tail": ""
+  },
+  {
+   "task": "py_c",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 39.0,
+   "min_ms": 38.9,
+   "max_ms": 39.4,
+   "output_tail": ""
+  },
+  {
+   "task": "py_c",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 39.1,
+   "min_ms": 38.7,
+   "max_ms": 39.5,
+   "output_tail": ""
+  },
+  {
+   "task": "node_e",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 28.5,
+   "min_ms": 28.0,
+   "max_ms": 28.8,
+   "output_tail": ""
+  },
+  {
+   "task": "node_e",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 28.5,
+   "min_ms": 28.4,
+   "max_ms": 28.7,
+   "output_tail": ""
+  },
+  {
+   "task": "node_e",
+   "policy": "allowlist+args",
+   "ok": false,
+   "statuses": [
+    "refused"
+   ],
+   "median_ms": 0.1,
+   "min_ms": 0.1,
+   "max_ms": 0.1,
+   "output_tail": "refused by policy: inline code"
+  },
+  {
+   "task": "node_e",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 30.8,
+   "min_ms": 30.4,
+   "max_ms": 31.3,
+   "output_tail": ""
+  },
+  {
+   "task": "node_e",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 36.5,
+   "min_ms": 36.0,
+   "max_ms": 38.0,
+   "output_tail": ""
+  },
+  {
+   "task": "node_e",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 36.0,
+   "min_ms": 35.7,
+   "max_ms": 38.5,
+   "output_tail": ""
+  },
+  {
+   "task": "git_c",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.1,
+   "min_ms": 8.9,
+   "max_ms": 10.0,
+   "output_tail": ""
+  },
+  {
+   "task": "git_c",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 9.0,
+   "min_ms": 9.0,
+   "max_ms": 9.1,
+   "output_tail": ""
+  },
+  {
+   "task": "git_c",
+   "policy": "allowlist+args",
+   "ok": false,
+   "statuses": [
+    "refused"
+   ],
+   "median_ms": 0.1,
+   "min_ms": 0.1,
+   "max_ms": 0.1,
+   "output_tail": "refused by policy: git config change"
+  },
+  {
+   "task": "git_c",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 8.9,
+   "min_ms": 8.9,
+   "max_ms": 9.4,
+   "output_tail": ""
+  },
+  {
+   "task": "git_c",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 15.9,
+   "min_ms": 15.8,
+   "max_ms": 16.1,
+   "output_tail": ""
+  },
+  {
+   "task": "git_c",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok"
+   ],
+   "median_ms": 15.8,
+   "min_ms": 15.7,
+   "max_ms": 16.2,
+   "output_tail": ""
+  },
+  {
+   "task": "find_delete",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 6.5,
+   "min_ms": 6.4,
+   "max_ms": 6.6,
+   "output_tail": ""
+  },
+  {
+   "task": "find_delete",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 6.5,
+   "min_ms": 6.4,
+   "max_ms": 6.7,
+   "output_tail": ""
+  },
+  {
+   "task": "find_delete",
+   "policy": "allowlist+args",
+   "ok": false,
+   "statuses": [
+    "ok",
+    "refused"
+   ],
+   "median_ms": 0.2,
+   "min_ms": 0.2,
+   "max_ms": 0.3,
+   "output_tail": "refused by policy: find -exec/-delete"
+  },
+  {
+   "task": "find_delete",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 6.4,
+   "min_ms": 6.3,
+   "max_ms": 6.9,
+   "output_tail": ""
+  },
+  {
+   "task": "find_delete",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 30.5,
+   "min_ms": 30.2,
+   "max_ms": 30.9,
+   "output_tail": ""
+  },
+  {
+   "task": "find_delete",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 31.0,
+   "min_ms": 30.5,
+   "max_ms": 33.0,
+   "output_tail": ""
+  },
+  {
+   "task": "new_test",
+   "policy": "none",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 223.1,
+   "min_ms": 217.0,
+   "max_ms": 374.2,
+   "output_tail": ""
+  },
+  {
+   "task": "new_test",
+   "policy": "allowlist",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 222.2,
+   "min_ms": 221.3,
+   "max_ms": 230.0,
+   "output_tail": ""
+  },
+  {
+   "task": "new_test",
+   "policy": "allowlist+args",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 222.3,
+   "min_ms": 215.2,
+   "max_ms": 232.0,
+   "output_tail": ""
+  },
+  {
+   "task": "new_test",
+   "policy": "env-scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 218.3,
+   "min_ms": 213.7,
+   "max_ms": 223.2,
+   "output_tail": ""
+  },
+  {
+   "task": "new_test",
+   "policy": "sandbox",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 242.7,
+   "min_ms": 234.8,
+   "max_ms": 251.2,
+   "output_tail": ""
+  },
+  {
+   "task": "new_test",
+   "policy": "sandbox+scrub",
+   "ok": true,
+   "statuses": [
+    "ok",
+    "ok"
+   ],
+   "median_ms": 253.3,
+   "min_ms": 243.7,
+   "max_ms": 256.6,
+   "output_tail": ""
+  }
+ ],
+ "summary": {
+  "none": {
+   "attacks_met": 27,
+   "attacks": 27,
+   "stopped_by_validator": 0,
+   "stopped_by_sandbox": 0,
+   "stopped_by_env_scrub": 0,
+   "attack_failed": 0,
+   "tasks_ok": 28,
+   "tasks": 28
+  },
+  "allowlist": {
+   "attacks_met": 26,
+   "attacks": 27,
+   "stopped_by_validator": 1,
+   "stopped_by_sandbox": 0,
+   "stopped_by_env_scrub": 0,
+   "attack_failed": 0,
+   "tasks_ok": 27,
+   "tasks": 28
+  },
+  "allowlist+args": {
+   "attacks_met": 17,
+   "attacks": 27,
+   "stopped_by_validator": 10,
+   "stopped_by_sandbox": 0,
+   "stopped_by_env_scrub": 0,
+   "attack_failed": 0,
+   "tasks_ok": 22,
+   "tasks": 28
+  },
+  "env-scrub": {
+   "attacks_met": 24,
+   "attacks": 27,
+   "stopped_by_validator": 0,
+   "stopped_by_sandbox": 0,
+   "stopped_by_env_scrub": 3,
+   "attack_failed": 0,
+   "tasks_ok": 28,
+   "tasks": 28
+  },
+  "sandbox": {
+   "attacks_met": 3,
+   "attacks": 27,
+   "stopped_by_validator": 0,
+   "stopped_by_sandbox": 24,
+   "stopped_by_env_scrub": 0,
+   "attack_failed": 0,
+   "tasks_ok": 28,
+   "tasks": 28
+  },
+  "sandbox+scrub": {
+   "attacks_met": 0,
+   "attacks": 27,
+   "stopped_by_validator": 0,
+   "stopped_by_sandbox": 24,
+   "stopped_by_env_scrub": 3,
+   "attack_failed": 0,
+   "tasks_ok": 28,
+   "tasks": 28
+  }
+ },
+ "spawn_median_ms": {
+  "bash -c true": 3.33,
+  "sandbox-exec bash -c true": 10.37
+ },
+ "validator_us_per_command": {
+  "allowlist": 27.3,
+  "allowlist+args": 55.5
+ }
+}

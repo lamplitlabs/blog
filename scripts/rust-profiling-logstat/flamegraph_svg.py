@@ -11,6 +11,7 @@ warm for this crate's code, blue-grey for the allocator and libc, sand for std
 and core. Each box carries a <title> tooltip with samples and percent.
 """
 import html
+import os
 import sys
 import zlib
 
@@ -18,7 +19,8 @@ FRAME_H = 22
 FONT = 13
 PAD_TOP = 54
 PAD_BOTTOM = 26
-ROOT = "logstat::main"  # frames above it (start, main, std::rt::lang_start...) are dropped
+ROOT = os.environ.get("FLAMEGRAPH_ROOT", "logstat::main")  # frames above it (start, main, std::rt::lang_start...) are dropped
+CRATE = ROOT.split("::")[0] + "::"  # frames of this crate get the warm colours
 
 
 def load(path):
@@ -51,7 +53,7 @@ def build(stacks):
 
 def colour(name):
     h = zlib.crc32(name.encode()) / 0xFFFFFFFF
-    if name.startswith("logstat::"):
+    if name.startswith(CRATE) or f"<{CRATE}" in name:
         return (int(205 + 50 * h), int(80 + 90 * h), int(30 + 40 * h))
     if any(k in name for k in ("malloc", "free", "xzm", "alloc", "memcmp", "memmove", "memcpy", "stub:", "_platform")):
         return (int(90 + 40 * h), int(140 + 40 * h), int(190 + 40 * h))
@@ -96,7 +98,7 @@ def render(root, out, title, width=1200, min_px=0.6):
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" font-family="Menlo,monospace">',
          f'<rect width="100%" height="100%" fill="#f8f8f4"/>',
          f'<text x="{width/2}" y="26" font-size="18" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="bold">{html.escape(title)}</text>',
-         f'<text x="10" y="{height-8}" font-size="12" fill="#555" font-family="Helvetica,Arial,sans-serif">width = share of 1 ms samples (macOS sample); x order is alphabetical, not time; frames above logstat::main trimmed</text>']
+         f'<text x="10" y="{height-8}" font-size="12" fill="#555" font-family="Helvetica,Arial,sans-serif">width = share of 1 ms samples (macOS sample); x order is alphabetical, not time; frames above {html.escape(ROOT)} trimmed</text>']
     for name, x, d, w, n in rows:
         y = height - PAD_BOTTOM - (d + 1) * FRAME_H
         r, g, b = colour(name) if d else (200, 200, 200)

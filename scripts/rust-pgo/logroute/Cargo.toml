@@ -1,0 +1,23 @@
+[package]
+name = "logroute"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# No dependencies: the build is `cargo build --release --offline` and the
+# PGO variants only change RUSTFLAGS (see ../measure.sh).
+[dependencies]
+
+[features]
+# Measurement knob: #[inline(never)] on HistSink::write (see measure.sh).
+outline-write = []
+
+[profile.release]
+debug = "line-tables-only"
+
+# The "tuned release profile" baseline: fat LTO and one codegen unit, the
+# usual first thing people try before PGO.
+[profile.release-lto]
+inherits = "release"
+lto = "fat"
+codegen-units = 1

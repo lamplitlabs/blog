@@ -1,0 +1,808 @@
+{
+  "host": {
+    "cpu": "Apple M2 Pro",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+    "llvm": "22.1.2",
+    "go": "go1.27.4"
+  },
+  "lines": 1000000,
+  "reps": 5,
+  "cells": {
+    "go-off/api": {
+      "best_ns_per_line_median": 223.6,
+      "best_ns_per_line_runs": [
+        222.55,
+        222.65,
+        233.72,
+        221.01,
+        227.34,
+        232.07,
+        222.69,
+        228.42,
+        221.13,
+        224.43
+      ],
+      "instructions_per_line_median": 3321.4,
+      "instructions_per_line_spread_pct": 0.28,
+      "cycles_per_line_median": 767.2,
+      "ipc_median": 4.33,
+      "max_rss_mb_median": 164.5,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": 0.0,
+      "cycles_per_line_vs_off_pct": 0.0,
+      "ns_per_line_vs_off_pct": 0.0,
+      "instructions_per_line_vs_go_off_pct": 0.0
+    },
+    "go-off/batch": {
+      "best_ns_per_line_median": 187.9,
+      "best_ns_per_line_runs": [
+        185.78,
+        186.39,
+        188.65,
+        186.71,
+        188.97,
+        196.43,
+        187.1,
+        190.29,
+        186.24,
+        189.1
+      ],
+      "instructions_per_line_median": 2873.8,
+      "instructions_per_line_spread_pct": 0.26,
+      "cycles_per_line_median": 640.5,
+      "ipc_median": 4.49,
+      "max_rss_mb_median": 164.6,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": 0.0,
+      "cycles_per_line_vs_off_pct": 0.0,
+      "ns_per_line_vs_off_pct": 0.0,
+      "instructions_per_line_vs_go_off_pct": 0.0
+    },
+    "go-pgo/api": {
+      "best_ns_per_line_median": 216.3,
+      "best_ns_per_line_runs": [
+        215.98,
+        212.61,
+        220.4,
+        211.27,
+        219.73,
+        223.27,
+        213.13,
+        216.66,
+        213.34,
+        217.72
+      ],
+      "instructions_per_line_median": 3032.0,
+      "instructions_per_line_spread_pct": 0.25,
+      "cycles_per_line_median": 736.6,
+      "ipc_median": 4.12,
+      "max_rss_mb_median": 164.5,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -8.7,
+      "cycles_per_line_vs_off_pct": -4.0,
+      "ns_per_line_vs_off_pct": -3.3,
+      "instructions_per_line_vs_go_off_pct": -8.7
+    },
+    "go-pgo/batch": {
+      "best_ns_per_line_median": 180.6,
+      "best_ns_per_line_runs": [
+        176.83,
+        180.48,
+        181.1,
+        177.26,
+        188.11,
+        180.73,
+        173.11,
+        181.09,
+        181.29,
+        180.14
+      ],
+      "instructions_per_line_median": 2585.6,
+      "instructions_per_line_spread_pct": 0.23,
+      "cycles_per_line_median": 609.3,
+      "ipc_median": 4.24,
+      "max_rss_mb_median": 164.6,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -10.0,
+      "cycles_per_line_vs_off_pct": -4.9,
+      "ns_per_line_vs_off_pct": -3.9,
+      "instructions_per_line_vs_go_off_pct": -10.0
+    },
+    "rs-off/api": {
+      "best_ns_per_line_median": 209.4,
+      "best_ns_per_line_runs": [
+        205.22,
+        209.5,
+        205.33,
+        205.73,
+        212.21,
+        210.11,
+        204.06,
+        210.8,
+        209.25,
+        210.95
+      ],
+      "instructions_per_line_median": 2792.7,
+      "instructions_per_line_spread_pct": 0.24,
+      "cycles_per_line_median": 711.4,
+      "ipc_median": 3.93,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": 0.0,
+      "cycles_per_line_vs_off_pct": 0.0,
+      "ns_per_line_vs_off_pct": 0.0,
+      "instructions_per_line_vs_go_off_pct": -15.9
+    },
+    "rs-off/batch": {
+      "best_ns_per_line_median": 163.4,
+      "best_ns_per_line_runs": [
+        162.29,
+        167.2,
+        161.16,
+        161.89,
+        164.22,
+        162.5,
+        167.99,
+        166.72,
+        161.79,
+        164.48
+      ],
+      "instructions_per_line_median": 2345.0,
+      "instructions_per_line_spread_pct": 0.2,
+      "cycles_per_line_median": 560.0,
+      "ipc_median": 4.19,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": 0.0,
+      "cycles_per_line_vs_off_pct": 0.0,
+      "ns_per_line_vs_off_pct": 0.0,
+      "instructions_per_line_vs_go_off_pct": -18.4
+    },
+    "rs-lto/api": {
+      "best_ns_per_line_median": 203.0,
+      "best_ns_per_line_runs": [
+        199.83,
+        206.41,
+        199.5,
+        194.67,
+        205.93,
+        200.85,
+        200.29,
+        205.24,
+        206.67,
+        211.39
+      ],
+      "instructions_per_line_median": 2670.1,
+      "instructions_per_line_spread_pct": 0.25,
+      "cycles_per_line_median": 693.7,
+      "ipc_median": 3.85,
+      "max_rss_mb_median": 155.5,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -4.4,
+      "cycles_per_line_vs_off_pct": -2.5,
+      "ns_per_line_vs_off_pct": -3.1,
+      "instructions_per_line_vs_go_off_pct": -19.6
+    },
+    "rs-lto/batch": {
+      "best_ns_per_line_median": 156.6,
+      "best_ns_per_line_runs": [
+        154.71,
+        158.68,
+        155.98,
+        152.23,
+        161.84,
+        157.31,
+        152.49,
+        168.43,
+        152.77,
+        163.48
+      ],
+      "instructions_per_line_median": 2233.5,
+      "instructions_per_line_spread_pct": 0.34,
+      "cycles_per_line_median": 539.9,
+      "ipc_median": 4.14,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -4.8,
+      "cycles_per_line_vs_off_pct": -3.6,
+      "ns_per_line_vs_off_pct": -4.2,
+      "instructions_per_line_vs_go_off_pct": -22.3
+    },
+    "rs-pgo/api": {
+      "best_ns_per_line_median": 211.7,
+      "best_ns_per_line_runs": [
+        210.62,
+        218.52,
+        208.85,
+        206.07,
+        216.17,
+        212.77,
+        210.39,
+        217.89,
+        205.84,
+        226.06
+      ],
+      "instructions_per_line_median": 2671.8,
+      "instructions_per_line_spread_pct": 0.26,
+      "cycles_per_line_median": 731.0,
+      "ipc_median": 3.65,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -4.3,
+      "cycles_per_line_vs_off_pct": 2.8,
+      "ns_per_line_vs_off_pct": 1.1,
+      "instructions_per_line_vs_go_off_pct": -19.6
+    },
+    "rs-pgo/batch": {
+      "best_ns_per_line_median": 178.7,
+      "best_ns_per_line_runs": [
+        175.92,
+        180.62,
+        175.88,
+        171.34,
+        180.27,
+        178.4,
+        184.96,
+        179.0,
+        176.09,
+        193.92
+      ],
+      "instructions_per_line_median": 2325.1,
+      "instructions_per_line_spread_pct": 0.34,
+      "cycles_per_line_median": 607.5,
+      "ipc_median": 3.83,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -0.8,
+      "cycles_per_line_vs_off_pct": 8.5,
+      "ns_per_line_vs_off_pct": 9.4,
+      "instructions_per_line_vs_go_off_pct": -19.1
+    },
+    "rs-pgo-lto/api": {
+      "best_ns_per_line_median": 212.5,
+      "best_ns_per_line_runs": [
+        209.54,
+        211.51,
+        215.24,
+        203.21,
+        214.95,
+        211.06,
+        213.51,
+        221.78,
+        208.45,
+        248.28
+      ],
+      "instructions_per_line_median": 2567.8,
+      "instructions_per_line_spread_pct": 0.23,
+      "cycles_per_line_median": 725.3,
+      "ipc_median": 3.54,
+      "max_rss_mb_median": 155.5,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -8.1,
+      "cycles_per_line_vs_off_pct": 2.0,
+      "ns_per_line_vs_off_pct": 1.5,
+      "instructions_per_line_vs_go_off_pct": -22.7
+    },
+    "rs-pgo-lto/batch": {
+      "best_ns_per_line_median": 177.5,
+      "best_ns_per_line_runs": [
+        174.15,
+        178.84,
+        176.07,
+        169.82,
+        178.33,
+        176.71,
+        184.92,
+        180.49,
+        169.52,
+        235.67
+      ],
+      "instructions_per_line_median": 2221.2,
+      "instructions_per_line_spread_pct": 0.34,
+      "cycles_per_line_median": 603.1,
+      "ipc_median": 3.68,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -5.3,
+      "cycles_per_line_vs_off_pct": 7.7,
+      "ns_per_line_vs_off_pct": 8.6,
+      "instructions_per_line_vs_go_off_pct": -22.7
+    },
+    "rs-pgo-noicp/api": {
+      "best_ns_per_line_median": 219.9,
+      "best_ns_per_line_runs": [
+        209.6,
+        219.47,
+        229.88,
+        210.67,
+        225.63,
+        215.22,
+        220.42,
+        221.73,
+        214.8,
+        274.34
+      ],
+      "instructions_per_line_median": 2727.6,
+      "instructions_per_line_spread_pct": 0.29,
+      "cycles_per_line_median": 746.0,
+      "ipc_median": 3.66,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -2.3,
+      "cycles_per_line_vs_off_pct": 4.9,
+      "ns_per_line_vs_off_pct": 5.0,
+      "instructions_per_line_vs_go_off_pct": -17.9
+    },
+    "rs-pgo-noicp/batch": {
+      "best_ns_per_line_median": 176.1,
+      "best_ns_per_line_runs": [
+        172.83,
+        177.58,
+        174.68,
+        168.88,
+        184.75,
+        172.9,
+        178.62,
+        182.11,
+        172.25,
+        216.24
+      ],
+      "instructions_per_line_median": 2281.0,
+      "instructions_per_line_spread_pct": 0.33,
+      "cycles_per_line_median": 600.8,
+      "ipc_median": 3.8,
+      "max_rss_mb_median": 155.6,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -2.7,
+      "cycles_per_line_vs_off_pct": 7.3,
+      "ns_per_line_vs_off_pct": 7.8,
+      "instructions_per_line_vs_go_off_pct": -20.6
+    },
+    "rs-pgo-nomemop/api": {
+      "best_ns_per_line_median": 215.7,
+      "best_ns_per_line_runs": [
+        220.96,
+        215.55,
+        208.38,
+        215.79,
+        220.52,
+        210.89,
+        214.89,
+        220.65,
+        212.9,
+        245.47
+      ],
+      "instructions_per_line_median": 2672.5,
+      "instructions_per_line_spread_pct": 0.31,
+      "cycles_per_line_median": 733.5,
+      "ipc_median": 3.64,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -4.3,
+      "cycles_per_line_vs_off_pct": 3.1,
+      "ns_per_line_vs_off_pct": 3.0,
+      "instructions_per_line_vs_go_off_pct": -19.5
+    },
+    "rs-pgo-nomemop/batch": {
+      "best_ns_per_line_median": 179.3,
+      "best_ns_per_line_runs": [
+        174.49,
+        180.01,
+        176.33,
+        179.2,
+        183.95,
+        175.02,
+        180.95,
+        179.43,
+        171.02,
+        189.48
+      ],
+      "instructions_per_line_median": 2323.7,
+      "instructions_per_line_spread_pct": 0.25,
+      "cycles_per_line_median": 609.6,
+      "ipc_median": 3.81,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -0.9,
+      "cycles_per_line_vs_off_pct": 8.9,
+      "ns_per_line_vs_off_pct": 9.7,
+      "instructions_per_line_vs_go_off_pct": -19.1
+    },
+    "rs-pgo-exttsp/api": {
+      "best_ns_per_line_median": 214.0,
+      "best_ns_per_line_runs": [
+        209.57,
+        214.87,
+        209.24,
+        213.36,
+        218.56,
+        210.84,
+        214.67,
+        215.53,
+        203.82,
+        224.1
+      ],
+      "instructions_per_line_median": 2667.2,
+      "instructions_per_line_spread_pct": 0.27,
+      "cycles_per_line_median": 724.8,
+      "ipc_median": 3.68,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -4.5,
+      "cycles_per_line_vs_off_pct": 1.9,
+      "ns_per_line_vs_off_pct": 2.2,
+      "instructions_per_line_vs_go_off_pct": -19.7
+    },
+    "rs-pgo-exttsp/batch": {
+      "best_ns_per_line_median": 180.4,
+      "best_ns_per_line_runs": [
+        179.86,
+        180.87,
+        177.03,
+        179.8,
+        186.66,
+        183.05,
+        185.23,
+        177.47,
+        179.64,
+        188.28
+      ],
+      "instructions_per_line_median": 2325.0,
+      "instructions_per_line_spread_pct": 0.23,
+      "cycles_per_line_median": 612.4,
+      "ipc_median": 3.8,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -0.9,
+      "cycles_per_line_vs_off_pct": 9.4,
+      "ns_per_line_vs_off_pct": 10.4,
+      "instructions_per_line_vs_go_off_pct": -19.1
+    },
+    "rs-pgo-outline/api": {
+      "best_ns_per_line_median": 209.2,
+      "best_ns_per_line_runs": [
+        205.61,
+        219.49,
+        207.31,
+        210.38,
+        217.8,
+        207.76,
+        211.42,
+        207.54,
+        208.0,
+        222.0
+      ],
+      "instructions_per_line_median": 2789.5,
+      "instructions_per_line_spread_pct": 0.21,
+      "cycles_per_line_median": 714.5,
+      "ipc_median": 3.9,
+      "max_rss_mb_median": 155.5,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -0.1,
+      "cycles_per_line_vs_off_pct": 0.4,
+      "ns_per_line_vs_off_pct": -0.1,
+      "instructions_per_line_vs_go_off_pct": -16.0
+    },
+    "rs-pgo-outline/batch": {
+      "best_ns_per_line_median": 166.9,
+      "best_ns_per_line_runs": [
+        165.47,
+        172.39,
+        162.4,
+        159.16,
+        172.34,
+        167.73,
+        167.98,
+        166.16,
+        162.29,
+        172.47
+      ],
+      "instructions_per_line_median": 2340.9,
+      "instructions_per_line_spread_pct": 0.19,
+      "cycles_per_line_median": 565.8,
+      "ipc_median": 4.14,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -0.2,
+      "cycles_per_line_vs_off_pct": 1.0,
+      "ns_per_line_vs_off_pct": 2.1,
+      "instructions_per_line_vs_go_off_pct": -18.5
+    },
+    "rs-pgo-short/api": {
+      "best_ns_per_line_median": 215.4,
+      "best_ns_per_line_runs": [
+        213.48,
+        222.14,
+        213.6,
+        207.28,
+        225.47,
+        212.07,
+        218.27,
+        213.5,
+        217.14,
+        225.63
+      ],
+      "instructions_per_line_median": 2702.8,
+      "instructions_per_line_spread_pct": 0.21,
+      "cycles_per_line_median": 734.3,
+      "ipc_median": 3.68,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": -3.2,
+      "cycles_per_line_vs_off_pct": 3.2,
+      "ns_per_line_vs_off_pct": 2.9,
+      "instructions_per_line_vs_go_off_pct": -18.6
+    },
+    "rs-pgo-short/batch": {
+      "best_ns_per_line_median": 179.1,
+      "best_ns_per_line_runs": [
+        176.52,
+        184.87,
+        177.19,
+        172.31,
+        185.42,
+        172.18,
+        181.02,
+        177.21,
+        181.55,
+        182.33
+      ],
+      "instructions_per_line_median": 2340.3,
+      "instructions_per_line_spread_pct": 0.22,
+      "cycles_per_line_median": 609.0,
+      "ipc_median": 3.84,
+      "max_rss_mb_median": 155.6,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -0.2,
+      "cycles_per_line_vs_off_pct": 8.7,
+      "ns_per_line_vs_off_pct": 9.6,
+      "instructions_per_line_vs_go_off_pct": -18.6
+    },
+    "rs-pgo-batchprof/api": {
+      "best_ns_per_line_median": 222.6,
+      "best_ns_per_line_runs": [
+        218.77,
+        232.4,
+        219.28,
+        213.19,
+        231.08,
+        218.9,
+        225.5,
+        219.72,
+        235.58,
+        231.72
+      ],
+      "instructions_per_line_median": 2810.5,
+      "instructions_per_line_spread_pct": 0.23,
+      "cycles_per_line_median": 761.8,
+      "ipc_median": 3.69,
+      "max_rss_mb_median": 155.6,
+      "checksum": "11463464160021572079",
+      "instructions_per_line_vs_off_pct": 0.6,
+      "cycles_per_line_vs_off_pct": 7.1,
+      "ns_per_line_vs_off_pct": 6.3,
+      "instructions_per_line_vs_go_off_pct": -15.4
+    },
+    "rs-pgo-batchprof/batch": {
+      "best_ns_per_line_median": 171.4,
+      "best_ns_per_line_runs": [
+        167.01,
+        176.66,
+        167.05,
+        162.91,
+        176.94,
+        167.18,
+        171.7,
+        171.47,
+        171.41,
+        172.01
+      ],
+      "instructions_per_line_median": 2281.1,
+      "instructions_per_line_spread_pct": 0.28,
+      "cycles_per_line_median": 580.3,
+      "ipc_median": 3.93,
+      "max_rss_mb_median": 155.5,
+      "checksum": "124650555801876366",
+      "instructions_per_line_vs_off_pct": -2.7,
+      "cycles_per_line_vs_off_pct": 3.6,
+      "ns_per_line_vs_off_pct": 4.9,
+      "instructions_per_line_vs_go_off_pct": -20.6
+    }
+  },
+  "instrumented": [
+    {
+      "variant": "rs-gen",
+      "input": "api",
+      "ns_per_line_best": "303.15",
+      "ns_per_line_mean": "308.74",
+      "checksum": "11463464160021572079"
+    },
+    {
+      "variant": "rs-gen-lto",
+      "input": "api-lto",
+      "ns_per_line_best": "317.61",
+      "ns_per_line_mean": "323.67",
+      "checksum": "11463464160021572079"
+    },
+    {
+      "variant": "rs-gen",
+      "input": "api-short",
+      "ns_per_line_best": "303.75",
+      "ns_per_line_mean": "303.75",
+      "checksum": "14449923844333321564"
+    },
+    {
+      "variant": "rs-gen",
+      "input": "batch",
+      "ns_per_line_best": "242.25",
+      "ns_per_line_mean": "247.11",
+      "checksum": "124650555801876366"
+    }
+  ],
+  "remarks": {
+    "off": {
+      "icall_promotions": [],
+      "inline_success": 57,
+      "inline_missed": 35
+    },
+    "pgo": {
+      "icall_promotions": [
+        {
+          "line": 312,
+          "text": "Promote indirect call to <RoutePrefix as Matcher>::matches with count 55441660 out of 67714450"
+        },
+        {
+          "line": 312,
+          "text": "Promote indirect call to <SlowerThan as Matcher>::matches with count 10000000 out of 12272790"
+        },
+        {
+          "line": 313,
+          "text": "Promote indirect call to <HistSink as Sink>::write with count 10000000 out of 10050800"
+        }
+      ],
+      "inline_success": 49,
+      "inline_missed": 59
+    },
+    "pgo-noicp": {
+      "icall_promotions": [],
+      "inline_success": 47,
+      "inline_missed": 58
+    },
+    "pgo-batchprof": {
+      "icall_promotions": [
+        {
+          "line": 312,
+          "text": "Promote indirect call to <StatusRange as Matcher>::matches with count 23323240 out of 50187730"
+        },
+        {
+          "line": 312,
+          "text": "Promote indirect call to <LevelIs as Matcher>::matches with count 21627810 out of 26864490"
+        },
+        {
+          "line": 312,
+          "text": "Promote indirect call to <SvcIn as Matcher>::matches with count 5236680 out of 5236680"
+        },
+        {
+          "line": 313,
+          "text": "Promote indirect call to <CountSink as Sink>::write with count 6099880 out of 10792120"
+        },
+        {
+          "line": 313,
+          "text": "Promote indirect call to <HistSink as Sink>::write with count 4692240 out of 4692240"
+        }
+      ],
+      "inline_success": 51,
+      "inline_missed": 59
+    }
+  },
+  "builds": {
+    "rs-off": {
+      "seconds": [
+        0.39,
+        0.44,
+        0.43
+      ],
+      "bytes": 533752,
+      "seconds_median": 0.43
+    },
+    "rs-gen": {
+      "seconds": [
+        0.44,
+        0.47,
+        0.49
+      ],
+      "bytes": 589032,
+      "seconds_median": 0.47
+    },
+    "rs-pgo": {
+      "seconds": [
+        0.4,
+        0.42,
+        0.41
+      ],
+      "bytes": 537144,
+      "seconds_median": 0.41
+    },
+    "rs-lto": {
+      "seconds": [
+        2.51,
+        2.52,
+        2.49
+      ],
+      "bytes": 464296,
+      "seconds_median": 2.51
+    },
+    "rs-pgo-lto": {
+      "seconds": [
+        2.78,
+        2.87,
+        2.68
+      ],
+      "bytes": 452936,
+      "seconds_median": 2.78
+    },
+    "go-off": {
+      "seconds": [
+        2.34,
+        2.34,
+        2.08
+      ],
+      "bytes": 2817170,
+      "seconds_median": 2.34
+    },
+    "go-pgo": {
+      "seconds": [
+        2.22,
+        2.13,
+        2.31
+      ],
+      "bytes": 2817106,
+      "seconds_median": 2.22
+    }
+  },
+  "codesize": {
+    "rs-off": {
+      "main_bytes": 7460,
+      "main_insns": 1865,
+      "main_indirect_calls": 5,
+      "main_sp_loads_stores": 233,
+      "text_bytes": 248564
+    },
+    "rs-lto": {
+      "main_bytes": 10500,
+      "main_insns": 2625,
+      "main_indirect_calls": 6,
+      "main_sp_loads_stores": 447,
+      "text_bytes": 236312
+    },
+    "rs-pgo": {
+      "main_bytes": 8136,
+      "main_insns": 2034,
+      "main_indirect_calls": 4,
+      "main_sp_loads_stores": 231,
+      "text_bytes": 249744
+    },
+    "rs-pgo-lto": {
+      "main_bytes": 7276,
+      "main_insns": 1819,
+      "main_indirect_calls": 5,
+      "main_sp_loads_stores": 276,
+      "text_bytes": 246172
+    },
+    "rs-pgo-noicp": {
+      "main_bytes": 6752,
+      "main_insns": 1688,
+      "main_indirect_calls": 4,
+      "main_sp_loads_stores": 236,
+      "text_bytes": 248484
+    },
+    "rs-pgo-outline": {
+      "main_bytes": 8380,
+      "main_insns": 2095,
+      "main_indirect_calls": 5,
+      "main_sp_loads_stores": 200,
+      "text_bytes": 248692
+    }
+  }
+}

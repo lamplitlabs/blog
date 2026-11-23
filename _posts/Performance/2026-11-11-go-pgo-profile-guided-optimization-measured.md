@@ -162,11 +162,13 @@ The pprof source view of the input profile shows why inlining `setField` matters
 - **Inlining did all of it.** With devirtualization disabled the result was the same. With inlining disabled the gain disappeared, and one config got 1.8% worse.
 - A **0.4 s profile did nothing**, because too few call sites crossed the hot threshold. Profiles from a different traffic mix, merged profiles, and a profile of the PGO build all gave the same gain.
 - Check PGO with the compiler's own output (`-gcflags=-m`, `-d=pgodebug=1`) and with instruction counters. Do not trust one wall-clock benchmark.
+- Follow-up: we ported the same log router to Rust and measured `rustc -Cprofile-use` against these Go numbers in [Rust PGO vs Go PGO on the Same Log Router](/posts/rust-pgo-vs-go-pgo-profile-guided-optimization-measured/).
 
 *We use this measure → change one thing → re-measure loop on the Go services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
 
 ## Related reading
 
+- [Rust PGO vs Go PGO on the Same Log Router: Fewer Instructions, More Cycles, Measured](/posts/rust-pgo-vs-go-pgo-profile-guided-optimization-measured/): the Rust half of this comparison, where LLVM's PGO cut instructions but cost cycles.
 - [Go pprof Profiling Guide: CPU, Goroutine and Mutex Profiles on One Service](/posts/go-pprof-profiling-guide-cpu-goroutine-mutex/): how to collect and read the CPU profile PGO feeds on.
 - [Go pprof alloc_space: 2.87 GB of garbage from one `+=` in a loop](/posts/go-pprof-alloc-space-escape-analysis/): the other half of `-gcflags=-m`, escape analysis.
 - [GOGC=off with runtime.SetMemoryLimit](/posts/go-gogc-off-memory-limit-p99/): a runtime knob to try after the compiler ones.

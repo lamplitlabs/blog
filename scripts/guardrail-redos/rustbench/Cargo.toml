@@ -1,0 +1,13 @@
+[package]
+name = "guardbench"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# Both crates must already be in the local cargo cache: measure.sh builds with --offline.
+[dependencies]
+regex = "=1.13.1"
+serde_json = "=1.0.154"
+
+[profile.release]
+debug = "line-tables-only"

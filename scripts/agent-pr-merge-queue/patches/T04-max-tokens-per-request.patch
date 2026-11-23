@@ -1,0 +1,73 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..382b789 100644
+--- a/handler.go
++++ b/handler.go
+@@ -11,6 +11,9 @@ import (
+ type Server struct {
+ 	Ledger *Ledger
+ 	Log    *slog.Logger
++	// MaxTokens caps the tokens of a single spend request (Config.MaxTokens).
++	// Zero or less means no cap is enforced.
++	MaxTokens int
+ }
+ 
+ type spendRequest struct {
+@@ -33,6 +36,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 		http.Error(w, "bad request body", http.StatusBadRequest)
+ 		return
+ 	}
++	if s.MaxTokens > 0 && req.Tokens > s.MaxTokens {
++		s.Log.Info("spend rejected: over per-request cap", "tenant", req.Tenant, "tokens", req.Tokens, "max_tokens", s.MaxTokens)
++		http.Error(w, "tokens exceed per-request maximum", http.StatusRequestEntityTooLarge)
++		return
++	}
+ 	s.Log.Info("spend", "tenant", req.Tenant, "tokens", req.Tokens)
+ 	if err := s.Ledger.Spend(req.Tenant, req.Tokens); err != nil {
+ 		if errors.Is(err, ErrOverBudget) {
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..32399d0 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -42,3 +42,42 @@ func TestHandlerBadBody(t *testing.T) {
+ 		t.Fatalf("got %d, want 400", w.Code)
+ 	}
+ }
++
++func TestHandlerMaxTokensRejectsOverCap(t *testing.T) {
++	s := newServer()
++	s.MaxTokens = 50
++	w := post(s, `{"tenant":"acme","tokens":51}`)
++	if w.Code != http.StatusRequestEntityTooLarge {
++		t.Fatalf("got %d, want 413", w.Code)
++	}
++	if got := s.Ledger.Remaining("acme"); got != 100 {
++		t.Fatalf("ledger touched: remaining %d, want 100", got)
++	}
++}
++
++func TestHandlerMaxTokensAllowsAtCap(t *testing.T) {
++	s := newServer()
++	s.MaxTokens = 50
++	w := post(s, `{"tenant":"acme","tokens":50}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":50`) {
++		t.Fatalf("got %d %s", w.Code, w.Body)
++	}
++}
++
++func TestHandlerMaxTokensZeroMeansNoCap(t *testing.T) {
++	s := newServer() // MaxTokens is zero
++	w := post(s, `{"tenant":"acme","tokens":100}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":0`) {
++		t.Fatalf("got %d %s", w.Code, w.Body)
++	}
++}
++
++func TestHandlerMaxTokensCheckedBeforeBudget(t *testing.T) {
++	s := newServer()
++	s.MaxTokens = 50
++	// Over both the cap and the tenant budget: the cap answers first.
++	w := post(s, `{"tenant":"acme","tokens":500}`)
++	if w.Code != http.StatusRequestEntityTooLarge {
++		t.Fatalf("got %d, want 413", w.Code)
++	}
++}

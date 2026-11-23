@@ -8,6 +8,15 @@
 
 set -eu
 
+# Scheduled runs start with an empty environment, so the locale is "C"
+# (US-ASCII). Ruby then reads the built pages as US-ASCII and html-proofer's
+# Nokogiri parse dies on the first non-ASCII byte of every page; the failures
+# are only logged as warnings, so it reports "Checking 0 internal links" and
+# passes without checking anything. Pin a UTF-8 locale unless one is set.
+if [[ "$(locale charmap 2>/dev/null)" != "UTF-8" ]]; then
+  export LC_ALL=C.UTF-8
+fi
+
 SITE_DIR="_site"
 
 _config="_config.yml"
@@ -55,18 +64,35 @@ read_baseurl() {
   fi
 }
 
+# Print the path of a usable mise binary, or nothing. Scheduled runs start with
+# a bare PATH (/usr/bin:/bin:...), where macOS's /usr/bin/ruby 2.6 and
+# /usr/bin/bundle are found but mise (installed in ~/.local/bin by its
+# installer) is not, so look in its standard install locations too.
+find_mise() {
+  local candidate
+  for candidate in "$(command -v mise 2>/dev/null)" "${MISE_INSTALL_PATH:-}" \
+    "${HOME:-}/.local/bin/mise" /opt/homebrew/bin/mise /usr/local/bin/mise; do
+    if [[ -n $candidate && -x $candidate ]]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+  return 0
+}
+
 preflight() {
-  local pinned_ruby
+  local pinned_ruby mise_bin
   pinned_ruby="$(tr -d '[:space:]' <.ruby-version 2>/dev/null || echo 'unknown')"
+  mise_bin="$(find_mise)"
 
   if ! command -v bundle >/dev/null 2>&1; then
     # Scheduled runs and hooks often start with a bare PATH (no mise shims), so
     # 'bundle' is missing even though mise has the pinned Ruby installed. Re-exec
     # once under mise rather than failing with "command not found" (exit 127).
-    if [[ -z ${TEST_SH_REEXEC:-} ]] && command -v mise >/dev/null 2>&1 \
-      && mise exec "ruby@$pinned_ruby" -- bundle -v >/dev/null 2>&1; then
+    if [[ -z ${TEST_SH_REEXEC:-} && -n $mise_bin ]] \
+      && "$mise_bin" exec "ruby@$pinned_ruby" -- bundle -v >/dev/null 2>&1; then
       echo "note: 'bundle' not on PATH; re-running under mise ruby@$pinned_ruby (.ruby-version)." >&2
-      TEST_SH_REEXEC=1 exec mise exec "ruby@$pinned_ruby" -- bash "$0" ${_orig_args[@]+"${_orig_args[@]}"}
+      TEST_SH_REEXEC=1 exec "$mise_bin" exec "ruby@$pinned_ruby" -- bash "$0" ${_orig_args[@]+"${_orig_args[@]}"}
     fi
     echo "error: 'bundle' not found on PATH." >&2
     echo "       Activate the pinned toolchain (e.g. 'mise exec -- bash tools/test.sh') and try again." >&2
@@ -83,10 +109,10 @@ preflight() {
     # The scheduler and most callers run `bash tools/test.sh` with a bare PATH.
     # When mise has the pinned Ruby installed, re-exec once under it instead of
     # asking a human to retype the command (guarded so a wrong re-exec cannot loop).
-    if [[ -z ${TEST_SH_REEXEC:-} ]] && command -v mise >/dev/null 2>&1 \
-      && mise exec "ruby@$pinned_ruby" -- ruby -e 'exit 0' >/dev/null 2>&1; then
+    if [[ -z ${TEST_SH_REEXEC:-} && -n $mise_bin ]] \
+      && "$mise_bin" exec "ruby@$pinned_ruby" -- ruby -e 'exit 0' >/dev/null 2>&1; then
       echo "note: ruby on PATH is $found_ruby; re-running under mise ruby@$pinned_ruby (.ruby-version)." >&2
-      TEST_SH_REEXEC=1 exec mise exec "ruby@$pinned_ruby" -- bash "$0" ${_orig_args[@]+"${_orig_args[@]}"}
+      TEST_SH_REEXEC=1 exec "$mise_bin" exec "ruby@$pinned_ruby" -- bash "$0" ${_orig_args[@]+"${_orig_args[@]}"}
     fi
     echo "error: ruby on PATH is $found_ruby ($(command -v ruby 2>/dev/null || echo 'not found')) but .ruby-version pins $pinned_ruby." >&2
     echo "       Run 'mise exec ruby@$pinned_ruby -- bash tools/test.sh' so bundle uses the pinned Ruby." >&2

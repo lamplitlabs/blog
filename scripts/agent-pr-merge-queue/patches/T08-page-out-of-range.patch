@@ -1,0 +1,106 @@
+diff --git a/page.go b/page.go
+index 43ca0f0..88932b7 100644
+--- a/page.go
++++ b/page.go
+@@ -1,16 +1,27 @@
+ package quota
+ 
+-import "fmt"
++import (
++	"errors"
++	"fmt"
++)
+ 
+-// Page returns the 1-based page of items with the given page size. A page past
+-// the end is empty, not an error.
++// ErrPageOutOfRange is returned by Page when the requested page starts past
++// the end of the items.
++var ErrPageOutOfRange = errors.New("page out of range")
++
++// Page returns the 1-based page of items with the given page size. A page that
++// starts past the end of the items returns an error wrapping
++// ErrPageOutOfRange; page 1 of an empty list is a valid empty page.
+ func Page[T any](items []T, page, size int) ([]T, error) {
+ 	if page < 1 || size < 1 {
+ 		return nil, fmt.Errorf("page %d size %d: both must be >= 1", page, size)
+ 	}
++	if page == 1 && len(items) == 0 {
++		return []T{}, nil
++	}
+ 	start := (page - 1) * size
+ 	if start >= len(items) {
+-		return []T{}, nil
++		return nil, fmt.Errorf("page %d size %d of %d items: %w", page, size, len(items), ErrPageOutOfRange)
+ 	}
+ 	end := start + size
+ 	if end > len(items) {
+diff --git a/page_test.go b/page_test.go
+index 48dc450..52e68bb 100644
+--- a/page_test.go
++++ b/page_test.go
+@@ -1,6 +1,7 @@
+ package quota
+ 
+ import (
++	"errors"
+ 	"reflect"
+ 	"testing"
+ )
+@@ -14,7 +15,8 @@ func TestPage(t *testing.T) {
+ 		{1, 3, []int{1, 2, 3}},
+ 		{2, 3, []int{4, 5, 6}},
+ 		{3, 3, []int{7}},
+-		{4, 3, []int{}},
++		{1, 7, []int{1, 2, 3, 4, 5, 6, 7}},
++		{1, 10, []int{1, 2, 3, 4, 5, 6, 7}},
+ 	}
+ 	for _, c := range cases {
+ 		got, err := Page(items, c.page, c.size)
+@@ -27,8 +29,47 @@ func TestPage(t *testing.T) {
+ 	}
+ }
+ 
++func TestPagePastEndIsOutOfRange(t *testing.T) {
++	items := []int{1, 2, 3, 4, 5, 6, 7}
++	cases := []struct{ page, size int }{
++		{4, 3},
++		{5, 3},
++		{2, 7},
++	}
++	for _, c := range cases {
++		got, err := Page(items, c.page, c.size)
++		if !errors.Is(err, ErrPageOutOfRange) {
++			t.Errorf("Page(%d, %d) err = %v, want ErrPageOutOfRange", c.page, c.size, err)
++		}
++		if got != nil {
++			t.Errorf("Page(%d, %d) = %v, want nil", c.page, c.size, got)
++		}
++	}
++	if _, err := Page([]int{}, 2, 3); !errors.Is(err, ErrPageOutOfRange) {
++		t.Errorf("Page(empty, 2, 3) err = %v, want ErrPageOutOfRange", err)
++	}
++}
++
++func TestPageFirstOfEmptyIsEmpty(t *testing.T) {
++	for _, items := range [][]int{nil, {}} {
++		got, err := Page(items, 1, 3)
++		if err != nil {
++			t.Fatalf("Page(%v, 1, 3) err = %v", items, err)
++		}
++		if got == nil || len(got) != 0 {
++			t.Errorf("Page(%v, 1, 3) = %#v, want empty non-nil slice", items, got)
++		}
++	}
++}
++
+ func TestPageRejectsZero(t *testing.T) {
+ 	if _, err := Page([]int{1}, 0, 3); err == nil {
+ 		t.Fatal("page 0 accepted")
+ 	}
++	if _, err := Page([]int{1}, 1, 0); err == nil {
++		t.Fatal("size 0 accepted")
++	}
++	if _, err := Page([]int{1}, 0, 3); errors.Is(err, ErrPageOutOfRange) {
++		t.Fatal("page 0 reported as out of range, want invalid argument")
++	}
+ }

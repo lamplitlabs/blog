@@ -1,0 +1,13 @@
+ticket	model_calls	tool_steps	seconds	agent_self_report_green
+T01-spend-returns-remaining	5	4	37	yes
+T02-refund-endpoint	4	3	41	yes
+T03-budget-error-details	5	4	35	yes
+T04-max-tokens-per-request	4	3	29	yes
+T05-batch-spend-endpoint	5	4	45	yes
+T06-unknown-tenant-404	4	3	23	yes
+T07-usage-listing	5	4	41	yes
+T08-page-out-of-range	4	3	24	yes
+T09-remaining-unknown-tenant	5	4	30	yes
+T10-set-limit	4	3	31	yes
+T11-zero-token-spend	5	4	28	yes
+T12-spend-audit-log	5	4	41	yes

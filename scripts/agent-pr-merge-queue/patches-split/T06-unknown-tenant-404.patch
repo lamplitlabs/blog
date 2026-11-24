@@ -1,0 +1,114 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..ae256a5 100644
+--- a/handler.go
++++ b/handler.go
+@@ -39,6 +39,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 			http.Error(w, "token budget exhausted", http.StatusPaymentRequired)
+ 			return
+ 		}
++		if errors.Is(err, ErrUnknownTenant) {
++			http.Error(w, "unknown tenant", http.StatusNotFound)
++			return
++		}
+ 		http.Error(w, "invalid spend", http.StatusBadRequest)
+ 		return
+ 	}
+diff --git a/ledger.go b/ledger.go
+index 01b580c..e243227 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -37,7 +37,7 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 	defer l.mu.Unlock()
+ 	lim, ok := l.limit[tenant]
+ 	if !ok {
+-		return fmt.Errorf("tenant %q: unknown", tenant)
++		return fmt.Errorf("tenant %q: %w", tenant, ErrUnknownTenant)
+ 	}
+ 	if l.spent[tenant]+n > lim {
+ 		return fmt.Errorf("tenant %q: %w (%d + %d > %d)", tenant, ErrOverBudget, l.spent[tenant], n, lim)
+diff --git a/unknown_tenant.go b/unknown_tenant.go
+new file mode 100644
+index 0000000..ecd7790
+--- /dev/null
++++ b/unknown_tenant.go
+@@ -0,0 +1,7 @@
++package quota
++
++import "errors"
++
++// ErrUnknownTenant is returned (wrapped) when a spend names a tenant the
++// ledger has no limit for. The HTTP front answers it with 404 Not Found.
++var ErrUnknownTenant = errors.New("unknown tenant")
+diff --git a/unknown_tenant_test.go b/unknown_tenant_test.go
+new file mode 100644
+index 0000000..e1b231b
+--- /dev/null
++++ b/unknown_tenant_test.go
+@@ -0,0 +1,67 @@
++package quota
++
++import (
++	"errors"
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++)
++
++func unknownTenantServer() *Server {
++	return &Server{
++		Ledger: NewLedger(map[string]int{"acme": 100}),
++		Log:    slog.New(slog.NewTextHandler(io.Discard, nil)),
++	}
++}
++
++func unknownTenantPost(s *Server, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, "/v1/spend", strings.NewReader(body)))
++	return w
++}
++
++func TestSpendUnknownTenantIsErrUnknownTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	err := l.Spend("globex", 10)
++	if !errors.Is(err, ErrUnknownTenant) {
++		t.Fatalf("err = %v, want ErrUnknownTenant", err)
++	}
++	if !strings.Contains(err.Error(), `"globex"`) {
++		t.Fatalf("err = %v, want the tenant name in the message", err)
++	}
++	if errors.Is(err, ErrOverBudget) {
++		t.Fatalf("unknown tenant reported as over budget: %v", err)
++	}
++}
++
++func TestSpendKnownTenantErrorsAreNotUnknownTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 101); errors.Is(err, ErrUnknownTenant) {
++		t.Fatalf("over-budget spend reported as unknown tenant: %v", err)
++	}
++	if err := l.Spend("acme", 0); errors.Is(err, ErrUnknownTenant) {
++		t.Fatalf("non-positive spend reported as unknown tenant: %v", err)
++	}
++}
++
++func TestHandlerUnknownTenantIs404(t *testing.T) {
++	w := unknownTenantPost(unknownTenantServer(), `{"tenant":"globex","tokens":10}`)
++	if w.Code != http.StatusNotFound {
++		t.Fatalf("got %d %s, want 404", w.Code, w.Body)
++	}
++}
++
++func TestHandlerInvalidSpendStays400(t *testing.T) {
++	for _, body := range []string{
++		`{"tenant":"acme","tokens":0}`,
++		`{"tenant":"acme","tokens":-5}`,
++	} {
++		w := unknownTenantPost(unknownTenantServer(), body)
++		if w.Code != http.StatusBadRequest {
++			t.Fatalf("%s: got %d, want 400", body, w.Code)
++		}
++	}
++}

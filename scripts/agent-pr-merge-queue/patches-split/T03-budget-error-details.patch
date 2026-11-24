@@ -1,0 +1,180 @@
+diff --git a/budget_error.go b/budget_error.go
+new file mode 100644
+index 0000000..4e789a5
+--- /dev/null
++++ b/budget_error.go
+@@ -0,0 +1,27 @@
++package quota
++
++import (
++	"encoding/json"
++	"fmt"
++	"net/http"
++)
++
++// BudgetError is returned when a spend would take a tenant past its limit.
++// It carries the numbers a client needs to see how much budget is left.
++type BudgetError struct {
++	Tenant    string `json:"tenant"`
++	Spent     int    `json:"spent"`
++	Requested int    `json:"requested"`
++	Limit     int    `json:"limit"`
++}
++
++func (e *BudgetError) Error() string {
++	return fmt.Sprintf("tenant %q: over budget (%d + %d > %d)", e.Tenant, e.Spent, e.Requested, e.Limit)
++}
++
++// writeBudgetError writes e as a 402 JSON response.
++func writeBudgetError(w http.ResponseWriter, e *BudgetError) {
++	w.Header().Set("Content-Type", "application/json")
++	w.WriteHeader(http.StatusPaymentRequired)
++	_ = json.NewEncoder(w).Encode(e)
++}
+diff --git a/budget_error_test.go b/budget_error_test.go
+new file mode 100644
+index 0000000..eca910b
+--- /dev/null
++++ b/budget_error_test.go
+@@ -0,0 +1,81 @@
++package quota
++
++import (
++	"encoding/json"
++	"errors"
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++)
++
++func TestBudgetErrorFields(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 60); err != nil {
++		t.Fatal(err)
++	}
++	err := l.Spend("acme", 41)
++	var be *BudgetError
++	if !errors.As(err, &be) {
++		t.Fatalf("err = %v, want *BudgetError", err)
++	}
++	want := BudgetError{Tenant: "acme", Spent: 60, Requested: 41, Limit: 100}
++	if *be != want {
++		t.Fatalf("got %+v, want %+v", *be, want)
++	}
++	if msg := be.Error(); !strings.Contains(msg, "over budget") || !strings.Contains(msg, `"acme"`) {
++		t.Fatalf("Error() = %q", msg)
++	}
++}
++
++func TestBudgetErrorOnlyForOverBudget(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	var be *BudgetError
++	for _, err := range []error{l.Spend("acme", 0), l.Spend("globex", 1)} {
++		if errors.As(err, &be) {
++			t.Fatalf("err = %v is a *BudgetError, want a plain error", err)
++		}
++	}
++}
++
++func budgetServer() *Server {
++	return &Server{
++		Ledger: NewLedger(map[string]int{"acme": 100}),
++		Log:    slog.New(slog.NewTextHandler(io.Discard, nil)),
++	}
++}
++
++func budgetPost(s *Server, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, "/v1/spend", strings.NewReader(body)))
++	return w
++}
++
++func TestHandlerOverBudgetJSON(t *testing.T) {
++	s := budgetServer()
++	if w := budgetPost(s, `{"tenant":"acme","tokens":30}`); w.Code != http.StatusOK {
++		t.Fatalf("first spend: got %d %s", w.Code, w.Body)
++	}
++	w := budgetPost(s, `{"tenant":"acme","tokens":71}`)
++	if w.Code != http.StatusPaymentRequired {
++		t.Fatalf("got %d, want 402", w.Code)
++	}
++	if ct := w.Header().Get("Content-Type"); ct != "application/json" {
++		t.Fatalf("Content-Type = %q, want application/json", ct)
++	}
++	var got map[string]any
++	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
++		t.Fatalf("body %q is not JSON: %v", w.Body, err)
++	}
++	want := map[string]any{"tenant": "acme", "spent": 30.0, "requested": 71.0, "limit": 100.0}
++	if len(got) != len(want) {
++		t.Fatalf("body = %v, want %v", got, want)
++	}
++	for k, v := range want {
++		if got[k] != v {
++			t.Fatalf("body[%q] = %v, want %v (body %s)", k, got[k], v, w.Body)
++		}
++	}
++}
+diff --git a/handler.go b/handler.go
+index 2997f37..7825e52 100644
+--- a/handler.go
++++ b/handler.go
+@@ -35,8 +35,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 	}
+ 	s.Log.Info("spend", "tenant", req.Tenant, "tokens", req.Tokens)
+ 	if err := s.Ledger.Spend(req.Tenant, req.Tokens); err != nil {
+-		if errors.Is(err, ErrOverBudget) {
+-			http.Error(w, "token budget exhausted", http.StatusPaymentRequired)
++		var be *BudgetError
++		if errors.As(err, &be) {
++			writeBudgetError(w, be)
+ 			return
+ 		}
+ 		http.Error(w, "invalid spend", http.StatusBadRequest)
+diff --git a/ledger.go b/ledger.go
+index 01b580c..f705167 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -3,14 +3,10 @@
+ package quota
+ 
+ import (
+-	"errors"
+ 	"fmt"
+ 	"sync"
+ )
+ 
+-// ErrOverBudget is returned when a spend would take a tenant past its limit.
+-var ErrOverBudget = errors.New("over budget")
+-
+ // Ledger tracks tokens spent per tenant against a per-tenant limit.
+ type Ledger struct {
+ 	mu    sync.Mutex
+@@ -40,7 +36,7 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 		return fmt.Errorf("tenant %q: unknown", tenant)
+ 	}
+ 	if l.spent[tenant]+n > lim {
+-		return fmt.Errorf("tenant %q: %w (%d + %d > %d)", tenant, ErrOverBudget, l.spent[tenant], n, lim)
++		return &BudgetError{Tenant: tenant, Spent: l.spent[tenant], Requested: n, Limit: lim}
+ 	}
+ 	l.spent[tenant] += n
+ 	return nil
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..3516e18 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -21,8 +21,9 @@ func TestSpendUpToLimit(t *testing.T) {
+ func TestSpendOverLimit(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+ 	err := l.Spend("acme", 101)
+-	if !errors.Is(err, ErrOverBudget) {
+-		t.Fatalf("err = %v, want ErrOverBudget", err)
++	var be *BudgetError
++	if !errors.As(err, &be) {
++		t.Fatalf("err = %v, want *BudgetError", err)
+ 	}
+ 	if got := l.Remaining("acme"); got != 100 {
+ 		t.Fatalf("a refused spend changed the balance: remaining = %d", got)

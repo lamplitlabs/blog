@@ -1,0 +1,118 @@
+diff --git a/ledger.go b/ledger.go
+index 01b580c..16a7bc2 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -28,10 +28,11 @@ func NewLedger(limits map[string]int) *Ledger {
+ }
+ 
+ // Spend records n tokens for tenant. A spend that lands exactly on the limit
+-// is allowed; one token more is not.
++// is allowed; one token more is not. A spend of 0 tokens (health checks,
++// cache hits) succeeds for a known tenant without changing the balance.
+ func (l *Ledger) Spend(tenant string, n int) error {
+-	if n <= 0 {
+-		return fmt.Errorf("spend %d tokens: must be positive", n)
++	if n < 0 {
++		return fmt.Errorf("spend %d tokens: must not be negative", n)
+ 	}
+ 	l.mu.Lock()
+ 	defer l.mu.Unlock()
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..aaea71b 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -29,9 +29,9 @@ func TestSpendOverLimit(t *testing.T) {
+ 	}
+ }
+ 
+-func TestSpendRejectsNonPositive(t *testing.T) {
++func TestSpendRejectsNegative(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+-	for _, n := range []int{0, -5} {
++	for _, n := range []int{-1, -5} {
+ 		if err := l.Spend("acme", n); err == nil {
+ 			t.Fatalf("Spend(%d) = nil, want an error", n)
+ 		}
+diff --git a/zero_spend_test.go b/zero_spend_test.go
+new file mode 100644
+index 0000000..74b4cb2
+--- /dev/null
++++ b/zero_spend_test.go
+@@ -0,0 +1,77 @@
++package quota
++
++import (
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++)
++
++func zeroSpendServer(limit int) *Server {
++	return &Server{
++		Ledger: NewLedger(map[string]int{"acme": limit}),
++		Log:    slog.New(slog.NewTextHandler(io.Discard, nil)),
++	}
++}
++
++func zeroSpendPost(s *Server, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, "/v1/spend", strings.NewReader(body)))
++	return w
++}
++
++func TestSpendZeroIsNoOp(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 30); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Spend("acme", 0); err != nil {
++		t.Fatalf("Spend(0) = %v, want nil", err)
++	}
++	if got := l.Remaining("acme"); got != 70 {
++		t.Fatalf("remaining = %d after a zero spend, want 70", got)
++	}
++}
++
++func TestSpendZeroAtLimit(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 100); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Spend("acme", 0); err != nil {
++		t.Fatalf("Spend(0) on an exhausted budget = %v, want nil", err)
++	}
++	if got := l.Remaining("acme"); got != 0 {
++		t.Fatalf("remaining = %d, want 0", got)
++	}
++}
++
++func TestSpendZeroUnknownTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("globex", 0); err == nil {
++		t.Fatal("zero spend for an unknown tenant accepted")
++	}
++}
++
++func TestHandlerZeroSpend(t *testing.T) {
++	w := zeroSpendPost(zeroSpendServer(100), `{"tenant":"acme","tokens":0}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":100`) {
++		t.Fatalf("got %d %s, want 200 with remaining 100", w.Code, w.Body)
++	}
++}
++
++func TestHandlerZeroSpendUnknownTenant(t *testing.T) {
++	w := zeroSpendPost(zeroSpendServer(100), `{"tenant":"globex","tokens":0}`)
++	if w.Code != http.StatusBadRequest {
++		t.Fatalf("got %d, want 400", w.Code)
++	}
++}
++
++func TestHandlerNegativeSpend(t *testing.T) {
++	w := zeroSpendPost(zeroSpendServer(100), `{"tenant":"acme","tokens":-1}`)
++	if w.Code != http.StatusBadRequest {
++		t.Fatalf("got %d, want 400", w.Code)
++	}
++}

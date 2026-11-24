@@ -1,0 +1,213 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..ecb5a83 100644
+--- a/handler.go
++++ b/handler.go
+@@ -24,6 +24,10 @@ type spendResponse struct {
+ 
+ // ServeHTTP handles POST /v1/spend.
+ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
++	if r.URL.Path == "/v1/refund" {
++		s.handleRefund(w, r)
++		return
++	}
+ 	if r.Method != http.MethodPost {
+ 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+ 		return
+diff --git a/refund.go b/refund.go
+new file mode 100644
+index 0000000..85fd5a6
+--- /dev/null
++++ b/refund.go
+@@ -0,0 +1,45 @@
++package quota
++
++import (
++	"encoding/json"
++	"fmt"
++	"net/http"
++)
++
++// Refund gives n tokens back to tenant, for example after the upstream model
++// call failed once the gateway had already charged the tenant. A refund never
++// takes the tenant's spend below zero: refunding more than was spent clears
++// the spend. An unknown tenant or a non-positive amount is an error.
++func (l *Ledger) Refund(tenant string, n int) error {
++	if n <= 0 {
++		return fmt.Errorf("refund %d tokens: must be positive", n)
++	}
++	l.mu.Lock()
++	defer l.mu.Unlock()
++	if _, ok := l.limit[tenant]; !ok {
++		return fmt.Errorf("tenant %q: unknown", tenant)
++	}
++	l.spent[tenant] = max(l.spent[tenant]-n, 0)
++	return nil
++}
++
++// handleRefund handles POST /v1/refund. It takes the same JSON body as
++// /v1/spend ({"tenant", "tokens"}) and answers {"remaining": N}.
++func (s *Server) handleRefund(w http.ResponseWriter, r *http.Request) {
++	if r.Method != http.MethodPost {
++		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
++		return
++	}
++	var req spendRequest
++	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16)).Decode(&req); err != nil {
++		http.Error(w, "bad request body", http.StatusBadRequest)
++		return
++	}
++	s.Log.Info("refund", "tenant", req.Tenant, "tokens", req.Tokens)
++	if err := s.Ledger.Refund(req.Tenant, req.Tokens); err != nil {
++		http.Error(w, "invalid refund", http.StatusBadRequest)
++		return
++	}
++	w.Header().Set("Content-Type", "application/json")
++	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
++}
+diff --git a/refund_test.go b/refund_test.go
+new file mode 100644
+index 0000000..85b8397
+--- /dev/null
++++ b/refund_test.go
+@@ -0,0 +1,141 @@
++package quota
++
++import (
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++)
++
++func newRefundServer() *Server {
++	return &Server{
++		Ledger: NewLedger(map[string]int{"acme": 100}),
++		Log:    slog.New(slog.NewTextHandler(io.Discard, nil)),
++	}
++}
++
++func refundDo(s *Server, method, path, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(method, path, strings.NewReader(body)))
++	return w
++}
++
++func TestRefundGivesTokensBack(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 60); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Refund("acme", 25); err != nil {
++		t.Fatal(err)
++	}
++	if got := l.Remaining("acme"); got != 65 {
++		t.Fatalf("remaining = %d, want 65", got)
++	}
++}
++
++func TestRefundNeverBelowZeroSpend(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 10); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Refund("acme", 50); err != nil {
++		t.Fatal(err)
++	}
++	if got := l.Remaining("acme"); got != 100 {
++		t.Fatalf("remaining = %d, want 100 (spend clamped at zero)", got)
++	}
++	// The clamp must not bank credit: the full limit, and no more, is spendable.
++	if err := l.Spend("acme", 101); err == nil {
++		t.Fatal("over-refund created extra budget")
++	}
++}
++
++func TestRefundRejectsUnknownTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Refund("ghost", 5); err == nil {
++		t.Fatal("Refund(unknown) = nil, want an error")
++	}
++}
++
++func TestRefundRejectsNonPositive(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 20); err != nil {
++		t.Fatal(err)
++	}
++	for _, n := range []int{0, -5} {
++		if err := l.Refund("acme", n); err == nil {
++			t.Fatalf("Refund(%d) = nil, want an error", n)
++		}
++	}
++	if got := l.Remaining("acme"); got != 80 {
++		t.Fatalf("a rejected refund changed the balance: remaining = %d", got)
++	}
++}
++
++func TestRefundConcurrent(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 1000})
++	if err := l.Spend("acme", 1000); err != nil {
++		t.Fatal(err)
++	}
++	done := make(chan struct{})
++	for range 100 {
++		go func() {
++			_ = l.Refund("acme", 3)
++			done <- struct{}{}
++		}()
++	}
++	for range 100 {
++		<-done
++	}
++	if got := l.Remaining("acme"); got != 300 {
++		t.Fatalf("remaining = %d, want 300", got)
++	}
++}
++
++func TestHandlerRefund(t *testing.T) {
++	s := newRefundServer()
++	if w := refundDo(s, http.MethodPost, "/v1/spend", `{"tenant":"acme","tokens":40}`); w.Code != http.StatusOK {
++		t.Fatalf("spend: got %d %s", w.Code, w.Body)
++	}
++	w := refundDo(s, http.MethodPost, "/v1/refund", `{"tenant":"acme","tokens":15}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":75`) {
++		t.Fatalf("refund: got %d %s", w.Code, w.Body)
++	}
++	if ct := w.Header().Get("Content-Type"); ct != "application/json" {
++		t.Fatalf("content type = %q", ct)
++	}
++}
++
++func TestHandlerRefundErrors(t *testing.T) {
++	cases := []struct {
++		name, method, body string
++		want               int
++	}{
++		{"unknown tenant", http.MethodPost, `{"tenant":"ghost","tokens":5}`, http.StatusBadRequest},
++		{"zero tokens", http.MethodPost, `{"tenant":"acme","tokens":0}`, http.StatusBadRequest},
++		{"negative tokens", http.MethodPost, `{"tenant":"acme","tokens":-5}`, http.StatusBadRequest},
++		{"bad body", http.MethodPost, `{`, http.StatusBadRequest},
++		{"wrong method", http.MethodGet, ``, http.StatusMethodNotAllowed},
++	}
++	for _, c := range cases {
++		t.Run(c.name, func(t *testing.T) {
++			w := refundDo(newRefundServer(), c.method, "/v1/refund", c.body)
++			if w.Code != c.want {
++				t.Fatalf("got %d, want %d (%s)", w.Code, c.want, w.Body)
++			}
++		})
++	}
++}
++
++func TestHandlerSpendStillWorksBesideRefund(t *testing.T) {
++	s := newRefundServer()
++	w := refundDo(s, http.MethodPost, "/v1/spend", `{"tenant":"acme","tokens":30}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":70`) {
++		t.Fatalf("spend: got %d %s", w.Code, w.Body)
++	}
++	if w := refundDo(s, http.MethodPost, "/v1/spend", `{"tenant":"acme","tokens":71}`); w.Code != http.StatusPaymentRequired {
++		t.Fatalf("over-budget spend: got %d, want 402", w.Code)
++	}
++}

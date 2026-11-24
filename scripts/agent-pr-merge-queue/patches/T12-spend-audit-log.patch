@@ -1,0 +1,136 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..47be034 100644
+--- a/handler.go
++++ b/handler.go
+@@ -30,18 +30,34 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 	}
+ 	var req spendRequest
+ 	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16)).Decode(&req); err != nil {
++		s.audit(r, req, "invalid")
+ 		http.Error(w, "bad request body", http.StatusBadRequest)
+ 		return
+ 	}
+-	s.Log.Info("spend", "tenant", req.Tenant, "tokens", req.Tokens)
+ 	if err := s.Ledger.Spend(req.Tenant, req.Tokens); err != nil {
+ 		if errors.Is(err, ErrOverBudget) {
++			s.audit(r, req, "over_budget")
+ 			http.Error(w, "token budget exhausted", http.StatusPaymentRequired)
+ 			return
+ 		}
++		s.audit(r, req, "invalid")
+ 		http.Error(w, "invalid spend", http.StatusBadRequest)
+ 		return
+ 	}
++	remaining := s.Ledger.Remaining(req.Tenant)
++	s.audit(r, req, "ok", slog.Int("remaining", remaining))
+ 	w.Header().Set("Content-Type", "application/json")
+-	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
++	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: remaining})
++}
++
++// audit writes the one Info-level audit line for a spend decision. outcome is
++// "ok", "over_budget" or "invalid"; extra carries outcome-specific attributes
++// such as "remaining" for an accepted spend.
++func (s *Server) audit(r *http.Request, req spendRequest, outcome string, extra ...slog.Attr) {
++	attrs := append([]slog.Attr{
++		slog.String("tenant", req.Tenant),
++		slog.Int("tokens", req.Tokens),
++		slog.String("outcome", outcome),
++	}, extra...)
++	s.Log.LogAttrs(r.Context(), slog.LevelInfo, "spend", attrs...)
+ }
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..066da4f 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -1,6 +1,8 @@
+ package quota
+ 
+ import (
++	"bytes"
++	"encoding/json"
+ 	"io"
+ 	"log/slog"
+ 	"net/http"
+@@ -42,3 +44,81 @@ func TestHandlerBadBody(t *testing.T) {
+ 		t.Fatalf("got %d, want 400", w.Code)
+ 	}
+ }
++
++// auditServer returns a server whose log output is captured as JSON lines.
++func auditServer() (*Server, *bytes.Buffer) {
++	var buf bytes.Buffer
++	s := newServer()
++	s.Log = slog.New(slog.NewJSONHandler(&buf, nil))
++	return s, &buf
++}
++
++// auditLines decodes every captured log line.
++func auditLines(t *testing.T, buf *bytes.Buffer) []map[string]any {
++	t.Helper()
++	var out []map[string]any
++	for _, line := range strings.Split(strings.TrimSpace(buf.String()), "\n") {
++		if line == "" {
++			continue
++		}
++		var m map[string]any
++		if err := json.Unmarshal([]byte(line), &m); err != nil {
++			t.Fatalf("log line %q: %v", line, err)
++		}
++		out = append(out, m)
++	}
++	return out
++}
++
++func TestHandlerAuditLog(t *testing.T) {
++	cases := []struct {
++		name          string
++		body          string
++		code          int
++		tenant        string
++		tokens        float64
++		outcome       string
++		remaining     float64
++		haveRemaining bool
++	}{
++		{"ok", `{"tenant":"acme","tokens":30}`, http.StatusOK, "acme", 30, "ok", 70, true},
++		{"exact limit", `{"tenant":"acme","tokens":100}`, http.StatusOK, "acme", 100, "ok", 0, true},
++		{"over budget", `{"tenant":"acme","tokens":101}`, http.StatusPaymentRequired, "acme", 101, "over_budget", 0, false},
++		{"unknown tenant", `{"tenant":"nope","tokens":1}`, http.StatusBadRequest, "nope", 1, "invalid", 0, false},
++		{"non-positive", `{"tenant":"acme","tokens":0}`, http.StatusBadRequest, "acme", 0, "invalid", 0, false},
++		{"bad body", `{`, http.StatusBadRequest, "", 0, "invalid", 0, false},
++	}
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			s, buf := auditServer()
++			w := post(s, tc.body)
++			if w.Code != tc.code {
++				t.Fatalf("status %d, want %d", w.Code, tc.code)
++			}
++			lines := auditLines(t, buf)
++			if len(lines) != 1 {
++				t.Fatalf("got %d log lines, want 1: %s", len(lines), buf)
++			}
++			got := lines[0]
++			if got["level"] != "INFO" || got["msg"] != "spend" {
++				t.Errorf("level/msg = %v/%v, want INFO/spend", got["level"], got["msg"])
++			}
++			if got["tenant"] != tc.tenant {
++				t.Errorf("tenant = %v, want %q", got["tenant"], tc.tenant)
++			}
++			if got["tokens"] != tc.tokens {
++				t.Errorf("tokens = %v, want %v", got["tokens"], tc.tokens)
++			}
++			if got["outcome"] != tc.outcome {
++				t.Errorf("outcome = %v, want %q", got["outcome"], tc.outcome)
++			}
++			rem, ok := got["remaining"]
++			if ok != tc.haveRemaining {
++				t.Fatalf("remaining present = %v, want %v (%v)", ok, tc.haveRemaining, got)
++			}
++			if ok && rem != tc.remaining {
++				t.Errorf("remaining = %v, want %v", rem, tc.remaining)
++			}
++		})
++	}
++}

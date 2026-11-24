@@ -1,0 +1,124 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..2f90076 100644
+--- a/handler.go
++++ b/handler.go
+@@ -11,6 +11,8 @@ import (
+ type Server struct {
+ 	Ledger *Ledger
+ 	Log    *slog.Logger
++	// MaxTokens caps the tokens of a single spend request; zero means no cap.
++	MaxTokens int
+ }
+ 
+ type spendRequest struct {
+@@ -33,6 +35,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 		http.Error(w, "bad request body", http.StatusBadRequest)
+ 		return
+ 	}
++	if s.overMaxTokens(req.Tokens) {
++		http.Error(w, "request exceeds max tokens", http.StatusRequestEntityTooLarge)
++		return
++	}
+ 	s.Log.Info("spend", "tenant", req.Tenant, "tokens", req.Tokens)
+ 	if err := s.Ledger.Spend(req.Tenant, req.Tokens); err != nil {
+ 		if errors.Is(err, ErrOverBudget) {
+diff --git a/max_tokens.go b/max_tokens.go
+new file mode 100644
+index 0000000..c64a0f5
+--- /dev/null
++++ b/max_tokens.go
+@@ -0,0 +1,15 @@
++package quota
++
++import "log/slog"
++
++// NewServerFromConfig returns a Server for ledger that logs to log and enforces
++// cfg.MaxTokens as the per-request cap.
++func NewServerFromConfig(cfg Config, ledger *Ledger, log *slog.Logger) *Server {
++	return &Server{Ledger: ledger, Log: log, MaxTokens: cfg.MaxTokens}
++}
++
++// overMaxTokens reports whether a single request for tokens exceeds the
++// configured per-request cap. A zero (or negative) cap means no cap.
++func (s *Server) overMaxTokens(tokens int) bool {
++	return s.MaxTokens > 0 && tokens > s.MaxTokens
++}
+diff --git a/max_tokens_test.go b/max_tokens_test.go
+new file mode 100644
+index 0000000..916d9bd
+--- /dev/null
++++ b/max_tokens_test.go
+@@ -0,0 +1,73 @@
++package quota
++
++import (
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++)
++
++func newMaxTokensServer(maxTokens int) *Server {
++	return NewServerFromConfig(
++		Config{MaxTokens: maxTokens},
++		NewLedger(map[string]int{"acme": 100}),
++		slog.New(slog.NewTextHandler(io.Discard, nil)),
++	)
++}
++
++func postMaxTokens(s *Server, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, "/v1/spend", strings.NewReader(body)))
++	return w
++}
++
++func TestMaxTokensRejectsOversizedRequest(t *testing.T) {
++	s := newMaxTokensServer(10)
++	w := postMaxTokens(s, `{"tenant":"acme","tokens":11}`)
++	if w.Code != http.StatusRequestEntityTooLarge {
++		t.Fatalf("got %d, want 413", w.Code)
++	}
++	if got := s.Ledger.Remaining("acme"); got != 100 {
++		t.Fatalf("ledger touched: remaining %d, want 100", got)
++	}
++}
++
++func TestMaxTokensAllowsRequestAtCap(t *testing.T) {
++	s := newMaxTokensServer(10)
++	w := postMaxTokens(s, `{"tenant":"acme","tokens":10}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":90`) {
++		t.Fatalf("got %d %s", w.Code, w.Body)
++	}
++}
++
++func TestMaxTokensZeroMeansNoCap(t *testing.T) {
++	s := newMaxTokensServer(0)
++	w := postMaxTokens(s, `{"tenant":"acme","tokens":100}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":0`) {
++		t.Fatalf("got %d %s", w.Code, w.Body)
++	}
++}
++
++func TestMaxTokensCheckedBeforeBudget(t *testing.T) {
++	// Over both the cap and the budget: the cap wins, so the answer is 413, not 402.
++	s := newMaxTokensServer(50)
++	w := postMaxTokens(s, `{"tenant":"acme","tokens":101}`)
++	if w.Code != http.StatusRequestEntityTooLarge {
++		t.Fatalf("got %d, want 413", w.Code)
++	}
++}
++
++func TestNewServerFromConfigUsesLoadedMaxTokens(t *testing.T) {
++	cfg, err := LoadConfig(func(k string) string {
++		return map[string]string{"UPSTREAM_URL": "http://up.example/", "MAX_TOKENS": "7"}[k]
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++	s := NewServerFromConfig(cfg, NewLedger(map[string]int{"acme": 100}), slog.New(slog.NewTextHandler(io.Discard, nil)))
++	if s.MaxTokens != 7 {
++		t.Fatalf("MaxTokens = %d, want 7", s.MaxTokens)
++	}
++}

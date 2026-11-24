@@ -1,0 +1,236 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..04f66dd 100644
+--- a/handler.go
++++ b/handler.go
+@@ -22,8 +22,11 @@ type spendResponse struct {
+ 	Remaining int `json:"remaining"`
+ }
+ 
+-// ServeHTTP handles POST /v1/spend.
++// ServeHTTP handles POST /v1/spend and GET /v1/usage.
+ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
++	if s.serveUsage(w, r) {
++		return
++	}
+ 	if r.Method != http.MethodPost {
+ 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+ 		return
+diff --git a/usage.go b/usage.go
+new file mode 100644
+index 0000000..77eba1b
+--- /dev/null
++++ b/usage.go
+@@ -0,0 +1,77 @@
++package quota
++
++import (
++	"encoding/json"
++	"net/http"
++	"sort"
++	"strconv"
++)
++
++// UsageEntry is one tenant's spend against its limit.
++type UsageEntry struct {
++	Tenant string `json:"tenant"`
++	Spent  int    `json:"spent"`
++	Limit  int    `json:"limit"`
++}
++
++// Default paging for GET /v1/usage.
++const (
++	usageDefaultPage = 1
++	usageDefaultSize = 20
++)
++
++// Usage returns one entry per tenant, sorted by tenant id.
++func (l *Ledger) Usage() []UsageEntry {
++	l.mu.Lock()
++	out := make([]UsageEntry, 0, len(l.limit))
++	for t, lim := range l.limit {
++		out = append(out, UsageEntry{Tenant: t, Spent: l.spent[t], Limit: lim})
++	}
++	l.mu.Unlock()
++	sort.Slice(out, func(i, j int) bool { return out[i].Tenant < out[j].Tenant })
++	return out
++}
++
++// serveUsage handles GET /v1/usage?page=P&size=S. It reports whether the
++// request was for this route.
++func (s *Server) serveUsage(w http.ResponseWriter, r *http.Request) bool {
++	if r.URL.Path != "/v1/usage" {
++		return false
++	}
++	if r.Method != http.MethodGet {
++		w.Header().Set("Allow", http.MethodGet)
++		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
++		return true
++	}
++	q := r.URL.Query()
++	page, ok := usageParam(q.Get("page"), usageDefaultPage)
++	if !ok {
++		http.Error(w, "bad page", http.StatusBadRequest)
++		return true
++	}
++	size, ok := usageParam(q.Get("size"), usageDefaultSize)
++	if !ok {
++		http.Error(w, "bad size", http.StatusBadRequest)
++		return true
++	}
++	items, err := Page(s.Ledger.Usage(), page, size)
++	if err != nil {
++		http.Error(w, "bad page or size", http.StatusBadRequest)
++		return true
++	}
++	w.Header().Set("Content-Type", "application/json")
++	_ = json.NewEncoder(w).Encode(items)
++	return true
++}
++
++// usageParam parses a positive integer query value, using def when empty.
++func usageParam(v string, def int) (int, bool) {
++	if v == "" {
++		return def, true
++	}
++	n, err := strconv.Atoi(v)
++	if err != nil || n < 1 {
++		return 0, false
++	}
++	return n, true
++}
+diff --git a/usage_test.go b/usage_test.go
+new file mode 100644
+index 0000000..7d715bc
+--- /dev/null
++++ b/usage_test.go
+@@ -0,0 +1,130 @@
++package quota
++
++import (
++	"encoding/json"
++	"fmt"
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"reflect"
++	"testing"
++)
++
++func newUsageServer(t *testing.T, tenants int) *Server {
++	t.Helper()
++	limits := map[string]int{}
++	for i := 0; i < tenants; i++ {
++		limits[fmt.Sprintf("t%02d", i)] = 100 + i
++	}
++	return &Server{
++		Ledger: NewLedger(limits),
++		Log:    slog.New(slog.NewTextHandler(io.Discard, nil)),
++	}
++}
++
++func getUsage(t *testing.T, s *Server, target string) (int, []UsageEntry) {
++	t.Helper()
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodGet, target, nil))
++	if w.Code != http.StatusOK {
++		return w.Code, nil
++	}
++	if ct := w.Header().Get("Content-Type"); ct != "application/json" {
++		t.Fatalf("Content-Type = %q", ct)
++	}
++	var got []UsageEntry
++	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
++		t.Fatalf("decode %q: %v", w.Body, err)
++	}
++	return w.Code, got
++}
++
++func TestLedgerUsageSorted(t *testing.T) {
++	l := NewLedger(map[string]int{"zeta": 50, "acme": 100, "mid": 10})
++	if err := l.Spend("acme", 30); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Spend("zeta", 50); err != nil {
++		t.Fatal(err)
++	}
++	want := []UsageEntry{
++		{Tenant: "acme", Spent: 30, Limit: 100},
++		{Tenant: "mid", Spent: 0, Limit: 10},
++		{Tenant: "zeta", Spent: 50, Limit: 50},
++	}
++	if got := l.Usage(); !reflect.DeepEqual(got, want) {
++		t.Fatalf("Usage() = %+v, want %+v", got, want)
++	}
++}
++
++func TestLedgerUsageEmpty(t *testing.T) {
++	if got := NewLedger(nil).Usage(); len(got) != 0 {
++		t.Fatalf("Usage() = %+v, want empty", got)
++	}
++}
++
++func TestUsageHandlerDefaults(t *testing.T) {
++	s := newUsageServer(t, 25)
++	if err := s.Ledger.Spend("t00", 7); err != nil {
++		t.Fatal(err)
++	}
++	code, got := getUsage(t, s, "/v1/usage")
++	if code != http.StatusOK {
++		t.Fatalf("got %d", code)
++	}
++	if len(got) != 20 {
++		t.Fatalf("default page has %d entries, want 20", len(got))
++	}
++	if got[0] != (UsageEntry{Tenant: "t00", Spent: 7, Limit: 100}) || got[19].Tenant != "t19" {
++		t.Fatalf("unexpected page: first %+v last %+v", got[0], got[19])
++	}
++}
++
++func TestUsageHandlerPaging(t *testing.T) {
++	s := newUsageServer(t, 25)
++	code, got := getUsage(t, s, "/v1/usage?page=2&size=10")
++	if code != http.StatusOK || len(got) != 10 || got[0].Tenant != "t10" || got[9].Tenant != "t19" {
++		t.Fatalf("page 2: %d %+v", code, got)
++	}
++	code, got = getUsage(t, s, "/v1/usage?page=2")
++	if code != http.StatusOK || len(got) != 5 || got[0].Tenant != "t20" {
++		t.Fatalf("page 2 default size: %d %+v", code, got)
++	}
++}
++
++func TestUsageHandlerPastEnd(t *testing.T) {
++	s := newUsageServer(t, 3)
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/v1/usage?page=5&size=2", nil))
++	if w.Code != http.StatusOK {
++		t.Fatalf("got %d, want 200", w.Code)
++	}
++	if body := w.Body.String(); body != "[]\n" {
++		t.Fatalf("body = %q, want empty JSON list", body)
++	}
++}
++
++func TestUsageHandlerBadParams(t *testing.T) {
++	s := newUsageServer(t, 3)
++	for _, target := range []string{
++		"/v1/usage?page=0",
++		"/v1/usage?size=0",
++		"/v1/usage?page=-1",
++		"/v1/usage?page=x",
++		"/v1/usage?size=1.5",
++	} {
++		if code, _ := getUsage(t, s, target); code != http.StatusBadRequest {
++			t.Errorf("%s: got %d, want 400", target, code)
++		}
++	}
++}
++
++func TestUsageHandlerMethod(t *testing.T) {
++	s := newUsageServer(t, 1)
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, "/v1/usage", nil))
++	if w.Code != http.StatusMethodNotAllowed {
++		t.Fatalf("got %d, want 405", w.Code)
++	}
++}

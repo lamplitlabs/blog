@@ -1,0 +1,141 @@
+diff --git a/ledger.go b/ledger.go
+index 01b580c..f83ee0a 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -46,11 +46,24 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 	return nil
+ }
+ 
+-// Remaining returns the tokens tenant may still spend.
++// SetLimit sets tenant's limit to n, adding the tenant if it is not known
++// yet. n must be >= 0. A limit below what the tenant already spent is
++// allowed: every later spend is refused and Remaining reports 0.
++func (l *Ledger) SetLimit(tenant string, n int) error {
++	if n < 0 {
++		return fmt.Errorf("set limit %d for tenant %q: must be >= 0", n, tenant)
++	}
++	l.mu.Lock()
++	defer l.mu.Unlock()
++	l.limit[tenant] = n
++	return nil
++}
++
++// Remaining returns the tokens tenant may still spend, never less than 0.
+ func (l *Ledger) Remaining(tenant string) int {
+ 	l.mu.Lock()
+ 	defer l.mu.Unlock()
+-	return l.limit[tenant] - l.spent[tenant]
++	return max(l.limit[tenant]-l.spent[tenant], 0)
+ }
+ 
+ // SpendAll applies the spends concurrently and returns how many succeeded.
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..3eac9d7 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -58,3 +58,105 @@ func TestSpendAll(t *testing.T) {
+ 		t.Fatalf("remaining = %d, want 500", got)
+ 	}
+ }
++
++func TestSetLimitRaise(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 100); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.SetLimit("acme", 150); err != nil {
++		t.Fatal(err)
++	}
++	if got := l.Remaining("acme"); got != 50 {
++		t.Fatalf("remaining = %d, want 50", got)
++	}
++	if err := l.Spend("acme", 50); err != nil {
++		t.Fatalf("spend within the raised limit: %v", err)
++	}
++}
++
++func TestSetLimitAddsTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.SetLimit("globex", 20); err != nil {
++		t.Fatal(err)
++	}
++	if got := l.Remaining("globex"); got != 20 {
++		t.Fatalf("remaining = %d, want 20", got)
++	}
++	if err := l.Spend("globex", 20); err != nil {
++		t.Fatalf("spend for a tenant added by SetLimit: %v", err)
++	}
++}
++
++func TestSetLimitBelowSpent(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 80); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.SetLimit("acme", 50); err != nil {
++		t.Fatalf("lowering below spent: %v", err)
++	}
++	if got := l.Remaining("acme"); got != 0 {
++		t.Fatalf("remaining = %d, want 0", got)
++	}
++	if err := l.Spend("acme", 1); !errors.Is(err, ErrOverBudget) {
++		t.Fatalf("err = %v, want ErrOverBudget", err)
++	}
++	if got := l.Remaining("acme"); got != 0 {
++		t.Fatalf("remaining after refused spend = %d, want 0", got)
++	}
++}
++
++func TestSetLimitZero(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.SetLimit("acme", 0); err != nil {
++		t.Fatalf("SetLimit(0): %v", err)
++	}
++	if got := l.Remaining("acme"); got != 0 {
++		t.Fatalf("remaining = %d, want 0", got)
++	}
++	if err := l.Spend("acme", 1); !errors.Is(err, ErrOverBudget) {
++		t.Fatalf("err = %v, want ErrOverBudget", err)
++	}
++}
++
++func TestSetLimitRejectsNegative(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.SetLimit("acme", -1); err == nil {
++		t.Fatal("SetLimit(-1) = nil, want an error")
++	}
++	if got := l.Remaining("acme"); got != 100 {
++		t.Fatalf("a rejected SetLimit changed the limit: remaining = %d", got)
++	}
++	if err := l.SetLimit("globex", -1); err == nil {
++		t.Fatal("SetLimit(-1) for a new tenant = nil, want an error")
++	}
++	if err := l.Spend("globex", 1); err == nil {
++		t.Fatal("a rejected SetLimit added the tenant")
++	}
++}
++
++func TestSetLimitConcurrentWithSpend(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 1000})
++	done := make(chan struct{})
++	go func() {
++		defer close(done)
++		for i := 0; i < 100; i++ {
++			if err := l.SetLimit("acme", 1000+i); err != nil {
++				t.Error(err)
++				return
++			}
++		}
++	}()
++	spends := make([]int, 50)
++	for i := range spends {
++		spends[i] = 10
++	}
++	if got := l.SpendAll("acme", spends); got != 50 {
++		t.Fatalf("SpendAll ok = %d, want 50", got)
++	}
++	<-done
++	if got := l.Remaining("acme"); got != 1099-500 {
++		t.Fatalf("remaining = %d, want %d", got, 1099-500)
++	}
++}

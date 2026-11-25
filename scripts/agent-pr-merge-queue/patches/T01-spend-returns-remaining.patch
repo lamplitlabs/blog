@@ -1,0 +1,218 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..16d023e 100644
+--- a/handler.go
++++ b/handler.go
+@@ -34,7 +34,8 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 		return
+ 	}
+ 	s.Log.Info("spend", "tenant", req.Tenant, "tokens", req.Tokens)
+-	if err := s.Ledger.Spend(req.Tenant, req.Tokens); err != nil {
++	remaining, err := s.Ledger.Spend(req.Tenant, req.Tokens)
++	if err != nil {
+ 		if errors.Is(err, ErrOverBudget) {
+ 			http.Error(w, "token budget exhausted", http.StatusPaymentRequired)
+ 			return
+@@ -43,5 +44,5 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 		return
+ 	}
+ 	w.Header().Set("Content-Type", "application/json")
+-	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
++	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: remaining})
+ }
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..62b6a23 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -29,6 +29,27 @@ func TestHandlerSpend(t *testing.T) {
+ 	}
+ }
+ 
++func TestHandlerSpendReportsBalanceAfterEachSpend(t *testing.T) {
++	s := newServer()
++	for _, want := range []string{`"remaining":75`, `"remaining":50`, `"remaining":0`} {
++		tokens := `25`
++		if want == `"remaining":0` {
++			tokens = `50`
++		}
++		w := post(s, `{"tenant":"acme","tokens":`+tokens+`}`)
++		if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), want) {
++			t.Fatalf("got %d %s, want %s", w.Code, w.Body, want)
++		}
++	}
++}
++
++func TestHandlerUnknownTenant(t *testing.T) {
++	w := post(newServer(), `{"tenant":"globex","tokens":1}`)
++	if w.Code != http.StatusBadRequest {
++		t.Fatalf("got %d, want 400", w.Code)
++	}
++}
++
+ func TestHandlerOverBudget(t *testing.T) {
+ 	w := post(newServer(), `{"tenant":"acme","tokens":101}`)
+ 	if w.Code != http.StatusPaymentRequired {
+diff --git a/ledger.go b/ledger.go
+index 01b580c..3b93cbf 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -29,21 +29,26 @@ func NewLedger(limits map[string]int) *Ledger {
+ 
+ // Spend records n tokens for tenant. A spend that lands exactly on the limit
+ // is allowed; one token more is not.
+-func (l *Ledger) Spend(tenant string, n int) error {
++//
++// Spend returns the tokens tenant may still spend, computed under the same
++// lock as the spend itself, so it cannot be stale. When the spend is refused
++// as over budget it returns the unchanged balance; for any other error
++// (non-positive n, unknown tenant) it returns 0.
++func (l *Ledger) Spend(tenant string, n int) (int, error) {
+ 	if n <= 0 {
+-		return fmt.Errorf("spend %d tokens: must be positive", n)
++		return 0, fmt.Errorf("spend %d tokens: must be positive", n)
+ 	}
+ 	l.mu.Lock()
+ 	defer l.mu.Unlock()
+ 	lim, ok := l.limit[tenant]
+ 	if !ok {
+-		return fmt.Errorf("tenant %q: unknown", tenant)
++		return 0, fmt.Errorf("tenant %q: unknown", tenant)
+ 	}
+ 	if l.spent[tenant]+n > lim {
+-		return fmt.Errorf("tenant %q: %w (%d + %d > %d)", tenant, ErrOverBudget, l.spent[tenant], n, lim)
++		return lim - l.spent[tenant], fmt.Errorf("tenant %q: %w (%d + %d > %d)", tenant, ErrOverBudget, l.spent[tenant], n, lim)
+ 	}
+ 	l.spent[tenant] += n
+-	return nil
++	return lim - l.spent[tenant], nil
+ }
+ 
+ // Remaining returns the tokens tenant may still spend.
+@@ -62,7 +67,7 @@ func (l *Ledger) SpendAll(tenant string, spends []int) int {
+ 		wg.Add(1)
+ 		go func() {
+ 			defer wg.Done()
+-			if l.Spend(tenant, n) == nil {
++			if _, err := l.Spend(tenant, n); err == nil {
+ 				mu.Lock()
+ 				ok++
+ 				mu.Unlock()
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..d390899 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -2,17 +2,26 @@ package quota
+ 
+ import (
+ 	"errors"
++	"sync"
+ 	"testing"
+ )
+ 
+ func TestSpendUpToLimit(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+-	if err := l.Spend("acme", 60); err != nil {
++	rem, err := l.Spend("acme", 60)
++	if err != nil {
+ 		t.Fatal(err)
+ 	}
+-	if err := l.Spend("acme", 40); err != nil {
++	if rem != 40 {
++		t.Fatalf("Spend returned remaining = %d, want 40", rem)
++	}
++	rem, err = l.Spend("acme", 40)
++	if err != nil {
+ 		t.Fatalf("spend landing exactly on the limit: %v", err)
+ 	}
++	if rem != 0 {
++		t.Fatalf("Spend returned remaining = %d, want 0", rem)
++	}
+ 	if got := l.Remaining("acme"); got != 0 {
+ 		t.Fatalf("remaining = %d, want 0", got)
+ 	}
+@@ -20,11 +29,17 @@ func TestSpendUpToLimit(t *testing.T) {
+ 
+ func TestSpendOverLimit(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+-	err := l.Spend("acme", 101)
++	if _, err := l.Spend("acme", 30); err != nil {
++		t.Fatal(err)
++	}
++	rem, err := l.Spend("acme", 71)
+ 	if !errors.Is(err, ErrOverBudget) {
+ 		t.Fatalf("err = %v, want ErrOverBudget", err)
+ 	}
+-	if got := l.Remaining("acme"); got != 100 {
++	if rem != 70 {
++		t.Fatalf("refused spend returned remaining = %d, want unchanged 70", rem)
++	}
++	if got := l.Remaining("acme"); got != 70 {
+ 		t.Fatalf("a refused spend changed the balance: remaining = %d", got)
+ 	}
+ }
+@@ -32,17 +47,64 @@ func TestSpendOverLimit(t *testing.T) {
+ func TestSpendRejectsNonPositive(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+ 	for _, n := range []int{0, -5} {
+-		if err := l.Spend("acme", n); err == nil {
++		rem, err := l.Spend("acme", n)
++		if err == nil {
+ 			t.Fatalf("Spend(%d) = nil, want an error", n)
+ 		}
++		if rem != 0 {
++			t.Fatalf("Spend(%d) remaining = %d, want 0 on error", n, rem)
++		}
++	}
++	if got := l.Remaining("acme"); got != 100 {
++		t.Fatalf("remaining = %d, want 100", got)
+ 	}
+ }
+ 
+ func TestSpendUnknownTenant(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+-	if err := l.Spend("globex", 1); err == nil {
++	rem, err := l.Spend("globex", 1)
++	if err == nil {
+ 		t.Fatal("unknown tenant accepted")
+ 	}
++	if rem != 0 {
++		t.Fatalf("unknown tenant remaining = %d, want 0", rem)
++	}
++}
++
++// Each successful concurrent spend must report a distinct balance, which is
++// only true if the balance is read under the same lock as the spend.
++func TestSpendRemainingIsConsistentUnderConcurrency(t *testing.T) {
++	const n = 100
++	l := NewLedger(map[string]int{"acme": n})
++	var wg sync.WaitGroup
++	results := make(chan int, n)
++	for range n {
++		wg.Add(1)
++		go func() {
++			defer wg.Done()
++			rem, err := l.Spend("acme", 1)
++			if err != nil {
++				t.Errorf("Spend: %v", err)
++				return
++			}
++			results <- rem
++		}()
++	}
++	wg.Wait()
++	close(results)
++	seen := make(map[int]bool, n)
++	for rem := range results {
++		if rem < 0 || rem >= n {
++			t.Fatalf("remaining %d out of range", rem)
++		}
++		if seen[rem] {
++			t.Fatalf("remaining %d reported twice", rem)
++		}
++		seen[rem] = true
++	}
++	if len(seen) != n {
++		t.Fatalf("got %d distinct balances, want %d", len(seen), n)
++	}
+ }
+ 
+ func TestSpendAll(t *testing.T) {

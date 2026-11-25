@@ -18,7 +18,7 @@ I wanted numbers rather than opinions, so I built a small permissioned knowledge
 ## TL;DR
 
 - **The prompt rule is not access control.** When documents the user may not see were labelled `RESTRICTED` in the prompt and the model was told never to use them, the contractor still got the answer to **107 of 545** questions it had no right to (19.6%). With no check at all it was 122. Of the 114 questions the model leaked without the rule, the rule stopped 33. It refused **0** times.
-- **Filtering before the prompt holds.** With a post-filter (fetch 100, drop what the user may not see) or a pre-filter (ACL inside the query), the restricted documents reached the prompt **0** times in 5,950 retrievals. The contractor got 9 of those 545 answers, versus 11 with no documents at all. All 9 were world knowledge the model already had ("1773", "New England Patriots").
+- **Filtering before the prompt holds.** With a post-filter (fetch 100, drop what the user may not see) or a pre-filter (ACL inside the query), the restricted documents reached the prompt **0** times in 5,950 retrievals. The contractor got 9 of those 545 answers, versus 11 with no documents at all. The model gave 6 of those with no documents at all, and the other 3 are general knowledge ("1773", "New England Patriots").
 - **A shallow post-filter starves low-privilege users.** Fetching only 4 and then filtering left the contractor with fewer than 4 documents on **95.9%** of its questions (266 with none at all). Fetch 20 brought that to 3.5% and fetch 100 to 1.1%. A pre-filter gets the same result at any depth.
 - **The rule also costs answers for users who are allowed.** On 451 questions a user was entitled to, where the unfiltered top 4 also held documents they were not, correct answers were 111 with no check, 97 with the prompt rule and 113 with a pre-filter.
 - **An answer cache keyed on the question alone undoes all of it.** Replaying 1,500 queries from five users through a shared cache, 911 of 1,125 hits (median of 3 runs) were served from an entry built for a different group set, and 381 from an entry built on documents the requester may not read. **35** replies across the 3 runs gave a user an answer that its own pipeline could not have produced. Adding the sorted group set to the key: **0**, at a hit rate of 57.7% instead of 75%.
@@ -74,7 +74,7 @@ The prompt rule also cost the people who were allowed. On the 451 authorized que
 
 Both post-filter and pre-filter passed the only test that matters for access control. Across 5 users x 1,190 questions = 5,950 retrievals, **0** restricted documents reached a prompt. Without a check, 4,232 retrievals (71%) put at least one restricted document in front of the model, 9,630 documents in total.
 
-The 9 "answers" the contractor still got with a filter are all in the no-documents baseline or are general knowledge. For example, "Who won Super Bowl XLIX?" got "the New England Patriots" from a 135M model with nothing but public distractors in the prompt. Nothing leaked; the model already knew.
+Of the 9 "answers" the contractor still got with a filter, 6 also came back with no documents at all, and the other 3 are general knowledge. For example, "Who won Super Bowl XLIX?" got "the New England Patriots" from a 135M model with nothing but public distractors in the prompt. Nothing leaked; the model already knew.
 
 Where the two filters differ is depth:
 

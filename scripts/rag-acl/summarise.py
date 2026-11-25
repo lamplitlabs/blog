@@ -4,8 +4,8 @@
 Usage:
   python3 scripts/rag-acl/summarise.py <work-dir>
 
-Keeps the per-strategy totals the post quotes, every LLM reply for the leak sets
-(so each "leak" can be checked by hand), and the cache leak examples.
+Keeps the per-strategy totals the post quotes, every LLM reply that counted as an
+answer or a refusal (so each "leak" can be checked by hand), and the cache leak examples.
 """
 import json
 import os
@@ -103,8 +103,12 @@ def main():
         "leaked_without_rule": len(leaked_none),
         "still_leaked_with_rule": sum(by[q]["prompt-rule"]["has_answer"] for q in leaked_none),
     }
-    out["llm_replies"] = [{k: r[k] for k in ("kind", "user", "strategy", "qid", "reply", "has_answer", "refused",
-                                             "restricted_in_prompt")} for r in llm]
+    # Keep every reply that counted (answer found or refusal), cut to 400 characters, so
+    # each number above can be checked by hand without a 1.5 MB file.
+    out["llm_replies_counted"] = [
+        {**{k: r[k] for k in ("kind", "user", "strategy", "qid", "has_answer", "refused", "restricted_in_prompt")},
+         "reply": r["reply"][:400]}
+        for r in llm if r["has_answer"] or r["refused"]]
 
     # cache
     cache = {}
@@ -119,6 +123,12 @@ def main():
     cache["question"]["leak_examples"] = [e for c in raw["cache"] if c["keying"] == "question"
                                           for e in c["leak_examples"]]
     out["cache"] = cache
+
+    # Terminal transcripts from capture.py, verbatim, for the screenshot.
+    out["captures"] = {}
+    for name in sorted(os.listdir(work)):
+        if name.startswith("capture-") and name.endswith(".txt"):
+            out["captures"][name[8:-4]] = open(os.path.join(work, name)).read().splitlines()
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as fh:

@@ -184,7 +184,9 @@ def retrieve(db, strategy, q, groups, doc_group):
 def norm(s):
     s = s.lower()
     s = re.sub(r"\b(a|an|the)\b", " ", s)
-    s = re.sub(r"[^a-z0-9%.]+", " ", s)
+    # Same normalisation on both sides: punctuation becomes a word break, so "3.62."
+    # in a document and "3.62" in a reply both read "3 62".
+    s = re.sub(r"[^a-z0-9]+", " ", s)
     return " ".join(s.split())
 
 
@@ -237,6 +239,8 @@ def main():
     ap.add_argument("--seed", type=int, default=20261125)
     ap.add_argument("--par", type=int, default=4)
     ap.add_argument("--cache-queries", type=int, default=1500)
+    ap.add_argument("--cache-only", action="store_true",
+                    help="reuse retrieval and LLM results from <work>/raw.json; rerun the cache replay")
     args = ap.parse_args()
     os.makedirs(args.work, exist_ok=True)
     rng = random.Random(args.seed)
@@ -258,10 +262,13 @@ def main():
     def answer_readable(user, answers):
         return any((" " + norm(a) + " ") in readable[user] for a in answers if norm(a))
 
+    if args.cache_only:
+        old = json.load(open(os.path.join(args.work, "raw.json")))
+        raw.update({k: old[k] for k in ("retrieval", "llm_sets", "llm", "llm_wall_s")})
     # ---- retrieval: every user x question x strategy, reps for latency
     strategies = ["none", "prompt-rule"] + ["post-filter@%d" % n for n in POST_FETCH] + ["pre-filter"]
     retr = {}
-    for s in strategies:
+    for s in ([] if args.cache_only else strategies):
         if s == "prompt-rule":
             continue  # same retrieval as none
         rows = []
@@ -278,7 +285,8 @@ def main():
                              "n_docs": len(ids), "ms": statistics.median(ms_all)})
         retr[s] = rows
         print("retrieval", s, "done", flush=True)
-    raw["retrieval"] = retr
+    if not args.cache_only:
+        raw["retrieval"] = retr
 
     # ---- LLM: unauthorized pairs (contractor) and authorized pairs (analyst, hr-partner, engineer)
     qs_by_id = {q["qid"]: q for q in questions}
@@ -330,16 +338,35 @@ def main():
                 "restricted_in_prompt": sum(doc_group[d] not in groups for d in ids),
                 "prompt_tokens": usage.get("prompt_tokens"), "ms": (time.perf_counter() - t) * 1000}
 
-    t0 = time.perf_counter()
-    with ThreadPoolExecutor(args.par) as ex:
-        llm_rows = list(ex.map(run, prepared))
-    raw["llm"] = llm_rows
-    raw["llm_wall_s"] = time.perf_counter() - t0
-    print("llm done", len(llm_rows), "calls in %.0fs" % raw["llm_wall_s"], flush=True)
+    if not args.cache_only:
+        t0 = time.perf_counter()
+        with ThreadPoolExecutor(args.par) as ex:
+            llm_rows = list(ex.map(run, prepared))
+        raw["llm"] = llm_rows
+        raw["llm_wall_s"] = time.perf_counter() - t0
+        print("llm done", len(llm_rows), "calls in %.0fs" % raw["llm_wall_s"], flush=True)
 
     # ---- shared answer cache replay
+    # A cache entry remembers which group set built it and which documents went into
+    # its prompt. For every hit we also compute what the requesting user's own
+    # pipeline (pre-filter on their groups) would have answered. Counted per hit:
+    #   cross_scope      the entry was built for a different group set
+    #   restricted_built the entry's prompt held a document the requester may not read
+    #   leak             the served reply holds the gold answer, the requester's own
+    #                    reply does not, and the answer string is in no document the
+    #                    requester may read (so it can only have come from the cache)
     cache_runs = []
     memo = {}
+
+    def answer_for(user, q):
+        groups = USERS[user]
+        ids, _ = retrieve(db, "pre-filter", q["question"], groups, doc_group)
+        system, prompt = prompt_for("pre-filter", ids, docs, groups, q["question"])
+        if prompt not in memo:
+            # temperature 0: the same prompt gives the same reply, so it is asked once.
+            memo[prompt] = chat(args.llm, system, prompt)[0]
+        return memo[prompt], ids
+
     pop = sorted(questions, key=lambda q: q["qid"])
     for rep in range(args.reps):
         r2 = random.Random(args.seed + 1000 + rep)
@@ -357,24 +384,31 @@ def main():
                     norm(q["question"]) + "|" + ",".join(sorted(groups))
                 hit = key in cache
                 if not hit:
-                    ids, _ = retrieve(db, "pre-filter", q["question"], groups, doc_group)
-                    system, prompt = prompt_for("pre-filter", ids, docs, groups, q["question"])
-                    # temperature 0: the same prompt gives the same reply, so a miss
-                    # for a prompt already answered in an earlier rep reuses it.
-                    if prompt not in memo:
-                        memo[prompt] = chat(args.llm, system, prompt)[0]
-                    reply = memo[prompt]
-                    cache[key] = {"reply": reply, "by": user}
+                    reply, ids = answer_for(user, q)
+                    cache[key] = {"reply": reply, "by": user, "ids": ids}
                 ent = cache[key]
-                leak = False
-                if hit and contains_answer(ent["reply"], q["answers"]) and not answer_readable(user, q["answers"]):
-                    leak = True
-                served.append({"user": user, "qid": q["qid"], "hit": hit, "by": ent["by"], "leak": leak})
+                row = {"user": user, "qid": q["qid"], "hit": hit, "by": ent["by"],
+                       "cross_scope": False, "restricted_built": False, "leak": False}
+                if hit:
+                    row["cross_scope"] = sorted(USERS[ent["by"]]) != sorted(groups)
+                    row["restricted_built"] = any(doc_group[d] not in groups for d in ent["ids"])
+                    if row["cross_scope"] and contains_answer(ent["reply"], q["answers"]) \
+                            and not answer_readable(user, q["answers"]):
+                        own, _ = answer_for(user, q)
+                        row["leak"] = not contains_answer(own, q["answers"])
+                        row["own_reply"] = own
+                    row["served_reply"] = ent["reply"]
+                served.append(row)
             cache_runs.append({"rep": rep, "keying": keying, "queries": len(served),
-                               "hits": sum(s["hit"] for s in served), "misses": sum(not s["hit"] for s in served),
-                               "leaks": sum(s["leak"] for s in served),
-                               "leak_examples": [s for s in served if s["leak"]][:20]})
-            print("cache", rep, keying, cache_runs[-1]["hits"], "hits", cache_runs[-1]["leaks"], "leaks", flush=True)
+                               "hits": sum(r["hit"] for r in served), "misses": sum(not r["hit"] for r in served),
+                               "cross_scope": sum(r["cross_scope"] for r in served),
+                               "restricted_built": sum(r["restricted_built"] for r in served),
+                               "leaks": sum(r["leak"] for r in served),
+                               "distinct_leaked_questions": len({r["qid"] for r in served if r["leak"]}),
+                               "leak_examples": [r for r in served if r["leak"]][:20]})
+            c = cache_runs[-1]
+            print("cache", rep, keying, c["hits"], "hits", c["cross_scope"], "cross-scope",
+                  c["restricted_built"], "restricted-built", c["leaks"], "leaks", flush=True)
     raw["cache"] = cache_runs
     raw["docs_sample"] = [{"id": d["id"], "group": d["group"], "src": d["src"]} for d in docs[:240]]
     with open(os.path.join(args.work, "raw.json"), "w") as fh:

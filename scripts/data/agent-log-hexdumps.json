@@ -1,0 +1,287 @@
+{
+ "generated_by": "scripts/agent-log-hexdumps/bench.py",
+ "seed": 20261125,
+ "events_per_format": 45,
+ "events": 495,
+ "dump_events": 405,
+ "secret_kinds": [
+  "aws_key_id",
+  "aws_secret",
+  "github_pat",
+  "slack_bot",
+  "stripe_live",
+  "openai",
+  "anthropic",
+  "jwt",
+  "db_password"
+ ],
+ "formats": [
+  {
+   "id": "cat",
+   "label": "cat .env (control)",
+   "cmd": "cat .env",
+   "caught": {
+    "gitleaks_stored": 40,
+    "gitleaks_view_tuned": 40,
+    "redact": 45,
+    "undump_redact": 45,
+    "undump_scan": 0,
+    "undump_both": 45
+   },
+   "undump_exact": 0,
+   "undump_detected_as": {
+    "none": 45
+   }
+  },
+  {
+   "id": "base64",
+   "label": "base64 -i .env",
+   "cmd": "base64 -i .env",
+   "caught": {
+    "gitleaks_stored": 40,
+    "gitleaks_view_tuned": 40,
+    "redact": 45,
+    "undump_redact": 45,
+    "undump_scan": 0,
+    "undump_both": 45
+   },
+   "undump_exact": 0,
+   "undump_detected_as": {
+    "none": 45
+   }
+  },
+  {
+   "id": "xxd",
+   "label": "xxd .env",
+   "cmd": "xxd .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "xxd": 45
+   }
+  },
+  {
+   "id": "xxd_p",
+   "label": "xxd -p .env",
+   "cmd": "xxd -p .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 16,
+    "redact": 9,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "xxd_p": 45
+   }
+  },
+  {
+   "id": "xxd_i",
+   "label": "xxd -i .env",
+   "cmd": "xxd -i .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "xxd_i": 45
+   }
+  },
+  {
+   "id": "xxd_b",
+   "label": "xxd -b .env",
+   "cmd": "xxd -b .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "xxd_b": 45
+   }
+  },
+  {
+   "id": "hexdump",
+   "label": "hexdump .env",
+   "cmd": "hexdump .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "hexdump": 45
+   }
+  },
+  {
+   "id": "hexdump_c",
+   "label": "hexdump -C .env",
+   "cmd": "hexdump -C .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 39,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "hexdump_c": 45
+   }
+  },
+  {
+   "id": "od",
+   "label": "od .env",
+   "cmd": "od .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "od": 45
+   }
+  },
+  {
+   "id": "od_c",
+   "label": "od -c .env",
+   "cmd": "od -c .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 39,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "od_c": 45
+   }
+  },
+  {
+   "id": "od_x1",
+   "label": "od -A x -t x1 .env",
+   "cmd": "od -A x -t x1 .env",
+   "caught": {
+    "gitleaks_stored": 0,
+    "gitleaks_view_tuned": 0,
+    "redact": 0,
+    "undump_redact": 45,
+    "undump_scan": 40,
+    "undump_both": 45
+   },
+   "undump_exact": 45,
+   "undump_detected_as": {
+    "od_x1": 45
+   }
+  }
+ ],
+ "defences": [
+  {
+   "id": "gitleaks_stored",
+   "label": "gitleaks, default rules, stored JSONL"
+  },
+  {
+   "id": "gitleaks_view_tuned",
+   "label": "gitleaks, tuned config, decoded view"
+  },
+  {
+   "id": "redact",
+   "label": "Encoding-aware known-value redaction"
+  },
+  {
+   "id": "undump_redact",
+   "label": "Undump, then known-value redaction"
+  },
+  {
+   "id": "undump_scan",
+   "label": "Undump, then gitleaks (tuned)"
+  },
+  {
+   "id": "undump_both",
+   "label": "Undump, then redaction + gitleaks"
+  }
+ ],
+ "totals_dump_formats": {
+  "gitleaks_stored": 0,
+  "gitleaks_view_tuned": 16,
+  "redact": 9,
+  "undump_redact": 405,
+  "undump_scan": 358,
+  "undump_both": 405
+ },
+ "oracle_sanity_recoverable": 495,
+ "xxd_reverse_roundtrip": {
+  "ok": 90,
+  "n": 90
+ },
+ "gitleaks_version": "8.30.1",
+ "xxd_version": "xxd 2025-08-24 by Juergen Weigert et al.",
+ "gitleaks_rules_stored": {
+  "aws-access-token": 10,
+  "github-pat": 10,
+  "generic-api-key": 10,
+  "slack-bot-token": 10,
+  "stripe-access-token": 10,
+  "openai-api-key": 10,
+  "jwt": 10,
+  "anthropic-api-key": 10
+ },
+ "gitleaks_decode_tags_stored": {
+  "decoded:base64": 40
+ },
+ "benign_records_checked": 5000,
+ "undump_fired_on_benign_records": {},
+ "benign_dumps": 360,
+ "benign_dumps_per_format": 40,
+ "benign_dumps_undumped_exact": {
+  "xxd": 40,
+  "xxd_p": 40,
+  "xxd_i": 40,
+  "xxd_b": 40,
+  "hexdump": 40,
+  "hexdump_c": 40,
+  "od": 40,
+  "od_c": 36,
+  "od_x1": 40
+ },
+ "benign_dumps_dropped_by_redactor": 0,
+ "gitleaks_findings_on_benign_dumps_undumped": 0,
+ "gitleaks_rules_on_benign_dumps": [],
+ "timing": {
+  "gitleaks_scan_stored_seconds_median": 0.064,
+  "undump_seconds_all_events": 0.0362,
+  "dump_output_bytes": 393193,
+  "undump_mb_per_second": 10.9
+ },
+ "repeats": 3,
+ "platform": "Darwin arm64"
+}

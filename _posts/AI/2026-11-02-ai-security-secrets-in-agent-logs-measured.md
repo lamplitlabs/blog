@@ -182,7 +182,7 @@ With that config, false positives on the decoded view dropped from 2,171 to 0, a
 
 ## What still leaks: hexdumps
 
-`xxd .env` scored 0 of 24 under every defence, including the combination. A hexdump splits the value into 2-byte groups separated by spaces and wraps it across lines, so neither the redactor's hex variant nor any scanner rule matches. Our oracle reads it back trivially, and so would an attacker with `xxd -r`. Agents run `xxd`, `od` and `hexdump` when a config file "looks wrong", and on binary files. Either strip or truncate tool output that looks like a hexdump before it is logged, or normalise it back to bytes before redacting.
+`xxd .env` scored 0 of 24 under every defence, including the combination. A hexdump splits the value into 2-byte groups separated by spaces and wraps it across lines, so neither the redactor's hex variant nor any scanner rule matches. Our oracle reads it back trivially, and so would an attacker with `xxd -r`. Agents run `xxd`, `od` and `hexdump` when a config file "looks wrong", and on binary files. Either strip or truncate tool output that looks like a hexdump before it is logged, or normalise it back to bytes before redacting. The [hexdump follow-up]({% post_url AI/2026-11-25-ai-security-agent-log-hexdump-secrets-measured %}) measures nine dump formats and that normaliser.
 
 ## A starting sequence
 

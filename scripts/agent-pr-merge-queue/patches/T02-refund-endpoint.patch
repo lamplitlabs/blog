@@ -1,0 +1,243 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..56d9df8 100644
+--- a/handler.go
++++ b/handler.go
+@@ -22,7 +22,8 @@ type spendResponse struct {
+ 	Remaining int `json:"remaining"`
+ }
+ 
+-// ServeHTTP handles POST /v1/spend.
++// ServeHTTP handles POST /v1/refund; every other path is handled as
++// POST /v1/spend, as before refunds existed.
+ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 	if r.Method != http.MethodPost {
+ 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+@@ -33,6 +34,14 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 		http.Error(w, "bad request body", http.StatusBadRequest)
+ 		return
+ 	}
++	if r.URL.Path == "/v1/refund" {
++		s.refund(w, req)
++		return
++	}
++	s.spend(w, req)
++}
++
++func (s *Server) spend(w http.ResponseWriter, req spendRequest) {
+ 	s.Log.Info("spend", "tenant", req.Tenant, "tokens", req.Tokens)
+ 	if err := s.Ledger.Spend(req.Tenant, req.Tokens); err != nil {
+ 		if errors.Is(err, ErrOverBudget) {
+@@ -45,3 +54,17 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 	w.Header().Set("Content-Type", "application/json")
+ 	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
+ }
++
++func (s *Server) refund(w http.ResponseWriter, req spendRequest) {
++	s.Log.Info("refund", "tenant", req.Tenant, "tokens", req.Tokens)
++	if err := s.Ledger.Refund(req.Tenant, req.Tokens); err != nil {
++		if errors.Is(err, ErrOverRefund) {
++			http.Error(w, "refund exceeds spend", http.StatusConflict)
++			return
++		}
++		http.Error(w, "invalid refund", http.StatusBadRequest)
++		return
++	}
++	w.Header().Set("Content-Type", "application/json")
++	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
++}
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..737385a 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -42,3 +42,62 @@ func TestHandlerBadBody(t *testing.T) {
+ 		t.Fatalf("got %d, want 400", w.Code)
+ 	}
+ }
++
++func postTo(s *Server, path, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, path, strings.NewReader(body)))
++	return w
++}
++
++func TestHandlerRefund(t *testing.T) {
++	s := newServer()
++	if w := postTo(s, "/v1/spend", `{"tenant":"acme","tokens":30}`); w.Code != http.StatusOK {
++		t.Fatalf("spend: got %d %s", w.Code, w.Body)
++	}
++	w := postTo(s, "/v1/refund", `{"tenant":"acme","tokens":20}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":90`) {
++		t.Fatalf("refund: got %d %s", w.Code, w.Body)
++	}
++	if ct := w.Header().Get("Content-Type"); ct != "application/json" {
++		t.Fatalf("Content-Type = %q", ct)
++	}
++	// Spend still works after a refund.
++	w = postTo(s, "/v1/spend", `{"tenant":"acme","tokens":90}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":0`) {
++		t.Fatalf("spend after refund: got %d %s", w.Code, w.Body)
++	}
++}
++
++func TestHandlerRefundErrors(t *testing.T) {
++	cases := []struct {
++		name string
++		body string
++		want int
++	}{
++		{"over refund", `{"tenant":"acme","tokens":1}`, http.StatusConflict},
++		{"zero", `{"tenant":"acme","tokens":0}`, http.StatusBadRequest},
++		{"negative", `{"tenant":"acme","tokens":-3}`, http.StatusBadRequest},
++		{"unknown tenant", `{"tenant":"globex","tokens":1}`, http.StatusBadRequest},
++		{"bad body", `{`, http.StatusBadRequest},
++	}
++	for _, c := range cases {
++		t.Run(c.name, func(t *testing.T) {
++			s := newServer()
++			w := postTo(s, "/v1/refund", c.body)
++			if w.Code != c.want {
++				t.Fatalf("got %d, want %d (%s)", w.Code, c.want, w.Body)
++			}
++			if got := s.Ledger.Remaining("acme"); got != 100 {
++				t.Fatalf("remaining = %d, want 100", got)
++			}
++		})
++	}
++}
++
++func TestHandlerRefundMethodNotAllowed(t *testing.T) {
++	w := httptest.NewRecorder()
++	newServer().ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/v1/refund", nil))
++	if w.Code != http.StatusMethodNotAllowed {
++		t.Fatalf("got %d, want 405", w.Code)
++	}
++}
+diff --git a/ledger.go b/ledger.go
+index 01b580c..f8ed9db 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -11,6 +11,9 @@ import (
+ // ErrOverBudget is returned when a spend would take a tenant past its limit.
+ var ErrOverBudget = errors.New("over budget")
+ 
++// ErrOverRefund is returned when a refund would take a tenant's spend below zero.
++var ErrOverRefund = errors.New("refund exceeds spend")
++
+ // Ledger tracks tokens spent per tenant against a per-tenant limit.
+ type Ledger struct {
+ 	mu    sync.Mutex
+@@ -46,6 +49,24 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 	return nil
+ }
+ 
++// Refund gives n tokens back to tenant. A refund that would take the tenant's
++// spend below zero is refused and leaves the balance unchanged.
++func (l *Ledger) Refund(tenant string, n int) error {
++	if n <= 0 {
++		return fmt.Errorf("refund %d tokens: must be positive", n)
++	}
++	l.mu.Lock()
++	defer l.mu.Unlock()
++	if _, ok := l.limit[tenant]; !ok {
++		return fmt.Errorf("tenant %q: unknown", tenant)
++	}
++	if n > l.spent[tenant] {
++		return fmt.Errorf("tenant %q: %w (%d > %d spent)", tenant, ErrOverRefund, n, l.spent[tenant])
++	}
++	l.spent[tenant] -= n
++	return nil
++}
++
+ // Remaining returns the tokens tenant may still spend.
+ func (l *Ledger) Remaining(tenant string) int {
+ 	l.mu.Lock()
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..6d119b2 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -2,6 +2,7 @@ package quota
+ 
+ import (
+ 	"errors"
++	"sync"
+ 	"testing"
+ )
+ 
+@@ -58,3 +59,77 @@ func TestSpendAll(t *testing.T) {
+ 		t.Fatalf("remaining = %d, want 500", got)
+ 	}
+ }
++
++func TestRefund(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 60); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Refund("acme", 25); err != nil {
++		t.Fatal(err)
++	}
++	if got := l.Remaining("acme"); got != 65 {
++		t.Fatalf("remaining = %d, want 65", got)
++	}
++	if err := l.Refund("acme", 35); err != nil {
++		t.Fatalf("refund landing exactly on zero spend: %v", err)
++	}
++	if got := l.Remaining("acme"); got != 100 {
++		t.Fatalf("remaining = %d, want 100", got)
++	}
++}
++
++func TestRefundNeverBelowZero(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Refund("acme", 1); !errors.Is(err, ErrOverRefund) {
++		t.Fatalf("refund with nothing spent: err = %v, want ErrOverRefund", err)
++	}
++	if err := l.Spend("acme", 10); err != nil {
++		t.Fatal(err)
++	}
++	if err := l.Refund("acme", 11); !errors.Is(err, ErrOverRefund) {
++		t.Fatalf("err = %v, want ErrOverRefund", err)
++	}
++	if got := l.Remaining("acme"); got != 90 {
++		t.Fatalf("a refused refund changed the balance: remaining = %d", got)
++	}
++}
++
++func TestRefundRejectsNonPositive(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Spend("acme", 50); err != nil {
++		t.Fatal(err)
++	}
++	for _, n := range []int{0, -5} {
++		if err := l.Refund("acme", n); err == nil {
++			t.Fatalf("Refund(%d) = nil, want an error", n)
++		}
++	}
++	if got := l.Remaining("acme"); got != 50 {
++		t.Fatalf("remaining = %d, want 50", got)
++	}
++}
++
++func TestRefundUnknownTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	if err := l.Refund("globex", 1); err == nil {
++		t.Fatal("unknown tenant accepted")
++	}
++}
++
++func TestRefundConcurrentWithSpend(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 1000})
++	if err := l.Spend("acme", 500); err != nil {
++		t.Fatal(err)
++	}
++	var wg sync.WaitGroup
++	for range 50 {
++		wg.Add(2)
++		go func() { defer wg.Done(); _ = l.Refund("acme", 10) }()
++		go func() { defer wg.Done(); _ = l.Spend("acme", 10) }()
++	}
++	wg.Wait()
++	if got := l.Remaining("acme"); got != 500 {
++		t.Fatalf("remaining = %d, want 500", got)
++	}
++}

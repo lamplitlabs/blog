@@ -1,0 +1,56 @@
+[
+ {
+  "arm": "patches",
+  "a": "T01",
+  "b": "T02",
+  "lines": [
+   "$ git merge --no-ff -q -m Merge T01 T01",
+   "$ git merge --no-ff -m Merge T02 T02",
+   "Auto-merging handler.go",
+   "Auto-merging handler_test.go",
+   "Auto-merging ledger.go",
+   "Auto-merging ledger_test.go",
+   "Merge made by the 'ort' strategy.",
+   " handler.go      | 25 ++++++++++++++++++-",
+   " handler_test.go | 59 +++++++++++++++++++++++++++++++++++++++++++++",
+   " ledger.go       | 21 ++++++++++++++++",
+   " ledger_test.go  | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++",
+   " 4 files changed, 178 insertions(+), 1 deletion(-)",
+   "$ gofmt -l .",
+   "$ go vet ./...",
+   "# example.com/quota",
+   "# [example.com/quota]",
+   "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values",
+   "[exit 1]"
+  ]
+ },
+ {
+  "arm": "patches-split",
+  "a": "T11",
+  "b": "T06",
+  "lines": [
+   "$ git merge --no-ff -q -m Merge T11 T11",
+   "$ git merge --no-ff -m Merge T06 T06",
+   "Auto-merging ledger.go",
+   "Merge made by the 'ort' strategy.",
+   " handler.go             |  4 +++",
+   " ledger.go              |  2 +-",
+   " unknown_tenant.go      |  7 ++++++",
+   " unknown_tenant_test.go | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++",
+   " 4 files changed, 79 insertions(+), 1 deletion(-)",
+   " create mode 100644 unknown_tenant.go",
+   " create mode 100644 unknown_tenant_test.go",
+   "$ gofmt -l .",
+   "$ go vet ./...",
+   "$ go test -race ./...",
+   "--- FAIL: TestHandlerInvalidSpendStays400 (0.00s)",
+   "    unknown_tenant_test.go:64: {\"tenant\":\"acme\",\"tokens\":0}: got 200, want 400",
+   "--- FAIL: TestHandlerZeroSpendUnknownTenant (0.00s)",
+   "    zero_spend_test.go:68: got 404, want 400",
+   "FAIL",
+   "FAIL\texample.com/quota\t0.248s",
+   "FAIL",
+   "[exit 1]"
+  ]
+ }
+]

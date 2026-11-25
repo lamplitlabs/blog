@@ -1,0 +1,93 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..ae256a5 100644
+--- a/handler.go
++++ b/handler.go
+@@ -39,6 +39,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 			http.Error(w, "token budget exhausted", http.StatusPaymentRequired)
+ 			return
+ 		}
++		if errors.Is(err, ErrUnknownTenant) {
++			http.Error(w, "unknown tenant", http.StatusNotFound)
++			return
++		}
+ 		http.Error(w, "invalid spend", http.StatusBadRequest)
+ 		return
+ 	}
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..e94b22e 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -42,3 +42,17 @@ func TestHandlerBadBody(t *testing.T) {
+ 		t.Fatalf("got %d, want 400", w.Code)
+ 	}
+ }
++
++func TestHandlerUnknownTenant(t *testing.T) {
++	w := post(newServer(), `{"tenant":"globex","tokens":1}`)
++	if w.Code != http.StatusNotFound {
++		t.Fatalf("got %d, want 404", w.Code)
++	}
++}
++
++func TestHandlerInvalidSpendStays400(t *testing.T) {
++	w := post(newServer(), `{"tenant":"acme","tokens":0}`)
++	if w.Code != http.StatusBadRequest {
++		t.Fatalf("got %d, want 400", w.Code)
++	}
++}
+diff --git a/ledger.go b/ledger.go
+index 01b580c..efdb2d2 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -11,6 +11,10 @@ import (
+ // ErrOverBudget is returned when a spend would take a tenant past its limit.
+ var ErrOverBudget = errors.New("over budget")
+ 
++// ErrUnknownTenant is returned when a spend names a tenant the ledger has no
++// limit for.
++var ErrUnknownTenant = errors.New("unknown tenant")
++
+ // Ledger tracks tokens spent per tenant against a per-tenant limit.
+ type Ledger struct {
+ 	mu    sync.Mutex
+@@ -37,7 +41,7 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 	defer l.mu.Unlock()
+ 	lim, ok := l.limit[tenant]
+ 	if !ok {
+-		return fmt.Errorf("tenant %q: unknown", tenant)
++		return fmt.Errorf("tenant %q: %w", tenant, ErrUnknownTenant)
+ 	}
+ 	if l.spent[tenant]+n > lim {
+ 		return fmt.Errorf("tenant %q: %w (%d + %d > %d)", tenant, ErrOverBudget, l.spent[tenant], n, lim)
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..bf65000 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -32,16 +32,24 @@ func TestSpendOverLimit(t *testing.T) {
+ func TestSpendRejectsNonPositive(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+ 	for _, n := range []int{0, -5} {
+-		if err := l.Spend("acme", n); err == nil {
++		err := l.Spend("acme", n)
++		if err == nil {
+ 			t.Fatalf("Spend(%d) = nil, want an error", n)
+ 		}
++		if errors.Is(err, ErrUnknownTenant) {
++			t.Fatalf("Spend(%d) = %v, must not be ErrUnknownTenant", n, err)
++		}
+ 	}
+ }
+ 
+ func TestSpendUnknownTenant(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+-	if err := l.Spend("globex", 1); err == nil {
+-		t.Fatal("unknown tenant accepted")
++	err := l.Spend("globex", 1)
++	if !errors.Is(err, ErrUnknownTenant) {
++		t.Fatalf("err = %v, want ErrUnknownTenant", err)
++	}
++	if errors.Is(err, ErrOverBudget) {
++		t.Fatalf("err = %v, must not be ErrOverBudget", err)
+ 	}
+ }
+ 

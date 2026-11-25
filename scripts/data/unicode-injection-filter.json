@@ -1,0 +1,130 @@
+{
+  "seed": 20261125,
+  "python": "3.13.5",
+  "unicode_version": "15.1.0",
+  "machine": "arm64",
+  "attacks": 2880,
+  "benign": 20,
+  "layers": {
+    "raw": {
+      "caught": 250,
+      "caught_pct": 8.7,
+      "caught_by_technique_pct": {
+        "plain": 100.0,
+        "zero_width": 1.2,
+        "soft_hyphen": 0.4,
+        "tag_chars": 0.4,
+        "bidi_controls": 0.4,
+        "fullwidth": 0.0,
+        "math_bold": 0.0,
+        "combining_marks": 0.4,
+        "variation_selectors": 0.8,
+        "homoglyph_cyrillic_greek": 0.0,
+        "mixed_zw_fullwidth_homoglyph": 0.0,
+        "homoglyph_not_in_table": 0.4
+      },
+      "benign_false_positives": 1,
+      "benign_false_positive_strings": [
+        "The new instructions for the printer are on page 3."
+      ],
+      "benign_changed": 0,
+      "ns_per_string_median": 3048
+    },
+    "nfkc": {
+      "caught": 730,
+      "caught_pct": 25.3,
+      "caught_by_technique_pct": {
+        "plain": 100.0,
+        "zero_width": 1.2,
+        "soft_hyphen": 0.4,
+        "tag_chars": 0.4,
+        "bidi_controls": 0.4,
+        "fullwidth": 100.0,
+        "math_bold": 100.0,
+        "combining_marks": 0.4,
+        "variation_selectors": 0.8,
+        "homoglyph_cyrillic_greek": 0.0,
+        "mixed_zw_fullwidth_homoglyph": 0.0,
+        "homoglyph_not_in_table": 0.4
+      },
+      "benign_false_positives": 1,
+      "benign_false_positive_strings": [
+        "The new instructions for the printer are on page 3."
+      ],
+      "benign_changed": 3,
+      "ns_per_string_median": 18840
+    },
+    "strip_cf": {
+      "caught": 1684,
+      "caught_pct": 58.5,
+      "caught_by_technique_pct": {
+        "plain": 100.0,
+        "zero_width": 100.0,
+        "soft_hyphen": 100.0,
+        "tag_chars": 100.0,
+        "bidi_controls": 100.0,
+        "fullwidth": 100.0,
+        "math_bold": 100.0,
+        "combining_marks": 0.4,
+        "variation_selectors": 0.8,
+        "homoglyph_cyrillic_greek": 0.0,
+        "mixed_zw_fullwidth_homoglyph": 0.0,
+        "homoglyph_not_in_table": 0.4
+      },
+      "benign_false_positives": 1,
+      "benign_false_positive_strings": [
+        "The new instructions for the printer are on page 3."
+      ],
+      "benign_changed": 11,
+      "ns_per_string_median": 52095
+    },
+    "strip_mn": {
+      "caught": 2161,
+      "caught_pct": 75.0,
+      "caught_by_technique_pct": {
+        "plain": 100.0,
+        "zero_width": 100.0,
+        "soft_hyphen": 100.0,
+        "tag_chars": 100.0,
+        "bidi_controls": 100.0,
+        "fullwidth": 100.0,
+        "math_bold": 100.0,
+        "combining_marks": 100.0,
+        "variation_selectors": 100.0,
+        "homoglyph_cyrillic_greek": 0.0,
+        "mixed_zw_fullwidth_homoglyph": 0.0,
+        "homoglyph_not_in_table": 0.4
+      },
+      "benign_false_positives": 1,
+      "benign_false_positive_strings": [
+        "The new instructions for the printer are on page 3."
+      ],
+      "benign_changed": 16,
+      "ns_per_string_median": 87674
+    },
+    "confusable": {
+      "caught": 2641,
+      "caught_pct": 91.7,
+      "caught_by_technique_pct": {
+        "plain": 100.0,
+        "zero_width": 100.0,
+        "soft_hyphen": 100.0,
+        "tag_chars": 100.0,
+        "bidi_controls": 100.0,
+        "fullwidth": 100.0,
+        "math_bold": 100.0,
+        "combining_marks": 100.0,
+        "variation_selectors": 100.0,
+        "homoglyph_cyrillic_greek": 100.0,
+        "mixed_zw_fullwidth_homoglyph": 100.0,
+        "homoglyph_not_in_table": 0.4
+      },
+      "benign_false_positives": 1,
+      "benign_false_positive_strings": [
+        "The new instructions for the printer are on page 3."
+      ],
+      "benign_changed": 16,
+      "ns_per_string_median": 41631
+    }
+  }
+}

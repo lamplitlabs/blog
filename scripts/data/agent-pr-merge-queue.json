@@ -1,0 +1,1018 @@
+{
+ "host": {
+  "cpu": "Apple M2 Pro",
+  "cores": "12",
+  "os": "macOS-27.0.1-arm64-arm-64bit"
+ },
+ "go": "go version go1.27.4 darwin/arm64",
+ "git": "git version 2.54.0 (Apple Git-157)",
+ "seed": 20261123,
+ "arms": {
+  "default": {
+   "solo_green": 12,
+   "tickets": 12,
+   "pairs": 132,
+   "pair_results": {
+    "build": 14,
+    "textual": 80,
+    "green": 38
+   },
+   "matrix": {
+    "T01>T02": "build",
+    "T01>T03": "textual",
+    "T01>T04": "green",
+    "T01>T05": "green",
+    "T01>T06": "textual",
+    "T01>T07": "build",
+    "T01>T08": "green",
+    "T01>T09": "textual",
+    "T01>T10": "build",
+    "T01>T11": "textual",
+    "T01>T12": "textual",
+    "T02>T01": "build",
+    "T02>T03": "build",
+    "T02>T04": "textual",
+    "T02>T05": "textual",
+    "T02>T06": "textual",
+    "T02>T07": "textual",
+    "T02>T08": "green",
+    "T02>T09": "textual",
+    "T02>T10": "textual",
+    "T02>T11": "textual",
+    "T02>T12": "textual",
+    "T03>T01": "textual",
+    "T03>T02": "build",
+    "T03>T04": "green",
+    "T03>T05": "green",
+    "T03>T06": "build",
+    "T03>T07": "textual",
+    "T03>T08": "green",
+    "T03>T09": "build",
+    "T03>T10": "build",
+    "T03>T11": "textual",
+    "T03>T12": "textual",
+    "T04>T01": "green",
+    "T04>T02": "textual",
+    "T04>T03": "green",
+    "T04>T05": "textual",
+    "T04>T06": "textual",
+    "T04>T07": "textual",
+    "T04>T08": "green",
+    "T04>T09": "textual",
+    "T04>T10": "green",
+    "T04>T11": "textual",
+    "T04>T12": "textual",
+    "T05>T01": "green",
+    "T05>T02": "textual",
+    "T05>T03": "green",
+    "T05>T04": "textual",
+    "T05>T06": "textual",
+    "T05>T07": "textual",
+    "T05>T08": "green",
+    "T05>T09": "textual",
+    "T05>T10": "green",
+    "T05>T11": "textual",
+    "T05>T12": "textual",
+    "T06>T01": "textual",
+    "T06>T02": "textual",
+    "T06>T03": "build",
+    "T06>T04": "textual",
+    "T06>T05": "textual",
+    "T06>T07": "textual",
+    "T06>T08": "green",
+    "T06>T09": "textual",
+    "T06>T10": "green",
+    "T06>T11": "textual",
+    "T06>T12": "textual",
+    "T07>T01": "build",
+    "T07>T02": "textual",
+    "T07>T03": "textual",
+    "T07>T04": "textual",
+    "T07>T05": "textual",
+    "T07>T06": "textual",
+    "T07>T08": "textual",
+    "T07>T09": "textual",
+    "T07>T10": "textual",
+    "T07>T11": "textual",
+    "T07>T12": "textual",
+    "T08>T01": "green",
+    "T08>T02": "green",
+    "T08>T03": "green",
+    "T08>T04": "green",
+    "T08>T05": "green",
+    "T08>T06": "green",
+    "T08>T07": "textual",
+    "T08>T09": "green",
+    "T08>T10": "green",
+    "T08>T11": "green",
+    "T08>T12": "green",
+    "T09>T01": "textual",
+    "T09>T02": "textual",
+    "T09>T03": "build",
+    "T09>T04": "textual",
+    "T09>T05": "textual",
+    "T09>T06": "textual",
+    "T09>T07": "textual",
+    "T09>T08": "green",
+    "T09>T10": "textual",
+    "T09>T11": "textual",
+    "T09>T12": "textual",
+    "T10>T01": "build",
+    "T10>T02": "textual",
+    "T10>T03": "build",
+    "T10>T04": "green",
+    "T10>T05": "green",
+    "T10>T06": "green",
+    "T10>T07": "textual",
+    "T10>T08": "green",
+    "T10>T09": "textual",
+    "T10>T11": "green",
+    "T10>T12": "green",
+    "T11>T01": "textual",
+    "T11>T02": "textual",
+    "T11>T03": "textual",
+    "T11>T04": "textual",
+    "T11>T05": "textual",
+    "T11>T06": "textual",
+    "T11>T07": "textual",
+    "T11>T08": "green",
+    "T11>T09": "textual",
+    "T11>T10": "green",
+    "T11>T12": "textual",
+    "T12>T01": "textual",
+    "T12>T02": "textual",
+    "T12>T03": "textual",
+    "T12>T04": "textual",
+    "T12>T05": "textual",
+    "T12>T06": "textual",
+    "T12>T07": "textual",
+    "T12>T08": "green",
+    "T12>T09": "textual",
+    "T12>T10": "green",
+    "T12>T11": "textual"
+   },
+   "semantic_examples": [
+    {
+     "a": "T01",
+     "b": "T02",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T01",
+     "b": "T07",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T01",
+     "b": "T10",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T02",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T02",
+     "b": "T03",
+     "stage": "build",
+     "first": "vet: ./ledger.go:25:21: undefined: errors"
+    },
+    {
+     "a": "T03",
+     "b": "T02",
+     "stage": "build",
+     "first": "vet: ./ledger.go:25:21: undefined: errors"
+    },
+    {
+     "a": "T03",
+     "b": "T06",
+     "stage": "build",
+     "first": "vet: ./ledger.go:26:24: undefined: errors"
+    },
+    {
+     "a": "T03",
+     "b": "T09",
+     "stage": "build",
+     "first": "vet: ./ledger.go:25:24: undefined: errors"
+    },
+    {
+     "a": "T03",
+     "b": "T10",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:137:48: undefined: ErrOverBudget"
+    },
+    {
+     "a": "T06",
+     "b": "T03",
+     "stage": "build",
+     "first": "vet: ./ledger.go:26:24: undefined: errors"
+    },
+    {
+     "a": "T07",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T09",
+     "b": "T03",
+     "stage": "build",
+     "first": "vet: ./ledger.go:25:24: undefined: errors"
+    },
+    {
+     "a": "T10",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T10",
+     "b": "T03",
+     "stage": "build",
+     "first": "vet: ./ledger_test.go:137:48: undefined: ErrOverBudget"
+    }
+   ],
+   "semantic_unordered_pairs": 7,
+   "order_independent": true,
+   "conflict_files": {
+    "handler_test.go": 60,
+    "handler.go": 22,
+    "ledger_test.go": 20,
+    "ledger.go": 18,
+    "page.go": 2,
+    "page_test.go": 2
+   },
+   "orders": 100,
+   "policies": {
+    "stale": {
+     "landed_mean": 3.41,
+     "landed_min": 2,
+     "landed_max": 4,
+     "ci_runs_mean": 15.4,
+     "ci_rounds_mean": 4.4,
+     "bounced_by": {
+      "textual": 859
+     },
+     "red_main_commits": 138,
+     "orders_main_red": 80,
+     "wasted_runs": 0,
+     "landed_before_first_red_mean": 2.03,
+     "red_share_of_main_commits": 0.405
+    },
+    "strict": {
+     "landed_mean": 2.66,
+     "landed_min": 1,
+     "landed_max": 3,
+     "ci_runs_mean": 29.7,
+     "ci_rounds_mean": 3.9,
+     "bounced_by": {
+      "textual": 796,
+      "build": 138
+     },
+     "red_main_commits": 0,
+     "orders_main_red": 0,
+     "wasted_runs": 0
+    },
+    "queue1": {
+     "landed_mean": 2.66,
+     "landed_min": 1,
+     "landed_max": 3,
+     "ci_runs_mean": 15.7,
+     "ci_rounds_mean": 4.7,
+     "bounced_by": {
+      "textual": 829,
+      "build": 105
+     },
+     "red_main_commits": 0,
+     "orders_main_red": 0,
+     "wasted_runs": 0
+    },
+    "queue4": {
+     "landed_mean": 2.6,
+     "landed_min": 1,
+     "landed_max": 3,
+     "ci_runs_mean": 16.1,
+     "ci_rounds_mean": 2.5,
+     "bounced_by": {
+      "textual": 850,
+      "build": 90
+     },
+     "red_main_commits": 0,
+     "orders_main_red": 0,
+     "wasted_runs": 62
+    }
+   },
+   "stale_red_causes": {
+    "vet: ./ledger_test.go:126:12: assignment mismatch: 1 variable but l.Spend returns 2 values": 32,
+    "vet: ./ledger.go:25:24: undefined: errors": 16,
+    "vet: ./ledger.go:26:24: undefined: errors": 16,
+    "vet: ./ledger_test.go:137:48: undefined: ErrOverBudget": 13,
+    "vet: ./ledger.go:25:21: undefined: errors": 3
+   },
+   "unique_trees_tested": 63,
+   "ci_seconds_median": 1.96,
+   "ci_seconds_p90": 2.09,
+   "agent_runs": {
+    "model_calls": 56,
+    "tool_steps": 47,
+    "seconds": 423,
+    "self_report_green": 12
+   },
+   "patches": [
+    {
+     "ticket": "T01-spend-returns-remaining",
+     "files": [
+      "handler.go",
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 103,
+     "removed": 14
+    },
+    {
+     "ticket": "T02-refund-endpoint",
+     "files": [
+      "handler.go",
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 179,
+     "removed": 1
+    },
+    {
+     "ticket": "T03-budget-error-details",
+     "files": [
+      "handler.go",
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 86,
+     "removed": 9
+    },
+    {
+     "ticket": "T04-max-tokens-per-request",
+     "files": [
+      "handler.go",
+      "handler_test.go"
+     ],
+     "new_files": 0,
+     "added": 47,
+     "removed": 0
+    },
+    {
+     "ticket": "T05-batch-spend-endpoint",
+     "files": [
+      "handler.go",
+      "handler_test.go"
+     ],
+     "new_files": 0,
+     "added": 118,
+     "removed": 1
+    },
+    {
+     "ticket": "T06-unknown-tenant-404",
+     "files": [
+      "handler.go",
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 34,
+     "removed": 4
+    },
+    {
+     "ticket": "T07-usage-listing",
+     "files": [
+      "handler.go",
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go",
+      "page.go",
+      "page_test.go"
+     ],
+     "new_files": 0,
+     "added": 220,
+     "removed": 6
+    },
+    {
+     "ticket": "T08-page-out-of-range",
+     "files": [
+      "page.go",
+      "page_test.go"
+     ],
+     "new_files": 0,
+     "added": 57,
+     "removed": 5
+    },
+    {
+     "ticket": "T09-remaining-unknown-tenant",
+     "files": [
+      "handler.go",
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 57,
+     "removed": 13
+    },
+    {
+     "ticket": "T10-set-limit",
+     "files": [
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 117,
+     "removed": 2
+    },
+    {
+     "ticket": "T11-zero-token-spend",
+     "files": [
+      "handler_test.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 0,
+     "added": 61,
+     "removed": 5
+    },
+    {
+     "ticket": "T12-spend-audit-log",
+     "files": [
+      "handler.go",
+      "handler_test.go"
+     ],
+     "new_files": 0,
+     "added": 98,
+     "removed": 2
+    }
+   ]
+  },
+  "split": {
+   "solo_green": 12,
+   "tickets": 12,
+   "pairs": 132,
+   "pair_results": {
+    "build": 20,
+    "textual": 26,
+    "green": 78,
+    "test": 8
+   },
+   "matrix": {
+    "T01>T02": "build",
+    "T01>T03": "textual",
+    "T01>T04": "green",
+    "T01>T05": "green",
+    "T01>T06": "textual",
+    "T01>T07": "build",
+    "T01>T08": "green",
+    "T01>T09": "build",
+    "T01>T10": "build",
+    "T01>T11": "textual",
+    "T01>T12": "textual",
+    "T02>T01": "build",
+    "T02>T03": "green",
+    "T02>T04": "green",
+    "T02>T05": "textual",
+    "T02>T06": "green",
+    "T02>T07": "textual",
+    "T02>T08": "green",
+    "T02>T09": "build",
+    "T02>T10": "green",
+    "T02>T11": "green",
+    "T02>T12": "green",
+    "T03>T01": "textual",
+    "T03>T02": "green",
+    "T03>T04": "green",
+    "T03>T05": "green",
+    "T03>T06": "build",
+    "T03>T07": "green",
+    "T03>T08": "green",
+    "T03>T09": "green",
+    "T03>T10": "build",
+    "T03>T11": "green",
+    "T03>T12": "textual",
+    "T04>T01": "green",
+    "T04>T02": "green",
+    "T04>T03": "green",
+    "T04>T05": "green",
+    "T04>T06": "green",
+    "T04>T07": "green",
+    "T04>T08": "green",
+    "T04>T09": "build",
+    "T04>T10": "green",
+    "T04>T11": "green",
+    "T04>T12": "textual",
+    "T05>T01": "green",
+    "T05>T02": "textual",
+    "T05>T03": "green",
+    "T05>T04": "green",
+    "T05>T06": "green",
+    "T05>T07": "textual",
+    "T05>T08": "green",
+    "T05>T09": "build",
+    "T05>T10": "green",
+    "T05>T11": "test",
+    "T05>T12": "green",
+    "T06>T01": "textual",
+    "T06>T02": "green",
+    "T06>T03": "build",
+    "T06>T04": "green",
+    "T06>T05": "green",
+    "T06>T07": "green",
+    "T06>T08": "green",
+    "T06>T09": "textual",
+    "T06>T10": "green",
+    "T06>T11": "test",
+    "T06>T12": "textual",
+    "T07>T01": "build",
+    "T07>T02": "textual",
+    "T07>T03": "green",
+    "T07>T04": "green",
+    "T07>T05": "textual",
+    "T07>T06": "green",
+    "T07>T08": "test",
+    "T07>T09": "green",
+    "T07>T10": "green",
+    "T07>T11": "green",
+    "T07>T12": "green",
+    "T08>T01": "green",
+    "T08>T02": "green",
+    "T08>T03": "green",
+    "T08>T04": "green",
+    "T08>T05": "green",
+    "T08>T06": "green",
+    "T08>T07": "test",
+    "T08>T09": "green",
+    "T08>T10": "green",
+    "T08>T11": "green",
+    "T08>T12": "green",
+    "T09>T01": "build",
+    "T09>T02": "build",
+    "T09>T03": "green",
+    "T09>T04": "build",
+    "T09>T05": "build",
+    "T09>T06": "textual",
+    "T09>T07": "green",
+    "T09>T08": "green",
+    "T09>T10": "textual",
+    "T09>T11": "build",
+    "T09>T12": "textual",
+    "T10>T01": "build",
+    "T10>T02": "green",
+    "T10>T03": "build",
+    "T10>T04": "green",
+    "T10>T05": "green",
+    "T10>T06": "green",
+    "T10>T07": "green",
+    "T10>T08": "green",
+    "T10>T09": "textual",
+    "T10>T11": "green",
+    "T10>T12": "green",
+    "T11>T01": "textual",
+    "T11>T02": "green",
+    "T11>T03": "green",
+    "T11>T04": "green",
+    "T11>T05": "test",
+    "T11>T06": "test",
+    "T11>T07": "green",
+    "T11>T08": "green",
+    "T11>T09": "build",
+    "T11>T10": "green",
+    "T11>T12": "test",
+    "T12>T01": "textual",
+    "T12>T02": "green",
+    "T12>T03": "textual",
+    "T12>T04": "textual",
+    "T12>T05": "green",
+    "T12>T06": "textual",
+    "T12>T07": "green",
+    "T12>T08": "green",
+    "T12>T09": "textual",
+    "T12>T10": "green",
+    "T12>T11": "test"
+   },
+   "semantic_examples": [
+    {
+     "a": "T01",
+     "b": "T02",
+     "stage": "build",
+     "first": "vet: ./refund_test.go:27:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T01",
+     "b": "T07",
+     "stage": "build",
+     "first": "vet: ./usage_test.go:45:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T01",
+     "b": "T09",
+     "stage": "build",
+     "first": "vet: ./handler.go:46:17: no new variables on left side of :="
+    },
+    {
+     "a": "T01",
+     "b": "T10",
+     "stage": "build",
+     "first": "vet: ./set_limit_test.go:11:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T02",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./refund_test.go:27:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T02",
+     "b": "T09",
+     "stage": "build",
+     "first": "vet: ./refund.go:44:57: multiple-value s.Ledger.Remaining(req.Tenant) (value of type (int, error)) in single-value context"
+    },
+    {
+     "a": "T03",
+     "b": "T06",
+     "stage": "build",
+     "first": "vet: ./unknown_tenant_test.go:35:20: undefined: ErrOverBudget"
+    },
+    {
+     "a": "T03",
+     "b": "T10",
+     "stage": "build",
+     "first": "vet: ./set_limit_test.go:26:48: undefined: ErrOverBudget"
+    },
+    {
+     "a": "T04",
+     "b": "T09",
+     "stage": "build",
+     "first": "vet: ./max_tokens_test.go:32:12: assignment mismatch: 1 variable but s.Ledger.Remaining returns 2 values"
+    },
+    {
+     "a": "T05",
+     "b": "T09",
+     "stage": "build",
+     "first": "vet: ./batch.go:42:14: multiple-value s.Ledger.Remaining(req.Tenant) (value of type (int, error)) in single-value context"
+    },
+    {
+     "a": "T05",
+     "b": "T11",
+     "stage": "test",
+     "first": "--- FAIL: TestSpendBatchInvalidSpendsNotAccepted (0.00s)"
+    },
+    {
+     "a": "T06",
+     "b": "T03",
+     "stage": "build",
+     "first": "vet: ./unknown_tenant_test.go:35:20: undefined: ErrOverBudget"
+    },
+    {
+     "a": "T06",
+     "b": "T11",
+     "stage": "test",
+     "first": "--- FAIL: TestHandlerInvalidSpendStays400 (0.00s)"
+    },
+    {
+     "a": "T07",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./usage_test.go:45:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T07",
+     "b": "T08",
+     "stage": "test",
+     "first": "--- FAIL: TestUsageHandlerPastEnd (0.00s)"
+    },
+    {
+     "a": "T08",
+     "b": "T07",
+     "stage": "test",
+     "first": "--- FAIL: TestUsageHandlerPastEnd (0.00s)"
+    },
+    {
+     "a": "T09",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./handler.go:46:17: no new variables on left side of :="
+    },
+    {
+     "a": "T09",
+     "b": "T02",
+     "stage": "build",
+     "first": "vet: ./refund.go:44:57: multiple-value s.Ledger.Remaining(req.Tenant) (value of type (int, error)) in single-value context"
+    },
+    {
+     "a": "T09",
+     "b": "T04",
+     "stage": "build",
+     "first": "vet: ./max_tokens_test.go:32:12: assignment mismatch: 1 variable but s.Ledger.Remaining returns 2 values"
+    },
+    {
+     "a": "T09",
+     "b": "T05",
+     "stage": "build",
+     "first": "vet: ./batch.go:42:14: multiple-value s.Ledger.Remaining(req.Tenant) (value of type (int, error)) in single-value context"
+    },
+    {
+     "a": "T09",
+     "b": "T11",
+     "stage": "build",
+     "first": "vet: ./zero_spend_test.go:33:12: assignment mismatch: 1 variable but l.Remaining returns 2 values"
+    },
+    {
+     "a": "T10",
+     "b": "T01",
+     "stage": "build",
+     "first": "vet: ./set_limit_test.go:11:12: assignment mismatch: 1 variable but l.Spend returns 2 values"
+    },
+    {
+     "a": "T10",
+     "b": "T03",
+     "stage": "build",
+     "first": "vet: ./set_limit_test.go:26:48: undefined: ErrOverBudget"
+    },
+    {
+     "a": "T11",
+     "b": "T05",
+     "stage": "test",
+     "first": "--- FAIL: TestSpendBatchInvalidSpendsNotAccepted (0.00s)"
+    },
+    {
+     "a": "T11",
+     "b": "T06",
+     "stage": "test",
+     "first": "--- FAIL: TestHandlerInvalidSpendStays400 (0.00s)"
+    },
+    {
+     "a": "T11",
+     "b": "T09",
+     "stage": "build",
+     "first": "vet: ./zero_spend_test.go:33:12: assignment mismatch: 1 variable but l.Remaining returns 2 values"
+    },
+    {
+     "a": "T11",
+     "b": "T12",
+     "stage": "test",
+     "first": "--- FAIL: TestAuditSpendLog (0.00s)"
+    },
+    {
+     "a": "T12",
+     "b": "T11",
+     "stage": "test",
+     "first": "--- FAIL: TestAuditSpendLog (0.00s)"
+    }
+   ],
+   "semantic_unordered_pairs": 14,
+   "order_independent": true,
+   "conflict_files": {
+    "handler.go": 18,
+    "ledger.go": 8,
+    "ledger_test.go": 4,
+    "unknown_tenant.go": 2,
+    "unknown_tenant_test.go": 2
+   },
+   "orders": 100,
+   "policies": {
+    "stale": {
+     "landed_mean": 5.97,
+     "landed_min": 5,
+     "landed_max": 7,
+     "ci_runs_mean": 18.0,
+     "ci_rounds_mean": 7.0,
+     "bounced_by": {
+      "textual": 603
+     },
+     "red_main_commits": 372,
+     "orders_main_red": 100,
+     "wasted_runs": 0,
+     "landed_before_first_red_mean": 2.25,
+     "red_share_of_main_commits": 0.623
+    },
+    "strict": {
+     "landed_mean": 4.14,
+     "landed_min": 3,
+     "landed_max": 5,
+     "ci_runs_mean": 39.6,
+     "ci_rounds_mean": 5.4,
+     "bounced_by": {
+      "textual": 382,
+      "test": 142,
+      "build": 262
+     },
+     "red_main_commits": 0,
+     "orders_main_red": 0,
+     "wasted_runs": 0
+    },
+    "queue1": {
+     "landed_mean": 4.14,
+     "landed_min": 3,
+     "landed_max": 5,
+     "ci_runs_mean": 19.1,
+     "ci_rounds_mean": 8.1,
+     "bounced_by": {
+      "textual": 490,
+      "test": 103,
+      "build": 193
+     },
+     "red_main_commits": 0,
+     "orders_main_red": 0,
+     "wasted_runs": 0
+    },
+    "queue4": {
+     "landed_mean": 4.03,
+     "landed_min": 2,
+     "landed_max": 5,
+     "ci_runs_mean": 20.9,
+     "ci_rounds_mean": 4.0,
+     "bounced_by": {
+      "textual": 554,
+      "test": 94,
+      "build": 149
+     },
+     "red_main_commits": 0,
+     "orders_main_red": 0,
+     "wasted_runs": 246
+    }
+   },
+   "stale_red_causes": {
+    "--- FAIL: TestAuditSpendLog (0.00s)": 16,
+    "vet: ./unknown_tenant_test.go:35:20: undefined: ErrOverBudget": 12,
+    "vet: ./set_limit_test.go:26:48: undefined: ErrOverBudget": 11,
+    "vet: ./set_limit_test.go:11:12: assignment mismatch: 1 variable but l.Spend returns 2 values": 9,
+    "--- FAIL: TestUsageHandlerPastEnd (0.00s)": 9,
+    "--- FAIL: TestHandlerInvalidSpendStays400 (0.00s)": 8,
+    "--- FAIL: TestSpendBatchInvalidSpendsNotAccepted (0.00s)": 8,
+    "vet: ./max_tokens_test.go:32:12: assignment mismatch: 1 variable but s.Ledger.Remaining returns 2 values": 7,
+    "vet: ./usage_test.go:45:12: assignment mismatch: 1 variable but l.Spend returns 2 values": 4,
+    "vet: ./refund_test.go:27:12: assignment mismatch: 1 variable but l.Spend returns 2 values": 4,
+    "vet: ./handler.go:46:17: no new variables on left side of :=": 3,
+    "vet: ./batch.go:42:14: multiple-value s.Ledger.Remaining(req.Tenant) (value of type (int, error)) in single-value context": 3,
+    "vet: ./refund.go:44:57: multiple-value s.Ledger.Remaining(req.Tenant) (value of type (int, error)) in single-value context": 3,
+    "vet: ./zero_spend_test.go:33:12: assignment mismatch: 1 variable but l.Remaining returns 2 values": 3
+   },
+   "unique_trees_tested": 361,
+   "ci_seconds_median": 0.93,
+   "ci_seconds_p90": 2.07,
+   "agent_runs": {
+    "model_calls": 55,
+    "tool_steps": 43,
+    "seconds": 405,
+    "self_report_green": 12
+   },
+   "patches": [
+    {
+     "ticket": "T01-spend-returns-remaining",
+     "files": [
+      "handler.go",
+      "ledger.go",
+      "ledger_test.go",
+      "spend_remaining_test.go"
+     ],
+     "new_files": 1,
+     "added": 134,
+     "removed": 15
+    },
+    {
+     "ticket": "T02-refund-endpoint",
+     "files": [
+      "handler.go",
+      "refund.go",
+      "refund_test.go"
+     ],
+     "new_files": 2,
+     "added": 190,
+     "removed": 0
+    },
+    {
+     "ticket": "T03-budget-error-details",
+     "files": [
+      "budget_error.go",
+      "budget_error_test.go",
+      "handler.go",
+      "ledger.go",
+      "ledger_test.go"
+     ],
+     "new_files": 2,
+     "added": 115,
+     "removed": 9
+    },
+    {
+     "ticket": "T04-max-tokens-per-request",
+     "files": [
+      "handler.go",
+      "max_tokens.go",
+      "max_tokens_test.go"
+     ],
+     "new_files": 2,
+     "added": 94,
+     "removed": 0
+    },
+    {
+     "ticket": "T05-batch-spend-endpoint",
+     "files": [
+      "batch.go",
+      "batch_test.go",
+      "handler.go"
+     ],
+     "new_files": 2,
+     "added": 151,
+     "removed": 0
+    },
+    {
+     "ticket": "T06-unknown-tenant-404",
+     "files": [
+      "handler.go",
+      "ledger.go",
+      "unknown_tenant.go",
+      "unknown_tenant_test.go"
+     ],
+     "new_files": 2,
+     "added": 79,
+     "removed": 1
+    },
+    {
+     "ticket": "T07-usage-listing",
+     "files": [
+      "handler.go",
+      "usage.go",
+      "usage_test.go"
+     ],
+     "new_files": 2,
+     "added": 211,
+     "removed": 1
+    },
+    {
+     "ticket": "T08-page-out-of-range",
+     "files": [
+      "page.go",
+      "page_out_of_range.go",
+      "page_out_of_range_test.go",
+      "page_test.go"
+     ],
+     "new_files": 2,
+     "added": 74,
+     "removed": 4
+    },
+    {
+     "ticket": "T09-remaining-unknown-tenant",
+     "files": [
+      "handler.go",
+      "ledger.go",
+      "ledger_test.go",
+      "unknown_tenant.go",
+      "unknown_tenant_test.go"
+     ],
+     "new_files": 2,
+     "added": 77,
+     "removed": 10
+    },
+    {
+     "ticket": "T10-set-limit",
+     "files": [
+      "ledger.go",
+      "set_limit.go",
+      "set_limit_test.go"
+     ],
+     "new_files": 2,
+     "added": 157,
+     "removed": 1
+    },
+    {
+     "ticket": "T11-zero-token-spend",
+     "files": [
+      "ledger.go",
+      "ledger_test.go",
+      "zero_spend_test.go"
+     ],
+     "new_files": 1,
+     "added": 83,
+     "removed": 5
+    },
+    {
+     "ticket": "T12-spend-audit-log",
+     "files": [
+      "audit.go",
+      "audit_test.go",
+      "handler.go"
+     ],
+     "new_files": 2,
+     "added": 139,
+     "removed": 2
+    }
+   ]
+  }
+ }
+}

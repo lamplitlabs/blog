@@ -25,7 +25,7 @@
     "gitleaks_view_tuned": 40,
     "redact": 45,
     "undump_redact": 45,
-    "undump_scan": 0,
+    "undump_scan": 40,
     "undump_both": 45
    },
    "undump_exact": 0,
@@ -42,7 +42,7 @@
     "gitleaks_view_tuned": 40,
     "redact": 45,
     "undump_redact": 45,
-    "undump_scan": 0,
+    "undump_scan": 40,
     "undump_both": 45
    },
    "undump_exact": 0,
@@ -248,11 +248,11 @@
  "gitleaks_rules_stored": {
   "aws-access-token": 10,
   "github-pat": 10,
-  "generic-api-key": 10,
   "slack-bot-token": 10,
+  "generic-api-key": 10,
   "stripe-access-token": 10,
-  "openai-api-key": 10,
   "jwt": 10,
+  "openai-api-key": 10,
   "anthropic-api-key": 10
  },
  "gitleaks_decode_tags_stored": {
@@ -277,10 +277,10 @@
  "gitleaks_findings_on_benign_dumps_undumped": 0,
  "gitleaks_rules_on_benign_dumps": [],
  "timing": {
-  "gitleaks_scan_stored_seconds_median": 0.064,
-  "undump_seconds_all_events": 0.0362,
+  "gitleaks_scan_stored_seconds_median": 0.063,
+  "undump_seconds_all_events": 0.035,
   "dump_output_bytes": 393193,
-  "undump_mb_per_second": 10.9
+  "undump_mb_per_second": 11.2
  },
  "repeats": 3,
  "platform": "Darwin arm64"

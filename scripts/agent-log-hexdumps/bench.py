@@ -449,7 +449,9 @@ def main():
     undump_secs = (time.time() - t) / a.repeats
     out_bytes = sum(len(e["out"]) for e in events)
 
-    _, undump_view = write_views("undump", lambda e: decoded[e["id"]][1].decode("latin-1") if decoded[e["id"]][1] else None)
+    # What the scanner reads after the normaliser: the decoded bytes when the
+    # output is a dump, the output itself otherwise.
+    _, undump_view = write_views("undump", lambda e: decoded[e["id"]][1].decode("latin-1") if decoded[e["id"]][1] else e["out"])
     f_undump, _ = base.gitleaks(undump_view, os.path.join(cap, "gitleaks-undump-tuned.json"), TUNED_CONFIG)
 
     h_stored, h_view, h_undump = hits(f_stored), hits(f_view), hits(f_undump)

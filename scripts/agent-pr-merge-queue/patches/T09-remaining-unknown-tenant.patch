@@ -1,0 +1,146 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..06c77f6 100644
+--- a/handler.go
++++ b/handler.go
+@@ -42,6 +42,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 		http.Error(w, "invalid spend", http.StatusBadRequest)
+ 		return
+ 	}
++	remaining, err := s.Ledger.Remaining(req.Tenant)
++	if err != nil {
++		s.Log.Error("remaining after spend", "tenant", req.Tenant, "err", err)
++		http.Error(w, "internal error", http.StatusInternalServerError)
++		return
++	}
+ 	w.Header().Set("Content-Type", "application/json")
+-	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
++	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: remaining})
+ }
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..f89b04d 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -42,3 +42,10 @@ func TestHandlerBadBody(t *testing.T) {
+ 		t.Fatalf("got %d, want 400", w.Code)
+ 	}
+ }
++
++func TestHandlerUnknownTenant(t *testing.T) {
++	w := post(newServer(), `{"tenant":"globex","tokens":1}`)
++	if w.Code != http.StatusBadRequest || strings.Contains(w.Body.String(), "remaining") {
++		t.Fatalf("got %d %s, want 400 without a remaining balance", w.Code, w.Body)
++	}
++}
+diff --git a/ledger.go b/ledger.go
+index 01b580c..7fb7ebd 100644
+--- a/ledger.go
++++ b/ledger.go
+@@ -11,6 +11,9 @@ import (
+ // ErrOverBudget is returned when a spend would take a tenant past its limit.
+ var ErrOverBudget = errors.New("over budget")
+ 
++// ErrUnknownTenant is returned for a tenant the ledger has no limit for.
++var ErrUnknownTenant = errors.New("unknown tenant")
++
+ // Ledger tracks tokens spent per tenant against a per-tenant limit.
+ type Ledger struct {
+ 	mu    sync.Mutex
+@@ -37,7 +40,7 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 	defer l.mu.Unlock()
+ 	lim, ok := l.limit[tenant]
+ 	if !ok {
+-		return fmt.Errorf("tenant %q: unknown", tenant)
++		return fmt.Errorf("tenant %q: %w", tenant, ErrUnknownTenant)
+ 	}
+ 	if l.spent[tenant]+n > lim {
+ 		return fmt.Errorf("tenant %q: %w (%d + %d > %d)", tenant, ErrOverBudget, l.spent[tenant], n, lim)
+@@ -46,11 +49,17 @@ func (l *Ledger) Spend(tenant string, n int) error {
+ 	return nil
+ }
+ 
+-// Remaining returns the tokens tenant may still spend.
+-func (l *Ledger) Remaining(tenant string) int {
++// Remaining returns the tokens tenant may still spend. An unknown tenant
++// yields an error wrapping ErrUnknownTenant, so it cannot be mistaken for an
++// exhausted budget.
++func (l *Ledger) Remaining(tenant string) (int, error) {
+ 	l.mu.Lock()
+ 	defer l.mu.Unlock()
+-	return l.limit[tenant] - l.spent[tenant]
++	lim, ok := l.limit[tenant]
++	if !ok {
++		return 0, fmt.Errorf("tenant %q: %w", tenant, ErrUnknownTenant)
++	}
++	return lim - l.spent[tenant], nil
+ }
+ 
+ // SpendAll applies the spends concurrently and returns how many succeeded.
+diff --git a/ledger_test.go b/ledger_test.go
+index c754f05..cc8af3c 100644
+--- a/ledger_test.go
++++ b/ledger_test.go
+@@ -13,8 +13,8 @@ func TestSpendUpToLimit(t *testing.T) {
+ 	if err := l.Spend("acme", 40); err != nil {
+ 		t.Fatalf("spend landing exactly on the limit: %v", err)
+ 	}
+-	if got := l.Remaining("acme"); got != 0 {
+-		t.Fatalf("remaining = %d, want 0", got)
++	if got, err := l.Remaining("acme"); err != nil || got != 0 {
++		t.Fatalf("remaining = %d, %v; want 0, nil", got, err)
+ 	}
+ }
+ 
+@@ -24,8 +24,8 @@ func TestSpendOverLimit(t *testing.T) {
+ 	if !errors.Is(err, ErrOverBudget) {
+ 		t.Fatalf("err = %v, want ErrOverBudget", err)
+ 	}
+-	if got := l.Remaining("acme"); got != 100 {
+-		t.Fatalf("a refused spend changed the balance: remaining = %d", got)
++	if got, err := l.Remaining("acme"); err != nil || got != 100 {
++		t.Fatalf("a refused spend changed the balance: remaining = %d, %v", got, err)
+ 	}
+ }
+ 
+@@ -40,8 +40,30 @@ func TestSpendRejectsNonPositive(t *testing.T) {
+ 
+ func TestSpendUnknownTenant(t *testing.T) {
+ 	l := NewLedger(map[string]int{"acme": 100})
+-	if err := l.Spend("globex", 1); err == nil {
+-		t.Fatal("unknown tenant accepted")
++	if err := l.Spend("globex", 1); !errors.Is(err, ErrUnknownTenant) {
++		t.Fatalf("err = %v, want ErrUnknownTenant", err)
++	}
++}
++
++func TestRemainingUnknownTenant(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 100})
++	got, err := l.Remaining("globex")
++	if !errors.Is(err, ErrUnknownTenant) {
++		t.Fatalf("err = %v, want ErrUnknownTenant", err)
++	}
++	if got != 0 {
++		t.Fatalf("remaining = %d, want 0 alongside the error", got)
++	}
++}
++
++func TestRemainingExhaustedIsNotAnError(t *testing.T) {
++	l := NewLedger(map[string]int{"acme": 10})
++	if err := l.Spend("acme", 10); err != nil {
++		t.Fatal(err)
++	}
++	got, err := l.Remaining("acme")
++	if err != nil || got != 0 {
++		t.Fatalf("remaining = %d, %v; want 0, nil", got, err)
+ 	}
+ }
+ 
+@@ -54,7 +76,7 @@ func TestSpendAll(t *testing.T) {
+ 	if got := l.SpendAll("acme", spends); got != 50 {
+ 		t.Fatalf("SpendAll ok = %d, want 50", got)
+ 	}
+-	if got := l.Remaining("acme"); got != 500 {
+-		t.Fatalf("remaining = %d, want 500", got)
++	if got, err := l.Remaining("acme"); err != nil || got != 500 {
++		t.Fatalf("remaining = %d, %v; want 500, nil", got, err)
+ 	}
+ }

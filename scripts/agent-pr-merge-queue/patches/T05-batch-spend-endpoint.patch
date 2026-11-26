@@ -1,0 +1,150 @@
+diff --git a/handler.go b/handler.go
+index 2997f37..5ef36b2 100644
+--- a/handler.go
++++ b/handler.go
+@@ -22,8 +22,22 @@ type spendResponse struct {
+ 	Remaining int `json:"remaining"`
+ }
+ 
+-// ServeHTTP handles POST /v1/spend.
++type batchSpendRequest struct {
++	Tenant string `json:"tenant"`
++	Tokens []int  `json:"tokens"`
++}
++
++type batchSpendResponse struct {
++	Accepted  int `json:"accepted"`
++	Remaining int `json:"remaining"`
++}
++
++// ServeHTTP handles POST /v1/spend and POST /v1/spend/batch.
+ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
++	if r.URL.Path == "/v1/spend/batch" {
++		s.serveBatch(w, r)
++		return
++	}
+ 	if r.Method != http.MethodPost {
+ 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+ 		return
+@@ -45,3 +59,34 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+ 	w.Header().Set("Content-Type", "application/json")
+ 	_ = json.NewEncoder(w).Encode(spendResponse{Remaining: s.Ledger.Remaining(req.Tenant)})
+ }
++
++// serveBatch handles POST /v1/spend/batch: it applies every spend in the body
++// with Ledger.SpendAll and reports how many were accepted.
++func (s *Server) serveBatch(w http.ResponseWriter, r *http.Request) {
++	if r.Method != http.MethodPost {
++		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
++		return
++	}
++	var req batchSpendRequest
++	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16)).Decode(&req); err != nil {
++		http.Error(w, "bad request body", http.StatusBadRequest)
++		return
++	}
++	if len(req.Tokens) == 0 {
++		http.Error(w, "no spends in batch", http.StatusBadRequest)
++		return
++	}
++	for _, n := range req.Tokens {
++		if n <= 0 {
++			http.Error(w, "invalid spend", http.StatusBadRequest)
++			return
++		}
++	}
++	s.Log.Info("spend batch", "tenant", req.Tenant, "count", len(req.Tokens))
++	accepted := s.Ledger.SpendAll(req.Tenant, req.Tokens)
++	w.Header().Set("Content-Type", "application/json")
++	_ = json.NewEncoder(w).Encode(batchSpendResponse{
++		Accepted:  accepted,
++		Remaining: s.Ledger.Remaining(req.Tenant),
++	})
++}
+diff --git a/handler_test.go b/handler_test.go
+index 0e302c1..9e17236 100644
+--- a/handler_test.go
++++ b/handler_test.go
+@@ -1,6 +1,7 @@
+ package quota
+ 
+ import (
++	"encoding/json"
+ 	"io"
+ 	"log/slog"
+ 	"net/http"
+@@ -42,3 +43,74 @@ func TestHandlerBadBody(t *testing.T) {
+ 		t.Fatalf("got %d, want 400", w.Code)
+ 	}
+ }
++
++func postBatch(s *Server, body string) *httptest.ResponseRecorder {
++	w := httptest.NewRecorder()
++	s.ServeHTTP(w, httptest.NewRequest(http.MethodPost, "/v1/spend/batch", strings.NewReader(body)))
++	return w
++}
++
++func TestHandlerBatchSpend(t *testing.T) {
++	w := postBatch(newServer(), `{"tenant":"acme","tokens":[10,20,30]}`)
++	if w.Code != http.StatusOK {
++		t.Fatalf("got %d %s", w.Code, w.Body)
++	}
++	var got batchSpendResponse
++	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
++		t.Fatalf("decode %q: %v", w.Body, err)
++	}
++	if got != (batchSpendResponse{Accepted: 3, Remaining: 40}) {
++		t.Fatalf("got %+v, want accepted 3 remaining 40", got)
++	}
++}
++
++func TestHandlerBatchSpendPartial(t *testing.T) {
++	// Equal spends make the outcome independent of the order SpendAll applies them in.
++	w := postBatch(newServer(), `{"tenant":"acme","tokens":[30,30,30,30,30]}`)
++	var got batchSpendResponse
++	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil || w.Code != http.StatusOK {
++		t.Fatalf("got %d %s (%v)", w.Code, w.Body, err)
++	}
++	if got != (batchSpendResponse{Accepted: 3, Remaining: 10}) {
++		t.Fatalf("got %+v, want accepted 3 remaining 10", got)
++	}
++}
++
++func TestHandlerBatchSpendThenSingle(t *testing.T) {
++	s := newServer()
++	if w := postBatch(s, `{"tenant":"acme","tokens":[10,20]}`); w.Code != http.StatusOK {
++		t.Fatalf("batch: got %d %s", w.Code, w.Body)
++	}
++	w := post(s, `{"tenant":"acme","tokens":5}`)
++	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), `"remaining":65`) {
++		t.Fatalf("single after batch: got %d %s", w.Code, w.Body)
++	}
++}
++
++func TestHandlerBatchSpendBadRequests(t *testing.T) {
++	for _, body := range []string{
++		`{`,
++		`{"tenant":"acme","tokens":30}`,
++		`{"tenant":"acme","tokens":[]}`,
++		`{"tenant":"acme"}`,
++		`{"tenant":"acme","tokens":[10,0]}`,
++		`{"tenant":"acme","tokens":[10,-5]}`,
++	} {
++		s := newServer()
++		w := postBatch(s, body)
++		if w.Code != http.StatusBadRequest {
++			t.Errorf("%s: got %d, want 400", body, w.Code)
++		}
++		if r := s.Ledger.Remaining("acme"); r != 100 {
++			t.Errorf("%s: remaining %d after rejected batch, want 100", body, r)
++		}
++	}
++}
++
++func TestHandlerBatchSpendMethod(t *testing.T) {
++	w := httptest.NewRecorder()
++	newServer().ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/v1/spend/batch", nil))
++	if w.Code != http.StatusMethodNotAllowed {
++		t.Fatalf("got %d, want 405", w.Code)
++	}
++}

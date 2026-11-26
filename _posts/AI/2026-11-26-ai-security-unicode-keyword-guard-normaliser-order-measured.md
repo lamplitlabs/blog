@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AI Security: Unicode Tricks vs Keyword Guardrails, Measured"
+title: "AI Security: Unicode Disguises vs a Keyword Guard, Normaliser Order Measured"
 date: 2026-11-26 00:05:00 +0100
 categories: ai
 author: manishtiwari25

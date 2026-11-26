@@ -216,8 +216,16 @@ def corpus_lines():
     lines = []
     for path in sorted(glob.glob("_posts/**/*.md", recursive=True)):
         # Skip the README and the post about this script: it quotes the
-        # disguised payloads on purpose and would count itself.
-        if path.endswith("README.md") or "unicode-obfuscation-keyword-guardrails" in path:
+        # disguised payloads on purpose and would count itself. The post was
+        # first published under the same slug as the 2026-11-25 post (which
+        # this skip also covers), then renamed so the two URLs do not collide.
+        if path.endswith("README.md") or any(
+            s in path
+            for s in (
+                "unicode-obfuscation-keyword-guardrails",
+                "unicode-keyword-guard-normaliser-order",
+            )
+        ):
             continue
         fm = 0
         for ln in open(path, encoding="utf-8"):

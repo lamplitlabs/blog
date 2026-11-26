@@ -1203,6 +1203,28 @@ check_tab_order_unique() {
   echo "tab-order-coverage: all _tabs/*.md 'order:' values are unique (rule: no two tabs share the same front-matter 'order:')"
 }
 
+# Fail when two _posts files share one slug (filename without its YYYY-MM-DD-
+# prefix and .md suffix). Posts are published at /posts/:title/, so both write
+# the same _site/posts/<slug>/index.html and one post silently replaces the
+# other (2026-11-25 and 2026-11-26 "unicode-obfuscation-keyword-guardrails"
+# posts did, SCHED-004 run 40). Jekyll only prints a 'Conflict:' warning for
+# it after the full build; this names both files before the build starts.
+check_post_slug_unique() {
+  local bad
+  bad="$(for f in $_posts; do n="$(basename "$f" .md)"; printf '%s\t%s\n' "${n:11}" "$f"; done |
+    sort -t "$(printf '\t')" -k1,1 -k2,2 | awk -F '\t' '
+      $1 == prev { print "slug " $1 " shared by " prevf " and " $2 }
+      { prev = $1; prevf = $2 }
+    ')"
+  if [[ -n $bad ]]; then
+    echo "error: _posts files that publish to the same /posts/<slug>/ URL were found:" >&2
+    printf '       %s\n' "$bad" >&2
+    echo "       Rename one file (and fix links to it) so each post keeps its own page." >&2
+    exit 1
+  fi
+  echo "post-slug-unique: 0 slugs shared by more than one of $_posts_total posts (rule: filename without YYYY-MM-DD- and .md is unique across _posts)"
+}
+
 # Fail when a `(/posts/<slug>/)` link under a post's "## Related" heading points
 # at a slug no file in _posts produces. Posts are published at /posts/:title/
 # (_config.yml), where :title is the filename with its YYYY-MM-DD- prefix and
@@ -1406,6 +1428,7 @@ main() {
   check_date_match
   check_future_backlog
   check_tab_order_unique
+  check_post_slug_unique
   report_image_coverage
   report_image_link_coverage
   check_header_aspect_ratio
@@ -1449,15 +1472,15 @@ main() {
     exit 1
   fi
   # Jekyll also prints "Conflict: The following destination is shared by multiple
-  # files." (exit 0) when two tag or category pages resolve to the same output
-  # path; one page silently overwrites the other and that archive lists only
-  # part of the posts. Fail so the colliding tag/category is fixed before merge.
+  # files." (exit 0) when two pages resolve to the same output path (two tag or
+  # category spellings, or two posts with one slug); one page silently
+  # overwrites the other. Fail so the collision is fixed before merge.
   local _conflicts
   _conflicts="$(sed 's/\x1b\[[0-9;]*m//g' "$_build_log" | grep -c 'Conflict: The following destination is shared by multiple files' || true)"
   if ((_conflicts > 0)); then
-    echo "ERROR: jekyll build emitted $_conflicts 'Conflict:' destination warning(s); one tag/category page silently overwrites another:" >&2
+    echo "ERROR: jekyll build emitted $_conflicts 'Conflict:' destination warning(s); one page (tag, category or post) silently overwrites another:" >&2
     sed 's/\x1b\[[0-9;]*m//g' "$_build_log" | grep -A 3 'Conflict: The following destination' >&2
-    echo "       Use one spelling per tag/category so every archive page lists all its posts." >&2
+    echo "       Use one spelling per tag/category, and one slug per post (rename the newer _posts file), so no page is lost." >&2
     rm -f "$_build_log"
     exit 1
   fi

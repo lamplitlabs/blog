@@ -215,9 +215,12 @@ def flagged(norm, s):
 def corpus_lines():
     lines = []
     for path in sorted(glob.glob("_posts/**/*.md", recursive=True)):
-        # Skip the README and the post about this script: it quotes the
-        # disguised payloads on purpose and would count itself.
-        if path.endswith("README.md") or "unicode-obfuscation-keyword-guardrails" in path:
+        # Skip the README and the posts about Unicode guardrails: they quote the
+        # disguised payloads on purpose and would count themselves.
+        # (The 2026-11-26 post was renamed from ...-unicode-obfuscation-keyword-
+        # guardrails-measured to give it a slug of its own.)
+        if path.endswith("README.md") or "unicode-obfuscation-keyword-guardrails" in path \
+                or "unicode-disguises-keyword-guard" in path:
             continue
         fm = 0
         for ln in open(path, encoding="utf-8"):

@@ -73,7 +73,7 @@ And the gateway side is a thin shim between the agent framework and its tools: i
 
 ## Where Hive fits
 
-We build [Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness, and it puts no egress gate of this kind in front of a job: Hive's [security notes](https://hivefleet.dev/docs/security/) say a job's commands run as your user with the network open, so the controls in this post are ones you add around it. What Hive has is narrower. Its `fetch` tool reads only the hosts the owner lists (none by default), every run stops at its limits on model calls and minutes, every commit is signed with a key made for that run, and every write is recorded in an event log. Autonomous work you cannot audit is not automation; it is delegation without supervision. We wrote about [how Hive improves this very blog]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) last week.
+We build [Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness, and it puts no egress gate of this kind in front of a job: Hive's [security notes](https://hivefleet.dev/docs/security/) say a job's commands run as your user with the network open, so the controls in this post are ones you add around it. What Hive has is narrower. Its `fetch` tool reads only the hosts the owner lists (none by default), every run stops at its limits on model calls and minutes, a job's commits are signed with a key made for that run, and every write is recorded in an event log. Autonomous work you cannot audit is not automation; it is delegation without supervision. We wrote about [how Hive improves this very blog]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) last week.
 
 ## Related posts
 

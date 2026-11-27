@@ -119,7 +119,7 @@ CI runs include the 12 runs on the PR branches. A round is one wait for CI; the 
 - **CI is gofmt, vet and `go test -race` only.** A real pipeline with integration tests or a slower build changes the cost columns, not the red-commit columns.
 - **The merge queue is modelled, not GitHub's.** It follows the documented behaviour (test main plus the entries ahead, remove a failed entry, rebuild the ones behind it). Its timing and retry details are not reproduced.
 
-[Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness ([introduction](/posts/hive-self-improving-rsi-agent-harness/)), runs many agents against the same repositories. It stacks its pull requests for the reason this post gives: the next one is built on the open one, so two open pull requests never hold changes to the same lines that meet for the first time at merge time. The check on the merged result itself is left to the repository's own pipeline.
+[Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness ([introduction](/posts/hive-self-improving-rsi-agent-harness/)), runs many agents against the same repositories. It stacks the pull requests of its tasks and jobs for the reason this post gives: the next one is built on the open one, so their changes do not meet for the first time at merge time. Not every pull request is in the stack (one opened from a conversation targets the default branch whatever else is open), and the check on the merged result itself is left to the repository's own pipeline.
 
 ## Reproduce it
 

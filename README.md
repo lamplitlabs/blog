@@ -194,6 +194,19 @@ included) and prints one summary line per check:
   build with `Could not find post`. The lower-case word is not matched. When
   clean it prints `old-product-name-coverage: 0 lines ... (...)`.
 
+- `product-ad-coverage`: holds the own-product cards (see
+  [Our own ads](#our-own-ads)) to their promise of no tracking. The build
+  **fails** if an entry in `_data/ads.yml` lacks a field, repeats an id, is
+  too long, links anywhere but `https://` on `hivefleet.dev` or
+  `lamplitlabs.com` (subdomains included) or carries a query string, or names
+  a logo that is not a file in this repository; and if a card on a built post
+  page holds a `<script>`, an `<img>`, an `<iframe>` or another active
+  element, an `on*=` handler, a `ping` or `data-track` attribute, more than
+  one link, or anything loaded from another host. It also fails when the
+  cards are enabled and no built post carries one. When clean it prints
+  `product-ad-coverage: <n>/<total> built post pages carry one own-product
+  card (...)`.
+
 - `future-external-links`: runs after the main `htmlproofer` pass, which
   skips external URLs (`--disable-external`) so CI stays fast and immune to
   the back catalogue's link rot. Only the rendered pages of scheduled
@@ -252,6 +265,12 @@ both passes are reported. This way a short edge-host outage is not reported
 as a dead link: on 2026-11-02, `modelcontextprotocol.io` refused connections
 for about 30 s and showed up as `UNREACHABLE` while the page was live.
 
+The watcher also probes every absolute URL in `_data/products.yml` (the list
+at the end of every post) and `_data/ads.yml` (the own-product cards), since
+the post layout prints those into every post: a `tools.lamplitlabs.com` URL
+must be listed in that site's sitemap, any other host is probed like a link
+in a post.
+
 To run the site locally with live reload (optionally in production mode or
 bound to a non-default host, e.g. to reach the dev server from another device
 or a container):
@@ -279,3 +298,42 @@ A post's file name is its address: the URL, and the name other posts use in
 Done on 2026-11-27 for the two posts about Hive, which was called Pulse
 before it shipped.
 
+## Our own ads
+
+Each post shows at most one small card for one of our own products (Hive,
+the Lamplit Labs tools, EDMX Tools, the Azure sites). There is no ad network
+and the cards add no tracking: a card is chosen when the site is built and
+reaches the reader as plain HTML with one link. No script runs for it, nothing
+is loaded from another host, it sets no cookie, it counts no click and its
+link carries no `utm_` tags. `tools/test.sh` (`product-ad-coverage`) fails the
+build if a later edit breaks any of that.
+
+The site's Google Analytics tag is a separate thing and is unchanged
+(`_includes/google-analytics.html`, production builds only). It still records
+page views on every page, and a GA4 property with *Enhanced measurement* on
+also records clicks on links that leave the site, a card's link among them.
+Turn *Outbound clicks* off in the property, or remove the tag, if no click is
+to be counted anywhere.
+
+- **The entries** live in `_data/ads.yml`: `id`, `product`, `title`, `text`,
+  `url`, `cta`, `logo` and an optional `topics` list. The file's header
+  explains every rule.
+- **Which card a post gets.** An entry with `topics` fits a post that carries
+  one of those categories or tags; an entry without `topics` fits every post
+  and is used when no topical entry matches. A post never shows the card of a
+  site its own text already links to. Among the entries that fit, the post's
+  date and title length pick one, so a post keeps its card until the data
+  file changes.
+- **Where it sits.** Between two sections of the article (before the middle
+  `h2`) when the post has four or more sections, after the text otherwise.
+  `placement: end` in the data file puts it after the text on every post.
+- **To turn it off.** `enabled: false` in `_data/ads.yml` for the whole site,
+  `ad: false` in one post's front matter, `active: false` on one entry.
+  `ad: <id>` in a post's front matter picks an entry by hand.
+- **The pieces.** `_includes/product-ad.html` picks and prints the card,
+  `_layouts/post.html` places it, the styles are at the end of
+  `assets/css/jekyll-theme-chirpy.scss`, the logos are in
+  `assets/img/products/`.
+
+The links in `_data/ads.yml` are probed by the external link watcher below,
+with those of `_data/products.yml` (the list at the end of every post).

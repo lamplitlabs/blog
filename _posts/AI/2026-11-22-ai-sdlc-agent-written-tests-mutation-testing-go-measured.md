@@ -129,7 +129,7 @@ On this service, `go test` takes 0.5-1.2 s. gomut takes 13-24 s with 4 parallel 
 - **gomut is small.** It has no string-literal, constant or lock-movement operators. A richer tool would rank suites differently, and part of finding 3 is about the operator set. Still, Stryker and PIT don't ship operators that check SQL text against its parameters either.
 - **The hand-written suite is not a real team's suite.** It was written for the gates post. It is the arm's starting point, not a human baseline to beat.
 
-Pulse, Lamplit Labs' self-improving automation product ([coming soon](/posts/pulse-internal-rsi-tool/)), uses the same pattern for its own work: a measured check decides, not a single score. This post is one more data point for why.
+[Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness ([introduction](/posts/hive-self-improving-rsi-agent-harness/)), uses a related rule for its own work: a suggested change must name a check that fails on the default branch today and passes with the change. This post is one more data point for why.
 
 ## Reproduce it
 
@@ -154,4 +154,4 @@ gomut on its own: `go run ./scripts/agent-tests-mutation/gomut -dir <package dir
 - [AI SDLC: AI Code Review Gates in CI, Measured on a Go Service](/posts/ai-sdlc-ai-code-review-gates-ci-go-measured/): the service and the 26 seeded defects.
 - [AI SDLC: When the Coding Agent Edits the Tests, Six Rules That Gate It](/posts/ai-sdlc-gating-ai-agent-test-changes-test-integrity-rules/): the weak-test defects (D09-D12).
 - [AI SDLC: The Agent-Written Code Review Loop, Measured](/posts/ai-sdlc-agent-code-review-loop-measured/): review as the gate for what tests miss.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/)
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/)

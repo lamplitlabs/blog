@@ -130,9 +130,9 @@ python3 scripts/rag-acl/gen_images.py                                   # the im
 
 The numbers above come from [`scripts/data/rag-acl-enforcement.json`](https://github.com/lamplitlabs/blog/blob/main/scripts/data/rag-acl-enforcement.json). It keeps per-user retrieval counts, every model reply that counted as an answer or a refusal (so each "leak" can be checked by hand), the cache leak examples with the requester's own answer, and the transcript behind the screenshot. Everything is seeded (`--seed 20261125`), and the model runs at temperature 0.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents work across several projects at once, and each project has its own repositories, boards and people who may see them. So the question in this post is one we answer in our own design: the scope comes from who is asking, it goes into the lookup, and it is part of every cache key. It is never only an instruction in a prompt. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents work across several projects at once, and each project has its own repository and board. Hive answers to one owner, so it has no per-person rights to enforce and does not face this question in the same form. What it shares with this post is the mechanism: when an agent asks the board about one project, the project is a filter in the query, not an instruction in a prompt. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.
 
 ## Related posts
 
@@ -141,4 +141,4 @@ Pulse, Lamplit Labs' multi-project self-improving automation product, is coming 
 - [AI Security: Prompt Injection Defenses for Agents That Actually Hold]({% post_url AI/2026-10-29-ai-security-prompt-injection-defenses-agents %})
 - [pgvector vs Qdrant: Vector Search Latency on 1M Embeddings, Measured at p99]({% post_url Performance/2026-10-09-pgvector-vs-qdrant-vector-search-latency %})
 - [Evaluating a RAG Retriever in .NET: Precision@k, Recall@k, MRR and a Golden Set You Can Run in CI]({% post_url AI/2026-09-30-evaluating-rag-retriever-golden-set-dotnet %})
-- [Pulse: Lamplit Labs' multi-project self-improving (RSI) automation product, coming soon]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %})
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %})

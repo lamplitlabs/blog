@@ -186,6 +186,14 @@ included) and prints one summary line per check:
   `today-not-future-coverage: 0 posts dated <today> skipped as 'has a future
   date' by a production (no --future) read (...)`.
 
+- `old-product-name-coverage`: the build **fails** if a post, a tab, a data
+  file, an include or a layout still says `Pulse` (the old name of Hive,
+  <https://hivefleet.dev>) or uses one of the two old post slugs
+  (`pulse-internal-rsi-tool`, `pulse-automation-evolution`). A post written
+  from an older brief would otherwise bring the old name back, or break the
+  build with `Could not find post`. The lower-case word is not matched. When
+  clean it prints `old-product-name-coverage: 0 lines ... (...)`.
+
 - `future-external-links`: runs after the main `htmlproofer` pass, which
   skips external URLs (`--disable-external`) so CI stays fast and immune to
   the back catalogue's link rot. Only the rendered pages of scheduled
@@ -254,3 +262,20 @@ bash tools/run.sh --production       # JEKYLL_ENV=production
 bash tools/run.sh -H 0.0.0.0         # bind to all interfaces (also --host <host>)
 bash tools/run.sh --help             # list all options
 ```
+
+## Renaming a published post
+
+A post's file name is its address: the URL, and the name other posts use in
+`{% post_url %}`. To rename one without breaking either:
+
+1. `git mv` the file and update the links to it in other posts.
+2. Add a forwarding page in `redirects/` (layout `redirect`, `permalink:` the
+   old URL, `redirect_to:` the new one), so old links and search results still
+   arrive. GitHub Pages serves static files only, so the forward is a meta
+   refresh with a canonical link; the old address is left out of the sitemap.
+3. Add a row to `_plugins/post-url-aliases.rb`, so a branch written before
+   the rename still builds instead of stopping with `Could not find post`.
+
+Done on 2026-11-27 for the two posts about Hive, which was called Pulse
+before it shipped.
+

@@ -1395,6 +1395,32 @@ check_raw_markdown_links() {
   echo "raw-markdown-link-coverage: $count lines across $pages built post pages show '](/posts/' outside <pre>/<code> (rule: any >0 fails)"
 }
 
+# The product these posts used to call "Pulse" (coming soon) shipped as Hive,
+# https://hivefleet.dev, and on 2026-11-27 every mention was renamed: 162 in 45
+# files (157 of them in 41 posts), the two posts about it included (their old
+# URLs forward from /redirects/). A post written from an older brief would bring the old name
+# back, or link to a post file that no longer exists, which breaks the build
+# with "Could not find post". Fail when the capitalised name or one of the two
+# old post slugs appears in a post, a tab, a data file, an include or a layout.
+# The lower-case word (a pulse of traffic) is not matched. _plugins/ and
+# /redirects/ are left out on purpose: they hold the old names so that old
+# links and old branches keep working (post-url-aliases.rb, the two
+# forwarding pages).
+check_old_product_name() {
+  local hits count
+  hits="$(grep -rnE '(^|[^A-Za-z])Pulse([^A-Za-z]|$)|pulse-internal-rsi-tool|pulse-automation-evolution' \
+    _posts _data _tabs _includes _layouts 2>/dev/null || true)"
+  count="$(printf '%s\n' "$hits" | grep -c . || true)"
+  if ((count > 0)); then
+    echo "error: $count line(s) still use the old product name 'Pulse' or an old post slug:" >&2
+    printf '%s\n' "$hits" | cut -c1-200 | head -20 | sed 's/^/       /' >&2
+    echo "       The product is Hive (https://hivefleet.dev), open source and available now, not 'coming soon'." >&2
+    echo "       Its posts are AI/2026-10-25-hive-self-improving-rsi-agent-harness and AI/2026-10-12-hive-automation-evolution." >&2
+    exit 1
+  fi
+  echo "old-product-name-coverage: 0 lines in _posts, _data, _tabs, _includes and _layouts say 'Pulse' or use an old pulse-* post slug (rule: the product is Hive, https://hivefleet.dev; any >0 fails)"
+}
+
 main() {
   preflight
   collect_posts
@@ -1416,6 +1442,7 @@ main() {
   check_related_link_resolution
   check_forward_links
   check_today_not_future
+  check_old_product_name
 
   # clean up
   if [[ -d $SITE_DIR ]]; then

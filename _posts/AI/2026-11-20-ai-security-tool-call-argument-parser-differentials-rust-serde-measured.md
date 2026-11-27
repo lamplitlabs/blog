@@ -192,6 +192,6 @@ python3 scripts/tool-args-differential/gen_images.py /tmp/tool-args-work
 - [Rust Error Handling: thiserror vs anyhow, Measured]({% post_url Languages/2026-11-06-rust-error-handling-thiserror-vs-anyhow-measured %}): the same measuring style, applied to the errors serde returns here.
 - If you write tool schemas by hand, the [Function Call Schema Builder]({% post_url AI/2026-10-12-function-call-schema-builder-tool-definitions-without-hand-written-json %}) generates them, and a schema with `additionalProperties: false` is the schema-side twin of `deny_unknown_fields`.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. It runs coding agents for long stretches without a person watching, and every one of their tool calls passes through a gate like the ones measured here. That is why we test the gate and the executor as a pair instead of trusting either one. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. It runs coding agents for long stretches without a person watching, and every tool call passes its deny rules and hooks before it runs, so it has a gate and an executor in the sense of this post. The result here is the reason to test the two as a pair instead of trusting either one. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

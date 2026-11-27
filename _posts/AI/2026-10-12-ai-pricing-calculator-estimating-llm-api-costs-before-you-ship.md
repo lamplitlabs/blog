@@ -49,5 +49,5 @@ The prices are published list prices and are marked as approximate; they change,
 ## Related
 
 - [The Real Cost of AI Automation]({% post_url AI/2026-10-09-real-cost-of-ai-automation %})
-- [Pulse and the Automation Evolution]({% post_url AI/2026-10-12-pulse-automation-evolution %})
+- [Hive and the Automation Evolution]({% post_url AI/2026-10-12-hive-automation-evolution %})
 - [Enterprise AI: Azure OpenAI Data Residency and Compliance Checklist]({% post_url AI/2026-10-12-enterprise-ai-azure-openai-data-residency-compliance-checklist %})

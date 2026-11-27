@@ -100,9 +100,9 @@ python3 scripts/finetune-replay/summarise.py work
 python3 scripts/finetune-replay/gen_post_images.py --work work
 ```
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. This post is the kind of experiment it is built to run without supervision: change one variable, hold the budget fixed, score against data the change cannot see, and repeat the run before believing a small difference. The 5.5-point swing from block order alone is why a single run should not promote a change. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its self-improvement loop follows the rules of this experiment, for code instead of weights: a suggestion changes one variable, it is scored against private tests kept outside every repository, and a gain is measured a second time before it counts. The 5.5-point swing from block order alone is why a single run should not promote a change. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.
 
 ## Related posts
 

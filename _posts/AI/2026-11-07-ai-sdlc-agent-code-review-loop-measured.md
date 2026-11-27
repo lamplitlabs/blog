@@ -111,7 +111,7 @@ One review, fix and re-review cycle on a defective PR took about 90 s of agent t
 5. **Flag a PR whose description changed during the loop.** If PR.md (or the PR body) was rewritten, the person merging should see the old and new purpose side by side.
 6. **Let authors decline, and keep the reasons.** Declines with evidence were right 4 of 4 times. A loop that forces the author to comply with every blocking comment would have made four correct PRs worse.
 
-*We run review loops like this on the agent PRs behind Lamplit Labs' products. Scoring each change against checks it cannot edit before it lands is also the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We run review loops like this on the agent PRs behind Lamplit Labs' products. Scoring a change against tests kept outside the repository is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Limits
 
@@ -142,4 +142,4 @@ python3 scripts/ai-review-loop/gen_images.py                            # the fo
 - [AI SDLC: A Code-Review Agent Workflow That Reviewers Actually Trust](/posts/ai-sdlc-code-review-agent-workflow/): where review-agent findings go in a human review.
 - [AI SDLC: When the Coding Agent Edits the Tests, Six Rules That Gate It](/posts/ai-sdlc-gating-ai-agent-test-changes-test-integrity-rules/): the weakened tests on PR-02 and PR-08.
 - [AI SDLC: Spec to PR With Coding Agents, Measured](/posts/ai-sdlc-spec-to-pr-agents-what-to-gate/): the step before the review loop.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

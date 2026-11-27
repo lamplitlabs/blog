@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AI Security: Unicode Tricks vs Keyword Guardrails, Measured"
+title: "AI Security: Unicode Tricks vs Keyword Guardrails, Seven Filters Measured"
 date: 2026-11-25 00:00:00 +0100
 categories: ai
 author: manishtiwari25

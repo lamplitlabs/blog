@@ -112,9 +112,9 @@ python3 scripts/prompt-cache-timing/gen_images.py          # the images in this 
 
 Every number above comes from [`scripts/data/prompt-cache-timing-leaks.json`](https://github.com/lamplitlabs/blog/blob/main/scripts/data/prompt-cache-timing-leaks.json). It keeps every hit and miss latency, each secret's recovered digits next to the true ones, and the per-digit log behind the screenshot. The run is seeded (`--seed 20261126`). Timings move by 10-20% with host load, but the gaps are 6x to 16x, so the conclusions do not.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. It runs many agents for many projects against shared model servers, so "which tenant is this prefix for" is a question it has to answer for every request. The answer is the same as in this post: the tenant scope goes into the cache key, not into a hope that no one measures the latency. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. It runs agents on the owner's own machine, and they call whichever model provider or local model server the owner chooses. When several projects point at one local llama.cpp, Ollama or vLLM server, their requests share that server's prompt cache, which is exactly the setup this post measures. The fix measured above applies there too: a per-project salt at the start of the prompt, rather than a hope that nobody times the responses. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.
 
 ## Related posts
 
@@ -123,4 +123,4 @@ Pulse, Lamplit Labs' multi-project self-improving automation product, is coming 
 - [Enterprise AI: Token Budgets That Hold Under Concurrency - Measured on an LLM Gateway]({% post_url AI/2026-11-07-enterprise-ai-token-budgets-concurrency-measured %})
 - [Enterprise AI: Audit Logging and Policy Controls for an LLM Gateway]({% post_url AI/2026-10-23-enterprise-ai-llm-gateway-audit-logging-policy-controls %})
 - [AI Security: Secrets in Agent Logs, Measured - What gitleaks and Redaction Actually Catch]({% post_url AI/2026-11-02-ai-security-secrets-in-agent-logs-measured %})
-- [Pulse: Lamplit Labs' multi-project self-improving (RSI) automation product, coming soon]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %})
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %})

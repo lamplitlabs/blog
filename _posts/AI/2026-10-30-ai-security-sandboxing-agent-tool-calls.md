@@ -98,13 +98,13 @@ Two things to notice. First, `deny_all_others: true` - egress is opt-in per dest
 4. **Add output scanning** for the two or three secret classes you actually hold.
 5. **Log every decision** and verify you can answer "which sandbox saw which file at 03:12 on Tuesday?" before you need to.
 
-## Where Pulse fits
+## Where Hive fits
 
-We are building Pulse, Lamplit Labs' multi-project self-improving automation product, and its agents run under exactly this discipline: every tool call is classified, sandboxed, and scanned before the result re-enters the conversation, and every decision lands in a signed audit log. Autonomous agents that can reach your secrets are not automation; they are an incident report with a scheduler. Pulse is coming soon - if agent governance is on your 2027 roadmap, that is the problem we are building it to solve. We wrote about [how Pulse improves this very blog]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) last week.
+We build [Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness, and it does not sandbox a job. Its [security notes](https://hivefleet.dev/docs/security/) say so plainly: a job runs as your user, with no container and no operating-system sandbox around it, and the deny rules on its shell tool catch a mistake and are not a barrier. The one sandbox it has is lockdown, for a conversation, which the operating system enforces on macOS. So the advice in this post applies to anyone who runs Hive, and Hive's own advice is the same: treat a repository you point it at like code you would run yourself. We wrote about [how Hive improves this very blog]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) last week.
 
 ## Related posts
 
 - [AI Security: Prompt Injection Defenses That Actually Work for Coding Agents]({% post_url AI/2026-10-29-ai-security-prompt-injection-defenses-agents %})
 - [AI Security: LLM Data Exfiltration via Agent Tool Egress]({% post_url AI/2026-10-27-ai-security-llm-data-exfiltration-agent-tool-egress %})
 - [AI Security: Map Your Model Supply Chain Attack Surface Before Someone Else Does]({% post_url AI/2026-10-25-ai-security-model-supply-chain-attack-surface %})
-- [Inside Pulse: The Self-Improving RSI Tool We Use to Improve This Blog]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %})
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %})

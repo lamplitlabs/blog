@@ -229,7 +229,7 @@ The log generator is seeded, so you get the same one million lines and the same 
 - **The profiler finds the suspect, and an unprofiled run convicts it.** FxHash looked like an obvious win and lost 6%.
 - **Stop when the flame graph is flat.** When the widest box is your core loop with nothing above it, local tuning is done.
 
-*We use this profile → change one thing → re-measure loop on the Rust services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We use this profile → change one thing → re-measure loop on the Rust services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Related reading
 
@@ -240,4 +240,4 @@ The log generator is seeded, so you get the same one million lines and the same 
 - [Rust mimalloc vs glibc malloc](/posts/rust-mimalloc-vs-glibc-malloc/): for when the allocations cannot be removed.
 - [Rust Release Profiles: LTO, codegen-units and target-cpu](/posts/rust-lto-codegen-units-release-profile/): build settings to try once the code is right.
 - [Profiling an ASP.NET Core endpoint with dotnet-trace and dotnet-counters](/posts/profiling-aspnet-core-endpoint-dotnet-trace-counters/): the same workflow in .NET.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

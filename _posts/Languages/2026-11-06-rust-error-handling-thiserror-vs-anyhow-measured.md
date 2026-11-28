@@ -179,7 +179,7 @@ thiserror is a proc macro, so the first build compiles `syn`, `quote` and `proc-
 - **Set `RUST_LIB_BACKTRACE=0` next to `RUST_BACKTRACE=1`** in any service where an error is an expected outcome rather than a bug.
 - **Do not move an expected, high-rate failure into anyhow** because it is shorter to write. Parse errors, validation failures and "not found" belong in a typed error that never captures a stack. In this benchmark the crate choice only mattered once errors were common: 6% at 25% bad lines, 32% when every line failed, and 2.6x at 5% the moment a backtrace was captured.
 
-*We follow this split (typed errors inside, anyhow at the edges) in the Rust services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We follow this split (typed errors inside, anyhow at the edges) in the Rust services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Reproduce it
 
@@ -198,4 +198,4 @@ python3 scripts/gen_rust_error_handling_images.py /tmp/errbench-work
 - [Rust Profiling Practical Guide: sample, Flame Graphs and a Counting Allocator](/posts/rust-profiling-practical-guide-sample-flamegraph/): the counting allocator used for the allocation table above.
 - [Rust Ownership for .NET Developers](/posts/rust-ownership-for-dotnet-developers/): why `String` vs `&str` fields in an error type change what it costs to build.
 - [Rust vs Go for a CLI Tool](/posts/rust-vs-go-cli-tool/): where anyhow-style error handling usually ends up.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

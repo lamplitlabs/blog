@@ -80,6 +80,6 @@ python3.13 scripts/unicode-injection-filter/bench.py
 
 The JSON keeps the per-technique catch rates, the false-positive strings and the per-layer timings. Python 3.9's `unicodedata` (Unicode 13.0) gives the same catch rates. The numbers above are from Python 3.13.5 with Unicode 15.1.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents read issue threads, CI logs and web pages all day, so they run into this kind of text all the time. Measurements like this one decide which filters we keep, and they remind us that a filter is never the only control.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents read issue threads, CI logs and web pages all day, so they run into this kind of text all the time. Hive does not make a filter the control: its [security notes](https://hivefleet.dev/docs/security/) name its rules, the review of every pull request, the event log and the kill switch, and say none of them is a sandbox.

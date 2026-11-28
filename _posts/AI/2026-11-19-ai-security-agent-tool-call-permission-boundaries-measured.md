@@ -145,9 +145,9 @@ python3 scripts/tool-boundaries/gen_images.py --work /tmp/tool-boundaries
 
 The first command builds the fixture under `--work`. It runs the 27 attacks and the 28 tasks five times under each boundary, each on a fresh copy, and writes the results to `scripts/data/agent-tool-boundaries.json`, with one transcript per attack cell under `--work/capture/`. Nothing outside `--work` is read or written. The fake home, its secrets and both servers are local to the run. A run took about 1.5 minutes. The canaries are seeded (20261119), so the result is the same on every run, and only the timings vary with host load. The second command draws every figure in this post from that JSON and those transcripts.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents write code and run builds and tests in many repositories, so every one of them holds a `run_command` tool in the sense of this post. That is why we measure boundaries by the system call they stop, not by the command text they inspect.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents write code and run builds and tests in many repositories, so every one of them holds a `run_command` tool in the sense of this post. Hive's [security notes](https://hivefleet.dev/docs/security/) draw the same line this post does: its deny rules match the text of a command, so they catch a mistake and are not a barrier, and only lockdown, which the operating system enforces on macOS for a conversation, takes the network and outside writes away.
 
 ## Related posts
 
@@ -156,4 +156,4 @@ Pulse, Lamplit Labs' multi-project self-improving automation product, is coming 
 - [AI Security: Agent Tool-Egress and Data-Exfiltration Controls That Actually Hold]({% post_url AI/2026-10-27-ai-security-llm-data-exfiltration-agent-tool-egress %})
 - [AI Security: Secrets in Agent Logs, Measured]({% post_url AI/2026-11-02-ai-security-secrets-in-agent-logs-measured %})
 - [AI Security: Hidden Prompt Injection vs Agent Page Readers, Measured]({% post_url AI/2026-11-04-ai-security-hidden-prompt-injection-agent-page-readers-measured %})
-- [Pulse: Lamplit Labs' multi-project self-improving (RSI) automation product, coming soon]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %})
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %})

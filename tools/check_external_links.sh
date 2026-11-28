@@ -3,11 +3,12 @@
 # connection refused, timeout, or a 4xx/5xx status). tools/test.sh runs
 # htmlproofer with --disable-external, so these links are never checked by
 # the project's own build/test; a dead reference link degrades a reader's
-# experience but passes CI silently today. It also verifies every
-# tools.lamplitlabs.com URL in _data/products.yml - the data file behind
-# the cross-sell block _includes/related-products.html renders into every
-# post footer - against the live tools sitemap, so a renamed or removed
-# tool page is flagged before CI ships a dead link site-wide. This script
+# experience but passes CI silently today. It also verifies every absolute
+# URL in _data/products.yml and _data/ads.yml - the data files behind the
+# cross-sell block and the own-product card the post layout renders into
+# every post - so a renamed or removed product page is flagged before CI
+# ships a dead link site-wide (tools.lamplitlabs.com URLs against the live
+# tools sitemap, other hosts by HTTP status). This script
 # is read-only and prints only when it finds a problem, so it is safe to
 # run on a schedule.
 #
@@ -178,42 +179,72 @@ if [ -n "$deferred" ]; then
   done <<< "$deferred"
 fi
 
-# Cross-sell data file: _layouts/post.html renders _data/products.yml into
-# every post footer via _includes/related-products.html, but the URL scan
-# above only reads _posts' markdown, so a renamed or removed tool page
-# would be linked site-wide with nothing flagging it. Check each absolute
-# tools.lamplitlabs.com URL from that file against the live sitemap; the
-# internal "Pulse" entry uses a root-relative /categories/lamplit-tools/
-# link, which htmlproofer already validates during tools/test.sh.
-products_urls="$(awk '$1 == "url:" && $2 ~ /^https?:/ { print $2 }' \
-  _data/products.yml 2>/dev/null | sort -u)"
+# Data files rendered into every post: _data/products.yml (the cross-sell
+# block at the end of a post, _includes/related-products.html) and
+# _data/ads.yml (the card for one of our own products inside the article,
+# _includes/product-ad.html). The URL scan above only reads _posts' markdown,
+# so a renamed or removed product page would be linked site-wide with nothing
+# flagging it. Each absolute URL in the two files is checked: a
+# tools.lamplitlabs.com URL against the live tools sitemap (the app answers
+# 404 to curl for every client-side route), any other host (hivefleet.dev,
+# edmx.lamplitlabs.com, ...) by its HTTP status like a link in a post.
+# Root-relative entries (links to pages of this blog) are validated by
+# htmlproofer during tools/test.sh.
+data_urls="$(awk '$1 == "url:" && $2 ~ /^https?:/ { print $2 }' \
+  _data/products.yml _data/ads.yml 2>/dev/null | sort -u)"
 products_count=0
-[ -n "$products_urls" ] && products_count=$(echo "$products_urls" | wc -l | tr -d ' ')
+[ -n "$data_urls" ] && products_count=$(echo "$data_urls" | wc -l | tr -d ' ')
 
-if [ -n "$products_urls" ]; then
+if [ -n "$data_urls" ]; then
   data_problems=0
+  data_deferred=""
   while IFS= read -r url; do
     [ -z "$url" ] && continue
     case "$url" in
-      https://tools.lamplitlabs.com/*) ;;
-      *) continue ;;
+      https://tools.lamplitlabs.com/*)
+        if ! listed_in_sitemap "$url"; then
+          echo "NOT IN TOOLS SITEMAP  $url  (linked from _data/products.yml or _data/ads.yml, rendered into every post)"
+          problems=$((problems + 1))
+          data_problems=$((data_problems + 1))
+        fi
+        ;;
+      *)
+        code="$(probe "$url")"
+        if transient "$code"; then
+          data_deferred="$data_deferred$url"$'\n'
+          continue
+        fi
+        if report "$url" "$code"; then
+          problems=$((problems + 1))
+          data_problems=$((data_problems + 1))
+        fi
+        ;;
     esac
-    if ! listed_in_sitemap "$url"; then
-      echo "NOT IN TOOLS SITEMAP  $url  (linked from _data/products.yml, rendered into every post footer)"
-      problems=$((problems + 1))
-      data_problems=$((data_problems + 1))
-    fi
-  done <<< "$products_urls"
+  done <<< "$data_urls"
+
+  # Same second pass as for the posts' links: an edge host that dropped the
+  # connection gets RECHECK_DELAY seconds before it is reported.
+  if [ -n "$data_deferred" ]; then
+    sleep "$RECHECK_DELAY"
+    while IFS= read -r url; do
+      [ -z "$url" ] && continue
+      code="$(probe "$url")"
+      if report "$url" "$code"; then
+        problems=$((problems + 1))
+        data_problems=$((data_problems + 1))
+      fi
+    done <<< "$data_deferred"
+  fi
 
   if ((data_problems > 0)); then
     echo "---"
-    echo "$data_problems of $products_count _data/products.yml URLs are missing from the live tools.lamplitlabs.com sitemap - the cross-sell block renders them into every post footer."
+    echo "$data_problems of $products_count URLs in _data/products.yml and _data/ads.yml look broken - the post layout renders them into every post."
   fi
 fi
 
 if ((problems > 0)); then
   echo "---"
-  echo "$problems of $(( $(echo "$urls" | wc -l | tr -d ' ') + products_count )) external links (posts + _data/products.yml) look broken (tools/test.sh does not check these: htmlproofer runs with --disable-external)."
+  echo "$problems of $(( $(echo "$urls" | wc -l | tr -d ' ') + products_count )) external links (posts + _data/products.yml + _data/ads.yml) look broken (tools/test.sh does not check these: htmlproofer runs with --disable-external)."
 fi
 
 exit 0

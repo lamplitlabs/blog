@@ -71,13 +71,13 @@ And the gateway side is a thin shim between the agent framework and its tools: i
 4. **Set budgets** an order of magnitude above observed usage, and alert on the crossing, not the breach.
 5. **Log every decision** with a payload hash. Verify you can answer "show me everything agent X sent to host Y in March" before you need to.
 
-## Where Pulse fits
+## Where Hive fits
 
-We are building Pulse, Lamplit Labs' multi-project self-improving automation product, and the agents it runs operate under exactly this model: every tool call they make passes through an egress policy gate, runs inside a budget, and lands in a signed audit log. Autonomous work you cannot audit is not automation; it is delegation without supervision. Pulse is coming soon - if agent governance is on your 2027 roadmap, that is the problem we are building it to solve. We wrote about [how Pulse improves this very blog]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) last week.
+We build [Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness, and it puts no egress gate of this kind in front of a job: Hive's [security notes](https://hivefleet.dev/docs/security/) say a job's commands run as your user with the network open, so the controls in this post are ones you add around it. What Hive has is narrower. Its `fetch` tool reads only the hosts the owner lists (none by default), every run stops at its limits on model calls and minutes, a job's commits are signed with a key made for that run, and every write is recorded in an event log. Autonomous work you cannot audit is not automation; it is delegation without supervision. We wrote about [how Hive improves this very blog]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) last week.
 
 ## Related posts
 
 - [AI Security: Map Your Model Supply Chain Attack Surface Before Someone Else Does]({% post_url AI/2026-10-25-ai-security-model-supply-chain-attack-surface %})
-- [Inside Pulse: The Self-Improving RSI Tool We Use to Improve This Blog]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %})
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %})
 - [Fine-Tuning Pipelines Need Regression Gates, Not Just Evals]({% post_url AI/2026-10-25-fine-tuning-pipeline-regression-gates %})
 - [AI SDLC for .NET Teams: a phase-by-phase guide]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})

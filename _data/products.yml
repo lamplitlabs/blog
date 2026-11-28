@@ -1,7 +1,11 @@
 # Products and sites shown in the cross-sell block at the end of every post
-# (_includes/related-products.html). Keep descriptions short; Pulse is listed
-# as a coming-soon product under `internal` (rendered after the featured list).
+# (_includes/related-products.html). Keep descriptions short. `featured` holds
+# links to our other sites; `internal` holds links to pages of this blog and is
+# rendered after the featured list.
 featured:
+  - title: "Hive: the open-source agent harness that improves your projects"
+    url: https://hivefleet.dev/
+    blurb: Our harness for coding agents on your own machine, with automations, a self-improvement (RSI) loop and an AI-native SDLC.
   - title: "New: Go pprof alloc_space - 2.87 GB of garbage from one += in a loop"
     url: /posts/go-pprof-alloc-space-escape-analysis/
     blurb: Our latest walkthrough with terminal screenshots - trace 2.87 GB/s of garbage to one string concat, cut it to 513 kB and CPU by 94%.
@@ -27,6 +31,6 @@ featured:
     url: https://tools.lamplitlabs.com/
     blurb: The full set of free browser tools we ship and maintain.
 internal:
-  - title: Pulse (coming soon)
-    url: /categories/lamplit-tools/
-    blurb: Our multi-project self-improving (RSI) automation product. Coming soon - this blog is its proving ground, and we write about how it works.
+  - title: How Hive works, and how it runs this blog
+    url: /posts/hive-self-improving-rsi-agent-harness/
+    blurb: The loop behind Hive (plan, work, verify, review, learn) and the fence around it.

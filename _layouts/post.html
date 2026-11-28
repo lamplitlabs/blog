@@ -119,8 +119,30 @@ script_includes:
     </dialog>
   {% endif %}
 
+  {%- comment -%}
+    One card for one of our own products (_data/ads.yml), printed between two
+    sections of the article: before the middle h2 when the post has four or
+    more sections, after the text otherwise (or always after the text with
+    `placement: end` in the data file). Nothing is printed when the cards are
+    off or no entry fits the post.
+  {%- endcomment -%}
+  {%- capture _product_ad -%}{% include product-ad.html content=content %}{%- endcapture -%}
+  {%- assign _product_ad = _product_ad | strip -%}
+  {%- assign _sections = content | split: '<h2' -%}
   <div class="content">
-    {{ content }}
+    {%- if _product_ad != '' and _sections.size > 4 and site.data.ads.placement != 'end' -%}
+      {%- assign _ad_before = _sections.size | divided_by: 2 -%}
+      {%- for _section in _sections -%}
+        {%- unless forloop.first -%}
+          {%- if forloop.index0 == _ad_before -%}{{ _product_ad }}{%- endif -%}
+          <h2
+        {%- endunless -%}
+        {{- _section -}}
+      {%- endfor -%}
+    {%- else -%}
+      {{ content }}
+      {{ _product_ad }}
+    {%- endif -%}
   </div>
 
   {% include related-products.html %}

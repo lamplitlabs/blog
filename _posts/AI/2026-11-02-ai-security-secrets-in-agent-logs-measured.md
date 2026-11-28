@@ -204,6 +204,6 @@ The first command writes `scripts/data/agent-log-secret-leaks.json` (counts only
 
 Token counts depend on the tokenizer, but any BPE vocabulary breaks a random credential into short pieces. To estimate how many tokens a string costs for GPT-4o, Claude, Gemini or Llama before you send it, use the [Token Counter]({% post_url AI/2026-10-12-token-counter-checking-prompt-size-and-context-window-fit %}).
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. It runs agents for long stretches without a person watching, and their transcripts are exactly the kind of log measured here. That is why we measure our own defences instead of trusting a scanner's defaults. If you are about to give agents longer leashes, measure what your logs keep before you widen access to them. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. It runs agents for long stretches without a person watching, and their transcripts are exactly the kind of log measured here. Hive keeps each run's transcript on your own machine, for 14 days by default, so the advice here applies to it as much as to any other log. If you are about to give agents longer leashes, measure what your logs keep before you widen access to them. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

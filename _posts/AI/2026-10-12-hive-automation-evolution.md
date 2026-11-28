@@ -1,19 +1,23 @@
 ---
 layout: post
-title: "Pulse and the Automation Evolution: Why We Did Not Skip Straight to 'AI Does Everything'"
+title: "Hive and the Automation Evolution: Why We Did Not Skip Straight to 'AI Does Everything'"
 date: 2026-10-12 01:30:00 +0200
+last_modified_at: 2026-11-27 07:00:00 +0000
 categories: ai lamplit-tools
 tags: ai sdlc automation agents governance devops testing
 author: manishtiwari25
-description: "How Pulse fits the manual to API to AI progression: what it automates for this blog today, where humans still approve, and how to pace AI adoption."
+description: "How Hive fits the manual to API to AI progression: what it automates for this blog today, where humans still approve, and how to pace AI adoption."
 image:
-  path: /assets/img/headers/ai/pulse-automation-evolution.webp
+  path: /assets/img/headers/ai/hive-automation-evolution.webp
   alt: "Four-stage flow card: manual (human writes, checks, merges), scripts and API (tools/test.sh, html-proofer, GitHub Pages), AI agents (draft in throwaway clones, signed commits), and a human gate (review branch, owner-only files, Tier 2 stops)"
 ---
 
-Every "AI will run your company" demo skips two stages. In the [post about how this blog is built]({% post_url AI/2026-10-09-our-blog-pipeline-ai-assisted-publishing %}) I described the agent loop that drafts posts like this one. What I did not say is that the loop only works because we walked the usual automation path first: manual, then scripts and APIs, then AI, with a human still holding the merge button. This post is about that pacing, using Pulse, the small runner that hands jobs to agents on this repo, as the worked example.
+Every "AI will run your company" demo skips two stages. In the [post about how this blog is built]({% post_url AI/2026-10-09-our-blog-pipeline-ai-assisted-publishing %}) I described the agent loop that drafts posts like this one. What I did not say is that the loop only works because we walked the usual automation path first: manual, then scripts and APIs, then AI, with a human still holding the merge button. This post is about that pacing, using [Hive](https://hivefleet.dev/), the runner that hands jobs to agents on this repo, as the worked example.
 
-![Table of Pulse steps with who does them and the gate: propose change (suggestion card, agents vote), pick next job (vote-ordered queue), draft content (agent in a throwaway clone, Tier 0/1 only), verify (tools/test.sh plus html-proofer), commit (signed with the run's key), decide and merge (a human reads the diff), policy files (owner-only)](/assets/img/posts/ai/pulse-automation-evolution-gates-table.webp){: width="1200" height="620" }
+> Update, November 2026: Hive is now open source and available at [hivefleet.dev](https://hivefleet.dev/). One step has moved since this was written. A review agent now reads every pull request and merges the changes agents may decide on; decisions, policy files and anything the rules hand over still wait for a person. The stages and the pacing argument below are unchanged.
+{: .prompt-info }
+
+![Table of Hive steps with who does them and the gate: propose change (suggestion card, agents vote), pick next job (vote-ordered queue), draft content (agent in a throwaway clone, Tier 0/1 only), verify (tools/test.sh plus html-proofer), commit (signed with the run's key), decide and merge (a human reads the diff), policy files (owner-only)](/assets/img/posts/ai/hive-automation-evolution-gates-table.webp){: width="1200" height="620" }
 
 ## Stage 1: manual, and why it had to come first
 
@@ -37,12 +41,12 @@ This is the stage most enterprises undervalue. It is boring: a shell script, a f
 
 ## Stage 3: AI agents, inside the fence the first two stages built
 
-Pulse came after the checks, not instead of them. What it automates today, as it is used on this repo:
+Hive came after the checks, not instead of them. What it automates today, as it is used on this repo:
 
 - **Proposing work.** A suggestion is one card: one file, one variable, a hypothesis about what readers get, and the check that should move. Agents and humans both file them.
 - **Ordering work.** Other agents vote the card up or down with a reason. Votes order the queue and reach quorum only when distinct agents cast them. A vote never approves anything.
 - **Drafting.** The winning card becomes a job. The agent gets a throwaway clone with the pinned Ruby and the exact gem set already installed, writes the post and its images, and runs `mise exec -- bash tools/test.sh` until it is green.
-- **Committing.** The agent commits with its own key and trailers naming the job and run. It cannot push, cannot add remotes, cannot install packages and cannot change a lockfile. The runner copies the commit to a `pulse/<agent>/<job>` branch and refuses anything not signed with that run's key.
+- **Committing.** The agent commits with its own key and trailers naming the job and run. It cannot push, cannot add remotes, cannot install packages and cannot change a lockfile. The runner copies the commit to a `hive/<agent>/<job>` branch and refuses anything not signed with that run's key.
 - **Reporting.** The agent ends with a one-line summary, findings the next agent would otherwise rediscover, and suggestions that become new cards. Nobody reads the chat; the report and the branch are the output.
 
 That is a real amount of automation. The Related-post lists across the Performance series, the image and description backfill across the archive and most of the recent AI SDLC posts came out of this loop.
@@ -76,4 +80,4 @@ The other tools we ship at Lamplit Labs follow the same shape: the [EDMX Trimmer
 - [AI SDLC for .NET Teams: a phase-by-phase guide]({% post_url AI/2026-10-03-ai-sdlc-dotnet-teams %})
 - [AI SDLC: gating AI coding agent pull requests before merge]({% post_url AI/2026-10-12-ai-sdlc-gating-ai-coding-agent-pull-requests-before-merge %})
 - [AI SDLC: coding agents in the dev lifecycle and their handoff points]({% post_url AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points %})
-- {% include series-link.html post="AI/2026-10-12-automation-evolution-manual-api-ai" title="Enterprise AI: The Automation Evolution Enterprises Skip - Manual Process to API Integration to AI-Assisted Automation" note=" - the enterprise-side view of the same manual-to-API-to-AI ladder that Pulse climbs for this blog." %}
+- {% include series-link.html post="AI/2026-10-12-automation-evolution-manual-api-ai" title="Enterprise AI: The Automation Evolution Enterprises Skip - Manual Process to API Integration to AI-Assisted Automation" note=" - the enterprise-side view of the same manual-to-API-to-AI ladder that Hive climbs for this blog." %}

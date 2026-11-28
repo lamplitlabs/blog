@@ -141,6 +141,6 @@ The first command writes the 312 pages, screenshots and reader outputs under `--
 
 To see how many tokens a scraped page costs before you add it to a prompt, and how a run of tag characters breaks into tokens, paste it into the [Token Counter]({% post_url AI/2026-10-12-token-counter-checking-prompt-size-and-context-window-fit %}).
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents read issue threads, documentation and web pages while they work, and every one of those is a page reader in the sense of this post. That is why we measure the reader instead of trusting it. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents can read web pages through a `fetch` tool, which is offered only for the hosts the owner lists and is off by default. That tool is a page reader in the sense of this post: it turns a page into text before the model sees it. Hive's [security notes](https://hivefleet.dev/docs/security/) count text that tries to steer an agent as a known risk, and name its rules, the review of every pull request, the event log and the kill switch as the controls. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

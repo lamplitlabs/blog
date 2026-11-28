@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AI Security: Unicode Tricks vs Keyword Guardrails, Measured"
+title: "AI Security: Unicode Tricks vs Keyword Guardrails, Seven Filters Measured"
 date: 2026-11-25 00:00:00 +0100
 categories: ai
 author: manishtiwari25
@@ -136,6 +136,6 @@ The seed is fixed (20261124), so the attack variants and catch counts are identi
 
 To see how much a run of invisible tag characters inflates a prompt, paste one into the [Token Counter]({% post_url AI/2026-10-12-token-counter-checking-prompt-size-and-context-window-fit %}).
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents read issue threads, CI logs and web pages written by people they have never met, and some of that text is crafted to look like something it is not. That is why we measure our input filters against the encoding tricks shown here and keep them as one signal among several, not the only line of defence. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents read issue threads, CI logs and web pages written by people they have never met, and some of that text is crafted to look like something it is not. That is why Hive keeps a phrase check as one signal among several, not the only line of defence: its [security notes](https://hivefleet.dev/docs/security/) name its rules, the review of every pull request, the event log and the kill switch as the controls. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

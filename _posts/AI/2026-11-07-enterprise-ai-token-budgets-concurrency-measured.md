@@ -166,7 +166,7 @@ The summarised numbers are in `scripts/data/enterprise-ai-token-budgets.json`. H
 
 To size budgets and `max_tokens` caps before you set them, the [Lamplit Labs token counter](https://tools.lamplitlabs.com/token-counter) shows what your real prompts cost in tokens, and the [AI pricing calculator walkthrough](/posts/ai-pricing-calculator-estimating-llm-api-costs-before-you-ship/) turns that into a monthly figure.
 
-*We run the gateways behind Lamplit Labs' products with reservation-based budgets for this reason. Changing one control at a time and measuring it against a baseline before trusting it is also at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We run the gateways behind Lamplit Labs' products with reservation-based budgets for this reason. Changing one control at a time and measuring it against a baseline before trusting it is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Related posts
 
@@ -174,4 +174,4 @@ To size budgets and `max_tokens` caps before you set them, the [Lamplit Labs tok
 - [Audit logging and policy controls for an LLM gateway](/posts/enterprise-ai-llm-gateway-audit-logging-policy-controls/)
 - [A use-case intake form and three risk tiers](/posts/enterprise-ai-use-case-intake-risk-tiers-governance/)
 - [Continuous batching in llama.cpp, measured](/posts/continuous-batching-llm-serving-llama-cpp-measured/)
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/)
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/)

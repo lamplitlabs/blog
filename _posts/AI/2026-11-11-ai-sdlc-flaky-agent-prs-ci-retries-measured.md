@@ -109,7 +109,7 @@ On a real service the race detector's instrumentation does cost something, usual
 
 Pick the policy you want before an agent finds the retry button. Agents keep pressing it until the build is green, and nothing in a green build tells you whether it was green on the first try.
 
-*We gate the agent PRs behind Lamplit Labs' own products this way, and treating a red-then-green run as a signal rather than noise is part of how **Pulse**, Lamplit Labs' self-improving automation product (coming soon), decides what lands.*
+*We gate the agent PRs behind Lamplit Labs' own products this way. [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness, holds its own agents to the project's check at every commit and again when a run ends, and a run whose check fails delivers nothing.*
 
 ## Limits
 
@@ -135,4 +135,4 @@ python3 scripts/ai-sdlc-flaky-gates/gen_images.py                        # the f
 - [AI SDLC: AI-Assisted Flaky Test Triage for .NET Pipelines](/posts/ai-sdlc-flaky-test-triage/): triage for tests that already exist and went flaky.
 - [AI SDLC: When the Coding Agent Edits the Tests, Six Rules That Gate It](/posts/ai-sdlc-gating-ai-agent-test-changes-test-integrity-rules/): rules for what an agent may do to tests.
 - [Go Context Cancellation for LLM Streaming Agents](/posts/go-context-cancellation-llm-streaming-agents/): deadlines that come from the context, not from a margin.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

@@ -1417,6 +1417,133 @@ check_raw_markdown_links() {
   echo "raw-markdown-link-coverage: $count lines across $pages built post pages show '](/posts/' outside <pre>/<code> (rule: any >0 fails)"
 }
 
+# The product these posts used to call "Pulse" (coming soon) shipped as Hive,
+# https://hivefleet.dev, and on 2026-11-27 every mention was renamed: 162 in 45
+# files (157 of them in 41 posts), the two posts about it included (their old
+# URLs forward from /redirects/). A post written from an older brief would bring the old name
+# back, or link to a post file that no longer exists, which breaks the build
+# with "Could not find post". Fail when the capitalised name or one of the two
+# old post slugs appears in a post, a tab, a data file, an include or a layout.
+# The lower-case word (a pulse of traffic) is not matched. _plugins/ and
+# /redirects/ are left out on purpose: they hold the old names so that old
+# links and old branches keep working (post-url-aliases.rb, the two
+# forwarding pages).
+check_old_product_name() {
+  local hits count
+  hits="$(grep -rnE '(^|[^A-Za-z])Pulse([^A-Za-z]|$)|pulse-internal-rsi-tool|pulse-automation-evolution' \
+    _posts _data _tabs _includes _layouts 2>/dev/null || true)"
+  count="$(printf '%s\n' "$hits" | grep -c . || true)"
+  if ((count > 0)); then
+    echo "error: $count line(s) still use the old product name 'Pulse' or an old post slug:" >&2
+    printf '%s\n' "$hits" | cut -c1-200 | head -20 | sed 's/^/       /' >&2
+    echo "       The product is Hive (https://hivefleet.dev), open source and available now, not 'coming soon'." >&2
+    echo "       Its posts are AI/2026-10-25-hive-self-improving-rsi-agent-harness and AI/2026-10-12-hive-automation-evolution." >&2
+    exit 1
+  fi
+  echo "old-product-name-coverage: 0 lines in _posts, _data, _tabs, _includes and _layouts say 'Pulse' or use an old pulse-* post slug (rule: the product is Hive, https://hivefleet.dev; any >0 fails)"
+}
+
+# Our own ads: _layouts/post.html prints at most one card per post for a
+# Lamplit Labs product, from _data/ads.yml through _includes/product-ad.html.
+# The promise to readers is that a card is plain HTML with one link and
+# nothing else: no script, nothing loaded from another host, no click counter,
+# no tagged link. This check holds the data file and every built post page to
+# that promise, so a later edit cannot turn the card into a tracker unseen:
+#   - data: unique ids; id, product, title, text, url, cta and logo present;
+#     title <= 70 and text <= 220 characters; the url is https on one of our
+#     own hosts (hivefleet.dev, lamplitlabs.com and its subdomains) with no
+#     query string; the logo is a file in this repository.
+#   - built pages: at most one card per page; inside a card no <script>, <img>,
+#     <iframe>, <form> or other active element, no on*= handler, no ping or
+#     data-track attribute, exactly one link, to one of our own hosts with no
+#     query string, and no resource (src=, url()) from another host.
+#   - when the cards are enabled, at least one built post page must carry one
+#     (otherwise the include or the layout broke and nothing would say so).
+check_product_ads() {
+  ruby -e '
+    require "yaml"
+    require "uri"
+    root = ARGV[0]
+    own = ->(h) { h == "hivefleet.dev" || h == "lamplitlabs.com" || h.end_with?(".lamplitlabs.com") }
+    own_link = lambda do |url|
+      u = begin URI.parse(url) rescue nil end
+      !u.nil? && u.scheme == "https" && own.(u.host.to_s) && u.query.nil?
+    end
+    errs = []
+    data = (YAML.safe_load(File.read("_data/ads.yml")) rescue nil)
+    if !data.is_a?(Hash) || !data["ads"].is_a?(Array)
+      errs << "_data/ads.yml: expected `enabled:` and a list under `ads:`"
+      data = { "ads" => [] }
+    end
+    ads = data["ads"]
+    unless [nil, "middle", "end"].include?(data["placement"])
+      errs << "_data/ads.yml: placement is #{data["placement"].inspect} (middle or end)"
+    end
+    ids = ads.map { |a| a["id"].to_s }
+    ids.select { |i| ids.count(i) > 1 }.uniq.each { |i| errs << "_data/ads.yml: id #{i.inspect} is used twice" }
+    ads.each do |a|
+      id = a["id"].to_s
+      %w[id product title text url cta logo].each do |k|
+        errs << "_data/ads.yml #{id}: `#{k}` is missing" if a[k].to_s.strip.empty?
+      end
+      errs << "_data/ads.yml #{id}: title is #{a["title"].to_s.size} characters (70 at most)" if a["title"].to_s.size > 70
+      errs << "_data/ads.yml #{id}: text is #{a["text"].to_s.size} characters (220 at most)" if a["text"].to_s.size > 220
+      unless own_link.(a["url"].to_s)
+        errs << "_data/ads.yml #{id}: url #{a["url"].inspect} must be https on hivefleet.dev or lamplitlabs.com, without a query string"
+      end
+      logo = a["logo"].to_s
+      unless logo.start_with?("/assets/") && File.file?(logo.sub(%r{\A/}, ""))
+        errs << "_data/ads.yml #{id}: logo #{logo.inspect} must be a file in this repository under /assets/"
+      end
+      t = a["topics"]
+      unless t.nil? || (t.is_a?(Array) && t.all? { |x| x.is_a?(String) && x == x.downcase })
+        errs << "_data/ads.yml #{id}: topics must be a list of lower-case categories or tags"
+      end
+    end
+
+    # Post pages only: the forwarding pages under /posts/ (layout redirect)
+    # have no <article> and are not counted.
+    pages = []
+    with = 0
+    Dir.glob(File.join(root, "posts", "*", "index.html")).sort.each do |p|
+      html = File.read(p, encoding: "UTF-8")
+      next unless html.include?("<article")
+      pages << p
+      cards = html.scan(%r{<aside class="lamplit-product".*?</aside>}m)
+      next if cards.empty?
+      with += 1
+      errs << "#{p}: #{cards.size} cards on one page (one at most)" if cards.size > 1
+      cards.each do |c|
+        if c =~ /<(script|img|iframe|object|embed|form|input|button|video|audio|link|style|meta)\b/i
+          errs << "#{p}: <#{$1}> inside the card"
+        end
+        errs << "#{p}: an on*= event handler inside the card" if c =~ /\son[a-z]+\s*=/i
+        errs << "#{p}: a #{$1} attribute inside the card" if c =~ /\s(ping|data-track[a-z-]*|data-ga[a-z-]*|data-event[a-z-]*)\s*=/i
+        hrefs = c.scan(/href="([^"]*)"/).flatten
+        errs << "#{p}: #{hrefs.size} links inside the card (exactly one)" unless hrefs.size == 1
+        hrefs.each do |h|
+          errs << "#{p}: card link #{h.inspect} is not https on one of our own hosts, or carries a query string" unless own_link.(h)
+        end
+        c.scan(/(?:\ssrc=|url\()\s*["\x27]?([^"\x27)\s>]+)/).flatten.each do |r|
+          errs << "#{p}: the card loads #{r.inspect} from another host" if r =~ %r{\A(?:[a-z][a-z0-9+.-]*:)?//}i
+        end
+      end
+    end
+    if data["enabled"] && !ads.empty? && !pages.empty? && with.zero?
+      errs << "_data/ads.yml has `enabled: true` but none of the #{pages.size} built post pages carries a card; _includes/product-ad.html or the slot in _layouts/post.html broke"
+    end
+
+    unless errs.empty?
+      warn "error: #{errs.size} problem(s) with the own-product cards (_data/ads.yml, _includes/product-ad.html):"
+      errs.first(20).each { |e| warn "       #{e}" }
+      warn "       A card is plain HTML with one link to one of our own sites: no script, no remote resource, no tagged link."
+      exit 1
+    end
+    state = data["enabled"] ? "enabled" : "disabled"
+    puts "product-ad-coverage: #{with}/#{pages.size} built post pages carry one own-product card (#{ads.size} entries in _data/ads.yml, cards #{state}); 0 cards with a script, a remote resource, a tagged or foreign link (rule: any >0 fails)"
+  ' "$SITE_DIR$_baseurl"
+}
+
 main() {
   preflight
   collect_posts
@@ -1439,6 +1566,7 @@ main() {
   check_related_link_resolution
   check_forward_links
   check_today_not_future
+  check_old_product_name
 
   # clean up
   if [[ -d $SITE_DIR ]]; then
@@ -1489,6 +1617,7 @@ main() {
 
   check_glightbox_before_bundle
   check_raw_markdown_links
+  check_product_ads
 
   # test
   bundle exec htmlproofer "$SITE_DIR" \

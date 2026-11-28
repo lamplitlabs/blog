@@ -105,6 +105,6 @@ The counts are deterministic. The µs figures will vary with the machine and its
 - [AI Security: Prompt Injection Defenses for Agents]({% post_url AI/2026-10-29-ai-security-prompt-injection-defenses-agents %}): where a keyword filter sits among the other layers.
 - To see how many tokens a tag-encoded or zero-width-padded line costs before it enters a prompt, paste it into the [Token Counter]({% post_url AI/2026-10-12-token-counter-checking-prompt-size-and-context-window-fit %}).
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents read issue threads, CI logs and web pages that anyone can write to, so we test our own input filters against disguised text like this, and we do not let a filter be the only thing between untrusted text and a tool call. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents read issue threads, CI logs and web pages that anyone can write to, so Hive does not let a filter be the only thing between untrusted text and a merged change: a review agent reads every pull request, and its [security notes](https://hivefleet.dev/docs/security/) name its rules, that review, the event log and the kill switch as the controls. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

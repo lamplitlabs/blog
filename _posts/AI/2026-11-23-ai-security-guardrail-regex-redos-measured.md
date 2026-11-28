@@ -175,6 +175,6 @@ python3 scripts/guardrail-redos/gen_images.py             # the images in this p
 
 The numbers above come from [`scripts/data/guardrail-redos-m2pro.json`](https://github.com/lamplitlabs/blog/blob/main/scripts/data/guardrail-redos-m2pro.json), which keeps every run (not just the medians) and the raw terminal output behind the screenshots. The other engine comparison on this blog, for throughput rather than worst cases, is the [regex engine performance post]({% post_url Performance/2026-10-03-regex-engine-performance-rust-go-dotnet-node %}).
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents read untrusted text all day: issue threads, CI logs, web pages, model output. Each of those passes through filters like the ones measured here before anything acts on it. That is why we put our own guardrails through ReDoS tests and run them on a linear-time engine rather than trust that a pattern looks harmless. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents read untrusted text all day: issue threads, CI logs, web pages, model output. The deny rules on Hive's shell tool are patterns too, and they run on Rust's `regex` crate, which is linear-time and has no look-around, so the blow-up measured here cannot happen in them. That safety comes from the choice of engine, not from trusting that a pattern looks harmless. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

@@ -135,7 +135,7 @@ My first run of the mutation gate got several mutants wrong. In one PR, four mut
 - I wrote the tickets, the hidden tests and the reference solution, and the full tickets are what the hidden tests check. That is the point: the acceptance gate can only be as good as the spec it comes from. But it does mean the full tickets were never ambiguous against their own tests.
 - Several thin-ticket choices (CRLF, input order, insertion-order pagination) are not bugs in general. They are bugs against what the business wanted, which is exactly what a thin ticket does not tell the agent.
 
-*We run agents this way on the work behind Lamplit Labs' products: a ticket that passes a lint, acceptance checks the agent cannot see, and a reviewer who reads the agent's assumptions first. Turning a goal into checked tasks and measuring each change against a baseline before it lands is also the core of [**Pulse**]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}), Lamplit Labs' self-improving automation product, coming soon.*
+*We run agents this way on the work behind Lamplit Labs' products: a ticket that passes a lint, acceptance checks the agent cannot see, and a reviewer who reads the agent's assumptions first. Cutting a task into steps that must each pass the project's own check is also how [**Hive**]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}), Lamplit Labs' open-source, self-improving (RSI) agent harness at [hivefleet.dev](https://hivefleet.dev/), works.*
 
 ## Reproduce it
 

@@ -117,7 +117,7 @@ Three caveats. First, this is a 3.1B model on a laptop GPU. Absolute numbers on 
 
 Everything is in this blog's repository. `scripts/llama_server_loadgen.py` is the load generator. `scripts/summarise_continuous_batching_runs.py` turns the raw runs into `scripts/data/continuous-batching-llama-cpp-m2pro.json`, and `scripts/gen_continuous_batching_post_images.py` draws every chart on this page from that file. Change the seed or the arrival rate and run it against your own server; the summary script reports the same percentiles for any number of runs.
 
-Repeating a benchmark three times on every change, checking the results in next to the code and regenerating the charts from them is the kind of check-gated, repeatable loop that **Pulse**, Lamplit Labs' self-improving automation product, is being built to run across projects. Pulse is coming soon.
+Repeating a benchmark three times on every change, checking the results in next to the code and regenerating the charts from them is the kind of check-gated, repeatable loop that [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness, is built to run across projects.
 
 ## Related
 

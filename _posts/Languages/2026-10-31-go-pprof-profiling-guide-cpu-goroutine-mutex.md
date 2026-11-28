@@ -243,7 +243,7 @@ The leak fix alone delivers most of the p99 win. The lock and regexp fixes add t
 - **Re-profile after every fix.** Removing the leak made the global lock *more* contended (171 s → 362 s of delay).
 - **Ship the `-diff_base` output with the fix**, and normalise by requests served, not by raw seconds.
 
-*We use this CPU → goroutine → mutex → diff loop on the Go services behind Lamplit Labs' products, including the LLM gateway in the posts below. The same habit of measuring, changing one thing and re-measuring with a diff as the evidence is at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We use this CPU → goroutine → mutex → diff loop on the Go services behind Lamplit Labs' products, including the LLM gateway in the posts below. The same habit of measuring, changing one thing and re-measuring with a diff as the evidence is how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Related reading
 
@@ -253,4 +253,4 @@ The leak fix alone delivers most of the p99 win. The lock and regexp fixes add t
 - [Go Context Cancellation for LLM Streaming and Agent Calls](/posts/go-context-cancellation-llm-streaming-agents/): the right way to stop the upstream call that leaked here.
 - [GOGC=off with runtime.SetMemoryLimit](/posts/go-gogc-off-memory-limit-p99/): GC tuning, for when the GC cost is real and not a leak.
 - [Hedged Requests and Load Shedding in Our Go LLM Gateway](/posts/go-llm-gateway-hedged-requests-load-shedding/): tail-latency tools beyond profiling.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

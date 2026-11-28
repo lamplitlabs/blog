@@ -164,7 +164,7 @@ The pprof source view of the input profile shows why inlining `setField` matters
 - Check PGO with the compiler's own output (`-gcflags=-m`, `-d=pgodebug=1`) and with instruction counters. Do not trust one wall-clock benchmark.
 - Follow-up: we ported the same log router to Rust and measured `rustc -Cprofile-use` against these Go numbers in [Rust PGO vs Go PGO on the Same Log Router](/posts/rust-pgo-vs-go-pgo-profile-guided-optimization-measured/).
 
-*We use this measure → change one thing → re-measure loop on the Go services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We use this measure → change one thing → re-measure loop on the Go services behind Lamplit Labs' products. Measuring a change against a baseline before accepting it is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Related reading
 
@@ -174,4 +174,4 @@ The pprof source view of the input profile shows why inlining `setField` matters
 - [GOGC=off with runtime.SetMemoryLimit](/posts/go-gogc-off-memory-limit-p99/): a runtime knob to try after the compiler ones.
 - [Rust Release Profiles: LTO, codegen-units and target-cpu](/posts/rust-lto-codegen-units-release-profile/): the same "build settings, measured" question for Rust.
 - [Rust Profiling Practical Guide: sample, Flame Graphs and a Counting Allocator, Measured](/posts/rust-profiling-practical-guide-sample-flamegraph/): instruction counters on macOS with `/usr/bin/time -l`, the method used here.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

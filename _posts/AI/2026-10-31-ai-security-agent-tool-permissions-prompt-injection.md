@@ -142,7 +142,7 @@ If you run agents with real tools today, this is the order we would apply the co
 
 A permission gate limits what a successful injection can *do*. It does not stop the model from writing a misleading draft, summarising a poisoned page wrongly, or burning tokens on a long detour. Keep the output checks, the provenance labels and the human review on high-impact text. And keep the grants honest: a task that is granted all three legs "just in case" has turned the gate off.
 
-At Lamplit Labs we hold our own agents to this rule. Pulse, our multi-project self-improving automation product, is coming soon, and its workers run each job with a narrow set of tools, explicit approval boundaries and signed commits that a human reviews before anything lands. If you are planning how to give agents real permissions in your organisation, that is the problem we are building it for.
+At Lamplit Labs we work on the same problem. [Hive](https://hivefleet.dev/), our open-source, self-improving (RSI) agent harness, gives each job a short list of typed tools, hands it no git login of its own and signs its commits with a key made for that run. A review agent reads every pull request, and one that touches a guarded path, such as a workflow file, a `.env` file or anything named like a secret, always waits for a person. Its shell tool still runs as your user, and Hive's [security notes](https://hivefleet.dev/docs/security/) are plain that these are rules and review, not a sandbox. If you are planning how to give agents real permissions in your organisation, read them alongside this post.
 
 ## Related posts
 
@@ -151,4 +151,4 @@ At Lamplit Labs we hold our own agents to this rule. Pulse, our multi-project se
 - [AI Security: Agent Tool-Egress and Data-Exfiltration Controls That Actually Hold]({% post_url AI/2026-10-27-ai-security-llm-data-exfiltration-agent-tool-egress %})
 - [AI SDLC: Prompt Injection Defences for Coding Agents That Read Untrusted Repository Content]({% post_url AI/2026-10-11-ai-sdlc-prompt-injection-defences-for-coding-agents %})
 - [OpenAPI to MCP Server Generator: Turning REST APIs into Agent Tools]({% post_url AI/2026-10-12-openapi-to-mcp-server-generator-turning-rest-apis-into-agent-tools %})
-- [Pulse: Lamplit Labs' multi-project self-improving (RSI) automation product, coming soon]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %})
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %})

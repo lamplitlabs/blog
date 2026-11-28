@@ -87,7 +87,7 @@ The allocation count did not drop to zero because long prompts still spill past 
 - **Allocation reduction compounds.** Cutting `malloc`/`free` from 34% to 6% of samples bought 19% p99 latency, because allocator locks and heap fragmentation were also serializing the 8 encode threads.
 - **SmallVec is a surgical tool.** It pays off when a size histogram proves most values fit inline; if the p99 record had been 200 bytes, an arena or pooled buffers would have been the better fix.
 
-[SmallVec](https://crates.io/crates/smallvec) and [flamegraph](https://crates.io/crates/flamegraph) are both drop-in cargo dependencies. Lamplit Labs builds with this profile-first discipline; Pulse, our self-improving automation product coming soon, applies the same measure-then-change loop to engineering workflows.
+[SmallVec](https://crates.io/crates/smallvec) and [flamegraph](https://crates.io/crates/flamegraph) are both drop-in cargo dependencies. Lamplit Labs builds with this profile-first discipline; [Hive](https://hivefleet.dev/), our open-source, self-improving (RSI) agent harness, applies the same measure-then-change loop to a project's code.
 
 ## Related
 

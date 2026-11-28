@@ -90,7 +90,7 @@ The numbers are in `scripts/data/enterprise-ai-prompt-formats.json`. Here is the
 
 To check the same thing on a prompt of your own without a server, paste it into the [Lamplit Labs token counter](https://tools.lamplitlabs.com/token-counter), once as pretty JSON and once as a table. The [AI pricing calculator walkthrough](/posts/ai-pricing-calculator-estimating-llm-api-costs-before-you-ship/) turns the difference into a monthly figure.
 
-*Changing one variable, measuring it against a baseline and keeping the change only when the numbers say so is how we tune the prompts behind Lamplit Labs' products. It is also at the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*Changing one variable, measuring it against a baseline and keeping the change only when the numbers say so is how we tune the prompts behind Lamplit Labs' products. It is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Related posts
 
@@ -98,4 +98,4 @@ To check the same thing on a prompt of your own without a server, paste it into 
 - [Wiring Azure OpenAI into a D365 F&O vendor invoice workflow](/posts/enterprise-ai-azure-openai-d365fo-vendor-invoice-coding/)
 - [Token counter: checking prompt size and context window fit](/posts/token-counter-checking-prompt-size-and-context-window-fit/)
 - [Azure OpenAI prompt caching in .NET](/posts/azure-openai-prompt-caching-dotnet/)
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/)
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/)

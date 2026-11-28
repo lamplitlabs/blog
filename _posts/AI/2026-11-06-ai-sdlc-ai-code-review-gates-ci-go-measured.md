@@ -136,7 +136,7 @@ From this run, for a Go service:
 
 That set adds up to about 2.5 s per PR in this setup (all ten gates: 3.2 s median, 4.0 s worst). For the merge policy around these gates (who may override what, and when an agent PR still needs a human), see [how we gate AI coding-agent pull requests before merge]({% post_url AI/2026-10-12-ai-sdlc-gating-ai-coding-agent-pull-requests-before-merge %}).
 
-*We run gates like these on the agent PRs behind Lamplit Labs' products. Measuring each change against a baseline before it lands is also the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We run gates like these on the agent PRs behind Lamplit Labs' products. Measuring each change against a baseline before it lands is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Reproduce it
 
@@ -157,4 +157,4 @@ python3 scripts/ai-review-gates/gen_images.py                      # the four fi
 - [AI SDLC: A Code-Review Agent Workflow That Reviewers Actually Trust](/posts/ai-sdlc-code-review-agent-workflow/): where advisory findings go in the review.
 - [AI Security: Secrets in Agent Logs, Measured - What gitleaks and Redaction Actually Catch](/posts/ai-security-secrets-in-agent-logs-measured/): what gitleaks misses when the secret is not in a diff.
 - [Go pprof Profiling Guide](/posts/go-pprof-profiling-guide-cpu-goroutine-mutex/): the same kind of service, measured for speed instead of defects.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

@@ -218,12 +218,13 @@ def corpus_lines():
         # Skip the README and the post about this script: it quotes the
         # disguised payloads on purpose and would count itself. The post was
         # first published under the same slug as the 2026-11-25 post (which
-        # this skip also covers), then renamed so the two URLs do not collide.
+        # this skip also covers), then renamed to ...-unicode-disguises-
+        # keyword-guard-normalisation-measured so the two URLs do not collide.
         if path.endswith("README.md") or any(
             s in path
             for s in (
                 "unicode-obfuscation-keyword-guardrails",
-                "unicode-keyword-guard-normaliser-order",
+                "unicode-disguises-keyword-guard",
             )
         ):
             continue

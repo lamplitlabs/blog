@@ -104,9 +104,9 @@ When the gate passes, merge the adapter into the base weights for serving (`merg
 
 And a closing note on disclosure: a fine-tuned model inherits the base model's license obligations, and your training data's provenance travels with the adapter. Our [fine-tuning data curation and eval set construction guide]({% post_url AI/2026-10-27-fine-tuning-data-curation-eval-set-construction %}) goes deeper on provenance and split hygiene.
 
-## Where Pulse fits
+## Where Hive fits
 
-This loop - dataset commit, training config, eval gate, merge decision - is exactly the kind of multi-step, check-gated workflow we are building Pulse to automate. Pulse is Lamplit Labs' self-improving automation product (coming soon): it turns repeated engineering rituals like eval gating into durable, versioned pipelines that get better each run. If your team re-runs fine-tunes monthly, that is the layer that keeps the fourth re-run as reliable as the first.
+This loop - dataset commit, training config, eval gate, merge decision - is the kind of multi-step, check-gated workflow [Hive](https://hivefleet.dev/) is built to run. Hive is Lamplit Labs' open-source, self-improving (RSI) agent harness: it can keep a repeated ritual like an eval gate as an automation, a file in your repository that runs on a schedule and queues one agent job when it goes red. The file is reviewed and versioned like any other. If your team re-runs fine-tunes monthly, that is the layer that keeps the fourth re-run as reliable as the first.
 
 ## Related posts
 

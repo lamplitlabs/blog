@@ -15,7 +15,7 @@ mermaid: false
 
 [Prompt injection defences for coding agents]({% post_url AI/2026-10-11-ai-sdlc-prompt-injection-defences-for-coding-agents %}) cover what happens when an attacker talks *to* your model. This post is about the quieter problem: what happens when the attacker ships *inside* it. Every model weight file, dataset and eval harness you consume is a build artifact from somebody else's machine, and most teams pull them with less scrutiny than they would give a random npm package.
 
-We hit this ourselves building the eval loops behind Pulse, our internal automation. A fine-tune we were testing pulled a "community-cleaned" dataset from a hub repository, and the only reason the run was reproducible was that we had pinned the revision hash. The repository was force-updated two days later with no changelog. Nothing malicious happened - but nothing would have told us if it had.
+We hit this ourselves building the eval loops for our own models at Lamplit Labs. A fine-tune we were testing pulled a "community-cleaned" dataset from a hub repository, and the only reason the run was reproducible was that we had pinned the revision hash. The repository was force-updated two days later with no changelog. Nothing malicious happened - but nothing would have told us if it had.
 
 ## Three artifact classes, three failure modes
 

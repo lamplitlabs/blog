@@ -56,4 +56,4 @@ Open [tools.lamplitlabs.com/openapi-to-mcp](https://tools.lamplitlabs.com/openap
 
 - [AI Pricing Calculator: Estimating LLM API Costs Before You Ship]({% post_url AI/2026-10-12-ai-pricing-calculator-estimating-llm-api-costs-before-you-ship %})
 - [AI SDLC: Coding Agents in the Dev Lifecycle and Their Handoff Points]({% post_url AI/2026-10-11-ai-sdlc-coding-agents-in-the-dev-lifecycle-handoff-points %})
-- [Pulse and the Automation Evolution]({% post_url AI/2026-10-12-pulse-automation-evolution %})
+- [Hive and the Automation Evolution]({% post_url AI/2026-10-12-hive-automation-evolution %})

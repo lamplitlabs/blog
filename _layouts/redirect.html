@@ -1,0 +1,25 @@
+<!doctype html>
+{%- comment -%}
+  A page that only forwards an old address to a new one, for a post whose
+  file name (and so its URL) changed. Used by the files in /redirects/:
+  front matter `permalink:` is the old address, `redirect_to:` the new one.
+  No plugin: GitHub Pages serves static files only, so the forward is a
+  meta refresh plus a canonical link for search engines and a plain link
+  for a browser that does not follow the refresh.
+{%- endcomment %}
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | default: 'This page has moved' | escape }}</title>
+    <link rel="canonical" href="{{ page.redirect_to | absolute_url }}">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url={{ page.redirect_to | relative_url }}">
+  </head>
+  <body>
+    <p>
+      This page has moved to
+      <a href="{{ page.redirect_to | relative_url }}">{{ page.title | default: page.redirect_to | escape }}</a>.
+    </p>
+  </body>
+</html>

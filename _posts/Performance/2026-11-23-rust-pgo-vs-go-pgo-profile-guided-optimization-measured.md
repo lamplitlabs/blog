@@ -161,7 +161,7 @@ This is one program of about 420 lines with a tight loop. Published Rust PGO win
 - Fat LTO without a profile beat Rust PGO here, and a profile from the wrong traffic cost up to 8.5%.
 - Rust's default build was already 16-18% fewer instructions per line than Go's. PGO did not change which language was faster. It changed how much measurement you need before you ship it.
 
-*We use this measure → change one thing → re-measure loop on the Rust and Go services behind Lamplit Labs' products. Checking each change against a baseline before accepting it is also the core of **Pulse**, Lamplit Labs' self-improving automation product, coming soon.*
+*We use this measure → change one thing → re-measure loop on the Rust and Go services behind Lamplit Labs' products. Checking each change against a baseline before accepting it is also how the self-improvement (RSI) loop in [**Hive**](https://hivefleet.dev/), Lamplit Labs' open-source agent harness, decides what to keep.*
 
 ## Related reading
 
@@ -169,4 +169,4 @@ This is one program of about 420 lines with a tight loop. Published Rust PGO win
 - [Rust Release Profiles: LTO, codegen-units and target-cpu](/posts/rust-lto-codegen-units-release-profile/): the release-profile knobs to try before PGO.
 - [Rust Profiling Practical Guide: sample, Flame Graphs and a Counting Allocator, Measured](/posts/rust-profiling-practical-guide-sample-flamegraph/): the `/usr/bin/sample` and counter method used here.
 - [Rust vs Go for a CPU-Bound Microservice](/posts/rust-vs-go-cpu-bound-microservice/): the same two languages on throughput, tail latency and memory.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

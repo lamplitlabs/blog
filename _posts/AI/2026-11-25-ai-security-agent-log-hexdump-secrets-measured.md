@@ -84,9 +84,9 @@ python3 scripts/agent-log-hexdumps/gen_images.py --work /tmp/hexdumps # the imag
 
 The JSON keeps the per-command counts for every defence, the gitleaks rules that fired, and the timings. It holds no secret values.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents debug real projects without a person watching, and `xxd` on a config file is exactly the kind of command they run. That is why we test our transcript handling against the odd shapes as well as the common ones. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents debug real projects without a person watching, and `xxd` on a config file is exactly the kind of command they run. Hive keeps each run's transcript on your own machine, for 14 days by default, so what this post measured is worth checking in a Hive transcript too. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.
 
 ## Related
 

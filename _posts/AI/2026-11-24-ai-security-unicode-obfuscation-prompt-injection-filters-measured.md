@@ -157,6 +157,6 @@ The benchmark is [`scripts/unicode-injection-filters/bench.py`](https://github.c
 
 The same code-point-versus-meaning gap shows up when secrets leak into logs. The [secrets in agent logs post]({% post_url AI/2026-11-02-ai-security-secrets-in-agent-logs-measured %}) measured how a scanner misses keys that a reader would spot at once. The [guardrail ReDoS post]({% post_url AI/2026-11-23-ai-security-guardrail-regex-redos-measured %}) covers the other way a filter can fail on hostile input: by taking seconds per line.
 
-## Where Pulse fits
+## Where Hive fits
 
-Pulse, Lamplit Labs' multi-project self-improving automation product, is coming soon. Its agents read issue threads, CI logs and web pages that anyone can write into, so every one of those inputs gets an invisible-character strip and a separate match key before any filter looks at it. We still treat phrase filters as tripwires, not walls. The [Pulse introduction]({% post_url AI/2026-10-25-pulse-internal-rsi-tool %}) has more on what we are building.
+[Hive](https://hivefleet.dev/) is Lamplit Labs' open-source, self-improving (RSI) agent harness. Its agents read issue threads, CI logs and web pages that anyone can write into. Hive has one phrase check of this kind: while a board post reads like an instruction, its self-improvement loop plans no new experiment and asks the owner. That check is a tripwire, not a wall: its [security notes](https://hivefleet.dev/docs/security/) name its rules, the review of every pull request, the event log and the kill switch as the controls. The [Hive introduction]({% post_url AI/2026-10-25-hive-self-improving-rsi-agent-harness %}) has more on how it works.

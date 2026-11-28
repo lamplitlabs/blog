@@ -1,0 +1,135 @@
+# Our own ads: one small card per post for a Lamplit Labs product.
+#
+# How it works (all of it happens when the site is built; nothing runs in the
+# reader's browser):
+#   - _includes/product-ad.html picks at most one entry below for each post and
+#     _layouts/post.html prints it between two sections of the article (after
+#     the text when the post has fewer than four sections).
+#   - An entry with `topics:` is shown only on posts that carry one of those
+#     categories or tags. Entries without `topics:` fit every post and are used
+#     when no topical entry matches.
+#   - A post never shows the card of a site its own text already links to.
+#   - Among the entries that fit, the post's date and title length pick one, so
+#     a post keeps the same card until this file changes.
+#
+# No tracking, by rule (tools/test.sh fails the build otherwise): a card is
+# plain HTML with one link. No script, no image or frame from another host, no
+# cookie, no click counter, and no query string on the link (so no utm_ tags).
+# The site's own Google Analytics tag is separate; see "Our own ads" in the
+# README for what it still records.
+#
+# To turn it off: set `enabled: false` here for the whole site, or `ad: false`
+# in one post's front matter. `ad: <id>` in a post's front matter picks one
+# entry by hand. `active: false` parks one entry. `placement: end` moves the
+# card from the middle of the article to the end of its text.
+#
+# Fields: id (unique), product (the name shown in bold), title (up to 70
+# characters), text (up to 220), url (https, no query string), cta (the link's
+# words), logo (a file in this repository), topics (optional list).
+enabled: true
+placement: middle # middle: between two sections of the article; end: after its text
+
+ads:
+  - id: hive-rsi
+    product: Hive
+    title: Self-improvement with every step written down
+    text: >-
+      In Hive, our open-source agent harness, agents suggest a change and name
+      a check that fails today. Turn the loop on and it builds the top voted
+      one, measures it and delivers what it kept as a pull request.
+    url: https://hivefleet.dev/rsi/
+    cta: How the loop works
+    logo: /assets/img/products/hive.svg
+    topics: [ai, llm, agents, machine-learning, fine-tuning, evals, benchmark, performance, profiling, rust, go]
+
+  - id: hive-sdlc
+    product: Hive
+    title: An AI-native SDLC, from a task to a merged pull request
+    text: >-
+      A lead agent cuts your task into steps. Each step must pass your
+      project's own check, and a review agent reads the pull request. Open
+      source, on your own machine.
+    url: https://hivefleet.dev/docs/sdlc/
+    cta: Read the ten phases
+    logo: /assets/img/products/hive.svg
+    topics: [ai-sdlc, sdlc, code-review, testing, ci, devops, github, github-actions, software-engineering, coding, copilot]
+
+  - id: hive-automation
+    product: Hive
+    title: Standing work for agents, run on a schedule
+    text: >-
+      Hive keeps a project's recurring work going with automations, such as a
+      weekly job for an agent or a script that checks your site every half
+      hour. One binary, MIT licensed.
+    url: https://hivefleet.dev/docs/how-to/schedules/
+    cta: Set up a schedule
+    logo: /assets/img/products/hive.svg
+    topics: [automation, enterprise-ai, enterprise, governance, observability, reliability]
+
+  - id: tools-ai
+    product: Lamplit Labs Tools
+    title: Count tokens and price a prompt before you send it
+    text: >-
+      Free browser tools for AI work: a token counter, a pricing calculator
+      across providers, a context-window lookup and a structured-output
+      playground.
+    url: https://tools.lamplitlabs.com/
+    cta: Open the tools
+    logo: /assets/img/products/lamplit.svg
+    topics: [openai, azure-openai, cost, finops, prompt-engineering, embeddings, rag, tools, lamplit-tools]
+
+  - id: edmx-tools
+    product: EDMX Tools
+    title: Trim and explore OData metadata in your browser
+    text: >-
+      Free client-side tools for trimming, exploring and converting EDMX and
+      OData metadata files. No data leaves your browser.
+    url: https://edmx.lamplitlabs.com/
+    cta: Open EDMX Tools
+    logo: /assets/img/products/lamplit.svg
+    topics: [odata, d365, d365fo, edmx]
+
+  - id: azure-icons
+    product: Azure Draw.io Assets
+    title: Azure service icons for your Draw.io diagrams
+    text: >-
+      Browse and search more than 600 Azure service icons for Draw.io, kept up
+      to date from Microsoft's official icon sets.
+    url: https://azure-assets.lamplitlabs.com/
+    cta: Browse the icons
+    logo: /assets/img/products/lamplit.svg
+    topics: [azure, cloud, architecture, drawio, apim]
+
+  - id: azure-compliance
+    product: Azure Compliance Matrix
+    title: Which Azure service holds which certification
+    text: >-
+      An interactive matrix of compliance coverage for more than 210 Azure
+      services across 17 frameworks, including ISO 27001, SOC 2, HIPAA and PCI
+      DSS.
+    url: https://azure-compliance.lamplitlabs.com/
+    cta: Open the matrix
+    logo: /assets/img/products/lamplit.svg
+    topics: [compliance, azure, cloud]
+
+  # General entries: no topics, so they fit any post.
+  - id: hive
+    product: Hive
+    title: The agent harness that improves your projects
+    text: >-
+      An open-source harness for coding agents on your own machine. It does
+      your tasks, runs automations and improves every project it works on,
+      under rules you write.
+    url: https://hivefleet.dev/
+    cta: See how it works
+    logo: /assets/img/products/hive.svg
+
+  - id: tools
+    product: Lamplit Labs Tools
+    title: Free developer tools that run in your browser
+    text: >-
+      A JSON formatter, a JWT decoder, a regex tester, a cron translator, a
+      text compare and more. Free, from the people who write this blog.
+    url: https://tools.lamplitlabs.com/
+    cta: Open the tools
+    logo: /assets/img/products/lamplit.svg

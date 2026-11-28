@@ -15,7 +15,7 @@ mermaid: false
 
 A fine-tuning run is a build. It takes inputs (base weights, data, code, hyperparameters), produces an artifact (adapter or full weights), and that artifact ships to production. Yet most teams run training like a notebook experiment: data copied by hand, eval by eyeball, promotion by vibes. Then a regression ships and nobody can answer the only question that matters - *what changed?*
 
-This is the pipeline shape we converged on for the models behind our own tooling at Lamplit Labs, including the classification and drafting loops in Pulse. None of it needs a platform team; it needs the same discipline a CI pipeline has, applied to a longer build.
+This is the pipeline shape we converged on for the models behind our own tooling at Lamplit Labs. None of it needs a platform team; it needs the same discipline a CI pipeline has, applied to a longer build.
 
 ![A fine-tuning pipeline with a manifest, frozen eval and regression gates](/assets/img/posts/ai/fine-tuning-pipeline-regression-gates.webp)
 

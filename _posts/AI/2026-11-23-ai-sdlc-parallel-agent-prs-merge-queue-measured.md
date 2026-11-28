@@ -119,7 +119,7 @@ CI runs include the 12 runs on the PR branches. A round is one wait for CI; the 
 - **CI is gofmt, vet and `go test -race` only.** A real pipeline with integration tests or a slower build changes the cost columns, not the red-commit columns.
 - **The merge queue is modelled, not GitHub's.** It follows the documented behaviour (test main plus the entries ahead, remove a failed entry, rebuild the ones behind it). Its timing and retry details are not reproduced.
 
-Pulse, Lamplit Labs' self-improving automation product ([coming soon](/posts/pulse-internal-rsi-tool/)), runs many agents against the same repositories. Its work lands the way this post recommends: each change is checked on the tree it will actually join, not on the base it started from.
+[Hive](https://hivefleet.dev/), Lamplit Labs' open-source, self-improving (RSI) agent harness ([introduction](/posts/hive-self-improving-rsi-agent-harness/)), runs many agents against the same repositories. It stacks the pull requests of its tasks and jobs for the reason this post gives: the next one is built on the open one, so their changes do not meet for the first time at merge time. Not every pull request is in the stack (one opened from a conversation targets the default branch whatever else is open), and the check on the merged result itself is left to the repository's own pipeline.
 
 ## Reproduce it
 
@@ -146,4 +146,4 @@ The recorded patches are committed, so you can skip the agent step and start at 
 - [AI SDLC: Flaky Agent PRs vs "Re-run Failed Jobs", Measured on 10,233 Go Test Runs](/posts/ai-sdlc-flaky-agent-prs-ci-retries-measured/): the other way a green check can lie.
 - [AI SDLC: Spec to PR With Coding Agents, Measured - What to Gate Before and After the Agent](/posts/ai-sdlc-spec-to-pr-agents-what-to-gate/): how thin tickets turn into wrong assumptions.
 - [AI SDLC: Agent-Written Go Tests vs Mutation Testing, Measured - Same 97.3% Score, 15 or 19 Bugs Caught](/posts/ai-sdlc-agent-written-tests-mutation-testing-go-measured/): what the tests that guard these merges actually catch.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/)
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/)

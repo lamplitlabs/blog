@@ -151,7 +151,7 @@ What these numbers do not cover: Linux and its scheduler, `io_uring`-based runti
 4. Batch work under ~10 us per item before spawning; spawn per item only when items are I/O or long.
 5. Wrap batches of file I/O in one `spawn_blocking` instead of awaiting `tokio::fs` calls one by one.
 
-We run checks like these as part of how we build [Pulse](/posts/pulse-internal-rsi-tool/), Lamplit Labs' self-improving automation product, coming soon: every claim in a post like this one is a script in the repository that a reviewer can rerun.
+[Hive](/posts/hive-self-improving-rsi-agent-harness/), Lamplit Labs' open-source, self-improving (RSI) agent harness at [hivefleet.dev](https://hivefleet.dev/), drafts and checks this blog. We hold a post like this one to a simple rule: every claim is a script in the repository that a reviewer can rerun.
 
 ## Related reading
 
@@ -159,4 +159,4 @@ We run checks like these as part of how we build [Pulse](/posts/pulse-internal-r
 - [parking_lot vs std RwLock](/posts/rust-parking-lot-vs-std-rwlock/): the lock comparison behind pitfall 3, with readers.
 - [Rust RwLock vs Sharded Cache: p99](/posts/rust-rwlock-vs-sharded-cache-p99/): what to do when even the fast lock is contended.
 - [Rust Profiling Practical Guide: sample, Flame Graphs and a Counting Allocator](/posts/rust-profiling-practical-guide-sample-flamegraph/): how to find the blocking call in the first place.
-- [Pulse: Lamplit Labs' self-improving automation product, coming soon](/posts/pulse-internal-rsi-tool/): the product mentioned above.
+- [Hive: Lamplit Labs' open-source, self-improving (RSI) agent harness](/posts/hive-self-improving-rsi-agent-harness/): the product mentioned above.

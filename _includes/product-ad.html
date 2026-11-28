@@ -1,0 +1,70 @@
+{%- comment -%}
+  One card for one of our own products, chosen for this post from
+  _data/ads.yml (that file explains the rules). _layouts/post.html calls it
+  with the post's rendered HTML as `content`.
+
+  Prints nothing when the cards are switched off, when the post sets
+  `ad: false`, or when no entry fits.
+
+  Keep the card free of <img> and of h2-h5: the theme's refactor-content.html
+  wraps every <img> in a popup link and gives every heading an anchor, and the
+  contents list picks up headings inside the article. The logo is a background
+  image for that reason. Keep it free of scripts and remote resources as well:
+  tools/test.sh (check_product_ads) fails the build on any of them.
+{%- endcomment -%}
+{%- assign _ads = site.data.ads -%}
+{%- assign _ad = nil -%}
+{%- if _ads.enabled and page.ad != false -%}
+  {%- if page.ad -%}
+    {%- assign _ad = _ads.ads | where: 'id', page.ad | first -%}
+  {%- else -%}
+    {%- assign _topics = page.categories | concat: page.tags | join: '|' | downcase | split: '|' -%}
+    {%- assign _topical = '' | split: '' -%}
+    {%- assign _general = '' | split: '' -%}
+    {%- for _entry in _ads.ads -%}
+      {%- if _entry.active == false -%}{%- continue -%}{%- endif -%}
+      {%- comment %} "https://host/path" split on "/" gives the host third. {% endcomment -%}
+      {%- assign _host = _entry.url | split: '/' -%}
+      {%- assign _host = _host[2] -%}
+      {%- if include.content contains _host -%}{%- continue -%}{%- endif -%}
+      {%- if _entry.topics -%}
+        {%- for _topic in _entry.topics -%}
+          {%- if _topics contains _topic -%}
+            {%- assign _topical = _topical | push: _entry -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign _general = _general | push: _entry -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign _pool = _topical -%}
+    {%- if _pool.size == 0 -%}{%- assign _pool = _general -%}{%- endif -%}
+    {%- if _pool.size > 0 -%}
+      {%- comment %} Minutes since 1970 plus the title's length: fixed for a post, spread across posts. {% endcomment -%}
+      {%- assign _pick = page.date | date: '%s' | divided_by: 60 | plus: page.title.size | modulo: _pool.size -%}
+      {%- assign _ad = _pool[_pick] -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if _ad -%}
+  {%- assign _host = _ad.url | split: '/' -%}
+  <aside class="lamplit-product" data-product-ad="{{ _ad.id }}" aria-label="Our product: {{ _ad.product | escape }}">
+    <span
+      class="lamplit-product-logo"
+      style="background-image: url('{{ _ad.logo | relative_url }}')"
+      aria-hidden="true"
+    ></span>
+    <div class="lamplit-product-body">
+      <p class="lamplit-product-label">Our product</p>
+      <p class="lamplit-product-title">
+        <a href="{{ _ad.url }}"><strong>{{ _ad.product | escape }}</strong>: {{ _ad.title | escape }}</a>
+      </p>
+      <p class="lamplit-product-text">{{ _ad.text | escape }}</p>
+      <p class="lamplit-product-cta">
+        <span class="lamplit-product-go">{{ _ad.cta | escape }} <i class="fas fa-arrow-right fa-fw" aria-hidden="true"></i></span>
+        <span class="lamplit-product-host">{{ _host[2] }}</span>
+      </p>
+    </div>
+  </aside>
+{%- endif -%}
